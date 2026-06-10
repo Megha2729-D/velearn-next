@@ -2610,6 +2610,7 @@ section {
 
 .count_clr.count_clr1 img {
     height: 225px;
+    width: auto;
     position: absolute;
     bottom: 0;
     right: 5px;
