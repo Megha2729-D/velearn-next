@@ -573,6 +573,7 @@ export default function Footer() {
                                                         alt="Facebook"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -587,6 +588,7 @@ export default function Footer() {
                                                         alt="Twitter"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -601,6 +603,7 @@ export default function Footer() {
                                                         alt="Instagram"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -619,6 +622,7 @@ export default function Footer() {
                                                         alt="LinkedIn"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -633,6 +637,7 @@ export default function Footer() {
                                                         alt="YouTube"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -647,6 +652,7 @@ export default function Footer() {
                                                         alt="Telegram"
                                                         height={100}
                                                         width={100}
+                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -665,6 +671,7 @@ export default function Footer() {
                                                 alt="google-play"
                                                 height={100}
                                                 width={100}
+                                                unoptimized
                                             />
                                         </a>
                                     </div>
@@ -679,6 +686,7 @@ export default function Footer() {
                                                 alt="apple-store"
                                                 height={100}
                                                 width={100}
+                                                unoptimized
                                             />
                                         </a>
                                     </div>

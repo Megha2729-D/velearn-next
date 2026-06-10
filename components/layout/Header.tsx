@@ -356,6 +356,7 @@ export default function Navbar() {
                                     alt="Velearn Logo"
                                     height={100}
                                     width={100}
+                                    unoptimized
                                 />
                             </div>
                         </Link>
@@ -846,6 +847,7 @@ export default function Navbar() {
                                                 alt="User"
                                                 height={100}
                                                 width={100}
+                                                unoptimized
                                             />
                                         </div>
                                         {userDropdownOpen && (

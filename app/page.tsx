@@ -405,6 +405,7 @@ export default function HomePage() {
                       width={40}
                       height={40}
                       className="phone-img"
+                      unoptimized
                     />
                     <div className="call_details">
                       <p className="text-c2 mb-0 fw-bold">
@@ -428,6 +429,7 @@ export default function HomePage() {
                   alt=""
                   height={100}
                   width={100}
+                  unoptimized
                 />
               </div>
               <div className="dotted_circle_parent">
@@ -500,6 +502,7 @@ export default function HomePage() {
                     alt=""
                     height={100}
                     width={100}
+                    unoptimized
                   />
                   <Image
                     src={`${BASE_IMAGE_URL}icons/js.png`}
@@ -507,6 +510,7 @@ export default function HomePage() {
                     alt=""
                     height={100}
                     width={100}
+                    unoptimized
                   />
                   <Image
                     src={`${BASE_IMAGE_URL}icons/angular.png`}
@@ -514,6 +518,7 @@ export default function HomePage() {
                     alt=""
                     height={100}
                     width={100}
+                    unoptimized
                   />
                   <Image
                     src={`${BASE_IMAGE_URL}icons/python.png`}
@@ -521,6 +526,7 @@ export default function HomePage() {
                     alt=""
                     height={100}
                     width={100}
+                    unoptimized
                   />
                 </div>
               </div>
@@ -582,6 +588,7 @@ export default function HomePage() {
                       alt={course.title}
                       height={100}
                       width={100}
+                      unoptimized
                     />
                     <div className="live_parent d-flex gap-2 align-items-center justify-content-center">
                       <div className="live_icon"></div>
@@ -657,6 +664,7 @@ export default function HomePage() {
                       alt="testimonial"
                       height={100}
                       width={100}
+                      unoptimized
                     />
                   </div>
 
@@ -782,6 +790,7 @@ export default function HomePage() {
                             alt={course.title}
                             height={100}
                             width={100}
+                            unoptimized
                           />
                         </div>
 
@@ -941,6 +950,7 @@ export default function HomePage() {
                     className="partner-logo"
                     height={100}
                     width={100}
+                    unoptimized
                   />
                 </SwiperSlide>
               ))}
@@ -1071,6 +1081,7 @@ export default function HomePage() {
                       className="partner-logo"
                       height={100}
                       width={100}
+                      unoptimized
                     />
                   </SwiperSlide>
                 ))}
@@ -1103,6 +1114,7 @@ export default function HomePage() {
                       className="partner-logo"
                       height={100}
                       width={100}
+                      unoptimized
                     />
                   </SwiperSlide>
                 ))}
@@ -1207,6 +1219,7 @@ export default function HomePage() {
                               alt=""
                               height={100}
                               width={100}
+                              unoptimized
                             />
                           </div>
                         </div>
@@ -1253,6 +1266,7 @@ export default function HomePage() {
                           alt=""
                           height={100}
                           width={100}
+                          unoptimized
                         />
                         <Image
                           src={`${BASE_IMAGE_URL}bento-vector-3-1.png`}
@@ -1260,6 +1274,7 @@ export default function HomePage() {
                           alt=""
                           height={100}
                           width={100}
+                          unoptimized
                         />
                       </div>
                     </div>
@@ -1290,6 +1305,7 @@ export default function HomePage() {
                           alt=""
                           height={100}
                           width={100}
+                          unoptimized
                         />
                       </div>
                     </div>
@@ -1405,6 +1421,7 @@ export default function HomePage() {
                           className="faq_toggle_icon"
                           height={100}
                           width={100}
+                          unoptimized
                         />
                       )}
                     </span>
@@ -1426,6 +1443,7 @@ export default function HomePage() {
                 alt="Velearn FAQ"
                 height={100}
                 width={100}
+                unoptimized
               />
             </div>
           </div>
