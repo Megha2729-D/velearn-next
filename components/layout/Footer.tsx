@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Image from "next/image";
+import "./Styles/Footer.css"
 
-const BASE_API_URL =
-    "https://velearn.in/velearn-crm/api/";
-const BASE_IMAGE_URL =
-    "https://velearn.in/assets/images/";
+const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 
 export default function Footer() {
     const [trendingCourses, setTrendingCourses] =

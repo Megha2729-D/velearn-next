@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import "./layout.css"
+import "./Styles/Header.css"
 
 const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";

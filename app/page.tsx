@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "./globals.css"  
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -425,7 +426,7 @@ export default function HomePage() {
               <div className="d-flex justify-content-center align-items-center">
                 <Image
                   src={`${BASE_IMAGE_URL}about-vector-person.png`}
-                  className="vector_about m-auto w-75"
+                  className="vector_about m-auto w-75 h-auto"
                   alt=""
                   height={100}
                   width={100}
@@ -1217,9 +1218,10 @@ export default function HomePage() {
                             <Image
                               src={`${BASE_IMAGE_URL}bento-vector-1.png`}
                               alt=""
-                              height={100}
+                              height={225}
                               width={100}
                               unoptimized
+                              className="h-auto"
                             />
                           </div>
                         </div>
@@ -1262,7 +1264,7 @@ export default function HomePage() {
                       <div className="d-flex justify-content-center align-items-center">
                         <Image
                           src={`${BASE_IMAGE_URL}bento-vector-3-2.png`}
-                          className="image-1"
+                          className="image-1 h-auto"
                           alt=""
                           height={100}
                           width={100}
@@ -1270,7 +1272,7 @@ export default function HomePage() {
                         />
                         <Image
                           src={`${BASE_IMAGE_URL}bento-vector-3-1.png`}
-                          className="image-2"
+                          className="image-2 h-auto"
                           alt=""
                           height={100}
                           width={100}
@@ -1303,6 +1305,7 @@ export default function HomePage() {
                         <Image
                           src={`${BASE_IMAGE_URL}bento-vector-2.png`}
                           alt=""
+                          className="h-auto"
                           height={100}
                           width={100}
                           unoptimized
@@ -1418,7 +1421,7 @@ export default function HomePage() {
                         <Image
                           src={`${BASE_IMAGE_URL}icons/faq-icon.png`}
                           alt="toggle"
-                          className="faq_toggle_icon"
+                          className="faq_toggle_icon h-auto"
                           height={100}
                           width={100}
                           unoptimized
@@ -1439,7 +1442,7 @@ export default function HomePage() {
             <div className="col-lg-6">
               <Image
                 src={`${BASE_IMAGE_URL}faq.png`}
-                className="w-100"
+                className="w-100 h-auto"
                 alt="Velearn FAQ"
                 height={100}
                 width={100}
