@@ -1,0 +1,202 @@
+.referBanner {
+    background: url(../../public/images/refer-and-earn/re-banner.png);
+    background-size: cover;
+    padding: 130px 0 80px 0;
+    position: relative;
+}
+
+.referBanner::before,
+.referBanner::after {
+    position: absolute;
+    content: "";
+    z-index: 1;
+}
+
+.referBanner::before {
+    background: url(../../public/images/refer-and-earn/banner-coins.png);
+    height: 80px;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    bottom: -7px;
+    left: 0;
+}
+
+.referBanner::after {
+    background: url(../../public/images/refer-and-earn/banner-trophy.png);
+    height: 80%;
+    width: 100%;
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    bottom: 0;
+    right: 25px;
+
+}
+
+.referBanner .section_container {
+    position: relative;
+    z-index: 2;
+}
+
+.navbarRefer .search_parent {
+    display: none;
+}
+
+.referBanner button {
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 55px;
+    padding: 10px 30px;
+    font-weight: 500;
+    font-size: 20px;
+    text-transform: uppercase;
+    border: 1px solid #000000;
+    transition: all .3s ease-out;
+}
+
+.referBanner button:hover {
+    background-color: var(--c1);
+    border: 1px solid var(--c1);
+    transition: all .3s ease-out;
+}
+
+.refer_bottom_content {
+    background: url(../../public/images/refer-and-earn/re-bg.png), linear-gradient(#000000, #000000);
+    /* background: linear-gradient(#000000, #000000); */
+    background-size: cover;
+    position: relative;
+}
+
+.refer_butt {
+    background: linear-gradient(180deg, #ffbd590f 0%, #ffbd590d 100%);
+    border: 1px solid #FFD12E;
+    box-shadow: 0px 4px 42.9px 8px #E69D1661;
+    border-radius: 30px;
+    padding: 10px 40px;
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.refer_butt:hover {
+    background: #FFC200;
+    border: 1px solid #FFD12E;
+    color: #000000;
+    transition: all .3s ease-out;
+}
+
+.refer_count_steps {
+    background-color: #ffffff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refer_steps {
+    border: 1px solid #ffc40080;
+    height: 100%;
+    border-radius: 58px;
+    background: linear-gradient(141.89deg, #ffffff33 2.65%, #ffffff00 44.8%);
+    box-shadow: 0 20px 39px 20px #FFC2002B, inset 0 -25px 25px -10px #ffc2007a;
+    padding: 30px;
+}
+
+.refer_bottom_content .refer_butt {
+    box-shadow: 0 20px 39px 20px #FFC2002B;
+}
+
+.refer_benefits h5 {
+    background-color: #FFC200;
+    padding: 10px;
+    box-shadow: 0px 3.31px 8.03px 0px #FFC200;
+    border-radius: 10px;
+    color: #000000;
+    text-align: center;
+}
+
+.refer_benefits_child div {
+    background-color: #ffffff;
+    padding: 30px 20px;
+    border-radius: 23px;
+    position: relative;
+    box-shadow: 0px 3.31px 8.03px 0px #FFC200;
+    min-height: 135px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.refer_benefits_child p {
+    margin-bottom: 0 !important;
+}
+
+.refer_benefits_child_one {
+    z-index: 3;
+}
+
+.refer_benefits_child_two {
+    z-index: 2;
+    margin-top: -10px;
+}
+
+.refer_benefits_child_three {
+    z-index: 1;
+    margin-top: -10px;
+}
+
+.navbarRefer .top-banner {
+    display: none;
+}
+
+.bg-refer {
+    background: #0c4052;
+}
+
+@media screen and (min-width: 992px) {
+    .navbarRefer .navbar_links {
+        margin: auto;
+        width: 90%;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 15px;
+        border: 1px solid #ffffff;
+        background: #ffffff36;
+        backdrop-filter: blur(5px);
+        border-radius: 20px;
+    }
+
+    .navbarRefer .navbar_links.is-fixed {
+        width: 100% !important;
+        border-radius: 0;
+        top: 0;
+        background: #ffffff;
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+    .referBanner {
+        padding: 40px 0 80px 0;
+    }
+
+    .referBanner::after {
+        height: 50%;
+        right: 0;
+    }
+
+    .referBanner::before {
+        height: 50px;
+        bottom: -1px;
+    }
+
+    .navbarRefer .nav-elements {
+        top: 62px;
+    }
+}

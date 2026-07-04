@@ -7,10 +7,10 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import "./Styles/Header.css"
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 const BASE_DYNAMIC_IMAGE_URL =
-    "https://velearn.in/velearn-crm/public/uploads/";
+    "https://crm.velearn.in/public/uploads/";
 
 interface User {
     id: number;
@@ -189,7 +189,7 @@ export default function Navbar() {
 
     const getProfileImage = () => {
         if (!user?.image) {
-            return `${BASE_IMAGE_URL}icons/user.png`;
+            return `/images/icons/user.png`;
         }
 
         if (user.image.startsWith("http")) {
@@ -198,7 +198,7 @@ export default function Navbar() {
 
         const imageName = user.image.split("/").pop();
 
-        return `https://velearn.in/velearn-crm/public/uploads/students/${imageName}`;
+        return `https://crm.velearn.in/public/uploads/students/${imageName}`;
     };
 
     const handleLogout = () => {
@@ -350,13 +350,12 @@ export default function Navbar() {
                                 <Image
                                     src={
                                         isNavbarTwo
-                                            ? `${BASE_IMAGE_URL}logo-white.png`
-                                            : `${BASE_IMAGE_URL}velearn-logo.png`
+                                            ? `/images/logo-white.png`
+                                            : `/images/velearn-logo.png`
                                     }
                                     alt="Velearn Logo"
                                     height={100}
-                                    width={100}
-                                    unoptimized
+                                    width={220}
                                 />
                             </div>
                         </Link>
@@ -847,7 +846,6 @@ export default function Navbar() {
                                                 alt="User"
                                                 height={100}
                                                 width={100}
-                                                unoptimized
                                             />
                                         </div>
                                         {userDropdownOpen && (

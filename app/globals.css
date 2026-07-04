@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap');
 
 :root {
   --c1: #22346b;
   --c2: #24b8ec;
   --heading-font: "Poppins", sans-serif;
-  --body-font: "Noto Sans", sans-serif;
+  --body-font: "Plus Jakarta Sans", sans-serif;
   --button-shadow: -6px 6px 11px 0px #00000069;
 }
 
@@ -14,21 +15,21 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #ececec;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: transparent;
+  background: var(--c1);
   border-radius: 10px;
 }
 
-*:hover::-webkit-scrollbar-thumb {
+/* *:hover::-webkit-scrollbar-thumb {
   background: #94a3b866;
 }
 
-*:hover::-webkit-scrollbar-thumb:hover {
-  background: #64748bcc;
-}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c1);
+} */
 
 .z-1 {
   z-index: 1 !important;
@@ -277,6 +278,91 @@ img {
   }
 }
 
+/* navbar-2 start */
+.v-navbar.navbar_two .top-banner {
+  display: none;
+}
+
+.v-navbar.navbar_two .hamburger span {
+  background: #ffffff;
+}
+
+.v-navbar.navbar_two {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  top: 15px;
+}
+
+.v-navbar.navbar_two .navbar_links {
+  background: #ffffff00;
+}
+
+/* .v-navbar.navbar_two .nav-elements ul a, */
+.v-navbar.navbar_two .nav-elements .dropdown-toggle,
+.v-navbar.navbar_two .search_parent i,
+.v-navbar.navbar_two input[type="search"]::placeholder {
+  color: #ffffff;
+}
+
+.v-navbar.navbar_two input[type="search"] {
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  border-radius: 24.5px;
+  text-indent: 20px;
+}
+
+.v-navbar.navbar_two .btn_login {
+  background-color: #ffffff;
+  transition: all .3s ease-out;
+}
+
+.v-navbar.navbar_two .btn_login:hover {
+  background-color: var(--c2);
+  transition: all .3s ease-out;
+}
+
+.v-navbar.navbar_two .navbar_links.is-fixed {
+  background: #000000;
+}
+
+@media screen and (max-width: 991px) {
+  .v-navbar.navbar_two .nav-elements {
+    background-color: #000000;
+    border: 10.5px solid #ffffff;
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .v-navbar.navbar_two .navbar_links.is-fixed .nav-elements {
+    border: none;
+  }
+
+  .v-navbar.navbar_two .navbar_links.is-fixed {
+    padding: 10px 0;
+  }
+
+  .v-navbar.navbar_two .navbar_links.navbar_links.is-fixed .nav-elements {
+    top: 80px;
+  }
+
+  .v-navbar.navbar_two .nav-elements ul.dropdown-menu a,
+  .v-navbar.navbar_two .nav-elements .sub-dropdown-toggle,
+  .v-navbar.navbar_two .nav-elements .dropdown-menu .sub-dropdown-menu a {
+    color: #ffffff;
+  }
+
+  .v-navbar.navbar_two .nav-elements {
+    background-color: #000000;
+  }
+
+  .v-navbar.navbar_two .bi-search {
+    color: #ffffff !important;
+  }
+}
+
+/* navbar-2 end */
 .signUpBut {
   color: #ffffff;
   padding: 10px 15px;
@@ -1705,7 +1791,7 @@ section {
 }
 
 .dotted_lines img.dotted-line-img {
-  width: 73%;
+  width: 73% !important;
   /* fixed for consistency */
   max-width: none;
 }
@@ -1715,7 +1801,7 @@ section {
   position: absolute;
   right: 153px;
   top: 50px;
-  height: 110px;
+  height: 110px !important;
   transform: rotate(18deg);
   z-index: 2;
 }
@@ -3485,4 +3571,55 @@ section {
     right: 0px;
     bottom: 47px;
   }
+}
+
+.blog_search_results_box {
+  background: #fff;
+  border: 1px solid #ddd;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-top: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1050;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.blog_search_results_box a:hover {
+  color: var(--c1);
+  transition: all .3s ease-out;
+}
+
+.blog_search_result_item {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #000;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.blog_search_result_item:hover {
+  background: #f5f5f5;
+  color: #007bff;
+}
+
+.pagination_parent {
+  margin-top: 70px;
+}
+
+.pagination_parent a,
+.pagination_parent span {
+  color: #ffffff;
+  font-weight: 300;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: all 0.3s ease-out;
+}
+
+.pagination_parent a:hover {
+  color: var(--c2);
+  transition: all 0.3s ease-out;
 }

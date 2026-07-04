@@ -1,0 +1,206 @@
+.blog_banner {
+    background: url(../../public/images/blogs/blog-banner-bg.png);
+    background-size: cover;
+}
+
+.blog_parent_body .blog_more_butt {
+    background: linear-gradient(90deg, #24B8EC 0%, #22346B 100%);
+    color: #ffffff;
+    border-radius: 32px;
+    border: none;
+    padding: 10px 45px;
+    cursor: pointer;
+}
+
+.blog_parent_body .blog_more_butt div {
+    font-size: 18px;
+    padding-left: 3px;
+    transform: rotate(310deg);
+}
+
+.blog_main_search {
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    color: #000000;
+    border-radius: 24.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.blog_main_search input {
+    width: 100%;
+    border: none;
+    padding: 10px;
+}
+
+.blog_main_search div {
+    background-color: var(--c1);
+    padding: 10px;
+    font-size: 15px;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.blog_main_search div:hover {
+    background-color: var(--c2);
+    transition: all .3s ease-out;
+}
+
+.blog_main_search input::placeholder {
+    padding-left: 10px;
+}
+
+.blog_right_part {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+/* .blog_parent_body .row {
+    align-items: flex-start;
+} */
+
+.blog_right_part li {
+    list-style: none;
+}
+
+.latest_blog_parent img {
+    height: 74px;
+    width: 74px;
+    object-fit: cover;
+}
+
+.latest_blog_parent p {
+    font-size: 15px;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.latest_blog__child {
+    padding: 12px 0;
+}
+
+.blog_tags_child {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 25px;
+    width: fit-content;
+}
+
+.blog_parent_card {
+    padding: 10px;
+    border-radius: 50px;
+    box-shadow: 0px 10px 60px 0px #262D7614;
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffffdc 50%), url(../../public/images/blogs/blog-card-bg.png);
+    display: flex;
+    width: 100%;
+}
+
+.blog_parent_card img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 25px;
+}
+
+.blog_parent_card_inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 50px;
+}
+
+.blog_parent_body .col-lg-8 img {
+    border-radius: 25px;
+}
+
+.blog_parent_body .col-lg-4 {
+    display: flex;
+}
+
+.blog_description {
+    display: -webkit-box;
+    line-clamp: 5;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    color: #000000;
+}
+
+.blog_more_butt {
+    background: linear-gradient(90deg, #24B8EC 0%, #22346B 100%);
+    border-radius: 32px;
+    color: #ffffff;
+    border: none;
+    padding: 10px 40px;
+    transition: all .5s ease-out;
+}
+
+.blog_more_butt:hover {
+    background: linear-gradient(90deg, #22346B 0%, #24B8EC 100%);
+    transition: all .5s ease-out;
+}
+
+.read_more_butt {
+    background: var(--c1);
+    border-radius: 32px;
+    color: #ffffff;
+    border: none;
+    padding: 10px 30px;
+    margin-top: auto;
+    transition: all .3s ease-out;
+}
+
+.read_more_butt:hover {
+    background: var(--c2);
+    transition: all .3s ease-out;
+}
+
+.blog_search_results_box {
+    background: #fff;
+    border: 1px solid #ddd;
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1050;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.blog_search_results_box a:hover {
+    color: var(--c1);
+    transition: all .3s ease-out;
+}
+
+.blog_search_result_item {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.blog_search_result_item:hover {
+    background: #f5f5f5;
+    color: #007bff;
+}

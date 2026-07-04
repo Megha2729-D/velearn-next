@@ -12,7 +12,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 
 export default function LoginPage() {
     const router = useRouter();

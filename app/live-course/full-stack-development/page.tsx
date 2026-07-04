@@ -16,10 +16,10 @@ import "./style.css"
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 const BASE_DYNAMIC_IMAGE_URL =
-    "https://velearn.in/velearn-crm/public/uploads/";
+    "https://crm.velearn.in/public/uploads/";
 
 export default function FullStackDevelopment() {
     const router = useRouter();
@@ -909,10 +909,10 @@ export default function FullStackDevelopment() {
                                         </div>
                                         <div className="col-4 px-0 pb-lg-4 position-relative d-flex flex-column justify-content-center align-items-center">
                                             <Image
-                                                src={`${BASE_IMAGE_URL}details-page/steps.png`}
+                                                src={`/images/details-page/steps.png`}
                                                 alt="Steps"
-                                                width={500}
-                                                height={500}
+                                                width={400}
+                                                height={300}
                                                 className="w-100 h-auto"
                                             />
                                             <div className="get_started_butt position-absolute bottom-0 d-none d-lg-flex justify-content-center">
@@ -1034,8 +1034,8 @@ export default function FullStackDevelopment() {
                                                                 <Image
                                                                     src={item.icon}
                                                                     alt={item.title}
-                                                                    width={80}
-                                                                    height={80}
+                                                                    width={240}
+                                                                    height={240}
                                                                 />
                                                                 <p className="text-white">
                                                                     {
@@ -1119,8 +1119,8 @@ export default function FullStackDevelopment() {
                                                 <Image
                                                     src={tool.logo}
                                                     alt={tool.name}
-                                                    width={100}
-                                                    height={100}
+                                                    width={170}
+                                                    height={170}
                                                 />
                                             </div>
                                         </SwiperSlide>
@@ -1328,14 +1328,19 @@ export default function FullStackDevelopment() {
                             </div>
 
                             <div className="puzzle_images">
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/puzzle-1.png`}
-                                    className="puzzle-1"
+
+                                <Image
+                                    src={`/images/details-page/puzzle-1.png`}
+                                    className="puzzle-1 w-auto"
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/puzzle-2.png`}
-                                    className="puzzle-2"
+                                <Image
+                                    src={`/images/details-page/puzzle-2.png`}
+                                    className="puzzle-2 w-auto"
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                             </div>
@@ -1366,24 +1371,30 @@ export default function FullStackDevelopment() {
                         <div className="journey_bg_icon"></div>
                         <div className="dotted_lines">
                             <div className="position-relative d-flex justify-content-center">
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/dotted-lines.png`}
-                                    className="dotted-line-img"
+                                <Image
+                                    src={`/images/details-page/journey/dotted-lines.png`}
+                                    className="dotted-line-img h-auto"
+                                    width={1500}
+                                    height={550}
                                     alt=""
                                 />
                             </div>
                         </div>
                         <div className="rocket_wrap">
-                            <img
-                                src={`${BASE_IMAGE_URL}details-page/journey/rocket.png`}
-                                className="rocket_img"
+                            <Image
+                                src={`/images/details-page/journey/rocket.png`}
+                                className="rocket_img h-auto"
+                                width={100}
+                                height={100}
                                 alt=""
                             />
                         </div>
                         <div className="journey_item item_1">
                             <div className="parent">
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/step-1.png`}
+                                <Image
+                                    src={`/images/details-page/journey/step-1.png`}
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                                 <div>
@@ -1405,8 +1416,10 @@ export default function FullStackDevelopment() {
                                         to expertise.
                                     </p>
                                 </div>
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/step-2.png`}
+                                <Image
+                                    src={`/images/details-page/journey/step-2.png`}
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                             </div>
@@ -1414,8 +1427,10 @@ export default function FullStackDevelopment() {
 
                         <div className="journey_item item_3">
                             <div className="parent">
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/step-3.png`}
+                                <Image
+                                    src={`/images/details-page/journey/step-3.png`}
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                                 <div>
@@ -1438,8 +1453,10 @@ export default function FullStackDevelopment() {
                                         portfolios, and interview success.
                                     </p>
                                 </div>
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/step-4.png`}
+                                <Image
+                                    src={`/images/details-page/journey/step-4.png`}
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                             </div>
@@ -1447,8 +1464,10 @@ export default function FullStackDevelopment() {
 
                         <div className="journey_item item_5">
                             <div className="parent">
-                                <img
-                                    src={`${BASE_IMAGE_URL}details-page/journey/step-5.png`}
+                                <Image
+                                    src={`/images/details-page/journey/step-5.png`}
+                                    height={200}
+                                    width={200}
                                     alt=""
                                 />
                                 <div>
@@ -1599,9 +1618,11 @@ export default function FullStackDevelopment() {
                                                     </div>
 
                                                     <div className="test_img_parent">
-                                                        <img
+                                                        <Image
                                                             src={item.img}
                                                             alt={item.name}
+                                                            height={270}
+                                                            width={200}
                                                             className="student-img"
                                                         />
 
@@ -1761,9 +1782,11 @@ export default function FullStackDevelopment() {
                                 <div className="col-lg-6 d-flex align-items-center justify-content-center p-lg-5">
                                     <div className=" d-flex align-items-center justify-content-center">
                                         <div className="col-lg-10">
-                                            <img
-                                                src={`${BASE_IMAGE_URL}details-page/certificate.jpg`}
-                                                className="w-100"
+                                            <Image
+                                                src={`/images/details-page/certificate.jpg`}
+                                                className="w-100 h-auto"
+                                                height={500}
+                                                width={500}
                                                 alt=""
                                             />
                                         </div>
@@ -1802,9 +1825,11 @@ export default function FullStackDevelopment() {
 
                                         <span className="icon">
                                             {activeFaqIndex !== index && (
-                                                <img
-                                                    src={`${BASE_IMAGE_URL}icons/faq-icon.png`}
+                                                <Image
+                                                    src="/images/icons/faq-icon.png"
                                                     alt="toggle"
+                                                    height={35}
+                                                    width={35}
                                                     className="faq_toggle_icon"
                                                 />
                                             )}

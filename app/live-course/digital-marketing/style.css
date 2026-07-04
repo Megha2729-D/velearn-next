@@ -1,0 +1,794 @@
+
+.dm_main {
+    background: linear-gradient(var(--c2), #ffffff);
+}
+
+.dm_top_sec {
+    border-radius: 0 0 43px 43px;
+    padding: 10px;
+}
+
+.dm_single_sec {
+    border-radius: 43px;
+    padding: 10px;
+}
+
+.digital_marketing_banner {
+    background: url(../../../public/images/live-course/digital-marketing/bg-1.png), linear-gradient(#000000, #000000);
+    background-size: cover;
+    padding-top: 150px;
+    border-radius: 45px;
+}
+
+.digital_marketing_banner form {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 13px;
+}
+
+.digital_marketing_banner form input,
+.digital_marketing_banner form select {
+    background-color: #B8B8B8;
+    border: none;
+    border-radius: 7px;
+    padding: 5px 10px;
+    color: #000000;
+}
+
+.digital_marketing_banner form button {
+    background-color: var(--c2);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    padding: 5px 30px;
+    border-radius: 5px;
+    transition: all .3s ease-out;
+}
+
+.digital_marketing_banner form button:hover {
+    background-color: var(--c1);
+    transition: all .3s ease-out;
+}
+
+.digital_marketing_banner .banner_left_dm button {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: var(--c1);
+    border: 1px solid #ffffff;
+    font-weight: 600;
+    font-size: 17.6px;
+    line-height: 20.58px;
+    margin-top: 20px;
+    transition: all .3s ease-out;
+}
+
+.digital_marketing_banner .banner_left_dm button:hover {
+    background-color: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.why_dm_sec {
+    background: url(../../../public/images/live-course/digital-marketing/bg-2-1.png), linear-gradient(#000000, #000000);
+    background-size: cover;
+    border-radius: 45px;
+    position: relative;
+    overflow: hidden;
+}
+
+.why_dm_sec::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background: url(../../../public/images/live-course/digital-marketing/bg-2-2.png);
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    z-index: 0;
+}
+
+.why_dm_sec .section_container {
+    position: relative;
+    z-index: 1;
+}
+
+.why_dm_sub {
+    background: #37738152;
+    border-radius: 20px;
+    padding: 15px 30px;
+    height: 100%;
+}
+
+.why_dm_sub p {
+    color: #ffffff;
+    margin-bottom: 0;
+    font-size: 15px;
+}
+
+.dm_overview {
+    background: url(../../../public/images/live-course/digital-marketing/bg-3.png), linear-gradient(#fff5f5, #fff5f5);
+    background-size: cover;
+    border-radius: 45px;
+}
+
+.dm_overview .dm_steps .dm_steps_sub {
+    display: flex;
+    border-radius: 13px;
+    overflow: hidden;
+    box-shadow:
+        inset 0 1px 6px #0000002e,
+        inset 0 -1px 4px #ffffffcc;
+
+}
+
+.dm_overview .dm_steps .dm_step_one div,
+.dm_overview .dm_steps .dm_step_two div,
+.dm_overview .dm_steps .dm_step_three div,
+.dm_overview .dm_steps .dm_step_four div {
+    width: 80px;
+}
+
+.dm_overview .dm_steps .dm_step_one div {
+    background: radial-gradient(circle at left, #78FF00 0%, #77ff0031 50%, #77ff0000 70%);
+}
+
+.dm_overview .dm_steps .dm_step_two div {
+    background: radial-gradient(circle at left, #FF0000 0%, #ff000031 50%, #ff000000 70%);
+}
+
+.dm_overview .dm_steps .dm_step_three div {
+    background: radial-gradient(circle at left, #EEFF00 0%, #EEFF0031 50%, #EEFF0000 70%);
+}
+
+.dm_overview .dm_steps .dm_step_four div {
+    background: radial-gradient(circle at left, #00F6FF 0%, #00F6FF31 50%, #00F6FF00 70%);
+}
+
+.dm_overview .dm_steps p {
+    margin-bottom: 0;
+    padding: 10px 10px 10px 0;
+}
+
+.dm_overview button {
+    background-color: var(--c1);
+    color: #ffffff;
+    border: none;
+    padding: 5px 30px;
+    border-radius: 5px;
+}
+
+.dm_skils_sub {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.dm_tools {
+    background: url(../../../public/images/live-course/digital-marketing/bg-4.png), linear-gradient(#000000, #000000);
+    background-size: cover;
+    border-radius: 45px;
+}
+
+.dm_tools_center {
+    position: absolute;
+    padding: 30px;
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--c2);
+    box-shadow: 0 0 100px 10px var(--c2);
+}
+
+.dm_path {
+    background: url(../../../public/images/live-course/digital-marketing/bg-5.png), linear-gradient(#fff5f5, #fff5f5);
+    background-size: cover;
+    border-radius: 45px;
+}
+
+.dm_ways_main button {
+    background-color: var(--c1);
+    color: #ffffff;
+    padding: 8px 30px;
+    border-radius: 10px;
+    width: fit-content;
+    border: none;
+    margin-top: 100px;
+    position: relative;
+    z-index: 1;
+}
+
+.dm_way_points {
+    border-radius: 17px;
+    background-color: #ffffff;
+    padding: 15px;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dm_way_points_parent {
+    max-width: 185px;
+    position: relative;
+}
+
+.dm_way_points_parent:after {
+    content: "";
+    background: linear-gradient(#24b8ec26 10%, #ffffff14 80%);
+    height: 255px;
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+    top: 94%;
+}
+
+.dm_way_points p {
+    font-size: 14px;
+}
+
+.dm_skills_main {
+    background: url(../../../public/images/live-course/digital-marketing/bg-6.png), linear-gradient(#000000, #000000);
+    background-size: cover;
+    border-radius: 45px;
+    margin-top: 13px;
+}
+
+
+.dm_skill_path .cards-box {
+    position: relative;
+    min-height: 500px;
+}
+
+.dm_skill_path .cards-box .card {
+    /* box-shadow: 0px 0px 8px -3px #cccccc inset; */
+    padding: 30px 20px 20px;
+    width: 100%;
+    max-width: 100%;
+    background: linear-gradient(180deg, #000000 10%, #686868 100%);
+    /* background: #07212b; */
+    border: none;
+    border-radius: 0 0 30px 30px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0'] {
+    padding: 50px 20px 20px;
+    background: linear-gradient(180deg, #000000 37.87%, #096301 100%);
+}
+
+.dm_skill_path .cards-box .card>div>div {
+    display: none;
+}
+
+.dm_skill_path .cards-box .card>div>div,
+.dm_skill_path .cards-box .card>div>p {
+    color: #d8d8d8;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0']>div>div,
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0']>div>p {
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0']>div>div {
+    display: block;
+}
+
+.dm_skill_path .cards-box .card img {
+    height: 63px;
+}
+
+.dm_skill_path .cards-box .card.hide {
+    visibility: hidden;
+}
+
+.dm_skill_path .cards-box .card:not(.hide) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.8s cubic-bezier(0.18, 0.98, 0.45, 1);
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0'] {
+    transform: translate(0px, 0px);
+    z-index: 9;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='1'] {
+    transform: translate(0px, 115px);
+    z-index: 8;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='2'] {
+    transform: translate(0px, 170px);
+    z-index: 7;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='3'] {
+    transform: translate(0px, 230px);
+    z-index: 6;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='4'] {
+    transform: translate(0px, 285px);
+    z-index: 5;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='5'] {
+    transform: translate(0px, 340px);
+    z-index: 4;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='6'] {
+    transform: translate(0px, 395px);
+    z-index: 3;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='7'] {
+    transform: translate(0px, 445px);
+    z-index: 2;
+}
+
+.dm_skill_path .cards-box .card:not(.hide)[data-slide='0'] {
+    transition: all 0.32s cubic-bezier(0.18, 0.98, 0.45, 1);
+}
+
+.dm_skill_path .cards-box .card p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.dm_from_start_sec {
+    background: url(../../../public/images/live-course/digital-marketing/bg-7.png), linear-gradient(#fff5f5, #fff5f5);
+    background-size: cover;
+    border-radius: 45px;
+    margin-top: 13px;
+}
+
+.testimonial_section {
+    /* background: linear-gradient(90deg, #f5b000, #111); */
+    padding: 30px 0;
+}
+
+.testimonial_section .swiper-slide {
+    padding: 150px 0 40px 0;
+}
+
+.dm_testimonial_card {
+    color: #fff;
+    text-align: center;
+    padding: 25px 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dm_testimonial_card img {
+    width: 190px;
+    height: auto;
+    position: absolute;
+    left: -87px;
+    bottom: 0;
+    z-index: 9;
+}
+
+.testimonial_text {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.dm_testimonial_card h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dm_testimonial_card span {
+    font-size: 13px;
+    color: #ddd;
+}
+
+@media screen and (max-width: 1400px) {
+    .testimonial_section .swiper-slide {
+        padding: 40px 0;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .dm_way_points_parent:after {
+        display: none;
+    }
+
+    .dm_way_points {
+        box-shadow: 0px 0px 12px 7px #24b8ec26;
+    }
+
+    .dm_ways_main button {
+        margin-top: 10px;
+    }
+
+    .testimonial_section .swiper-slide {
+        padding: 90px 0 40px;
+    }
+
+    .testimonial_text {
+        margin-top: 30px;
+    }
+
+    .dm_testimonial_card {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .dm_testimonial_card img {
+        position: relative;
+        left: 0;
+        right: 0;
+        margin: -100px auto 0;
+    }
+
+    .dm_ways_main .dm_way_points_card_parent {
+        flex-wrap: wrap;
+    }
+
+    .dm_way_points_parent {
+        max-width: 100%;
+    }
+
+    .dm_tools_center {
+        height: 130px;
+        width: 130px;
+    }
+
+    .dm_tools_center h5 {
+        font-size: 15px;
+    }
+
+    .why_dm_sec {
+        padding-bottom: 60px !important;
+    }
+
+    .why_dm_sec::after {
+        background-position: bottom;
+    }
+
+    .digital_marketing_banner,
+    .why_dm_sec,
+    .dm_single_sec,
+    .dm_overview,
+    .dm_tools,
+    .dm_path,
+    .dm_skills_main {
+        border-radius: 15px;
+    }
+
+    .dm_top_sec {
+        border-radius: 0 0 15px 15px;
+    }
+}
+
+/* module - start */
+.modules-section {
+    position: relative;
+}
+
+.modules-section .section_container {
+    padding-top: 90px;
+}
+
+.tabs-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+    padding-bottom: 260px;
+    /* <-- prevents overlap */
+}
+
+.tabs {
+    background: #000;
+    display: flex;
+    gap: 20px;
+    padding: 10px 25px;
+    border-radius: 30px;
+    position: relative;
+    white-space: nowrap;
+    min-width: auto;
+    max-width: 80%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    user-select: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs.dragging {
+    cursor: grabbing;
+}
+
+.tab {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    transition: 0.2s;
+}
+
+.tab.active {
+    color: var(--c2);
+    font-weight: 600;
+}
+
+.tab:hover {
+    color: var(--c2);
+}
+
+.tab-indicator {
+    width: 35px;
+    height: 25px;
+    background: #000;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    transition: left 0.25s ease;
+    z-index: 1;
+}
+
+/* .tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 25px;
+    background: #000;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+} */
+
+.tab-content-box {
+    background:
+        linear-gradient(180deg, #d9d9d900 94.17%, #f5f3f9 99.03%),
+        linear-gradient(270deg, #d9d9d900 94.2%, #f5f3f9 100%),
+        linear-gradient(90deg, #ffffff00 93.23%, #ffffff 100%),
+        linear-gradient(180deg, #ffffff00 0%, #ffffff 0%, #ffffff00 22%),
+        linear-gradient(180deg, #ffffff00 0%, #24b8ec33 100%);
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin-top: 25px;
+    min-width: 285px;
+    max-width: 340px;
+    color: #000;
+    max-height: 285px;
+    overflow-y: auto;
+}
+
+.combo_syllabus_modal .modal-content {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Opening animation */
+.modal-slide-down {
+    transform: translateY(0%);
+    opacity: 1;
+    transition: all .3s ease-out;
+}
+
+/* Closing animation */
+.modal-slide-up {
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all .3s ease-out;
+}
+
+.modal,
+.modal-backdrop {
+    background-color: #000000a1;
+    backdrop-filter: blur(10px);
+}
+
+.combo_syllabus_modal .tab-content-box {
+    max-height: 215px;
+}
+
+.combo_syllabus_modal .modal-body {
+    padding: 10px 50px;
+}
+
+.tab-content-box ul {
+    padding-left: 18px;
+}
+
+.tab-content-box .download_icon {
+    background: var(--c1);
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 576px) {
+    .tabs-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 25px;
+    }
+
+    .tabs {
+        white-space: nowrap;
+        min-width: auto;
+        max-width: 100%;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab {
+        font-size: 13px;
+    }
+
+    /*
+    .tab.active::after {
+        content: "";
+        position: absolute;
+        bottom: -28px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 35px;
+        height: 22px;
+        background: #000;
+        clip-path: polygon(50% 100%, 0 0, 100% 0);
+    } */
+
+    .tab-content-holder {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .tab-content-box {
+        background: #f7fafd;
+        border-radius: 12px;
+        padding: 20px 25px;
+        margin-top: 60px;
+        width: fit-content;
+        color: #000;
+        left: 0 !important;
+        right: 0 !important;
+        margin: auto;
+        transform: none !important;
+    }
+
+    .tab-content-box ul {
+        padding-left: 18px;
+    }
+}
+
+/* module - end */
+.price_section_parent_top {
+    position: absolute;
+    bottom: -210px;
+    left: 0;
+    right: 0;
+}
+
+/* price start */
+.price_section {
+    min-width: 600px;
+    border-radius: 80px;
+    background: #000000;
+    box-shadow: 0 49px 108px 41px #24b8ec73 inset;
+}
+
+.price_header {
+    border: 2px solid #05741d;
+    border-radius: 100px;
+}
+
+.price_header div {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 30px;
+    font-weight: 500;
+    border-radius: 100px;
+}
+
+.price_header div.active {
+    padding: 7px;
+    background: linear-gradient(108.28deg, #093f0f 6.47%, #008c0e 91.92%);
+}
+
+.price_header div.active div.butt {
+    font-weight: bold;
+    width: fit-content;
+    background: linear-gradient(108.28deg, #008c0e 6.47%, #093f0f 91.92%);
+}
+
+.price_header div.butt {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 5px 20px;
+    border-radius: 100px;
+}
+
+.price_section ul {
+    line-height: 35px;
+    font-size: 15px;
+}
+
+.parent_price {
+    border-radius: 100px;
+    box-shadow: 0px 20px 0px -2px rgba(0, 0, 0, 0.15);
+}
+
+.price_section .price_card button {
+    box-shadow: 0px 0px 13.5px 6px #0000003d inset;
+    background-color: var(--c1);
+    border: 1px solid var(--c1);
+    border-radius: 100px;
+    padding: 10px 40px;
+    font-weight: bold;
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.price_section .price_card button:hover {
+    background-color: var(--c2);
+    border: 1px solid var(--c2);
+    transition: all .3s ease-out;
+}
+
+.price_section_parent_top .new_price {
+    background: #06a523;
+}
+
+.tab_btn {
+    background: #1d1d1d;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+}
+
+.tab_btn.active {
+    background: #0d6efd;
+}
+
+/* price end */

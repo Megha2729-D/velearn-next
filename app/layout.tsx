@@ -6,6 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import BootstrapClient from "@/components/BootstrapClient";
 import Navbar from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BodyClass from "./BodyClass";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <BodyClass />
         <BootstrapClient />
         <Navbar />
 

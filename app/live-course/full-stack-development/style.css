@@ -769,11 +769,11 @@
 }
 
 .puzzle_images .puzzle-1 {
-    height: 150px;
+    height: 150px !important;
 }
 
 .puzzle_images .puzzle-2 {
-    height: 200px;
+    height: 200px !important;
 }
 
 .details_bottom_part {

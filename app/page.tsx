@@ -7,16 +7,16 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import "./globals.css"  
+import "./globals.css"
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 const BASE_DYNAMIC_IMAGE_URL =
-  "https://velearn.in/velearn-crm/public/uploads/";
+  "https://crm.velearn.in/public/uploads/";
 
 export default function HomePage() {
   interface Course {
@@ -401,12 +401,11 @@ export default function HomePage() {
                 <div className="col-12 mt-5">
                   <div className="d-flex align-items-center">
                     <Image
-                      src={`${BASE_IMAGE_URL}icons/phone.png`}
+                      src={`/images/icons/phone.png`}
                       alt="Phone"
                       width={40}
                       height={40}
                       className="phone-img"
-                      unoptimized
                     />
                     <div className="call_details">
                       <p className="text-c2 mb-0 fw-bold">
@@ -425,12 +424,12 @@ export default function HomePage() {
             <div className="col-lg-6 about_sec_right position-relative">
               <div className="d-flex justify-content-center align-items-center">
                 <Image
-                  src={`${BASE_IMAGE_URL}about-vector-person.png`}
+                  src={`/images/about-vector-person.webp`}
                   className="vector_about m-auto w-75 h-auto"
                   alt=""
-                  height={100}
-                  width={100}
-                  unoptimized
+                  height={400}
+                  width={400}
+
                 />
               </div>
               <div className="dotted_circle_parent">
@@ -498,36 +497,36 @@ export default function HomePage() {
               <div className="tech_icon">
                 <div className="tech_wrap">
                   <Image
-                    src={`${BASE_IMAGE_URL}icons/react.png`}
+                    src={`/images/icons/react.png`}
                     className="tech-icon tech-icon-one"
                     alt=""
                     height={100}
                     width={100}
-                    unoptimized
+
                   />
                   <Image
-                    src={`${BASE_IMAGE_URL}icons/js.png`}
+                    src={`/images/icons/js.png`}
                     className="tech-icon tech-icon-two"
                     alt=""
                     height={100}
                     width={100}
-                    unoptimized
+
                   />
                   <Image
-                    src={`${BASE_IMAGE_URL}icons/angular.png`}
+                    src={`/images/icons/angular.png`}
                     className="tech-icon tech-icon-three"
                     alt=""
                     height={100}
                     width={100}
-                    unoptimized
+
                   />
                   <Image
-                    src={`${BASE_IMAGE_URL}icons/python.png`}
+                    src={`/images/icons/python.png`}
                     className="tech-icon tech-icon-four"
                     alt=""
                     height={100}
                     width={100}
-                    unoptimized
+
                   />
                 </div>
               </div>
@@ -587,9 +586,9 @@ export default function HomePage() {
                       src={`${course.img}`}
                       className="card_img w-100"
                       alt={course.title}
-                      height={100}
-                      width={100}
-                      unoptimized
+                      height={270}
+                      width={270}
+
                     />
                     <div className="live_parent d-flex gap-2 align-items-center justify-content-center">
                       <div className="live_icon"></div>
@@ -660,12 +659,12 @@ export default function HomePage() {
                   {/* FLOATING IMAGE */}
                   <div className="testimonial_img_wrap">
                     <Image
-                      src={`${BASE_IMAGE_URL}${activeImage}`}
+                      src={`/images/${activeImage}`}
                       className="testi_img"
                       alt="testimonial"
-                      height={100}
-                      width={100}
-                      unoptimized
+                      height={140}
+                      width={140}
+
                     />
                   </div>
 
@@ -786,12 +785,12 @@ export default function HomePage() {
                       >
                         <div className="card_img_parent overflow-hidden">
                           <Image
-                            src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.image}`}
+                            // src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.image}`}
+                            src={`${BASE_IMAGE_URL}live-course/data-science.webp`}
                             className="card_img w-100"
                             alt={course.title}
-                            height={100}
-                            width={100}
-                            unoptimized
+                            height={270}
+                            width={270}
                           />
                         </div>
 
@@ -946,12 +945,12 @@ export default function HomePage() {
               {partners.map((logo, index) => (
                 <SwiperSlide key={index}>
                   <Image
-                    src={`${BASE_IMAGE_URL}partners/${logo}`}
+                    src={`/images/partners/${logo}`}
                     alt={`Partner ${index + 1}`}
                     className="partner-logo"
-                    height={100}
-                    width={100}
-                    unoptimized
+                    height={50}
+                    width={150}
+
                   />
                 </SwiperSlide>
               ))}
@@ -1077,12 +1076,12 @@ export default function HomePage() {
                 {recruiters1.map((logo, index) => (
                   <SwiperSlide key={index}>
                     <Image
-                      src={`${BASE_IMAGE_URL}prime-recruiters/${logo}`}
+                      src={`/images/prime-recruiters/${logo}`}
                       alt={`Partner ${index + 1}`}
                       className="partner-logo"
-                      height={100}
-                      width={100}
-                      unoptimized
+                      height={50}
+                      width={150}
+
                     />
                   </SwiperSlide>
                 ))}
@@ -1110,12 +1109,12 @@ export default function HomePage() {
                 {recruiters2.map((logo, index) => (
                   <SwiperSlide key={index}>
                     <Image
-                      src={`${BASE_IMAGE_URL}prime-recruiters/${logo}`}
+                      src={`/images/prime-recruiters/${logo}`}
                       alt={`Partner ${index + 1}`}
                       className="partner-logo"
                       height={100}
                       width={100}
-                      unoptimized
+
                     />
                   </SwiperSlide>
                 ))}
@@ -1216,11 +1215,11 @@ export default function HomePage() {
                           </div>
                           <div className="col-lg-6 d-flex flex-column justify-content-center align-items-center">
                             <Image
-                              src={`${BASE_IMAGE_URL}bento-vector-1.png`}
+                              src={`/images/bento-vector-1.png`}
                               alt=""
                               height={225}
-                              width={100}
-                              unoptimized
+                              width={300}
+
                               className="h-auto"
                             />
                           </div>
@@ -1263,20 +1262,20 @@ export default function HomePage() {
                       </div>
                       <div className="d-flex justify-content-center align-items-center">
                         <Image
-                          src={`${BASE_IMAGE_URL}bento-vector-3-2.png`}
+                          src={`/images/bento-vector-3-2.png`}
                           className="image-1 h-auto"
                           alt=""
                           height={100}
                           width={100}
-                          unoptimized
+
                         />
                         <Image
-                          src={`${BASE_IMAGE_URL}bento-vector-3-1.png`}
+                          src={`/images/bento-vector-3-1.png`}
                           className="image-2 h-auto"
                           alt=""
-                          height={100}
-                          width={100}
-                          unoptimized
+                          height={300}
+                          width={300}
+
                         />
                       </div>
                     </div>
@@ -1303,12 +1302,12 @@ export default function HomePage() {
                       </div>
                       <div className="col-lg-4 col-12 d-flex justify-content-center align-items-center">
                         <Image
-                          src={`${BASE_IMAGE_URL}bento-vector-2.png`}
+                          src={`/images/bento-vector-2.png`}
                           alt=""
                           className="h-auto"
-                          height={100}
-                          width={100}
-                          unoptimized
+                          height={175}
+                          width={175}
+
                         />
                       </div>
                     </div>
@@ -1419,12 +1418,12 @@ export default function HomePage() {
                     <span className="icon">
                       {activeFaqIndex !== index && (
                         <Image
-                          src={`${BASE_IMAGE_URL}icons/faq-icon.png`}
+                          src={`/images/icons/faq-icon.png`}
                           alt="toggle"
                           className="faq_toggle_icon h-auto"
                           height={100}
                           width={100}
-                          unoptimized
+
                         />
                       )}
                     </span>
@@ -1441,12 +1440,12 @@ export default function HomePage() {
 
             <div className="col-lg-6">
               <Image
-                src={`${BASE_IMAGE_URL}faq.png`}
+                src={`/images/faq.png`}
                 className="w-100 h-auto"
                 alt="Velearn FAQ"
-                height={100}
-                width={100}
-                unoptimized
+                height={400}
+                width={600}
+
               />
             </div>
           </div>

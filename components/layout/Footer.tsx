@@ -6,7 +6,7 @@ import axios from "axios";
 import Image from "next/image";
 import "./Styles/Footer.css"
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 
 export default function Footer() {
@@ -572,7 +572,6 @@ export default function Footer() {
                                                         alt="Facebook"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -587,7 +586,6 @@ export default function Footer() {
                                                         alt="Twitter"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -602,7 +600,6 @@ export default function Footer() {
                                                         alt="Instagram"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -621,7 +618,6 @@ export default function Footer() {
                                                         alt="LinkedIn"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -636,7 +632,6 @@ export default function Footer() {
                                                         alt="YouTube"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -651,7 +646,6 @@ export default function Footer() {
                                                         alt="Telegram"
                                                         height={100}
                                                         width={100}
-                                                        unoptimized
                                                     />
                                                 </a>
                                             </div>
@@ -670,7 +664,6 @@ export default function Footer() {
                                                 alt="google-play"
                                                 height={100}
                                                 width={100}
-                                                unoptimized
                                             />
                                         </a>
                                     </div>
@@ -685,7 +678,6 @@ export default function Footer() {
                                                 alt="apple-store"
                                                 height={100}
                                                 width={100}
-                                                unoptimized
                                             />
                                         </a>
                                     </div>

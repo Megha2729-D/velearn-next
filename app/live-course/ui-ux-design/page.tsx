@@ -16,10 +16,10 @@ import "./style.css"
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
 const BASE_DYNAMIC_IMAGE_URL =
-    "https://velearn.in/velearn-crm/public/uploads/";
+    "https://crm.velearn.in/public/uploads/";
 
 export default function UIUX() {
     const router = useRouter();
@@ -379,19 +379,19 @@ export default function UIUX() {
     }, []);
     const testimonials = [
         {
-            img: `${BASE_IMAGE_URL}live-course/ui-ux/testimonial/person-1.png`,
+            img: `/images/live-course/ui-ux/testimonial/person-1.png`,
             text: "I was confused about UI and UX before joining this course. The way concepts were explained with real examples made everything clear. I now understand user flow, wireframes, and design decisions — not just tools."
         },
         {
-            img: `${BASE_IMAGE_URL}live-course/ui-ux/testimonial/person-2.png`,
+            img: `/images/live-course/ui-ux/testimonial/person-2.png`,
             text: "I was confused about UI and UX before joining this course. The way concepts were explained with real examples made everything clear. I now understand user flow, wireframes, and design decisions — not just tools."
         },
         {
-            img: `${BASE_IMAGE_URL}live-course/ui-ux/testimonial/person-3.png`,
+            img: `/images/live-course/ui-ux/testimonial/person-3.png`,
             text: "I was confused about UI and UX before joining this course. The way concepts were explained with real examples made everything clear. I now understand user flow, wireframes, and design decisions — not just tools."
         },
         {
-            img: `${BASE_IMAGE_URL}live-course/ui-ux/testimonial/person-4.png`,
+            img: `/images/live-course/ui-ux/testimonial/person-4.png`,
             text: "I was confused about UI and UX before joining this course. The way concepts were explained with real examples made everything clear. I now understand user flow, wireframes, and design decisions — not just tools."
         }
     ];
@@ -624,9 +624,11 @@ export default function UIUX() {
 
                         <div className="col-12 d-flex justify-content-center banner_center_piece">
                             <div className="col-lg-7 mt-4 mt-lg-0">
-                                <img
-                                    src={`${BASE_IMAGE_URL}live-course/ui-ux/ux.png`}
+                                <Image
+                                    src={`/images/live-course/ui-ux/ux.png`}
                                     className="w-100"
+                                    height={300}
+                                    width={800}
                                     alt=""
                                 />
                             </div>
@@ -783,10 +785,12 @@ export default function UIUX() {
                             </div>
 
                             {/* ROCKET */}
-                            <img
-                                src={`${BASE_IMAGE_URL}live-course/ui-ux/rocket-2.png`}
+                            <Image
+                                src={`/images/live-course/ui-ux/rocket-2.png`}
                                 alt="Rocket"
                                 className="rocket-img"
+                                width={1260}
+                                height={630}
                             />
 
                             {/* RIGHT ITEMS */}
@@ -827,10 +831,12 @@ export default function UIUX() {
                                     You’ll Master
                                 </span>
                             </h3>
-                            <img
-                                src={`${BASE_IMAGE_URL}live-course/ui-ux/tools.png`}
+                            <Image
+                                src={`/images/live-course/ui-ux/tools.png`}
                                 className="w-100"
                                 alt=""
+                                width={900}
+                                height={550}
                             />
                         </div>
                     </div>
@@ -1084,10 +1090,12 @@ export default function UIUX() {
                             </h3>
                             <div className="chart-wrapper image-chart mt-5">
                                 {/* BASE IMAGE */}
-                                <img
-                                    src={`${BASE_IMAGE_URL}live-course/ui-ux/skills.png`}
+                                <Image
+                                    src={`/images/live-course/ui-ux/skills.png`}
                                     alt="UI UX Salary Growth"
                                     className="chart-base-img"
+                                    width={1000}
+                                    height={400}
                                 />
 
                                 {/* OVERLAY */}
@@ -1139,24 +1147,30 @@ export default function UIUX() {
                                 <div className="journey_bg_icon"></div>
                                 <div className="dotted_lines">
                                     <div className="position-relative d-flex justify-content-center">
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/dotted-lines.png`}
-                                            className="dotted-line-img"
+                                        <Image
+                                            src={`/images/details-page/journey/dotted-lines.png`}
+                                            className="dotted-line-img h-auto"
+                                            width={1500}
+                                            height={550}
                                             alt=""
                                         />
                                     </div>
                                 </div>
                                 <div className="rocket_wrap">
-                                    <img
-                                        src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/rocket.png`}
-                                        className="rocket_img"
+                                    <Image
+                                        src={`/images/live-course/ui-ux/journey/rocket.png`}
+                                        className="rocket_img h-auto"
+                                        width={120}
+                                        height={120}
                                         alt=""
                                     />
                                 </div>
                                 <div className="journey_item item_1">
                                     <div className="parent">
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/step-1.png`}
+                                        <Image
+                                            src={`/images/live-course/ui-ux/journey/step-1.png`}
+                                            height={110}
+                                            width={110}
                                             alt=""
                                         />
                                         <div>
@@ -1181,8 +1195,10 @@ export default function UIUX() {
                                                 foundation to expertise.
                                             </p>
                                         </div>
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/step-2.png`}
+                                        <Image
+                                            src={`/images/live-course/ui-ux/journey/step-2.png`}
+                                            height={110}
+                                            width={110}
                                             alt=""
                                         />
                                     </div>
@@ -1190,8 +1206,10 @@ export default function UIUX() {
 
                                 <div className="journey_item item_3">
                                     <div className="parent">
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/step-3.png`}
+                                        <Image
+                                            src={`/images/live-course/ui-ux/journey/step-3.png`}
+                                            height={110}
+                                            width={110}
                                             alt=""
                                         />
                                         <div>
@@ -1220,8 +1238,10 @@ export default function UIUX() {
                                                 interview success.
                                             </p>
                                         </div>
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/step-4.png`}
+                                        <Image
+                                            src={`/images/live-course/ui-ux/journey/step-4.png`}
+                                            height={110}
+                                            width={110}
                                             alt=""
                                         />
                                     </div>
@@ -1229,8 +1249,10 @@ export default function UIUX() {
 
                                 <div className="journey_item item_5">
                                     <div className="parent">
-                                        <img
-                                            src={`${BASE_IMAGE_URL}live-course/ui-ux/journey/step-5.png`}
+                                        <Image
+                                            src={`/images/live-course/ui-ux/journey/step-5.png`}
+                                            height={110}
+                                            width={110}
                                             alt=""
                                         />
                                         <div>
@@ -1268,8 +1290,10 @@ export default function UIUX() {
                                             data-slide={position}
                                         >
                                             <div className="d-flex gap-4 align-items-center">
-                                                <img
+                                                <Image
                                                     src={testimonials[cardIndex].img}
+                                                    height={100}
+                                                    width={100}
                                                     alt=""
                                                 />
 
@@ -1354,9 +1378,11 @@ export default function UIUX() {
                                             <div className="col-lg-6 d-flex align-items-center justify-content-center p-lg-5">
                                                 <div className=" d-flex align-items-center justify-content-center">
                                                     <div className="col-lg-10">
-                                                        <img
-                                                            src={`${BASE_IMAGE_URL}details-page/certificate.jpg`}
-                                                            className="w-100 rounded-5"
+                                                        <Image
+                                                            src={`/images/details-page/certificate.jpg`}
+                                                            className="w-100 rounded-5 h-auto"
+                                                            height={500}
+                                                            width={500}
                                                             alt=""
                                                         />
                                                     </div>
@@ -1462,9 +1488,11 @@ export default function UIUX() {
 
                                         <span className="icon">
                                             {activeFaqIndex !== index && (
-                                                <img
-                                                    src={`${BASE_IMAGE_URL}icons/faq-icon.png`}
+                                                <Image
+                                                    src="/images/icons/faq-icon.png"
                                                     alt="toggle"
+                                                    height={35}
+                                                    width={35}
                                                     className="faq_toggle_icon"
                                                 />
                                             )}

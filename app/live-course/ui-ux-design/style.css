@@ -114,11 +114,18 @@
 .uiux-form button {
     width: 100%;
     padding: 12px;
-    background: #2ec4ff;
+    background: var(--c2);
     border: none;
     font-weight: 600;
     cursor: pointer;
     border-radius: 6px;
+    transition: all .3s ease-out;
+}
+
+.uiux-form button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
 }
 
 .modules_sec {
@@ -140,7 +147,7 @@
 }
 
 .course-overview span {
-    color: #2ec4ff;
+    color: var(--c2);
 }
 
 
@@ -157,7 +164,7 @@
 }
 
 .why-title span {
-    color: #2ec4ff;
+    color: var(--c2);
 }
 
 .why-wrapper {
