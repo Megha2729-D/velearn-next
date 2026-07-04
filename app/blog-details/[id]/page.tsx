@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import "../../blogs/style.css";
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
-const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
 
 interface BlogDescription {
     id: number;

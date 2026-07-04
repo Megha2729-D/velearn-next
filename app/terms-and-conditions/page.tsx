@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import "./style.css";
 
-const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
 
 export default function TermsAndConditions() {
     return (

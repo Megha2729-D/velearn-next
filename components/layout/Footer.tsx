@@ -7,7 +7,7 @@ import Image from "next/image";
 import "./Styles/Footer.css"
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
-const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
 
 export default function Footer() {
     const [trendingCourses, setTrendingCourses] =
@@ -568,7 +568,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/facebook.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/facebook.png`}
                                                         alt="Facebook"
                                                         height={100}
                                                         width={100}
@@ -582,7 +582,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/twitter.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/twitter.png`}
                                                         alt="Twitter"
                                                         height={100}
                                                         width={100}
@@ -596,7 +596,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/instagram.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/instagram.png`}
                                                         alt="Instagram"
                                                         height={100}
                                                         width={100}
@@ -614,7 +614,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/linkedin.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/linkedin.png`}
                                                         alt="LinkedIn"
                                                         height={100}
                                                         width={100}
@@ -628,7 +628,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/youtube.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/youtube.png`}
                                                         alt="YouTube"
                                                         height={100}
                                                         width={100}
@@ -642,7 +642,7 @@ export default function Footer() {
                                                     rel="noreferrer"
                                                 >
                                                     <Image
-                                                        src={`/images/icons/telegram.png`}
+                                                        src={`${BASE_IMAGE_URL}icons/telegram.png`}
                                                         alt="Telegram"
                                                         height={100}
                                                         width={100}
@@ -660,7 +660,7 @@ export default function Footer() {
                                             rel="noreferrer"
                                         >
                                             <Image
-                                                src={`/images/icons/google-play.png`}
+                                                src={`${BASE_IMAGE_URL}icons/google-play.png`}
                                                 alt="google-play"
                                                 height={100}
                                                 width={100}
@@ -674,7 +674,7 @@ export default function Footer() {
                                             rel="noreferrer"
                                         >
                                             <Image
-                                                src={`/images/icons/apple-store.png`}
+                                                src={`${BASE_IMAGE_URL}icons/apple-store.png`}
                                                 alt="apple-store"
                                                 height={100}
                                                 width={100}

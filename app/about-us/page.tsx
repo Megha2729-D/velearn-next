@@ -5,7 +5,7 @@ import Image from "next/image";
 import "./style.css";
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
-const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
 const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
 
