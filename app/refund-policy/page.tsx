@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import "./style.css";
 
-const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 
 export default function RefundPolicy() {
     return (

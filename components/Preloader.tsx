@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 
 const Preloader = () => {
     return (

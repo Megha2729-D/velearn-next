@@ -7,7 +7,7 @@ import Image from "next/image";
 import "./Styles/Footer.css"
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
-const BASE_IMAGE_URL = "https://velearn-next.onrender.com/assets/images/";
+const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 
 export default function Footer() {
     const [trendingCourses, setTrendingCourses] =
