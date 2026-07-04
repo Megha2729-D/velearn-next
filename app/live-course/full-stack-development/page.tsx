@@ -710,9 +710,9 @@ export default function FullStackDevelopment() {
                                         <div className="pagination_parent mt-5 d-lg-none d-flex justify-content-center">
                                             <Link href={"/"}>Home</Link>
                                             <span className="px-2"> /</span>
-                                            <Link href={"/recorded-course"}>
+                                            <Link href={"/live-course"}>
                                                 {" "}
-                                                Recorded courses{" "}
+                                                Live courses{" "}
                                             </Link>
                                             <span className="px-2">/</span>
                                             <Link href={"/course-details"}>

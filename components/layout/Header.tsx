@@ -441,7 +441,7 @@ export default function Navbar() {
                                                 })}
                                                 <li>
                                                     <Link
-                                                        href="/recorded-course/paid"
+                                                        href="/recorded-course#paid"
                                                         onClick={handleItemClick}
                                                     >
                                                         View All Paid
@@ -507,7 +507,7 @@ export default function Navbar() {
                                                 })}
                                                 <li>
                                                     <Link
-                                                        href="/recorded-course/combo"
+                                                        href="/recorded-course#combo"
                                                         onClick={
                                                             handleItemClick
                                                         }
@@ -575,7 +575,7 @@ export default function Navbar() {
                                                 })}
                                                 <li>
                                                     <Link
-                                                        href="/recorded-course/free"
+                                                        href="/recorded-course#free"
                                                         onClick={
                                                             handleItemClick
                                                         }
