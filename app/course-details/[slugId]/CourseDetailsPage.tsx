@@ -4,6 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "./style.css"
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
 interface CourseDetailsPageProps {
     slugId: string;
 }
@@ -24,6 +28,7 @@ export default function CourseDetailsPage({
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [activeTab, setActiveTab] = useState(1);
+    const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(0);
     const [activeTabMain, setActiveTabMain] = useState("overview");
     const [formData, setFormData] = useState({
         name: "",
@@ -284,13 +289,102 @@ export default function CourseDetailsPage({
         };
     }, [activeTab]);
 
+    const faqData = [
+        {
+            question: "Why learn Java?",
+            answer: (
+                <>
+                    <p>
+                      Java is one of the most popular programming languages used in software development and web development. Learning Java opens doors to careers as a Java developer or software engineer.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "How to learn Java programming online?",
+            answer: (
+                <>
+                    <p>
+                        This UI/UX Design course is ideal for students, fresh
+                        graduates, working professionals, developers, graphic
+                        designers, and career switchers who want to build a
+                        strong foundation in user interface (UI) and user
+                        experience (UX) design. No prior design experience is
+                        required, making it beginner-friendly and
+                        career-oriented.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question:
+                "Is this Java course suitable for complete beginners?",
+            answer: (
+                <>
+                    <p>
+                        This UI/UX Design course is ideal for students, fresh
+                        graduates, working professionals, developers, graphic
+                        designers, and career switchers who want to build a
+                        strong foundation in user interface (UI) and user
+                        experience (UX) design. No prior design experience is
+                        required, making it beginner-friendly and
+                        career-oriented.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question:
+                "Will I receive a certificate after completing the course?",
+            answer: (
+                <>
+                    <p>
+                        This UI/UX Design course is ideal for students, fresh
+                        graduates, working professionals, developers, graphic
+                        designers, and career switchers who want to build a
+                        strong foundation in user interface (UI) and user
+                        experience (UX) design. No prior design experience is
+                        required, making it beginner-friendly and
+                        career-oriented.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question:
+                " How long can I access the course?",
+            answer: (
+                <>
+                    <p>
+                        This UI/UX Design course is ideal for students
+                    </p>
+                </>
+            ),
+        },
+        {
+            question:
+                " Why choose Velearn for a Java Programming Course?",
+            answer: (
+                <>
+                    <p>
+                        This UI/UX Design course is ideal for students
+                    </p>
+                </>
+            ),
+        },
+    ];
 
+    const toggleFaq = (index: number) => {
+        setActiveFaqIndex((prev) =>
+            prev === index ? null : index
+        );
+    };
     return (
         <>
             <div className="rc_body">
                 {/* Hero Section */}
                 <section className="course-hero rc_banner">
-                    <div className="container">
+                    <div className="section_container">
                         <div className="row align-items-center justify-content-lg-between">
 
                             {/* Left Content */}
@@ -302,7 +396,7 @@ export default function CourseDetailsPage({
                                 <p className="course-description">
                                     Learn Java from scratch with our free beginner-friendly tutorials covering data types, control structures, and object oriented programming to build real world Java code and become a confident Java developer in software development.
                                 </p>
-                                <div className="d-flex justify-content-start mb-3">
+                                <div className="d-flex justify-content-lg-start justify-content-center mb-3">
                                     {isEnrolled ? (
                                         <button
                                             type="button"
@@ -621,7 +715,7 @@ export default function CourseDetailsPage({
                     </div>
 
                     {/* Modules */}
-                    <div id="modules" className="py-4 px-1 bg-white">
+                    <div id="keypoints" className="py-4 px-1 bg-white">
                         <div className="rc_sec_4">
                             <div className="section_container">
                                 <div className="row">
@@ -713,9 +807,9 @@ export default function CourseDetailsPage({
                         </div>
                     </div>
 
-                    {/* Reviews */}
-                    <div id="reviews">
-                        <div className="rc_sec_6 py-5">
+                    {/* modules */}
+                    <div id="modules">
+                        <div className="rc_sec_6 pt-5 pb-3">
                             <div className="section_container">
                                 <div className="row">
                                     <div className="col-lg-8">
@@ -786,13 +880,222 @@ export default function CourseDetailsPage({
                         </div>
                     </div>
 
-                    {/* Certificate */}
-                    <div id="certificate">
-                        <div className="rc_sec_7">
+                    {/* Benefits */}
+                    <div id="benefits" className="pt-1 px-1">
+                        <div className="rc_sec_7 rounded-5 py-4">
                             <div className="section_container">
                                 <div className="row">
                                     <div className="col-lg-8">
+                                        <div>
+                                            <h2 className="fw-bold text-white text-center mb-3">
+                                                Who Can  {" "}
+                                                <span className="text-c2">
+                                                    Benefit
+                                                </span>{" "}
+                                                from This {" "}
+                                                <span className="text-c2">
+                                                    Course
+                                                </span>
+                                            </h2>
+                                        </div>
+                                        <div className="row justify-content-center">
+                                            <div className="col-lg-10">
+                                                <div className="benefits_card_parent">
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <div>
+                                                                <p className="text-white text-center mb-0">Complete Beginners</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <div>
+                                                                <p className="text-white text-center mb-0">Students & Working Professionals</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <div>
+                                                                <p className="text-white text-center mb-0">Aspiring Java Developers</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <div>
+                                                                <p className="text-white text-center mb-0">Career Switchers to IT</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    {/* Reviews */}
+                    <div id="reviews">
+                        <div className="rc_sec_8">
+                            <div className="section_container">
+                                <div className="row">
+                                    <div className="col-lg-8">
+                                        <div className="py-5">
+                                            <h3 className="text-black fw-bold text-center">
+                                                Success Stories from{" "}
+                                                <span className="text-c2"> Java Learners</span>{" "}
+                                            </h3>
+
+                                            <div className="row justify-content-center">
+                                                <div className="col-lg-10">
+                                                    <div className="rc_testimonial">
+                                                        <h5 className="fw-bold text-black text-center">
+                                                            Our Student Review
+                                                        </h5>
+
+                                                        <Swiper
+                                                            modules={[
+                                                                Autoplay,
+                                                                Pagination,
+                                                            ]}
+                                                            autoplay={{
+                                                                delay: 3500,
+                                                                disableOnInteraction: false,
+                                                            }}
+                                                            loop={true}
+                                                            spaceBetween={30}
+                                                            slidesPerView={1}
+                                                            className="testimonial_swiper mt-4"
+                                                        >
+                                                            {/* Slide 1 */}
+                                                            <SwiperSlide>
+                                                                <div className="rc_testimonial_card">
+                                                                    <div className="testimonial_content">
+                                                                        <p>
+                                                                            I started this Java recorded course with no coding experience at all. The concepts were
+                                                                            explained in a very clear and simple way.Learning at my own pace helped me
+                                                                            understand Python without pressure.Now I feel confident writing basic programs on my own.
+                                                                        </p>
+
+                                                                        <div className="student_info">
+                                                                            <img
+                                                                                src={`${BASE_IMAGE_URL}recorded-course/student.png`}
+                                                                                alt=""
+                                                                            />
+                                                                            <h6>
+                                                                                Jennifer Lopez
+                                                                            </h6>
+                                                                            <div className="stars">
+                                                                                ★★★★★
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </SwiperSlide>
+
+                                                            {/* Slide 2 */}
+                                                            <SwiperSlide>
+                                                                <div className="rc_testimonial_card">
+                                                                    <div className="testimonial_content">
+                                                                        <p>
+                                                                            I started this Java recorded course with no coding experience at all. The concepts were
+                                                                            explained in a very clear and simple way.Learning at my own pace helped me
+                                                                            understand Python without pressure.Now I feel confident writing basic programs on my own.
+                                                                        </p>
+
+                                                                        <div className="student_info">
+                                                                            <img
+                                                                                src={`${BASE_IMAGE_URL}recorded-course/student.png`}
+                                                                                alt=""
+                                                                            />
+                                                                            <h6>
+                                                                                Arun Kumar
+                                                                            </h6>
+                                                                            <div className="stars">
+                                                                                ★★★★★
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </SwiperSlide>
+                                                        </Swiper>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* certificate */}
+                    <div id="certificate">
+                        <div className="rc_sec_9 pb-lg-2 pb-5">
+                            <div className="section_container">
+                                <div className="row">
+                                    <div className="col-lg-8">
+                                        <div className="pt-5 ">
+                                            <h3 className="text-white fw-bold text-center">
+                                                Get Your  {" "}
+                                                <span className="text-c2">
+                                                    Free Java Online Course
+                                                    {" "}
+                                                </span>
+                                                With Certificate
+                                            </h3>
+                                            <p className="text-center text-white">
+                                                Get recognized for your skills with a certificate that proves your expertise in java programming
+                                            </p>
+                                            <div className="row justify-content-center">
+                                                <div className="row">
+                                                    <div className="col-lg-5 d-flex flex-column justify-content-center pt-4">
+                                                        <div className="mb-2">
+                                                            <h5 className="text-c2 fw-bold mb-3">
+                                                                Industry-Recognized
+                                                            </h5>
+                                                            <p className="fw-bold text-white mb-1">
+                                                                Validate Your Achievement
+                                                            </p>
+                                                            <p className="text-white mb-4">
+                                                                A trusted certificate from one of the best Java programming for beginners courses with full recognition.
+                                                            </p>
+                                                        </div>
+                                                        <div className="mb-2">
+                                                            <h5 className="text-c2 fw-bold mb-3">
+                                                                Verified Credentials
+                                                            </h5>
+                                                            <p className="fw-bold text-white mb-1">
+                                                                Build a Professional Portfolio
+                                                            </p>
+                                                            <p className="text-white mb-4">
+                                                                Showcase your verified Java certification to stand out as a skilled Java developer in software development.
+                                                            </p>
+                                                        </div>
+                                                        <div className="mb-2">
+                                                            <h5 className="text-c2 fw-bold mb-3">
+                                                                Shareable Online
+                                                            </h5>
+                                                            <p className="fw-bold text-white mb-1">
+                                                                Share Your Success
+                                                            </p>
+                                                            <p className="text-white mb-4">
+                                                                Highlight your certificate on LinkedIn and resumes to unlock new career opportunities.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-7 d-flex align-items-start justify-content-center pt-4 px-lg-5 pb-lg-5">
+                                                        <div className=" d-flex align-items-center justify-content-center">
+                                                            <div className="col-lg-10">
+                                                                <img
+                                                                    src={`${BASE_IMAGE_URL}details-page/certificate.jpg`}
+                                                                    className="w-100 rounded-4"
+                                                                    alt=""
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -800,25 +1103,202 @@ export default function CourseDetailsPage({
                     </div>
 
                     {/* Duration & Fee */}
-                    <div id="fee">
-                        <div className="rc_sec_8">
-                            <div className="section_container">
-                                <div className="row">
-                                    <div className="col-lg-8">
+                    <div id="fees" className="course_fee_section py-5">
+                        <div className="section_container">
+                            <div className="row">
+                                <div className="col-lg-8">
 
+                                    {/* Heading */}
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-10 text-center mb-5">
+                                            <h3 className="text-black fw-bold text-center">
+                                                Java Course {" "}
+                                                <span className="text-c2">
+                                                    Duration & Fee
+                                                    {" "}
+                                                </span>
+                                            </h3>
+                                            <p className="text-muted">
+                                                Learn Java at your own pace with lifetime free access to all
+                                                recorded lessons and beginner friendly tutorials. Get complete
+                                                value with an affordable fee and a clear learning path designed
+                                                to make you job-ready.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="row g-4 align-items-stretch">
+
+                                        {/* Left Card */}
+                                        <div className="col-lg-7">
+                                            <div className="details_card h-100">
+                                                <h4 className="fw-bold mb-4">Course Details</h4>
+                                                <div className="row gy-4">
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-play-circle"></i>
+                                                            <div>
+                                                                <h6>Format</h6>
+                                                                <span>Self-Paced Recorded</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-clock"></i>
+                                                            <div>
+                                                                <h6>Duration</h6>
+                                                                <span>Lifetime</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-box"></i>
+                                                            <div>
+                                                                <h6>Modules</h6>
+                                                                <span>5 Modules</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-calendar-check"></i>
+                                                            <div>
+                                                                <h6>Time Commitments</h6>
+                                                                <span>Flexible</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-award"></i>
+                                                            <div>
+                                                                <h6>Certificate</h6>
+                                                                <span>Included</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <div className="course_item">
+                                                            <i className="bi bi-laptop"></i>
+                                                            <div>
+                                                                <h6>Device Support</h6>
+                                                                <span>All Devices</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {/* Right Card */}
+                                        <div className="col-lg-5 ps-lg-0">
+                                            <div className="price_card h-100">
+                                                <span className="offer_badge">
+                                                    Launch Offer
+                                                </span>
+                                                <h5 className="mt-4">Pricing</h5>
+                                                <div className="price_box">
+                                                    <h2>₹7,500</h2>
+                                                    <del>₹15,000</del>
+                                                </div>
+                                                <span className="discount">Save 50%</span>
+                                                <span className="text-muted small">
+                                                    Limited time offer!
+                                                </span>
+                                                <div className="price_info">
+                                                    <div className="row">
+                                                        <div className="col-5">
+                                                            <span>EMI Starts at</span>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <strong>₹2,025/mo</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-5">
+                                                            <span>Access</span>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <strong>Lifetime</strong>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-5">
+                                                            <span>Payment</span>
+                                                        </div>
+                                                        <div className="col-7">
+                                                            <strong>UPI, Cards, Net Banking</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button className="btn enroll_btn w-100 mt-4">
+                                                    Enroll Now →
+                                                </button>
+                                                <p className="secure_text mt-3">
+                                                    <i className="bi bi-lock-fill text-muted pe-2"></i>
+                                                    Secure & Safe Payments
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* FAQ */}
-                    <div id="faq">
-                        <div className="rc_sec_9">
-                            <div className="section_container">
-                                <div className="row">
-                                    <div className="col-lg-8">
+                    {/* faq */}
+                    <div id="faq" className="faq_section py-5">
+                        <div className="section_container">
+                            <div className="row">
+                                <div className="col-lg-8">
+                                    <h3 className="section_base_heading text-black text-center">
+                                        Frequently Asked{" "}
+                                        <span className="text-c2"> Questions</span>
+                                    </h3>
 
+                                    <div className="row mt-2 justify-content-center align-items-center">
+                                        {/* FAQ Accordion */}
+                                        <div className="col-lg-9 text-start">
+                                            {faqData.map((item, index) => (
+                                                <div
+                                                    className={`faq_item rounded-3 mb-3 ${activeFaqIndex === index
+                                                        ? "active"
+                                                        : ""
+                                                        }`}
+                                                    key={index}
+                                                    style={{borderRadius: '26px !important'}}
+                                                >
+                                                    <button
+                                                        className={`faq_question justify-content-between ${activeFaqIndex === index
+                                                            ? "active"
+                                                            : ""
+                                                            }`}
+                                                        onClick={() => toggleFaq(index)}
+                                                    >
+                                                        {item.question}
+
+                                                        <span className="icon">
+                                                            {activeFaqIndex !== index && (
+                                                                <Image
+                                                                    src="/images/icons/faq-icon.png"
+                                                                    alt="toggle"
+                                                                    height={35}
+                                                                    width={35}
+                                                                    className="faq_toggle_icon"
+                                                                />
+                                                            )}
+                                                        </span>
+                                                    </button>
+
+                                                    {activeFaqIndex ===
+                                                        index && (
+                                                            <div className="faq_answer text-black">
+                                                                {item.answer}
+                                                            </div>
+                                                        )}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

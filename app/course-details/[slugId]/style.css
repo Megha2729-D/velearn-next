@@ -130,6 +130,28 @@
     transition: all .3s ease-out;
 }
 
+@media screen and (max-width: 991px) {
+    .rc_banner form {
+        position: relative;
+        top: 30px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 100%;
+    }
+
+    .course-title,
+    .course-description {
+        text-align: center;
+    }
+
+    .rc_banner {
+        background-repeat: repeat, repeat;
+        background-size: 89% auto;
+        padding: 20px 0 50px;
+    }
+}
+
 .course-stats {
     margin-bottom: 40px;
 }
@@ -424,6 +446,38 @@
     margin-left: 0;
 }
 
+@media screen and (max-width: 991px) {
+    .points_circle div p {
+        font-size: 11px;
+    }
+
+    .points_circle div {
+        margin: 5px 0 !important;
+    }
+
+    .points_circle>div:nth-child(3) {
+        margin-left: 25px;
+    }
+
+    .points_circle>div:nth-child(2),
+    .points_circle>div:nth-child(5) {
+        margin-left: 65px;
+    }
+
+    .points_circle>div:first-child,
+    .points_circle>div:nth-child(6) {
+        margin-left: 125px;
+    }
+
+    .rc_sec_4 img {
+        width: 100% !important;
+    }
+
+    .rc_sec_4 {
+        padding-bottom: 30px;
+    }
+}
+
 .rc_sec_5 {
     background: url(../../../public/images/recorded-course/bg-4.png);
     width: 100%;
@@ -547,18 +601,6 @@
     z-index: 1;
 }
 
-/* .tab.active::after {
-    content: "";
-    position: absolute;
-    bottom: -34px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 35px;
-    height: 25px;
-    background: #000;
-    clip-path: polygon(50% 100%, 0 0, 100% 0);
-} */
-
 .tab-content-box {
     background:
         linear-gradient(180deg, #d9d9d900 94.17%, #f5f3f9 99.03%),
@@ -645,19 +687,6 @@
         font-size: 13px;
     }
 
-    /*
-    .tab.active::after {
-        content: "";
-        position: absolute;
-        bottom: -28px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 35px;
-        height: 22px;
-        background: #000;
-        clip-path: polygon(50% 100%, 0 0, 100% 0);
-    } */
-
     .tab-content-holder {
         width: 100%;
         display: flex;
@@ -680,4 +709,238 @@
     .tab-content-box ul {
         padding-left: 18px;
     }
+}
+
+.rc_sec_7 {
+    background: url(../../../public/images/recorded-course/bg-benefits.png);
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.benefits_card_parent .col-lg-6 {
+    margin: 15px 0;
+}
+
+.benefits_card_parent .col-lg-6:nth-child(odd)>div {
+    background: linear-gradient(92.61deg, #24b7ecc5 2.18%, #000000 72.69%);
+    box-shadow: 4px 3px 12.4px 0px #24b7ecc5;
+}
+
+.benefits_card_parent .col-lg-6:nth-child(even)>div {
+    background: linear-gradient(92.61deg, #000000 2.18%, #24b7ecc5 72.69%);
+    box-shadow: -1px 6px 15.8px 0px #24B8EC;
+}
+
+.benefits_card_parent .col-lg-6 div {
+    border-radius: 15px;
+    margin: 0 5px;
+    padding: 25px 45px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rc_testimonial {
+    background: linear-gradient(90deg, #FFFFFF 0%, #C0EAF9 100%);
+    border-radius: 14px;
+    padding: 35px 40px;
+    box-shadow: 0 10px 25px #00000026;
+}
+
+.testimonial_content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.testimonial_content p {
+    color: #222;
+    font-size: 15px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.student_info {
+    text-align: center;
+    min-width: 150px;
+}
+
+.student_info img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #2f6db3;
+    margin-bottom: 10px;
+}
+
+.student_info h6 {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.stars {
+    color: #ffb400;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 991px) {
+    .testimonial_content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.rc_sec_9 {
+    background: url(../../../public/images/recorded-course/bg-certificate.png);
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#certificate .row p {
+    font-size: 15px;
+}
+
+.course_fee_section {
+    background: #fff;
+}
+
+.details_card {
+    background: #24B8EC1F;
+    border-radius: 20px;
+    padding: 35px 20px;
+}
+
+.course_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 5px 0;
+    border-bottom: 1px solid #dbe9f3;
+}
+
+.course_item:last-child {
+    border-bottom: none;
+}
+
+.course_item i {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    border-radius: 50%;
+    border: 1px solid #b6ddff56;
+    background: #FFFFFF1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+}
+
+.course_item h6 {
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.course_item span {
+    color: #777;
+    font-size: 12px;
+}
+
+.price_card {
+    border: 2px solid var(--c2);
+    border-radius: 18px;
+    padding: 30px 10px 0px;
+    position: relative;
+    background: #fff;
+}
+
+.offer_badge {
+    color: #fff;
+    background: #000;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 13px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.price_box {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+
+.price_box h2 {
+    color: var(--c2);
+    font-size: 35px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.price_box del {
+    color: #888;
+    font-size: 13px;
+}
+
+.discount {
+    background: #d8f7dc;
+    color: #2b9d45;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    margin: 15px 0;
+}
+
+.price_info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.price_info div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price_info span {
+    font-size: 13px;
+    color: #666;
+}
+
+.price_info strong {
+    font-size: 13px;
+}
+
+.enroll_btn {
+    background: var(--c2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+    font-weight: 600;
+    transition: all .3s ease-out;
+}
+
+.enroll_btn:hover {
+    background: var(--c1);
+    transition: all .3s ease-out;
+}
+
+.enroll_btn:hover {
+    background: var(--c2);
+    color: #fff;
+}
+
+.secure_text {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
 }
