@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "velearn-next.onrender.com",
       },
+      {
+        protocol: "https",
+        hostname: "crm.velearn.in",
+      },
     ],
   },
 

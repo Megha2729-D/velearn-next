@@ -1,5 +1,5 @@
 .referBanner {
-    background: url(../../public/images/refer-and-earn/re-banner.png);
+    background: url(/images/refer-and-earn/re-banner.png);
     background-size: cover;
     padding: 130px 0 80px 0;
     position: relative;
@@ -13,7 +13,7 @@
 }
 
 .referBanner::before {
-    background: url(../../public/images/refer-and-earn/banner-coins.png);
+    background: url(/images/refer-and-earn/banner-coins.png);
     height: 80px;
     width: 100%;
     background-size: contain;
@@ -23,7 +23,7 @@
 }
 
 .referBanner::after {
-    background: url(../../public/images/refer-and-earn/banner-trophy.png);
+    background: url(/images/refer-and-earn/banner-trophy.png);
     height: 80%;
     width: 100%;
     background-size: contain;
@@ -62,7 +62,7 @@
 }
 
 .refer_bottom_content {
-    background: url(../../public/images/refer-and-earn/re-bg.png), linear-gradient(#000000, #000000);
+    background: url(/images/refer-and-earn/re-bg.png), linear-gradient(#000000, #000000);
     /* background: linear-gradient(#000000, #000000); */
     background-size: cover;
     position: relative;

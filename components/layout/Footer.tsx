@@ -50,7 +50,7 @@ export default function Footer() {
 
                 if (user) {
                     const enrollRes = await axios.get(
-                        `${BASE_API_URL}my-courses/${user.id}`
+                        `https://crm.velearn.in/api/my-courses/${user.id}`
                     );
 
                     if (enrollRes.data.status) {

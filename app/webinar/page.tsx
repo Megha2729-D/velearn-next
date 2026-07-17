@@ -6,10 +6,14 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import "./style.css";
 
-const BASE_API_URL = "https://crm.velearn.in/api/";
+// const BASE_API_URL = "https://crm.velearn.in/api/";
+// const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
+// const BASE_DYNAMIC_IMAGE_URL =
+//     "https://crm.velearn.in/public/uploads/";
+
+const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
-const BASE_DYNAMIC_IMAGE_URL =
-    "https://crm.velearn.in/public/uploads/";
+const BASE_DYNAMIC_IMAGE_URL = "https://crm.velearn.in/public/uploads/";
 
 interface WebinarType {
     id: number;
@@ -109,11 +113,10 @@ export default function Webinar() {
             document.documentElement.classList.remove("modal-open-custom");
         };
     }, [showRegisterModal, showSuccessModal]);
+
     const fetchWebinars = async () => {
         try {
-            const response = await fetch(
-                `${BASE_API_URL}webinars`
-            );
+            const response = await fetch(`${BASE_API_URL}webinars`);
 
             const data = await response.json();
 
@@ -126,6 +129,7 @@ export default function Webinar() {
             setLoading(false);
         }
     };
+
     const fetchMyWebinars = async (id: number) => {
         try {
             const response = await fetch(
@@ -165,15 +169,14 @@ export default function Webinar() {
             setIsClosing(false);
         }, 400);
     };
+    
     const formatDate = (date: string) => {
-        return new Date(date).toLocaleDateString(
-            "en-IN",
-            {
-                month: "short",
-                day: "numeric",
-                weekday: "short",
-            }
-        );
+        return new Date(date).toLocaleDateString("en-IN", {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        });
     };
 
     const formatTime = (time: string) => {

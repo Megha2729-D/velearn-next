@@ -1,5 +1,5 @@
 .blog_banner {
-    background: url(../../public/images/blogs/blog-banner-bg.png);
+    background: url(/images/blogs/blog-banner-bg.png);
     background-size: cover;
 }
 

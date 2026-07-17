@@ -11,8 +11,14 @@ import "swiper/css/effect-coverflow";
 interface CourseDetailsPageProps {
     slugId: string;
 }
-
-const BASE_API_URL = "https://crm.velearn.in/api/";
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    phone?: string;
+    phonenumber?: string;
+}
+const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
@@ -26,6 +32,10 @@ export default function CourseDetailsPage({
     const [contentLeft, setContentLeft] = useState<number>(0);
     const tabsWrapperRef = useRef<HTMLDivElement | null>(null);
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+    const listRef = useRef<HTMLUListElement | null>(null);
+    const [isScrollEnd, setIsScrollEnd] = useState(false);
+
     const [isEnrolled, setIsEnrolled] = useState(false);
     const [activeTab, setActiveTab] = useState(1);
     const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(0);
@@ -50,6 +60,74 @@ export default function CourseDetailsPage({
             router.push("/my-courses");
         }
     };
+
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {
+                // Logged in user
+                const storedUser = localStorage.getItem("user");
+
+                let currentUser: User | null = null;
+
+                if (storedUser) {
+                    currentUser = JSON.parse(storedUser);
+
+                    setUser(currentUser);
+
+                    setFormData({
+                        name: currentUser?.name || "",
+                        email: currentUser?.email || "",
+                        phone:
+                            (currentUser?.phonenumber ||
+                                currentUser?.phone ||
+                                "")
+                                .replace(/^\+?91/, "")
+                                .trim(),
+                    });
+                }
+
+                // Get all recorded courses to find courseId & courseType
+                const courseRes = await fetch(`${BASE_API_URL}recorded-course`);
+                const courseResult = await courseRes.json();
+
+                if (!courseResult.status) return;
+
+                const matchedCourse = courseResult.data.find(
+                    (item: any) => item.slug === slugId
+                );
+
+                if (!matchedCourse) return;
+
+                const courseId = matchedCourse.id;
+                const courseType = matchedCourse.course_type;
+
+                // Build API endpoint
+                const endpoint =
+                    courseType === "combo"
+                        ? `combo-course-detail/${courseId}`
+                        : `course-detail/${courseId}`;
+
+                const url = `https://crm.velearn.in/api/${endpoint}`;
+
+                const res = await fetch(url);
+                // Fetch course details
+                const detailRes = await fetch(`https://crm.velearn.in/api/${endpoint}`);
+                const detailResult = await detailRes.json();
+
+                if (detailResult.status) {
+                    setCourse(detailResult.data);
+
+                    if (currentUser) {
+                        checkEnrollment(currentUser.id, detailResult.data.id);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchCourse();
+    }, [slugId]);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -98,6 +176,36 @@ export default function CourseDetailsPage({
         }
         setErrors(newErrors);
         return valid;
+    };
+
+    const checkEnrollment = async (userId: number, courseId: number) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(
+                `https://crm.velearn.in/api/my-courses/${userId}`,
+                {
+                    headers: token
+                        ? {
+                            Authorization: `Bearer ${token}`,
+                        }
+                        : {},
+                }
+            );
+
+            const result = await response.json();
+            console.log(result);
+
+            if (result.status) {
+                const enrolled = (result.data.all || []).some(
+                    (item: any) => item.id === Number(courseId)
+                );
+
+                setIsEnrolled(enrolled);
+            }
+        } catch (err) {
+            console.error("Enrollment check failed:", err);
+        }
     };
 
     const handleSubmit = async (
@@ -154,6 +262,71 @@ export default function CourseDetailsPage({
         };
     }, []);
 
+    useEffect(() => {
+        const slider = listRef.current;
+
+        if (!slider) return;
+
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        const mouseDown = (e: MouseEvent) => {
+            isDown = true;
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        };
+
+        const mouseLeave = () => {
+            isDown = false;
+        };
+
+        const mouseUp = () => {
+            isDown = false;
+        };
+
+        const mouseMove = (e: MouseEvent) => {
+            if (!isDown) return;
+
+            e.preventDefault();
+
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+
+            slider.scrollLeft = scrollLeft - walk;
+        };
+
+        slider.addEventListener("mousedown", mouseDown);
+        slider.addEventListener("mouseleave", mouseLeave);
+        slider.addEventListener("mouseup", mouseUp);
+        slider.addEventListener("mousemove", mouseMove);
+
+        return () => {
+            slider.removeEventListener("mousedown", mouseDown);
+            slider.removeEventListener("mouseleave", mouseLeave);
+            slider.removeEventListener("mouseup", mouseUp);
+            slider.removeEventListener("mousemove", mouseMove);
+        };
+    }, []);
+    useEffect(() => {
+        const slider = listRef.current;
+        if (!slider) return;
+
+        const handleScroll = () => {
+            const atEnd =
+                slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 2;
+
+            setIsScrollEnd(atEnd);
+        };
+
+        handleScroll(); // Check on load
+
+        slider.addEventListener("scroll", handleScroll);
+
+        return () => {
+            slider.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
 
@@ -295,7 +468,7 @@ export default function CourseDetailsPage({
             answer: (
                 <>
                     <p>
-                      Java is one of the most popular programming languages used in software development and web development. Learning Java opens doors to careers as a Java developer or software engineer.
+                        Java is one of the most popular programming languages used in software development and web development. Learning Java opens doors to careers as a Java developer or software engineer.
                     </p>
                 </>
             ),
@@ -389,12 +562,9 @@ export default function CourseDetailsPage({
 
                             {/* Left Content */}
                             <div className="col-lg-8 pe-lg-5 text-white">
-                                <h1 className="course-title">
-                                    Free Java Online Course For Beginners
-                                </h1>
-
+                                <h1 className="course-title">{course?.title}</h1>
                                 <p className="course-description">
-                                    Learn Java from scratch with our free beginner-friendly tutorials covering data types, control structures, and object oriented programming to build real world Java code and become a confident Java developer in software development.
+                                    {course?.sub_description}
                                 </p>
                                 <div className="d-flex justify-content-lg-start justify-content-center mb-3">
                                     {isEnrolled ? (
@@ -424,14 +594,19 @@ export default function CourseDetailsPage({
                                         <div className="col-lg-3 col-6 my-3 my-lg-0">
                                             <div>
                                                 <p className="text-center text-white">
-                                                    5 Core <br /> Modules
+                                                    {
+                                                        course?.with_certificate != null
+                                                            ? String(course.with_certificate).match(/\d+/)?.[0]
+                                                            : null
+                                                    }{" "}
+                                                    Core <br /> Modules
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="col-lg-3 col-6 my-3 my-lg-0">
                                             <div>
                                                 <p className="text-center text-white">
-                                                    5+ Hrs of  <br />
+                                                    {course?.recorded_content} Hrs+ of  <br />
                                                     In-depth Content
                                                 </p>
                                             </div>
@@ -466,7 +641,14 @@ export default function CourseDetailsPage({
                             <div className="col-lg-3 position-relative">
                                 <form onSubmit={handleSubmit}>
                                     <h5 className="text-c2 fw-bold text-center mb-2">
-                                        Get this course @ ₹500
+                                        Get this course @{" "}
+                                        {course?.course_type === "free" ? (
+                                            "Free"
+                                        ) : course?.combo_price ? (
+                                            <>₹ {course.combo_price}</>
+                                        ) : (
+                                            <>₹ {course?.buy_price}</>
+                                        )}
                                     </h5>
 
                                     {/* Name */}
@@ -534,12 +716,27 @@ export default function CourseDetailsPage({
                                     </div>
 
                                     <div className="col-12 d-flex justify-content-center">
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary w-auto"
-                                        >
-                                            Enroll Now
-                                        </button>
+                                        {isEnrolled ? (
+                                            <button
+                                                type="button"
+                                                onClick={goToLearnPage}
+                                                className="btn btn-primary w-auto"
+                                            >
+                                                Start Course
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type={user ? "submit" : "button"}
+                                                onClick={() => {
+                                                    if (!user) {
+                                                        router.push("/login");
+                                                    }
+                                                }}
+                                                className="btn btn-primary w-auto"
+                                            >
+                                                {user ? "Enroll Now" : "Login to Enroll"}
+                                            </button>
+                                        )}
                                     </div>
                                 </form>
                             </div>
@@ -551,8 +748,8 @@ export default function CourseDetailsPage({
                     <div className="section_container">
                         <div className="row">
                             <div className="col-lg-9">
-                                <div className="course_tabs_sticky">
-                                    <ul>
+                                <div className={`course_tabs_sticky pe-lg-3 ${isScrollEnd ? "scroll-end" : ""}`}>
+                                    <ul ref={listRef}>
                                         {tabs.map((tab) => (
                                             <li key={tab.id}>
                                                 <button
@@ -565,7 +762,6 @@ export default function CourseDetailsPage({
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div id="overview" className="mt-4">
                                     <div className="rc_overview_box">
                                         <div>
@@ -933,7 +1129,7 @@ export default function CourseDetailsPage({
                     </div>
 
                     {/* Reviews */}
-                    <div id="reviews">
+                    <div id="reviews" className="bg-white">
                         <div className="rc_sec_8">
                             <div className="section_container">
                                 <div className="row">
@@ -943,7 +1139,6 @@ export default function CourseDetailsPage({
                                                 Success Stories from{" "}
                                                 <span className="text-c2"> Java Learners</span>{" "}
                                             </h3>
-
                                             <div className="row justify-content-center">
                                                 <div className="col-lg-10">
                                                     <div className="rc_testimonial">
@@ -1086,7 +1281,7 @@ export default function CourseDetailsPage({
                                                         <div className=" d-flex align-items-center justify-content-center">
                                                             <div className="col-lg-10">
                                                                 <img
-                                                                    src={`${BASE_IMAGE_URL}details-page/certificate.jpg`}
+                                                                    src={`/images/recorded-course/certificate.png`}
                                                                     className="w-100 rounded-4"
                                                                     alt=""
                                                                 />
@@ -1266,7 +1461,7 @@ export default function CourseDetailsPage({
                                                         : ""
                                                         }`}
                                                     key={index}
-                                                    style={{borderRadius: '26px !important'}}
+                                                    style={{ borderRadius: '26px !important' }}
                                                 >
                                                     <button
                                                         className={`faq_question justify-content-between ${activeFaqIndex === index
@@ -1300,6 +1495,21 @@ export default function CourseDetailsPage({
                                             ))}
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="rc-cta" className="rc_cta py-5">
+                        <div className="section_container">
+                            <div className="row justify-content-center">
+                                <h3 className="text-white text-center">Learn Java and Start Your Journey Today</h3>
+                                <p className="text-white text-center mt-2">
+                                    Enroll in our  free Java online course today and step confidently into your career as a Java developer.
+                                </p>
+                                <div className="d-flex justify-content-center gap-3 mt-4">
+                                    <button className="rc-cta-1">Enroll Now</button>
+                                    <button className="rc-cta-2">Download Syllabus</button>
                                 </div>
                             </div>
                         </div>

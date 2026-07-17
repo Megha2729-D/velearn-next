@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
 import Preloader from "@/components/Preloader";
 
@@ -278,10 +279,12 @@ export default function RecordedCoursePage() {
                                                     }`}
                                             >
                                                 <div className="card_img_parent overflow-hidden">
-                                                    <img
+                                                    <Image
                                                         src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.image}`}
                                                         className="card_img w-100"
                                                         alt={course.title}
+                                                        height={200}
+                                                        width={300}
                                                         loading="lazy"
                                                     />
                                                 </div>

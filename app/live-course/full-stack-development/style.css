@@ -1,7 +1,7 @@
 /* course details page - start */
 
 .banner_top_sec_parent {
-    background: url(../../../public/images/details-page/bg-blue.png), linear-gradient(#000000, #000000);
+    background: url(/images/details-page/bg-blue.png), linear-gradient(#000000, #000000);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -13,7 +13,7 @@
 
 .details_banner {
     position: relative;
-    background: url(../../../public/images/details-page/banner-bg.jpeg);
+    background: url(/images/details-page/banner-bg.jpeg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -33,7 +33,7 @@
     width: 100%;
     overflow: hidden;
     height: 100%;
-    background: url(../../../public/images/details-page/banner-peoples.png);
+    background: url(/images/details-page/banner-peoples.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -777,7 +777,7 @@
 }
 
 .details_bottom_part {
-    background: url(../../../public/images/details-page/green-bg.png);
+    background: url(/images/details-page/green-bg.png);
     background-size: cover;
     background-position: center top;
     padding-bottom: 230px;

@@ -1,5 +1,5 @@
 .webinar_banner {
-    background: url(../../public/images/blogs/blog-banner-bg.png);
+    background: url(/images/blogs/blog-banner-bg.png);
     background-size: cover;
 }
 
@@ -170,7 +170,7 @@
 /* Webinar card --- End */
 
 .webinar_subscribe_box {
-    background-image: url(../../public/images/webinar/webinar-form-bg.png);
+    background-image: url(/images/webinar/webinar-form-bg.png);
     background-size: cover;
     border-radius: 40px;
     background-position: center;
@@ -248,7 +248,7 @@
 }
 
 .webinar_cta {
-    background: url(../../public/images/webinar/webinar-cta-bg.png);
+    background: url(/images/webinar/webinar-cta-bg.png);
     background-size: cover;
     background-position: center;
 }

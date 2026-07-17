@@ -129,9 +129,9 @@ export default function BlogDetails() {
                             <div className="px-lg-5 py-3">
                                 <Image
                                     src={`${BASE_IMAGE_URL}blogs/blog-banner-right.png`}
-                                    className="w-100 h-auto"
-                                    height={320}
-                                    width={320}
+                                    className="w-100 h-auto "
+                                    height={800}
+                                    width={400}
                                     alt=""
                                 />
                             </div>

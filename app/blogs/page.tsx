@@ -5,15 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import "./style.css";
 
-const BASE_API_URL = "https://crm.velearn.in/api/";
+const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
+// const BASE_API_URL = "https://crm.velearn.in/api/";
+// const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
+// const BASE_DYNAMIC_IMAGE_URL =
+//     "https://crm.velearn.in/public/uploads/";
 
 interface Blog {
     id: number;
     title: string;
-    image_url: string;
+    image: string;
     published_date: string;
     descriptions: string[];
 }
@@ -124,14 +128,11 @@ export default function Blogs() {
                                         <div className="blog_parent_card">
                                             <div className="bg-white blog_parent_card_inner">
                                                 <div className="mb-3">
-                                                    <Image
-                                                        src={`https://crm.velearn.in/public${blog.image_url.replace(
-                                                            "/../public",
-                                                            ""
-                                                        )}`}
+                                                    <img
+                                                        src={`${BASE_DYNAMIC_IMAGE_URL.replace("/uploads/", "/blogs/")}${blog.image.replace("/../public/", "")}`}
                                                         className="w-100"
-                                                        height={320}
                                                         width={320}
+                                                        height={320}
                                                         alt={blog.title}
                                                     />
                                                 </div>

@@ -1,5 +1,5 @@
 .blog_banner {
-    background: url(../../public/images/blogs/blog-banner-bg.png);
+    background: url(/images/blogs/blog-banner-bg.png);
     background-size: cover;
 }
 
@@ -104,7 +104,7 @@
     padding: 10px;
     border-radius: 50px;
     box-shadow: 0px 10px 60px 0px #262D7614;
-    background: linear-gradient(to bottom, #ffffff 0%, #ffffffdc 50%), url(../../public/images/blogs/blog-card-bg.png);
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffffdc 50%), url(/images/blogs/blog-card-bg.png);
     display: flex;
     width: 100%;
 }
@@ -127,6 +127,7 @@
 
 .blog_parent_body .col-lg-8 img {
     border-radius: 25px;
+    object-fit: cover;
 }
 
 .blog_parent_body .col-lg-4 {

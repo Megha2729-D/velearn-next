@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import "./Styles/Header.css"
 
-const BASE_API_URL = "https://crm.velearn.in/api/";
+const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
 const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
@@ -82,8 +82,17 @@ export default function Navbar() {
             setUser(parsedUser);
 
             try {
+                const token = localStorage.getItem("token");
+
                 const res = await axios.get(
-                    `${BASE_API_URL}my-courses/${parsedUser.id}`
+                    `https://crm.velearn.in/api/my-courses/${parsedUser.id}`,
+                    {
+                        headers: token
+                            ? {
+                                Authorization: `Bearer ${token}`,
+                            }
+                            : {},
+                    }
                 );
 
                 if (res.data.status) {
@@ -96,10 +105,10 @@ export default function Navbar() {
 
         loadUser();
 
-        window.addEventListener("storage", loadUser);
+        window.addEventListener("storage-update", loadUser);
 
         return () => {
-            window.removeEventListener("storage", loadUser);
+            window.removeEventListener("storage-update", loadUser);
         };
     }, []);
 

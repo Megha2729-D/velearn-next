@@ -1,7 +1,6 @@
 .rc_body {
-    background-image: url(../../../public/images/details-page/bg-blue.png);
+    background-image: url(/images/details-page/bg-blue.png);
     background-size: cover;
-
 }
 
 .course-hero .container {
@@ -20,7 +19,7 @@
 }
 
 .rc_banner {
-    background: url(../../../public/images/recorded-course/recorded-course-banner-bg.webp), linear-gradient(#000000, #000000);
+    background: url(/images/recorded-course/recorded-course-banner-bg.webp), linear-gradient(#000000, #000000);
     background-size: cover;
     background-position: center;
     padding: 20px 0 30px;
@@ -28,6 +27,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.rc_banner .section_container {
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .rc_banner .rc_banner_content button {
@@ -76,7 +80,7 @@
 
 .rc_banner form {
     position: absolute;
-    width: 80%;
+    width: 100%;
     top: -140px;
     right: 40px;
     padding: 30px 20px;
@@ -263,7 +267,7 @@
 }
 
 .rc_sec_2 {
-    background: url(../../../public/images/recorded-course/bg-2.png);
+    background: url(/images/recorded-course/bg-2.png);
     width: 100%;
     background-size: auto;
     background-repeat: no-repeat;
@@ -271,11 +275,31 @@
 }
 
 .course_tabs_sticky {
-    z-index: 999;
+    z-index: 1;
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
+    width: 100%;
+    position: relative;
     /* position: sticky;
     top: 81px; */
+}
+
+.course_tabs_sticky::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 13px;
+    width: 40px;
+    height: 100%;
+    pointer-events: none;
+    background: linear-gradient(to left, #00000054, #ffffff00);
+    transition: all .3s ease-out;
+    z-index: 0;
+}
+
+.course_tabs_sticky.scroll-end::after {
+    background: linear-gradient(to left, #00000000, #ffffff00);
+    transition: all .3s ease-out;
 }
 
 .course_tabs_sticky ul {
@@ -325,7 +349,7 @@
 }
 
 .rc_sec_3 {
-    background: url(../../../public/images/recorded-course/bg-3.png);
+    background: url(/images/recorded-course/bg-3.png);
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -479,7 +503,7 @@
 }
 
 .rc_sec_5 {
-    background: url(../../../public/images/recorded-course/bg-4.png);
+    background: url(/images/recorded-course/bg-4.png);
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -712,7 +736,7 @@
 }
 
 .rc_sec_7 {
-    background: url(../../../public/images/recorded-course/bg-benefits.png);
+    background: url(/images/recorded-course/bg-benefits.png);
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -795,7 +819,7 @@
 }
 
 .rc_sec_9 {
-    background: url(../../../public/images/recorded-course/bg-certificate.png);
+    background: url(/images/recorded-course/bg-certificate.png);
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -943,4 +967,44 @@
     text-align: center;
     color: #888;
     font-size: 14px;
+}
+
+.rc_cta {
+    background: url(/images/recorded-course/rc-cta.png);
+    background-size: cover;
+    border-radius: 20px 20px 0 0;
+}
+
+.rc-cta-1,
+.rc-cta-2 {
+    border-radius: 50px;
+    padding: 10px 50px;
+    color: #ffffff;
+    border: none;
+    transform: translateY(0);
+    transition: all .3s ease-out;
+}
+
+.rc-cta-1 {
+    background-color: #069224;
+}
+
+.rc-cta-2 {
+    background-color: #FFFFFF21;
+}
+
+.rc-cta-1:hover {
+    background-color: #006115;
+    transform: translateY(-5px);
+    transition: all .3s ease-out;
+}
+
+.rc-cta-2:hover {
+    background-color: #ffffff63;
+    transform: translateY(-5px);
+    transition: all .3s ease-out;
+}
+
+.footer_sec {
+    border-radius: 0
 }
