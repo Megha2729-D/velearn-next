@@ -382,7 +382,57 @@ export default function HomePage() {
             navigation
             className="v-banner-swiper"
           >
-            {coursesList?.slice(0, 3).map((course: any) => {
+            <SwiperSlide className="z-1">
+              <div className="row align-items-center">
+                <div className="col-lg-6 d-flex flex-column align-items-center align-items-lg-start">
+                  <div className="content_left">
+                    <h5 className="text-white text-center text-lg-start text-uppercase">
+                      Build your career with live <br />
+                      online courses
+                      {/* {course.title} */}
+                    </h5>
+
+                    <p className="text-white text-center text-lg-start">
+                      We are committed to provide the best services to grow your
+                      business gradually in an efficient way.
+                      {/* {course.sub_description} */}
+                    </p>
+
+                    <div className="d-flex justify-content-lg-start justify-content-center">
+                      <Link
+                        // href={`${targetUrl}?courseId=${course.id}&courseType=${course.course_type}`}
+                        href={"/live-course"}
+                      >
+                        <button>
+                          Live Courses
+                        </button>
+                      </Link>
+                      <Link
+                        // href={`${targetUrl}?courseId=${course.id}&courseType=${course.course_type}`}
+                        href={"/recorded-course"}
+                      >
+                        <button>
+                          Self - Paced Courses
+                        </button>
+                      </Link>
+                      <Link
+                        // href={`${targetUrl}?courseId=${course.id}&courseType=${course.course_type}`}
+                        href={"/refund-policy"}
+                      >
+                        <button>
+                          Refund Policy
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="col-lg-6 pe-0 banner_right_part">
+                  <div className="right-banner-bg home-banner-bg"></div>
+                </div>
+              </div>
+            </SwiperSlide>
+            {/* {coursesList?.slice(0, 3).map((course: any) => {
               const isEnrolled = enrolledCoursesList.some(
                 (ec: any) =>
                   ec.id === course.id &&
@@ -401,13 +451,11 @@ export default function HomePage() {
                         <h5 className="text-white text-center text-lg-start text-uppercase">
                           Build your career with live <br />
                           online courses
-                          {/* {course.title} */}
                         </h5>
 
                         <p className="text-white text-center text-lg-start">
                           We are committed to provide the best services to grow your
                           business gradually in an efficient way.
-                          {/* {course.sub_description} */}
                         </p>
 
                         <div className="d-flex justify-content-lg-start justify-content-center">
@@ -445,7 +493,7 @@ export default function HomePage() {
                   </div>
                 </SwiperSlide>
               );
-            })}
+            })} */}
           </Swiper>
         </div>
       </section>
