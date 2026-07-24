@@ -236,35 +236,35 @@ export default function AboutUs() {
                     <div className="row justify-content-center mt-4">
                         <div className="col-lg-10">
                             <div className="row">
-                                <div className="col-lg-3 my-lg-0 my-3">
-                                    <div className="about_values_parent">
+                                <div className="col-lg-3 my-lg-0 my-3 px-lg-0 px-2">
+                                    <div className="about_values_parent h-100">
                                         <h5>Purpose</h5>
                                         <p className="mb-0">
                                             We exist to transform careers and change lives through education. Every course, every instructor, every feature is designed with one purpose, empowering professionals to achieve their dreams and succeed in their careers.
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 my-lg-0 my-3">
-                                    <div className="about_values_parent">
-                                        <h5>Purpose</h5>
+                                <div className="col-lg-3 my-lg-0 my-3 px-lg-0 px-2">
+                                    <div className="about_values_parent h-100">
+                                        <h5>Technology</h5>
                                         <p className="mb-0">
-                                            We exist to transform careers and change lives through education. Every course, every instructor, every feature is designed with one purpose, empowering professionals to achieve their dreams and succeed in their careers.
+                                            Technology is more than tools for us. It's the bridge between expert instruction and personalized learning. Our AI-powered systems understand how you learn, track your progress in real-time, and adapt the curriculum to your pace.
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 my-lg-0 my-3">
-                                    <div className="about_values_parent">
-                                        <h5>Purpose</h5>
+                                <div className="col-lg-3 my-lg-0 my-3 px-lg-0 px-2">
+                                    <div className="about_values_parent h-100">
+                                        <h5>Collaboration</h5>
                                         <p className="mb-0">
-                                            We exist to transform careers and change lives through education. Every course, every instructor, every feature is designed with one purpose, empowering professionals to achieve their dreams and succeed in their careers.
+                                            No one succeeds alone. Our expert instructors, dedicated support team, and vibrant learner community work together to help you achieve your goals. We believe in the power of collaboration, where experienced mentors guide you, peers inspire you, and community support lifts you up.
                                         </p>
                                     </div>
                                 </div>
-                                <div className="col-lg-3 my-lg-0 my-3">
-                                    <div className="about_values_parent">
-                                        <h5>Purpose</h5>
+                                <div className="col-lg-3 my-lg-0 my-3 px-lg-0 px-2">
+                                    <div className="about_values_parent h-100">
+                                        <h5>Integrity</h5>
                                         <p className="mb-0">
-                                            We exist to transform careers and change lives through education. Every course, every instructor, every feature is designed with one purpose, empowering professionals to achieve their dreams and succeed in their careers.
+                                            We believe in doing the right thing, always. Integrity is how we build trust with every learner. We're honest about our capabilities and results, transparent about our curriculum and pricing, and genuinely committed to supporting your journey. Real success is built on trust, reliability, and consistent action.
                                         </p>
                                     </div>
                                 </div>

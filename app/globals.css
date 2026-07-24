@@ -2875,10 +2875,10 @@ section {
     border-radius: 0 0 40.64px 40.64px;
   }
 
-  .banner_top_sec {
+  /* .banner_top_sec {
     background-color: #ffffff;
     border-radius: 0 0 60px 60px;
-  }
+  } */
 
   .form_sec {
     padding: 0 20px 60px !important;

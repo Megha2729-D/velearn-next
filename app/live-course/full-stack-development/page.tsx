@@ -317,49 +317,69 @@ export default function FullStackDevelopment() {
 
     const content = {
         1: {
-            title: "Foundations of Full Stack Development",
+            title: "All Modules",
             points: [
-                "How the web works (Client–Server architecture)",
-                "Frontend vs Backend vs Database",
-                "Developer tools & workflow",
-                "Introduction to Git & GitHub",
+                "HTML, CSS & Dev Environment",
+                "Advanced CSS & Tailwind CSS",
+                "JavaScript Fundamentals",
+                "Advanced JS + Git & Postman",
+                "React Fundamentals",
+                "React Hooks, Routing & TypeScript",
+                "State Management with Redux",
+                "React + API Integration & Testing",
+                "Node.js Fundamentals",
+                "Express JS & API Testing",
+                "MySQL",
+                "MongoDB & Mongoose",
+                "Authentication & Authorization",
+                "Full MERN Integration",
+                "Docker, CI/CD, AWS & AI Integration",
+                "Capstone Project",
             ],
         },
         2: {
-            title: "Frontend Development",
+            title: "Frontend",
             points: [
-                "HTML, CSS, JavaScript",
-                "Responsive UI & Grid Systems",
-                "React.js Fundamentals",
-                "State Management",
+                "HTML, CSS & Dev Environment",
+                "Advanced CSS & Tailwind CSS",
+                "JavaScript Fundamentals",
+                "Advanced JS + Git & Postman",
+                "React Fundamentals",
+                "React Hooks, Routing & TypeScript",
+                "State Management with Redux",
+                "React + API Integration & Testing",
             ],
         },
         3: {
-            title: "Backend Development",
+            title: "Backend",
             points: [
-                "Node.js & Express.js",
-                "REST APIs",
+                "Node.js Fundamentals",
+                "Express JS & API Testing",
+                "MySQL",
+                "MongoDB & Mongoose",
                 "Authentication & Authorization",
-                "Error Handling & Middleware",
             ],
         },
         4: {
-            title: "Database & Deployment",
+            title: "DevOps & AI",
             points: [
-                "MongoDB / SQL Basics",
-                "Data Modeling & Queries",
-                "Cloud Deployment",
-                "CI/CD & Environment Variables",
+                "Git & GitHub Workflow",
+                "Postman API Testing",
+                "REST API Best Practices",
+                "JWT Authentication",
+                "Docker Fundamentals",
+                "Docker Compose",
+                "CI/CD Pipelines",
+                "AWS Deployment",
+                "Cloud Hosting",
+                "Environment Variables",
+                "AI Tools for Developers",
+                "Docker, CI/CD, AWS & AI Integration",
             ],
         },
         5: {
-            title: "Capstone & Job Preparation",
-            points: [
-                "Real-World Project",
-                "Version Control",
-                "Resume & Portfolio",
-                "Mock Interviews",
-            ],
+            title: "Projects",
+            points: ["Capstone Project"],
         },
     };
 
@@ -564,7 +584,7 @@ export default function FullStackDevelopment() {
     };
     return (
         <>
-            <section className="banner_top_sec_parent">
+            <section className="banner_top_sec_parent" style={{ paddingBottom: "90px" }}>
                 <div className="banner_top_sec">
                     <div className="details_banner">
                         <div className="details_banner_inner">
@@ -573,21 +593,12 @@ export default function FullStackDevelopment() {
                                     <div className="col-lg-6">
                                         <div className="pe-lg-5">
                                             <h1 className="text-white">
-                                                Industry-Driven Online Full
-                                                Stack Program With Live
-                                                Mentors
+                                                Launch Your Tech Career with Our MERN Stack Online Course
                                             </h1>
-                                            <p className="text-white mt-4">
-                                                A live, mentor-led Full
-                                                Stack Development program
-                                                designed to take you from
-                                                fundamentals to
-                                                production-ready
-                                                applications — with real
-                                                projects, real tools, and
-                                                real career support.
+                                            <p className="text-white small mt-4">
+                                                Master AI-powered MERN stack development across React JS, Node.js, Express and MongoDB with real-world AI integration, through our live instructor-led course. Build intelligent web apps, earn your certificate, and launch your dream developer career.
                                             </p>
-                                            <div className="d-flex justify-content-start">
+                                            <div className="d-flex justify-content-start gap-2">
                                                 <button
                                                     onClick={handleCourseAction}
                                                 >
@@ -596,6 +607,17 @@ export default function FullStackDevelopment() {
                                                         : user
                                                             ? "Enroll Now"
                                                             : "Login to Enroll"}
+                                                </button>
+                                                <button className="demo_butt"
+                                                    onClick={handleCourseAction}
+                                                >
+                                                    {
+                                                        !user
+                                                            ? "Login to Book Demo"
+                                                            : isEnrolled
+                                                                ? "Book Demo"
+                                                                : "Enroll Now"
+                                                    }
                                                 </button>
                                             </div>
                                             {/* <button>Enroll Now</button> */}
@@ -613,8 +635,7 @@ export default function FullStackDevelopment() {
                                                     /
                                                 </span>
                                                 <span>
-                                                    Master in Full stack
-                                                    Development
+                                                    Full Stack Development
                                                 </span>
                                             </div>
                                         </div>
@@ -730,455 +751,358 @@ export default function FullStackDevelopment() {
                             <div className="col-12 d-flex justify-content-start">
                                 <div className="col-lg-9">
                                     <div className="ms-lg-5 ms-2 py-3">
-                                        <div className="row text-center">
-                                            <div className="col-6 col-lg-3 mb-3 banner_details_list d-flex justify-content-center">
-                                                <div className="d-flex justify-content-center align-items-center align-items-lg-start flex-column">
+                                        <div className="row text-center justify-content-lg-evenly justify-content-center">
+                                            <div className="col-6 col-lg-2 mb-3 banner_details_list d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center flex-column">
                                                     <p className="fw-bold mb-1">
-                                                        4 Modules
+                                                        Weeks
                                                     </p>
                                                     <p className="mb-0">
-                                                        with Certifications
+                                                        12
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="col-6 col-lg-3 mb-3 banner_details_list d-flex justify-content-center">
-                                                <div className="d-flex justify-content-center align-items-center align-items-lg-start flex-column">
+                                            <div className="col-6 col-lg-2 mb-3 banner_details_list d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center flex-column">
                                                     <p className="fw-bold mb-1">
-                                                        4 Hours
+                                                        Total Hours
                                                     </p>
                                                     <p className="mb-0">
-                                                        of Recorded Content
+                                                        160 Hours
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="col-6 col-lg-3 mb-3 banner_details_list d-flex justify-content-center">
-                                                <div className="d-flex justify-content-center align-items-center align-items-lg-start flex-column">
+                                            <div className="col-6 col-lg-2 mb-3 banner_details_list d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center flex-column">
                                                     <p className="fw-bold mb-1">
-                                                        4.5 Ratings
+                                                        Taught In
                                                     </p>
                                                     <p className="mb-0">
-                                                        by 1000 Learners
+                                                        தமிழ்
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="col-6 col-lg-3 mb-3 banner_details_list d-flex justify-content-center">
-                                                <div className="d-flex justify-content-center align-items-center align-items-lg-start flex-column">
+                                            <div className="col-6 col-lg-2 mb-3 banner_details_list d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center flex-column">
                                                     <p className="fw-bold mb-1">
-                                                        English
+                                                        1:1
                                                     </p>
                                                     <p className="mb-0">
-                                                        Language
+                                                        Doubt Sessions
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="col-6 col-lg-2 mb-3 banner_details_list d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center flex-column">
+                                                    <p className="fw-bold mb-1">
+                                                        Placement
+                                                    </p>
+                                                    <p className="mb-0">
+                                                        Support
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div className="col-12">
+                                <p className="fw-bold text-center batch_info">
+                                    Next batch starts 15 June 2026 Only 5 seats remaining
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="details_desc_parent">
                     <div className="section_container">
-                        <div className="why_choose_details pt-5 pb-lg-5">
-                            <div className="d-flex justify-content-center col-12">
+                        <div className="why_choose_details pt-2 pb-lg-5">
+                            <div className="row justify-content-center">
                                 <div className="col-lg-7">
-                                    <h3 className="text-white text-center fw-bold px-3 lh-sm">
-                                        Why Full Stack Development Is a
-                                        Smart
-                                        <span className="text-c2">
-                                            {" "}
-                                            Career Choice
-                                        </span>
+                                    <h3 className="text-center fw-bold px-3 lh-sm">
+                                        Step Into a Booming Career with the Best MERN Stack Course Online
                                     </h3>
                                 </div>
-                            </div>
-                            {/* Cards */}
-                            {/* Top Row - 3 Cards */}
-                            <div className="col-lg-12 d-flex justify-content-center">
-                                <div className="col-lg-8">
-                                    <div className="row justify-content-center mb-4">
-                                        <div className="col-lg-4 col-6 mb-3">
-                                            <div className="col-12 my-4 big">
-                                                <div className="why-card">
-                                                    Learn One Skill, Work in
-                                                    Multiple Roles
-                                                </div>
-                                            </div>
-                                            <div className="col-12 my-4 big">
-                                                <div className="why-card">
-                                                    High Demand Across All
-                                                    Industries
-                                                </div>
-                                            </div>
+                                <div className="col-lg-10">
+                                    <p className="text-center small lh-lg">
+                                        The MERN stack is booming with AI, and it's one of the most in demand skills in full stack web development today. Companies everywhere are looking for developers who can turn ideas into modern, scalable products. Step into a future proof career with skills that stay in demand for years.
+                                    </p>
+                                </div>
+                                {/* Cards */}
+                                {/* Top Row - 3 Cards */}
+                                <div className="col-lg-7 mt-4">
+                                    <div className="d-flex mern_steps_parent">
+                                        <div className="mern_step-1 w-100">
+                                            <p className="mb-1 fw-bold text-center">AI-Ready</p>
+                                            <p className="text-center text-black small mb-0">
+                                                Build smart apps The MERN stack skill every company wants now
+                                            </p>
                                         </div>
-                                        <div className="col-lg-4 col-6 mb-3">
-                                            <div className="col-12 my-4 small">
-                                                <div className="why-card">
-                                                    Build Real Products, Not
-                                                    Just Code
-                                                </div>
-                                            </div>
-                                            <div className="col-12 my-4 small">
-                                                <div className="why-card">
-                                                    Higher Salary Potential
-                                                </div>
-                                            </div>
-                                            <div className="col-12 my-4 small">
-                                                <div className="why-card">
-                                                    Faster Career Growth
-                                                </div>
-                                            </div>
+                                        <div className="mern_step-2 w-100">
+                                            <p className="mb-1 fw-bold text-center">#1</p>
+                                            <p className="text-center text-black small mb-0">
+                                                Most in-demand stack Across startups, IT firms & MNCs
+                                            </p>
                                         </div>
-                                        <div className="col-lg-4 col-12 mb-3 mt-4 mt-lg-0 d-flex flex-row flex-lg-column">
-                                            <div className="col-6 col-lg-12 my-4 big pe-3 pe-lg-0">
-                                                <div className="why-card">
-                                                    Strong Foundation for
-                                                    Future Tech
-                                                </div>
-                                            </div>
-                                            <div className="col-6 col-lg-12 my-4 my-lg-0 big ps-3 ps-lg-0">
-                                                <div className="why-card">
-                                                    Logic-Driven Problem
-                                                    Solving
-                                                </div>
-                                            </div>
+                                        <div className="mern_step-3 w-100">
+                                            <p className="mb-1 fw-bold text-center">4-in-1</p>
+                                            <p className="text-center text-black small mb-0">
+                                                One complete stack React + Node + Express + MongoDB
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="detail_overview pb-4">
-                            <div className="col-12">
-                                <h3 className="text-c2 text-center fw-bold">
-                                    {" "}
-                                    Course Overview
-                                </h3>
-                                <p className="text-white text-center text-lg-start mt-3">
-                                    Data science is an interdisciplinary
-                                    field that focuses on extracting
-                                    meaningful insights from data. It
-                                    combines statistics, mathematics,
-                                    programming, and domain knowledge to
-                                    analyze structured and unstructured
-                                    data. Data scientists collect, clean,
-                                    and process large datasets, then apply
-                                    techniques like data analysis,
-                                    visualization, machine learning, and
-                                    predictive modeling. The goal is to
-                                    identify patterns, trends, and
-                                    relationships that support better
-                                    decision-making. Data science is widely
-                                    used in industries such as healthcare,
-                                    finance, marketing, e-commerce, and
-                                    technology. By turning raw data into
-                                    actionable insights, data science helps
-                                    organizations improve efficiency,
-                                    predict outcomes, and create data-driven
-                                    strategies for growth and innovation.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="career_launch pt-lg-3 pb-4">
-                            <h3 className="text-white text-center fw-bold">
-                                Launch your iT Career As a
-                                <span className="text-c2">
-                                    {" "}
-                                    Full Stack Developer
-                                </span>
-                            </h3>
-                            <div className="d-flex justify-content-center mt-5">
-                                <div className="col-lg-10 position-relative">
+
+                                <div className="col-lg-9 mt-5">
                                     <div className="row">
-                                        <div className="col-4 pe-0">
-                                            <div className="h-100 d-flex flex-column gap-5">
-                                                <div className="steps_details h-50 d-flex justify-content-center align-items-center">
-                                                    <p className="mb-0">
-                                                        Launch your iT
-                                                        Career As a Full
-                                                        Stack Developer
-                                                    </p>
-                                                </div>
-                                                <div className="steps_details h-50 d-flex justify-content-center align-items-center">
-                                                    <p className="mb-0">
-                                                        Step into real IT
-                                                        jobs with confidence
-                                                    </p>
-                                                </div>
+                                        <div className="col-lg-4 pe-lg-0">
+                                            <div className="mern_keypoints_1 ms-lg-5">
+                                                <p className="fw-bold">Build faster with AI</p>
+                                                <p className="mb-0">
+                                                    Write code and build projects quicker using AI coding assistants
+                                                </p>
+                                            </div>
+                                            <div className="mern_keypoints_2 mt-4">
+                                                <p className="fw-bold">Build responsive websites</p>
+                                                <p className="mb-0">
+                                                    Create sites that work smoothly on every device with CSS and Tailwind
+                                                </p>
                                             </div>
                                         </div>
-                                        <div className="col-4 px-0 pb-lg-4 position-relative d-flex flex-column justify-content-center align-items-center">
-                                            <Image
-                                                src={`/images/details-page/steps.png`}
-                                                alt="Steps"
-                                                width={400}
-                                                height={300}
-                                                className="w-100 h-auto"
+                                        <div className="col-lg-4 px-lg-0 d-flex align-items-center justify-content-center">
+                                            <Image src="/images/live-course/mern/key-points.svg"
+                                                className="w-100 h-100 object-fit-contain mt-3"
+                                                height={500} width={250} alt=""
                                             />
-                                            <div className="get_started_butt position-absolute bottom-0 d-none d-lg-flex justify-content-center">
-                                                <div
-                                                    className="get_started_button"
-                                                    onClick={handleCourseAction}
-                                                >
-                                                    <button>
-                                                        {isEnrolled
-                                                            ? "Start Course"
-                                                            : user
-                                                                ? "Get Started"
-                                                                : "Login to Enroll"}
-                                                    </button>
-
-                                                    <div className="arr_right">
-                                                        <i className="bi bi-arrow-right"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div className="col-4 ps-0">
-                                            <div className="h-100 d-flex flex-column gap-5">
-                                                <div className="steps_details h-50 d-flex justify-content-center align-items-center">
-                                                    <p className="mb-0">
-                                                        Gain hands-on
-                                                        experience with live
-                                                        sessions
-                                                    </p>
-                                                </div>
-                                                <div className="steps_details h-50 d-flex justify-content-center align-items-center">
-                                                    <p className="mb-0">
-                                                        Experience real
-                                                        development workflow
-                                                        from start to deploy
-                                                    </p>
-                                                </div>
+                                        <div className="col-lg-4 ps-lg-0">
+                                            <div className="mern_keypoints_3 me-lg-5">
+                                                <p className="fw-bold">Find & fix errors easily</p>
+                                                <p className="mb-0">
+                                                    Spot and solve bugs the smart way with DevTools and AI
+                                                </p>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className="get_started_butt d-flex d-lg-none mt-4 justify-content-center">
-                                        <div className="get_started_button">
-                                            <button
-                                                onClick={handleCourseAction}
-                                            >
-                                                {isEnrolled
-                                                    ? "Start Course"
-                                                    : user
-                                                        ? "Get Started"
-                                                        : "Login to Enroll"}
-                                            </button>
-                                            <div className="arr_right">
-                                                <i className="bi bi-arrow-right"></i>
+                                            <div className="mern_keypoints_4 mt-4">
+                                                <p className="fw-bold">Build large-scale applications</p>
+                                                <p className="mb-0">
+                                                    Handle heavy traffic with caching, indexing and performance tuning
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        <div className="skills pt-lg-5 pt-4 pb-4 position-relative">
-                            <div className="d-flex justify-content-center">
-                                <div className="back_big_text">
-                                    Full Stack Developer
-                                </div>
-                            </div>
-                            <div className="inner_skills_content">
-                                <h3 className="text-white text-center fw-bold">
-                                    Core Skills
-                                    <span className="text-c2">
-                                        {" "}
-                                        You’ll Master
-                                    </span>
-                                </h3>
-                                <p className="text-white text-center mb-0">
-                                    At Velearn, we simplify skills that
-                                    shape real careers
-                                </p>
-                                <div className="row d-flex justify-content-center">
-                                    <div className="col-lg-10">
-                                        <div className="skills-slider-wrapper">
-                                            <Swiper
-                                                className="skills-swiper py-5"
-                                                modules={[
-                                                    Navigation,
-                                                    Autoplay,
-                                                ]}
-                                                autoplay={{
-                                                    delay: 2000,
-                                                    disableOnInteraction: false,
-                                                }}
-                                                loop={true}
-                                                navigation={true}
-                                                breakpoints={{
-                                                    0: {
-                                                        slidesPerView: 2,
-                                                        spaceBetween: 10,
-                                                    },
-                                                    576: {
-                                                        slidesPerView: 2,
-                                                        spaceBetween: 15,
-                                                    },
-                                                    768: {
-                                                        slidesPerView: 2,
-                                                        spaceBetween: 20,
-                                                    },
-                                                    1024: {
-                                                        slidesPerView: 5,
-                                                        centeredSlides: true,
-                                                        spaceBetween: 20,
-                                                    },
-                                                }}
-                                            >
-                                                {repeatedSkills.map(
-                                                    (item, i) => (
-                                                        <SwiperSlide
-                                                            key={i}
-                                                        >
-                                                            <div className="skill-card">
-                                                                <Image
-                                                                    src={item.icon}
-                                                                    alt={item.title}
-                                                                    width={240}
-                                                                    height={240}
-                                                                />
-                                                                <p className="text-white">
-                                                                    {
-                                                                        item.title
-                                                                    }
-                                                                </p>
-                                                            </div>
-                                                        </SwiperSlide>
-                                                    ),
-                                                )}
-                                            </Swiper>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <section className="tools_slider_section pt-lg-5">
-                            <div className="section_container text-center mb-4">
-                                <h3 className="text-white fw-bold mb-2">
-                                    <span className="text-c2">
-                                        Future-Ready{" "}
-                                    </span>
-                                    Tools for Modern Software
-                                    <span className="text-c2">
-                                        {" "}
-                                        Careers
-                                    </span>
-                                </h3>
-                            </div>
-
-                            <Swiper
-                                modules={[EffectCoverflow, Autoplay]}
-                                effect="coverflow"
-                                loop={true}
-                                slidesPerView={5}
-                                spaceBetween={20}
-                                centeredSlides={true}
-                                allowTouchMove={false}
-                                simulateTouch={false}
-                                // slidesPerView={window.innerWidth < 600 ? 1.6 : 5}
-                                coverflowEffect={{
-                                    rotate: 25,
-                                    stretch: 0,
-                                    depth: 200,
-                                    modifier: 1,
-                                    slideShadows: false,
-                                }}
-                                autoplay={{ delay: 2000 }}
-                                onSwiper={(swiper) => {
-                                    swiperRef.current = swiper;
-                                }}
-                                onSlideChange={(swiper) => {
-                                    setActiveIndex(swiper.realIndex);
-                                    setActiveToolName(
-                                        tools[swiper.realIndex].name
-                                    );
-                                    setActiveShadow(
-                                        tools[swiper.realIndex].shadow
-                                    );
-                                }}
-                                breakpoints={{
-                                    0: { slidesPerView: 1.6 }, // mobile screens
-                                    600: { slidesPerView: 3 }, // tablets
-                                    1024: { slidesPerView: 5 }, // desktop
-                                }}
-                                className="tools_swiper"
-                            >
-                                {tools.map((tool, index) => {
-                                    const isActive =
-                                        index === activeIndex;
-                                    return (
-                                        <SwiperSlide key={index}>
-                                            <div
-                                                className={`tool_card ${isActive ? "active" : ""}`}
-                                                style={{
-                                                    boxShadow: isActive
-                                                        ? `0px 5.33px 32px 1.02px ${tool.shadow} inset`
-                                                        : `0px 3.67px 22.04px 2.14px ${tool.shadow} inset`,
-                                                }}
-                                            >
-                                                <Image
-                                                    src={tool.logo}
-                                                    alt={tool.name}
-                                                    width={170}
-                                                    height={170}
-                                                />
-                                            </div>
-                                        </SwiperSlide>
-                                    );
-                                })}
-                            </Swiper>
-
-                            {/* === CUSTOM NAVIGATION + TOOL NAME === */}
-                            <div className="tool_name_parent d-flex justify-content-center align-items-center gap-3 mt-3">
-                                <button
-                                    className="tool_nav_btn left"
-                                    onClick={() =>
-                                        swiperRef.current?.slidePrev()
-                                    }
-                                >
-                                    ❮
-                                </button>
-
-                                <div className="position-relative d-flex justify-content-center">
-                                    <div className="curve"></div>
-                                    <div
-                                        className="tool-name-display text-center"
-                                        style={{
-                                            backgroundColor:
-                                                activeShadow,
-                                        }}
-                                    >
-                                        <h5 className="text-white fw-semibold mb-0">
-                                            {activeToolName}
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                <button
-                                    className="tool_nav_btn right"
-                                    onClick={() =>
-                                        swiperRef.current?.slideNext()
-                                    }
-                                >
-                                    ❯
-                                </button>
-                            </div>
-                        </section>
                     </div>
                 </div>
             </section>
-            <section className="modules-section">
+            <section className="mern_skills" style={{ marginTop: "-100px" }}>
+                <div className="skills pt-lg-5 pt-4 pb-4 position-relative">
+                    <div className="d-flex justify-content-center">
+                        <div className="back_big_text">
+                            Full Stack Developer
+                        </div>
+                    </div>
+                    <div className="inner_skills_content">
+                        <div className="section_container">
+                            <div className="d-flex justify-content-center">
+                                <div className="col-lg-10">
+                                    <h2 className="text-white text-center fw-bold">
+                                        Skills and Tools You'll Master in This Course
+                                    </h2>
+                                    <p className="text-white text-center mb-0 small mt-3">
+                                        Become a complete developer, not just a coder. Through our React JS Online Course, Node.js Online Course, and MongoDB Online Course modules, master html css and javascript, a modern javascript library, and a flexible nosql database — with hands-on projects and real world tools.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-lg-10">
+                                <div className="skills-slider-wrapper">
+                                    <Swiper
+                                        className="skills-swiper py-5"
+                                        modules={[
+                                            Navigation,
+                                            Autoplay,
+                                        ]}
+                                        autoplay={{
+                                            delay: 2000,
+                                            disableOnInteraction: false,
+                                        }}
+                                        loop={true}
+                                        navigation={true}
+                                        breakpoints={{
+                                            0: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 10,
+                                            },
+                                            576: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 15,
+                                            },
+                                            768: {
+                                                slidesPerView: 2,
+                                                spaceBetween: 20,
+                                            },
+                                            1024: {
+                                                slidesPerView: 5,
+                                                centeredSlides: true,
+                                                spaceBetween: 20,
+                                            },
+                                        }}
+                                    >
+                                        {repeatedSkills.map(
+                                            (item, i) => (
+                                                <SwiperSlide
+                                                    key={i}
+                                                >
+                                                    <div className="skill-card">
+                                                        <Image
+                                                            src={item.icon}
+                                                            alt={item.title}
+                                                            width={240}
+                                                            height={240}
+                                                        />
+                                                        <p className="text-white">
+                                                            {
+                                                                item.title
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </SwiperSlide>
+                                            ),
+                                        )}
+                                    </Swiper>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="tools_slider_section pt-lg-5">
+                    {/* <div className="section_container text-center mb-4">
+                        <h3 className="text-white fw-bold mb-2">
+                            <span className="text-c2">
+                                Future-Ready{" "}
+                            </span>
+                            Tools for Modern Software
+                            <span className="text-c2">
+                                {" "}
+                                Careers
+                            </span>
+                        </h3>
+                    </div> */}
+
+                    <Swiper
+                        modules={[EffectCoverflow, Autoplay]}
+                        effect="coverflow"
+                        loop={true}
+                        slidesPerView={5}
+                        spaceBetween={20}
+                        centeredSlides={true}
+                        allowTouchMove={false}
+                        simulateTouch={false}
+                        // slidesPerView={window.innerWidth < 600 ? 1.6 : 5}
+                        coverflowEffect={{
+                            rotate: 25,
+                            stretch: 0,
+                            depth: 200,
+                            modifier: 1,
+                            slideShadows: false,
+                        }}
+                        autoplay={{ delay: 2000 }}
+                        onSwiper={(swiper) => {
+                            swiperRef.current = swiper;
+                        }}
+                        onSlideChange={(swiper) => {
+                            setActiveIndex(swiper.realIndex);
+                            setActiveToolName(
+                                tools[swiper.realIndex].name
+                            );
+                            setActiveShadow(
+                                tools[swiper.realIndex].shadow
+                            );
+                        }}
+                        breakpoints={{
+                            0: { slidesPerView: 1.6 }, // mobile screens
+                            600: { slidesPerView: 3 }, // tablets
+                            1024: { slidesPerView: 5 }, // desktop
+                        }}
+                        className="tools_swiper"
+                    >
+                        {tools.map((tool, index) => {
+                            const isActive =
+                                index === activeIndex;
+                            return (
+                                <SwiperSlide key={index}>
+                                    <div
+                                        className={`tool_card ${isActive ? "active" : ""}`}
+                                        style={{
+                                            boxShadow: isActive
+                                                ? `0px 5.33px 32px 1.02px ${tool.shadow} inset`
+                                                : `0px 3.67px 22.04px 2.14px ${tool.shadow} inset`,
+                                        }}
+                                    >
+                                        <Image
+                                            src={tool.logo}
+                                            alt={tool.name}
+                                            width={170}
+                                            height={170}
+                                        />
+                                    </div>
+                                </SwiperSlide>
+                            );
+                        })}
+                    </Swiper>
+
+                    {/* === CUSTOM NAVIGATION + TOOL NAME === */}
+                    <div className="tool_name_parent d-flex justify-content-center align-items-center gap-3 mt-3">
+                        <button
+                            className="tool_nav_btn left"
+                            onClick={() =>
+                                swiperRef.current?.slidePrev()
+                            }
+                        >
+                            ❮
+                        </button>
+
+                        <div className="position-relative d-flex justify-content-center">
+                            <div className="curve"></div>
+                            <div
+                                className="tool-name-display text-center"
+                                style={{
+                                    backgroundColor:
+                                        activeShadow,
+                                }}
+                            >
+                                <h5 className="text-white fw-semibold mb-0">
+                                    {activeToolName}
+                                </h5>
+                            </div>
+                        </div>
+
+                        <button
+                            className="tool_nav_btn right"
+                            onClick={() =>
+                                swiperRef.current?.slideNext()
+                            }
+                        >
+                            ❯
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section className="modules-section" style={{ paddingTop: "40px", paddingBottom: "220px", marginTop: "-50px" }}>
                 <div className="section_container pb-5">
-                    <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                        A Structured Path to Master{" "}
-                        <span className="text-c2">Full Stack Development</span>
-                    </h3>
 
                     <div className="row justify-content-center">
-                        <div className="col-lg-5">
+                        <div className="col-lg-10">
+                            <h3 className="text-black text-center fw-bold px-lg-5 lh-sm">
+                                Explore the Complete Curriculum of Our MERN Stack Course Online
+                            </h3>
+
                             <p className="text-black text-center px-lg-5">
-                                Each module at Velearn focuses on practical skills
-                                to prepare you for real jobs.
+                                Our MERN stack course online takes you across 16 carefully sequenced weekly modules, where each session moves from theory to hands-on projects and real-world assignments. By the end, you've built a portfolio of complete web applications, not just lecture notes.
                             </p>
                         </div>
                     </div>
@@ -1188,17 +1112,16 @@ export default function FullStackDevelopment() {
                         ref={tabsWrapperRef}
                     >
                         <div className="tabs">
-                            {[1, 2, 3, 4, 5].map((num, index) => (
+                            {Object.entries(content).map(([key, item], index) => (
                                 <button
-                                    key={num}
+                                    key={key}
                                     ref={(el) => {
                                         tabRefs.current[index] = el;
                                     }}
-                                    className={`tab ${activeTab === num ? "active" : ""
-                                        }`}
-                                    onClick={() => setActiveTab(num)}
+                                    className={`tab ${activeTab === Number(key) ? "active" : ""}`}
+                                    onClick={() => setActiveTab(Number(key))}
                                 >
-                                    Module {num}
+                                    {item.title} ({item.points.length})
                                 </button>
                             ))}
                         </div>
@@ -1214,34 +1137,45 @@ export default function FullStackDevelopment() {
                         />
 
                         <div
-                            className="tab-content-box positioned"
+                            // className="tab-content-box positioned"
                             style={{
                                 position: "absolute",
                                 top: "70px",
                                 left: `${contentLeft}px`,
                                 transform: "translateX(-50%)",
+                                zIndex: '1',
                             }}
                         >
-                            <h6 className="mb-3">{currentContent.title}</h6>
+                            {/* <h6 className="mb-3">{currentContent.title}</h6> */}
 
-                            <ul>
-                                {currentContent.points.map((point, index) => (
-                                    <li key={index}>{point}</li>
-                                ))}
-                            </ul>
+                            <div className="tab-content-box positioned">
+                                <ul>
+                                    {currentContent.points.map((point, index) => (
+                                        <li key={index}>{point}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="download_syll_butt mt-3">
+                                <div className="download_icon">
+                                    <i className="bi bi-download text-black"></i>
+                                </div>
+                                <span>Download Full Syllabus</span>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </section>
             <section className="advantage-section">
                 <div className="section_container pt-5">
-                    <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                        Velearn Live Course –
-                        <span className="text-c2">
-                            {" "}
-                            What Makes It Different
-                        </span>
-                    </h3>
+                    <div className="row justify-content-center">
+                        <div className="col-lg-7">
+                            <h3 className="text-black text-center fw-bold lh-sm">
+                                Build AI Powered Web Apps in Our MERN Stack Course
+                            </h3>
+                        </div>
+                    </div>
 
                     <div className="row justify-content-center">
                         <div className="col-lg-10 position-relative">
