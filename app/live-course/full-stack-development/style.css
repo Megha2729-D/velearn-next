@@ -1217,3 +1217,27 @@
         background: linear-gradient(to bottom, transparent, #ffffff);
     }
 }
+
+.build_list_robo_parent {
+    position: relative;
+}
+
+.build_list_robo_parent img {
+    width: 70%;
+    margin-top: 40px;
+}
+
+.build_list_robo_parent div {
+    box-shadow: inset 0px 0px 10px 1px #ffffff69;
+    width: 230px;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 40px;
+    background: #ffffff47
+}
+
+.build_list_robo_parent div:first-child {
+    position: absolute;
+    right: 7.5%;
+    top: 21.5%;
+}

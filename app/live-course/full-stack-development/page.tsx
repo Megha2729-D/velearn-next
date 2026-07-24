@@ -1092,7 +1092,7 @@ export default function FullStackDevelopment() {
                     </div>
                 </div>
             </section>
-            <section className="modules-section" style={{ paddingTop: "40px", paddingBottom: "220px", marginTop: "-50px" }}>
+            <section className="modules-section" style={{ paddingTop: "40px", paddingBottom: "230px", marginTop: "-60px" }}>
                 <div className="section_container pb-5">
 
                     <div className="row justify-content-center">
@@ -1101,7 +1101,7 @@ export default function FullStackDevelopment() {
                                 Explore the Complete Curriculum of Our MERN Stack Course Online
                             </h3>
 
-                            <p className="text-black text-center px-lg-5">
+                            <p className="text-black text-center px-lg-5 small">
                                 Our MERN stack course online takes you across 16 carefully sequenced weekly modules, where each session moves from theory to hands-on projects and real-world assignments. By the end, you've built a portfolio of complete web applications, not just lecture notes.
                             </p>
                         </div>
@@ -1178,9 +1178,22 @@ export default function FullStackDevelopment() {
                     </div>
 
                     <div className="row justify-content-center">
-                        <div className="col-lg-10 position-relative">
-                            <div className="row justify-content-center">
-                                {advantages.map((item, index) => (
+                        <div className="col-lg-12 position-relative">
+                            <div className="row justify-content-center build_list_robo_parent">
+                                <Image src={"/images/live-course/mern/build-list-robot.svg"} height={400} width={400} className="h-auto" alt="" />
+                                <div>
+                                    <p className="fw-bold">AI Coding Assistants & LLM APIs</p>
+                                    <p className="small">
+                                        Step into AI-powered development, use AI coding assistants to work faster and integrate LLM APIs into real web applications, the foundation of modern full stack development.
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="fw-bold">AI Chat UI & Vector Search</p>
+                                    <p className="small">
+                                        Build a live AI chat interface and add smart, meaning-based vector search to your projects, the core features behind today's AI apps.
+                                    </p>
+                                </div>
+                                {/* {advantages.map((item, index) => (
                                     <div
                                         className="col-lg-3 col-6 d-flex justify-content-center mb-4 ms-lg-1"
                                         key={index}
@@ -1258,10 +1271,10 @@ export default function FullStackDevelopment() {
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                ))} */}
                             </div>
 
-                            <div className="puzzle_images">
+                            {/* <div className="puzzle_images">
 
                                 <Image
                                     src={`/images/details-page/puzzle-1.png`}
@@ -1277,7 +1290,7 @@ export default function FullStackDevelopment() {
                                     width={200}
                                     alt=""
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
