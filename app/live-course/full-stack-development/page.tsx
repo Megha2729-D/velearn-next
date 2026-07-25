@@ -14,6 +14,8 @@ import {
 } from "swiper/modules";
 import "./style.css"
 import "swiper/css";
+// import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
@@ -447,6 +449,15 @@ export default function FullStackDevelopment() {
         },
     ];
 
+    const partners = [
+        "accenture.png",
+        "tech-mahindra.png",
+        "wipro.png",
+        "tcs.png",
+        "ibm.png",
+        "infosys.png",
+    ];
+
     const testimonials = [
         {
             name: "Swetha",
@@ -492,86 +503,99 @@ export default function FullStackDevelopment() {
 
     const faqData = [
         {
-            question: "Who is this Live Full Stack course designed for?",
+            question: "What technology should I learn?",
             answer: (
                 <>
                     <p>
-                        This course is designed for students, freshers, career
-                        switchers, and working professionals who want to learn
-                        full stack development through live training, gain
-                        real-world project experience, become job-ready
-                        developers with strong practical skills, and build a
-                        professional portfolio for interviews and receive career
-                        and placement guidance.
+                        Start with HTML CSS JavaScript, then move into React, Node.js, Express and MongoDB, along with real AI tools. That's the complete mern stack our course covers from day one.
                     </p>
                 </>
             ),
         },
         {
-            question: "Do I need prior coding experience to join this course?",
+            question: "Why is the MERN stack important?",
             answer: (
                 <>
                     <p>
-                        No. You do not need any prior coding experience to join
-                        this course.
+                        The MERN stack (MongoDB, Express.js, React.js, and Node.js)
+                        is one of the most in-demand full-stack web development
+                        technologies used by startups and leading tech companies.
                     </p>
                     <p>
-                        Our training starts from the basics and gradually moves
-                        toward advanced concepts. Beginners, students, and
-                        non-IT professionals can easily learn.
+                        It enables developers to build fast, scalable, and modern web
+                        applications using JavaScript across both the frontend and
+                        backend, making development more efficient and easier to
+                        maintain.
                     </p>
                     <p>
-                        For those who already have some coding knowledge, we
-                        provide fast-track options, challenging tasks, and
-                        advanced modules to match your skill level.
+                        Learning the MERN stack opens up career opportunities such as
+                        Full Stack Developer, Frontend Developer, Backend Developer,
+                        and Software Engineer.
                     </p>
                 </>
             ),
         },
         {
-            question: "What kind of projects will I work on?",
+            question: "How do mentors help during the course?",
             answer: (
                 <>
                     <p>
-                        You will work on real-time, industry-relevant projects
-                        based on the specific course you choose. These projects
-                        help you build strong practical skills and a job-ready
-                        portfolio.
-                    </p>
-                    <p>Example project types include:</p>
-                    <ul>
-                        <li>Web and mobile application development</li>
-                        <li>API & backend systems</li>
-                        <li>Data visualization dashboards</li>
-                        <li>Machine learning mini-projects</li>
-                        <li>Cloud deployment & automation tasks</li>
-                    </ul>
-                    <p>
-                        At the end of the course, you will also complete a
-                        capstone project to showcase your skills.
-                    </p>
-                </>
-            ),
-        },
-        {
-            question: "Will this course help me get a job?",
-            answer: (
-                <>
-                    <p>
-                        Yes. This course is designed to make you job-ready
-                        through:
+                        Our experienced mentors guide you throughout your learning
+                        journey with personalized support and practical insights.
                     </p>
                     <ul>
-                        <li>Practical training & real-world projects</li>
-                        <li>Portfolio and resume development</li>
-                        <li>Interview preparation & mock interviews</li>
-                        <li>Placement support & company referrals</li>
+                        <li>Explain concepts with real-world examples</li>
+                        <li>Conduct live coding and doubt-clearing sessions</li>
+                        <li>Review assignments and project work</li>
+                        <li>Provide feedback to improve coding skills</li>
+                        <li>Offer career guidance and interview preparation</li>
                     </ul>
                     <p>
-                        Many students start as interns, junior developers,
-                        analysts, or IT support roles depending on their course.
-                        Our placement team helps you throughout the job
-                        application process.
+                        Mentors ensure you gain confidence by helping you solve
+                        challenges and complete projects successfully.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Is placement support included in this course?",
+            answer: (
+                <>
+                    <p>
+                        Yes. We provide dedicated placement assistance to help you
+                        become job-ready after completing the course.
+                    </p>
+                    <ul>
+                        <li>Resume and LinkedIn profile building</li>
+                        <li>Mock interviews with expert feedback</li>
+                        <li>Aptitude and technical interview preparation</li>
+                        <li>Portfolio and GitHub profile guidance</li>
+                        <li>Job referrals and placement assistance</li>
+                    </ul>
+                    <p>
+                        Our placement team supports you throughout the hiring process
+                        and connects you with suitable job opportunities.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Do I get a certificate after completing a course?",
+            answer: (
+                <>
+                    <p>
+                        Yes. After successfully completing the course and required
+                        assessments, you will receive a course completion certificate.
+                    </p>
+                    <p>
+                        The certificate validates your skills and can be added to your
+                        resume, LinkedIn profile, and professional portfolio to enhance
+                        your career prospects.
+                    </p>
+                    <p>
+                        Along with the certificate, you will also have hands-on project
+                        experience that demonstrates your practical knowledge to
+                        employers.
                     </p>
                 </>
             ),
@@ -853,7 +877,7 @@ export default function FullStackDevelopment() {
                                     </div>
                                 </div>
 
-                                <div className="col-lg-9 mt-5">
+                                <div className="col-lg-9 mt-5 pb-lg-0 pb-5">
                                     <div className="row">
                                         <div className="col-lg-4 pe-lg-0">
                                             <div className="mern_keypoints_1 ms-lg-5">
@@ -875,7 +899,7 @@ export default function FullStackDevelopment() {
                                                 height={500} width={250} alt=""
                                             />
                                         </div>
-                                        <div className="col-lg-4 ps-lg-0">
+                                        <div className="col-lg-4 ps-lg-0 mt-lg-0 mt-4">
                                             <div className="mern_keypoints_3 me-lg-5">
                                                 <p className="fw-bold">Find & fix errors easily</p>
                                                 <p className="mb-0">
@@ -892,7 +916,6 @@ export default function FullStackDevelopment() {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -917,7 +940,7 @@ export default function FullStackDevelopment() {
                                 </div>
                             </div>
                         </div>
-                        <div className="row d-flex justify-content-center">
+                        <div className="row d-flex justify-content-center w-100 m-auto">
                             <div className="col-lg-10">
                                 <div className="skills-slider-wrapper">
                                     <Swiper
@@ -1137,7 +1160,7 @@ export default function FullStackDevelopment() {
                         />
 
                         <div
-                            // className="tab-content-box positioned"
+                            className="tab-content-parent"
                             style={{
                                 position: "absolute",
                                 top: "70px",
@@ -1181,135 +1204,29 @@ export default function FullStackDevelopment() {
                         <div className="col-lg-12 position-relative">
                             <div className="row justify-content-center build_list_robo_parent">
                                 <Image src={"/images/live-course/mern/build-list-robot.svg"} height={400} width={400} className="h-auto" alt="" />
-                                <div>
+                                <div className="build_list_robo_1">
                                     <p className="fw-bold">AI Coding Assistants & LLM APIs</p>
                                     <p className="small">
                                         Step into AI-powered development, use AI coding assistants to work faster and integrate LLM APIs into real web applications, the foundation of modern full stack development.
                                     </p>
                                 </div>
-                                <div>
+                                <div className="build_list_robo_2">
                                     <p className="fw-bold">AI Chat UI & Vector Search</p>
                                     <p className="small">
                                         Build a live AI chat interface and add smart, meaning-based vector search to your projects, the core features behind today's AI apps.
                                     </p>
                                 </div>
-                                {/* {advantages.map((item, index) => (
-                                    <div
-                                        className="col-lg-3 col-6 d-flex justify-content-center mb-4 ms-lg-1"
-                                        key={index}
-                                    >
-                                        <div className="inner_adv">
-                                            <div className="inner_adv_bg">
-                                                <svg
-                                                    viewBox="0 0 185 175"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <g filter="url(#filter0_g_652_2040)">
-                                                        <rect
-                                                            x="4.91113"
-                                                            y="4.91138"
-                                                            width="174.198"
-                                                            height="164.989"
-                                                            rx="13.813"
-                                                            fill={
-                                                                item.color
-                                                            }
-                                                            fillOpacity="0.19"
-                                                        />
-                                                    </g>
-                                                    <defs>
-                                                        <filter
-                                                            id="filter0_g_652_2040"
-                                                            x="-0.000171661"
-                                                            y="7.24792e-05"
-                                                            width="184.02"
-                                                            height="174.812"
-                                                            filterUnits="userSpaceOnUse"
-                                                            colorInterpolationFilters="sRGB"
-                                                        >
-                                                            <feFlood
-                                                                floodOpacity="0"
-                                                                result="BackgroundImageFix"
-                                                            />
-                                                            <feBlend
-                                                                mode="normal"
-                                                                in="SourceGraphic"
-                                                                in2="BackgroundImageFix"
-                                                                result="shape"
-                                                            />
-                                                            <feTurbulence
-                                                                type="fractalNoise"
-                                                                baseFrequency="0.200479 0.200479"
-                                                                numOctaves="3"
-                                                                seed="1556"
-                                                            />
-                                                            <feDisplacementMap
-                                                                in="shape"
-                                                                scale="9.82"
-                                                                xChannelSelector="R"
-                                                                yChannelSelector="G"
-                                                                result="displacedImage"
-                                                                width="100%"
-                                                                height="100%"
-                                                            />
-                                                            <feMerge result="effect1_texture_652_2040">
-                                                                <feMergeNode in="displacedImage" />
-                                                            </feMerge>
-                                                        </filter>
-                                                    </defs>
-                                                </svg>
-                                            </div>
-
-                                            <div className="inner_adv_content">
-                                                <h4 className="text-black fw-bold text-lg-start text-center">
-                                                    {item.title}
-                                                </h4>
-                                                <p className="text-black text-lg-start text-center">
-                                                    {item.text}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))} */}
                             </div>
-
-                            {/* <div className="puzzle_images">
-
-                                <Image
-                                    src={`/images/details-page/puzzle-1.png`}
-                                    className="puzzle-1 w-auto"
-                                    height={200}
-                                    width={200}
-                                    alt=""
-                                />
-                                <Image
-                                    src={`/images/details-page/puzzle-2.png`}
-                                    className="puzzle-2 w-auto"
-                                    height={200}
-                                    width={200}
-                                    alt=""
-                                />
-                            </div> */}
                         </div>
                     </div>
                 </div>
             </section>
-            <section className="from_start_sec pt-4">
+            <section className="from_start_sec pt-5">
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-7">
                             <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                                A Smart{" "}
-                                <span className="text-c2">
-                                    {" "}
-                                    Learning Journey{" "}
-                                </span>
-                                That Leads to{" "}
-                                <span className="text-c2">
-                                    {" "}
-                                    Real Careers
-                                </span>
+                                Velearn's Step-by-Step Learning Journey to Become a Fullstack Developer
                             </h3>
                         </div>
                     </div>
@@ -1431,17 +1348,192 @@ export default function FullStackDevelopment() {
                     </div>
                 </div>
             </section>
+            <section className="portfolio_parent_part" style={{ paddingBottom: '80px' }}>
+                <div className="skill_parent portfolio_parent pb-lg-0 pb-5">
+                    <div className="section_container pt-5">
+                        <div className="row justify-content-center">
+                            <div className="col-lg-7">
+                                <h3 className="text-white text-center fw-bold px-3 lh-sm">
+                                    Real World Projects That Build {" "}
+                                    <span className="text-c2">
+                                        {" "}
+                                        Your Developer Portfolio
+                                    </span>
+                                </h3>
+                            </div>
+                        </div>
+                        <div className="row justify-content-center align-items-center">
+                            <div className="col-lg-12">
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-6 d-flex align-items-center justify-content-center">
+                                        <div className="">
+                                            <Image src={"/images/live-course/mern/portfolio-left.svg"} className="w-100 h-auto" height={300} width={300} alt="" />
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 d-flex align-items-center justify-content-center">
+                                        <Swiper
+                                            loop={true}
+                                            pagination={{ clickable: true }}
+                                            centeredSlides={true}
+                                            slidesPerView={1}
+                                            modules={[Pagination, Autoplay, Navigation]}
+                                            navigation={true}
+                                            autoplay={{
+                                                delay: 2000,
+                                                disableOnInteraction: false,
+                                            }}
+                                        // breakpoints={{
+                                        //     0: { slidesPerView: 2.3 },
+                                        //     576: { slidesPerView: 2.3 },
+                                        //     768: { slidesPerView: 3.3 },
+                                        //     991: { slidesPerView: 3.3 },
+                                        //     1024: { slidesPerView: 3.3 },
+                                        //     1200: { slidesPerView: 5 },
+                                        // }}
+                                        >
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                {/* <Image src={"/images/live-course/mern/portfolio-1.gif"} */}
+                                                <Image src={"/images/live-course/mern/portfolio-swiper-1.png"}
+                                                    className="w-75 h-auto"
+                                                    height={500}
+                                                    width={500}
+                                                    alt="" />
+                                            </SwiperSlide>
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                {/* <Image src={"/images/live-course/mern/portfolio-1.gif"} */}
+                                                <Image src={"/images/live-course/mern/portfolio-swiper-1.png"}
+                                                    className="w-75 h-auto"
+                                                    height={500}
+                                                    width={500}
+                                                    alt="" />
+                                            </SwiperSlide>
+                                        </Swiper>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="certificate_parent" style={{ borderRadius: '65px 65px 0 0', marginTop: '-70px' }}>
+                <div className="section_container py-5">
+                    <div>
+                        <div className="row justify-content-center">
+                            <div className="col-lg-6">
+                                <h3 className="text-black text-center fw-bold px-3 lh-sm">
+                                    Earn an Industry{" "}
+                                    <span className="text-c2">{" "}Recognized{" "}</span>
+                                    MERN Stack Course with
+                                    <span className="text-c2">{" "}Certificate</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <div className="row justify-content-center">
+                            <div className="col-lg-9 mt-4">
+                                <div className="row">
+                                    <div className="col-lg-6 d-flex flex-column justify-content-center">
+                                        <div className="mb-4">
+                                            <h5 className="text-c1 fw-bold mb-3">
+                                                Validate Your Achievement
+                                            </h5>
+                                            <p className="text-black mb-4">
+                                                Complete the course and earn an ISO-certified MERN Stack Developer Professional Certificate that proves your skills to hiring companies.
+                                            </p>
+                                        </div>
+                                        <div className="mb-4">
+                                            <h5 className="text-c1 fw-bold mb-3">
+                                                Build a Professional Skill Portfolio
+                                            </h5>
+                                            <p className="text-black mb-4">
+                                                Pair your certificate with real-world projects and web applications that prove your readiness as a web developer.
+                                            </p>
+                                        </div>
+                                        <div className="mb-4">
+                                            <h5 className="text-c1 fw-bold mb-3">
+                                                Share Your Success
+                                            </h5>
+                                            <p className="text-black mb-4">
+                                                Showcase your achievement on LinkedIn and job applications as a certified developer or software engineer.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-6 d-flex align-items-center justify-content-center p-lg-5">
+                                        <div className=" d-flex align-items-center justify-content-center">
+                                            <div className="col-lg-10">
+                                                <Image
+                                                    src={`/images/details-page/certificate.jpg`}
+                                                    className="w-100 h-auto"
+                                                    height={500}
+                                                    width={500}
+                                                    alt=""
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="my-4">
+                        <div className="row justify-content-center my-3">
+                            <div className="col-lg-6 mt-lg-0 mt-4">
+                                <h3 className="text-black text-center fw-bold px-3 lh-sm">
+                                    <span className="text-c2">Get Hired{" "}</span>
+                                    Faster with Our MERN Stack Course with Placement
+                                </h3>
+                            </div>
+                        </div>
+                        <div className="row justify-content-center">
+                            <div className="col-lg-10">
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-3 mt-4">
+                                        <div className="hire_points one">
+                                            <h6 className="fw-bold">Resume & portfolio reviews</h6>
+                                            <p className="mb-0 small">
+                                                1:1 reviews of your GitHub, LinkedIn and resume, showcasing the real web applications you built through this full stack developer course, backed by our dedicated placement support.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 mt-4">
+                                        <div className="hire_points two">
+                                            <h6 className="fw-bold">Mock technical interviews</h6>
+                                            <p className="mb-0 small">
+                                                DSA, system design, and live coding rounds. Mock interviews built around real MERN stack scenarios that prepare you for every developer role
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 mt-4">
+                                        <div className="hire_points three">
+                                            <h6 className="fw-bold">Direct hiring partner referrals</h6>
+                                            <p className="mb-0 small">
+                                                We send your profile to recruiters at top companies hiring for full stack web development roles, connecting you with real job opportunities.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 mt-4">
+                                        <div className="hire_points four">
+                                            <h6 className="fw-bold">Support until you're placed</h6>
+                                            <p className="mb-0 small">
+                                                No time limit. We stay with you until you land your first web development job, with full placement assistance
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <section className="details_bottom_part">
                 <div className="skill_parent">
                     <div className="section_container py-5">
                         <div className="row justify-content-center">
                             <div className="col-lg-7">
                                 <h3 className="text-white text-center fw-bold px-3 lh-sm">
-                                    Unlock High-Paying Tech Roles with{" "}
                                     <span className="text-c2">
-                                        {" "}
-                                        Full Stack Skills
+                                        Unlock Top Job Roles{" "}
                                     </span>
+                                    and Salaries with the Full Stack Developer Course
                                 </h3>
                             </div>
                         </div>
@@ -1451,51 +1543,93 @@ export default function FullStackDevelopment() {
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                Full stack Developer Avg ₹ 6
-                                                LPA - 8 LPA
+                                                Full stack Developer
+                                                Avg ₹ 6 LPA - 8 LPA
                                             </p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                Frontend Developer Avg ₹ 5
-                                                LPA - 9 LPA
+                                                Frontend Developer
+                                                Avg ₹ 5 LPA - 9 LPA
                                             </p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                Backend Developer Avg ₹ 5
-                                                LPA - 10 LPA
+                                                Backend Developer
+                                                Avg ₹ 5 LPA - 10 LPA
                                             </p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                DevOps Engineer Avg ₹ 10 LPA
-                                                - 20 LPA
+                                                DevOps Engineer
+                                                Avg ₹ 10 LPA - 20 LPA
                                             </p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                React/Node.js Developer Avg
-                                                ₹ 6 LPA - 12 LPA
+                                                React/Node.js Developer
+                                                Avg ₹ 6 LPA - 12 LPA
                                             </p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-6 my-3">
                                         <div className="skill_inner_p">
                                             <p>
-                                                Software Engineer Avg ₹ 5
-                                                LPA - 10 LPA
+                                                Software Engineer
+                                                Avg ₹ 5 LPA - 10 LPA
                                             </p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="pb-5 logo_swiper mern_partner">
+                                <div className="section_container p-xl text-center mt-5">
+                                    <h2 className="text-white fw-bold text-center">
+                                        Trusted by Top{" "}
+                                        <span className="text-c2">Hiring Partners</span>
+                                    </h2>
+                                    <Swiper
+                                        className="pt-5"
+                                        modules={[Autoplay]}
+                                        spaceBetween={30}
+                                        slidesPerView={5}
+                                        speed={3000}
+                                        autoplay={{
+                                            delay: 0,
+                                            disableOnInteraction: false,
+                                        }}
+                                        loop={true}
+                                        grabCursor={false}
+                                        allowTouchMove={false}
+                                        breakpoints={{
+                                            320: { slidesPerView: 2 },
+                                            768: { slidesPerView: 3 },
+                                            1024: { slidesPerView: 5 },
+                                        }}
+                                    >
+                                        {partners.map((logo, index) => (
+                                            <SwiperSlide key={index}>
+                                                <Image
+                                                    src={`/images/prime-recruiters/${logo}`}
+                                                    alt={`Partner ${index + 1}`}
+                                                    className="partner-logo"
+                                                    height={50}
+                                                    width={150}
+
+                                                />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
                                 </div>
                             </div>
                         </div>
@@ -1505,28 +1639,28 @@ export default function FullStackDevelopment() {
                     <div className="section_container">
                         <div className="row justify-content-center">
                             <div className="col-lg-7">
-                                <h3 className="text-white text-center fw-bold px-3 lh-sm">
-                                    Real Learning Outcomes Shared by{" "}
+                                <h2 className="text-white text-center fw-bold px-3 lh-sm">
                                     <span className="text-c2">
-                                        Our Students
+                                        Stories of Students{" "}
                                     </span>
-                                </h3>
+                                    Who Made It Happen
+                                </h2>
                             </div>
                         </div>
 
                         <div className="testimonial-slider-wrapper">
                             <Swiper
-                                className="testimonial-swiper"
+                                className="testimonial-swiper" style={{ paddingBottom: '50px !important' }}
                                 loop={true}
                                 pagination={{ clickable: true }}
                                 centeredSlides={true}
                                 slidesPerGroup={3}
                                 slidesPerView={5}
                                 modules={[Pagination, Autoplay]}
-                                autoplay={{
-                                    delay: 2000,
-                                    disableOnInteraction: false,
-                                }}
+                                // autoplay={{
+                                //     delay: 2000,
+                                //     disableOnInteraction: false,
+                                // }}
                                 onSwiper={(swiper) => {
                                     setActiveSlide(swiper.realIndex);
                                 }}
@@ -1590,6 +1724,64 @@ export default function FullStackDevelopment() {
                         </div>
                     </div>
                 </div>
+                <div className="section_container mt-4">
+                    <h2 className="fw-bold text-white text-center">Choose a Batch That Fits Your Schedule</h2>
+                    <div className="row justify-content-center w-100 m-auto">
+                        <div className="col-lg-9 mt-4">
+                            <div className="row justify-content-center batch_parent">
+                                <div className="col-lg-6 my-4">
+                                    <div className="batch_child">
+                                        <h4 className="text-white fw-bold text-center">Weekday Batch</h4>
+                                        <div>
+                                            <p className="text-white small">Monday - Friday</p>
+                                            <p className="text-white small">4 Month / 160 Hours <br /> (include Doubt Clearing)</p>
+                                            <p className="text-white small">Session Recordings Included</p>
+                                        </div>
+                                        <div className="col-12 d-flex justify-content-center">
+                                            <button>Enroll In Weekday Batch</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6 my-4">
+                                    <div className="batch_child">
+                                        <h4 className="text-white fw-bold text-center">Weekend Batch</h4>
+                                        <div>
+                                            <p className="text-white small">Saturday – Sunday</p>
+                                            <p className="text-white small">5 Months / 160 Hours <br /> (include Doubt Clearing)</p>
+                                            <p className="text-white small">Session Recordings Included</p>
+                                        </div>
+                                        <div className="col-12 d-flex justify-content-center">
+                                            <button>Enroll In Weekend Batch</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-12 ">
+                                    <div className="row batch_child mt-5 mb-4">
+                                        <div className="col-lg-6 d-flex align-items-center">
+                                            <div>
+                                                <h5 className="text-white fw-bold">Self-Paced</h5>
+                                                <p className="text-white">Learn at your own schedule </p>
+                                                <p className="text-white small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
+
+                                                <div className="col-12 mt-4 d-flex justify-content-start">
+                                                    <button>Explore self-paced course</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-6 d-flex align-items-center mt-lg-0 mt-4">
+                                            <ul className="p-0 m-0">
+                                                <li>All recordings + materials</li>
+                                                <li>Lifetime access</li>
+                                                <li>Certificate of completion</li>
+                                                <li>Learn at your own pace</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="section_container">
                     <div className="py-5 price_section_parent_top">
                         <div className="text-center d-flex justify-content-center">
@@ -1599,8 +1791,7 @@ export default function FullStackDevelopment() {
                                         <div className="price_section d-flex flex-column align-items-center justify-content-center px-2 px-lg-4 py-4">
                                             {/* PRICE TABS */}
                                             <h3 className="fw-bold mb-3 text-white px-3 px-lg-0">
-                                                Full Stack Unlimited Access
-                                                Plan
+                                                Pricing Plans Built for Every Learner
                                             </h3>
 
                                             <div className="d-flex justify-content-center align-items-center gap-3 mb-4 price_header">
@@ -1623,38 +1814,26 @@ export default function FullStackDevelopment() {
                                                     <div className="col-6">
                                                         <ul className="list-unstyled">
                                                             <li>
-                                                                • Lifetime
-                                                                Material
-                                                                Access
+                                                                • Lifetime Material Access
                                                             </li>
                                                             <li>
-                                                                •
-                                                                Portfolio-Ready
-                                                                Projects
+                                                                • Portfolio-Ready Projects
                                                             </li>
                                                             <li>
-                                                                • Mentor-Led
-                                                                Support
+                                                                • Mentor-Led Support
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div className="col-6">
                                                         <ul className="list-unstyled">
                                                             <li>
-                                                                • Structured
-                                                                Full Stack
-                                                                Roadmap
+                                                                • Structured Full Stack Roadmap
                                                             </li>
                                                             <li>
-                                                                • Career &
-                                                                Placement
-                                                                Guidance
+                                                                • Career & Placement Guidance
                                                             </li>
                                                             <li>
-                                                                •
-                                                                Certificate
-                                                                Of
-                                                                Completion
+                                                                • Certificate Of Completion
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -1679,73 +1858,8 @@ export default function FullStackDevelopment() {
                     </div>
                 </div>
             </section>
-            <section>
-                <div
-                    className="section_container pt-5"
-                    style={{ marginTop: "200px" }}
-                >
-                    <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                        Earn Your Professional{" "}
-                        <span className="text-c2"> Certification</span>
-                    </h3>
-                    <div className="row justify-content-center">
-                        <div className="col-lg-10 mt-4">
-                            <div className="row">
-                                <div className="col-lg-6 d-flex flex-column justify-content-center">
-                                    <div className="mb-4">
-                                        <h5 className="text-c1 fw-bold mb-3">
-                                            Validate Your Achievement
-                                        </h5>
-                                        <p className="text-black mb-4">
-                                            {" "}
-                                            A trusted certificate that
-                                            reflects your successful Course
-                                            completion
-                                        </p>
-                                    </div>
-                                    <div className="mb-4">
-                                        <h5 className="text-c1 fw-bold mb-3">
-                                            {" "}
-                                            Build a Professional Skill
-                                            Portfolio
-                                        </h5>
-                                        <p className="text-black mb-4">
-                                            Build your professional profile
-                                            with verified course
-                                            credentials.
-                                        </p>
-                                    </div>
-                                    <div className="mb-4">
-                                        <h5 className="text-c1 fw-bold mb-3">
-                                            {" "}
-                                            Share Your Success
-                                        </h5>
-                                        <p className="text-black mb-4">
-                                            Highlight your certification on
-                                            LinkedIn and Resumes
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 d-flex align-items-center justify-content-center p-lg-5">
-                                    <div className=" d-flex align-items-center justify-content-center">
-                                        <div className="col-lg-10">
-                                            <Image
-                                                src={`/images/details-page/certificate.jpg`}
-                                                className="w-100 h-auto"
-                                                height={500}
-                                                width={500}
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section className="faq_section py-5">
-                <div className="section_container p-xl text-center mt-lg-5">
+            <section className="faq_section pb-5">
+                <div className="section_container p-xl text-center pt-5">
                     <h3 className="section_base_heading">
                         Frequently Asked{" "}
                         <span className="text-c2">Questions</span>
@@ -1791,6 +1905,37 @@ export default function FullStackDevelopment() {
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+            </section>
+            <section className="mern_cta position-relative">
+
+                <Image src={"/images/live-course/mern/cta-person.svg"} className="mern_cta_person" width={3000} height={500} alt="" />
+                <Image src={"/images/live-course/mern/cta-banner.svg"} className="mern_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
+                <div className="section_container">
+                    <div className="row justify-content-center w-100 m-auto">
+                        <div className="mern_cta_inner mt-lg-5">
+                            <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
+                            <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
+                            <div className="col-12 d-flex justify-content-center gap-3">
+                                <button>Enroll Now</button>
+                                <button>Talk to Counsellors</button>
+                            </div>
+                        </div>
+                        {/* <div className="col-lg-10">
+                            <div className="row py-5 justify-content-end">
+                                <div className="col-lg-8">
+                                    <div className="mern_cta_inner mt-5">
+                                        <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
+                                        <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
+                                        <div className="col-12 d-flex justify-content-center gap-3">
+                                            <button>Enroll Now</button>
+                                            <button>Talk to Counsellors</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </section>
