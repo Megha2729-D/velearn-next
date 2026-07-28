@@ -1909,7 +1909,6 @@ export default function FullStackDevelopment() {
                 </div>
             </section>
             <section className="mern_cta position-relative">
-
                 <Image src={"/images/live-course/mern/cta-person.svg"} className="mern_cta_person" width={3000} height={500} alt="" />
                 <Image src={"/images/live-course/mern/cta-banner.svg"} className="mern_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
                 <div className="section_container">
@@ -1922,20 +1921,6 @@ export default function FullStackDevelopment() {
                                 <button>Talk to Counsellors</button>
                             </div>
                         </div>
-                        {/* <div className="col-lg-10">
-                            <div className="row py-5 justify-content-end">
-                                <div className="col-lg-8">
-                                    <div className="mern_cta_inner mt-5">
-                                        <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
-                                        <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
-                                        <div className="col-12 d-flex justify-content-center gap-3">
-                                            <button>Enroll Now</button>
-                                            <button>Talk to Counsellors</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </section>

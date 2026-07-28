@@ -1,0 +1,24 @@
+<svg width="1424" height="500" viewBox="0 100 1424 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_0_1)">
+<path d="M-245.062 205.1H1668.94V554.1H-245.062V205.1Z" fill="#24B8EC" fill-opacity="0.49"/>
+</g>
+<path d="M302.835 474.211C180.453 486.445 110.789 506.543 40.4971 557.227H1304.49V243.077H1028.35C742.158 243.077 850.106 390.758 719.564 368.474C589.023 346.191 542.069 361.163 526.89 368.474C489.861 386.311 425.218 461.977 302.835 474.211Z" fill="url(#paint0_linear_0_1)" fill-opacity="0.5"/>
+<line x1="384.59" y1="422.159" x2="384.59" y2="502.222" stroke="white" stroke-opacity="0.18" stroke-width="0.873853" stroke-linecap="round" stroke-dasharray="5.24 5.24"/>
+<line x1="662.265" y1="345.348" x2="662.265" y2="502.223" stroke="white" stroke-opacity="0.18" stroke-width="0.873853" stroke-linecap="round" stroke-dasharray="5.24 5.24"/>
+<line x1="1016.65" y1="287.256" x2="1016.65" y2="502.222" stroke="white" stroke-opacity="0.18" stroke-width="0.873853" stroke-linecap="round" stroke-dasharray="5.24 5.24"/>
+<circle cx="385.027" cy="414.732" r="6.99083" fill="white"/>
+<circle cx="661.828" cy="344.91" r="6.99083" fill="white"/>
+<circle cx="1016.22" cy="279.828" r="6.99083" fill="white"/>
+<defs>
+<filter id="filter0_f_0_1" x="-450.163" y="9.15527e-05" width="2324.2" height="759.2" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="102.55" result="effect1_foregroundBlur_0_1"/>
+</filter>
+<linearGradient id="paint0_linear_0_1" x1="672.494" y1="240.377" x2="672.494" y2="557.227" gradientUnits="userSpaceOnUse">
+<stop stop-color="#24B8EC"/>
+<stop offset="0.816305" stop-color="#115A74"/>
+<stop offset="1" stop-color="#0D303D"/>
+</linearGradient>
+</defs>
+</svg>

@@ -59,8 +59,7 @@
 }
 
 .uiux-left p {
-    font-size: 18px;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .uiux-desc {
@@ -77,13 +76,30 @@
     font-weight: 700;
     border-radius: 30px;
     text-decoration: none;
-    margin-top: 10px;
+    border: none;
     transition: all .3s ease-out;
 }
 
 .uiux-btn:hover {
     background: var(--c1);
     color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.book_but {
+    border-radius: 30px;
+    background: #FFFFFF1A;
+    border: none;
+    color: #ffffff;
+    padding: 12px 28px;
+    font-weight: bold;
+    margin-left: 10px;
+    transition: all .3s ease-out;
+}
+
+.book_but:hover {
+    background: #FFFFFF;
+    color: var(--c1);
     transition: all .3s ease-out;
 }
 
@@ -130,7 +146,25 @@
 
 .modules_sec {
     border-radius: 55px;
-    box-shadow: 0 0 13px -2px #ffffff4d inset;
+    border: 1px solid #FFFFFF;
+    /* box-shadow: 0 0 13px -2px #ffffff4d inset; */
+    position: relative;
+}
+
+.batch_details {
+    background: #000000;
+    border: 1px solid #FFFFFF;
+    border-radius: 56px;
+    width: fit-content;
+    margin: auto;
+    padding: 56px 30px 10px 30px;
+    margin-top: -45px;
+}
+
+.batch_details p {
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .course-overview {
@@ -138,8 +172,8 @@
 }
 
 .course-overview h3 {
-    background-color: #ffffff;
-    padding: 15px 50px;
+    background: linear-gradient(180deg, #ffffff 44%, transparent);
+    padding: 15px 100px;
     width: fit-content;
     text-align: center;
     border-radius: 60px;
@@ -230,12 +264,20 @@
 }
 
 .tools_sec {
-    background: linear-gradient(to bottom,
-            #ffffff 0%,
-            #ffffff 5%,
-            #24B8EC7D 40%,
-            #ffffff 80%,
-            #ffffff 100%);
+    background: radial-gradient(circle at center, #24b8ec80 0%, #24b8ec80 15%, #ffffff00 100%, #ffffff 100%);
+    padding-bottom: 90px;
+}
+
+.tool_img img {
+    z-index: 2;
+    color: transparent;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 60%;
+    height: auto;
 }
 
 .launch_sec .uiux-section {
@@ -251,6 +293,7 @@
 .launch_sec .rocket-img {
     margin-top: 100px;
     width: 100%;
+    height: auto;
     z-index: 2;
     position: relative;
 }
@@ -260,10 +303,11 @@
     position: absolute;
     min-width: 200px;
     background: radial-gradient(96.78% 93.91% at 3.22% 6.09%, #ffffff6e 11.95% 11.95%, #ffffff1c 100%);
-    padding: 10px 18px;
+    padding: 7px 18px;
     border-radius: 25px;
     font-size: 14px;
     font-weight: 500;
+    line-height: 16px;
     color: #333;
     backdrop-filter: blur(6px);
 }
@@ -298,28 +342,28 @@
 }
 
 .launch_sec .ui-item.left.middle {
-    left: 24%;
+    left: 20%;
     top: 225px;
 }
 
 .launch_sec .ui-item.left.bottom {
-    left: 19%;
+    left: 16%;
     top: 345px;
 }
 
 /* RIGHT */
 .launch_sec .ui-item.right.top {
-    right: 30.5%;
-    top: 75px;
+    right: 27%;
+    top: 60px;
 }
 
 .launch_sec .ui-item.right.middle {
-    right: 24.3%;
+    right: 21%;
     top: 225px;
 }
 
 .launch_sec .ui-item.right.bottom {
-    right: 19%;
+    right: 16%;
     top: 345px;
 }
 
@@ -443,6 +487,11 @@
     transform: translate(var(--x), -50%) scale(1);
 }
 
+.demand_stack_uiux .demand_card p:last-child {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 .demand_stack_uiux .swap {
     animation: swap 1.3s ease-out forwards;
 }
@@ -464,6 +513,8 @@
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     overflow: hidden;
 }
@@ -545,13 +596,58 @@
     }
 }
 
+.download_icon {
+    background: #ffffff;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download_syll_butt {
+    position: relative;
+    z-index: 1;
+    background: #22346B33;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 10px 5px 5px;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.download_syll_butt:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.tab-content-box .download_icon {
+    background: var(--c1);
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .demand_stack_uiux h3 {
     font-size: 40px;
     line-height: 60px;
 }
 
 .demand_stack_uiux .demand_inner {
-    background: linear-gradient(178.6deg, #92E3FF 5.11%, #92E3FF 16.65%, #92E3FF 28.18%, #92E3FF 39.09%, #92E3FF 48.75%, #6eabc1e6 60.72%, #48707ecb 73.5%, #00000014 97.71%);
+    background: linear-gradient(180deg, #000000 3.99%, #26113F 26.6%, #000000 100%);
+    /* background: linear-gradient(178.6deg, #92E3FF 5.11%, #92E3FF 16.65%, #92E3FF 28.18%, #92E3FF 39.09%, #92E3FF 48.75%, #6eabc1e6 60.72%, #48707ecb 73.5%, #00000014 97.71%); */
     border-radius: 60px;
 }
 
@@ -590,11 +686,16 @@
     }
 }
 
+.salary_insight {
+    background: linear-gradient(to bottom, #00000000 0%, #000000 20%, #00000000);
+}
+
 /* demand stack cards end */
 .chart-wrapper.image-chart {
     position: relative;
-    max-width: 1000px;
+    max-width: 90%;
     margin: auto;
+    padding: 125px 0;
 }
 
 .chart-base-img {
@@ -617,34 +718,33 @@
     background: linear-gradient(to bottom right, #ffffff2f, #0000002f);
     color: #fff;
     border-radius: 13px;
-    text-align: center;
     min-width: 130px;
+    width: 300px;
     padding: 6px 14px;
     font-size: 13px;
     backdrop-filter: blur(6px);
     border: 1px solid #ffffff40;
-    white-space: nowrap;
 }
 
 .pill-1 {
-    left: 6%;
-    top: 55%;
+    left: 13%;
+    top: 27%;
 }
 
 .pill-2 {
-    left: 31%;
-    top: 25%;
+    left: 40%;
+    top: 15%;
 }
 
 .pill-3 {
-    left: 57%;
-    top: 1.5%;
+    left: 68%;
+    top: 5.5%;
 }
 
-.pill-4 {
+/* .pill-4 {
     right: 0;
     top: -20px;
-}
+} */
 
 /* labels stay below image */
 .chart-labels {
@@ -654,8 +754,13 @@
     font-size: 15px;
     margin-top: 12px;
     padding: 0 10px;
-    width: 65%;
+    width: 55%;
     margin-left: 50px;
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .chart-labels p {
@@ -668,15 +773,15 @@
     height: auto;
 }
 
-.scale_uiux_chart {
+/* .scale_uiux_chart {
     background-color: #000000;
     background: url(/images//live-course/ui-ux/bg-3.png), linear-gradient(#000000, #000000);
     background-size: cover;
 }
-
+    
 .scale_uiux_chart .scale_chart_parent {
     padding-top: 195px;
-}
+} */
 
 /* why learn end */
 /* journey start */
@@ -785,8 +890,8 @@
 
 /* pricing start */
 .uiux_pricing_plan {
-    background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images//live-course/ui-ux/bg-4.png);
-    background-size: cover;
+    /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images//live-course/ui-ux/bg-4.png);
+    background-size: cover; */
     display: flex;
     justify-content: center;
 }
@@ -976,7 +1081,7 @@
     }
 
     .scale_uiux_chart .scale_chart_parent {
-        padding-top: 350px;
+        padding-top: 0;
     }
 
     .demand_stack_uiux .stack {
@@ -1001,8 +1106,9 @@
     }
 
     .chart-labels {
-        width: 70%;
+        width: 90%;
         margin-left: 20px;
+        bottom: 75px;
     }
 
     .salary-pill {
@@ -1140,6 +1246,7 @@
 /* module - start */
 .modules-section {
     position: relative;
+    padding-bottom: 100px;
 }
 
 .modules-section .section_container {
@@ -1249,6 +1356,65 @@
     transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
+.bottom_parent {
+    background: url(/images/live-course/ui-ux/uiux-bottom.svg);
+    background-size: cover;
+    width: 100%;
+    background-position: center -200px;
+    padding-bottom: 175px;
+    background-repeat: no-repeat;
+}
+
+.adv_child {
+    border: 1.66px solid #FFFFFF;
+    backdrop-filter: blur(58.21125030517578px);
+    background: radial-gradient(100% 100% at 0% 0%, #ffffff66 0%, #ffffff00 100%);
+    border-radius: 18px;
+    padding: 15px;
+    height: 100%;
+    color: #000000;
+    text-align: center;
+}
+
+.best_course_parent button {
+    background: radial-gradient(93.01% 138.78% at 100% 71.53%, #D2FCFF 0%, #8BE9F3 50%, #24B8EC 100%);
+    border-radius: 127.39px 127.39px 0 0;
+    color: #000000;
+    font-weight: bold;
+    padding: 5px 65px;
+    border: 0;
+    transition: all .3s ease-out;
+}
+
+.best_course_parent button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.end_parent {
+    background: url(/images/live-course/ui-ux/end-bg.svg);
+    background-size: cover;
+    width: 100%;
+    background-position: center;
+    padding-top: 210px;
+    padding-bottom: 110px;
+    background-repeat: no-repeat;
+}
+
+.testimonial_bg {
+    background: url(/images/live-course/ui-ux/testimonial-bg.png);
+    background-size: cover;
+    width: 100%;
+    background-position: center;
+    border-radius: 58.51px 58.51px 0 0;
+    background-repeat: no-repeat;
+}
+
+/* .salary_insight {
+    background: linear-gradient(270deg, #ffffff1a 0%, #ffffff00 103.91%);
+} */
+
 /* Opening animation */
 .modal-slide-down {
     transform: translateY(0%);
@@ -1352,3 +1518,224 @@
 }
 
 /* module - end */
+
+.scale_uiux_chart .swiper-button-prev,
+.scale_uiux_chart .swiper-button-next {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 5px;
+}
+
+.scale_uiux_chart .swiper-button-prev {
+    left: -8px;
+    transform: rotate(180deg);
+}
+
+.scale_uiux_chart .swiper-button-next {
+    right: -8px;
+}
+
+.uiux_batch_inner {
+    background: linear-gradient(180deg, #24b8ec54 0%, #ffffff59 100%);
+    border: 1px solid #FFFFFF;
+    border-radius: 62px;
+    padding: 30px 40px;
+}
+
+.uiux_batch_inner button {
+    background: var(--c1);
+    border-radius: 25px;
+    padding: 6px 15px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    transition: all .3s ease-out;
+}
+
+.uiux_batch_inner button:hover {
+    background: var(--c2);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_parent .uiux_batch_inner {
+    background: linear-gradient(90deg, #24b8ec33 0%, #00e1ff33 100%);
+}
+
+.batch_parent button {
+    border: 3px solid #FFFFFF1F;
+    background: #FFFFFF33;
+    border-radius: 25px;
+    padding: 6px 20px;
+    color: #000000;
+    font-weight: 600;
+    transition: all .3s ease-out;
+}
+
+.batch_parent button:hover {
+    border: 3px solid var(--c1);
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_child ul li {
+    margin: 10px 0;
+    padding: 10px;
+    color: #000000;
+    list-style: none;
+    border-left: 3px solid #000000c0;
+    background: linear-gradient(90deg, #ffffff66 0%, #ffffff00 100%);
+}
+
+.uiux_cta {
+    margin-top: -70px;
+}
+
+.uiux_cta h3 {
+    font-size: 50px;
+}
+
+.uiux_cta button {
+    background: linear-gradient(90deg, #999696 0%, #FFFAFA 100%);
+    border-radius: 8px;
+    padding: 10px 30px;
+    border: none;
+    color: #000;
+    transition: all .3s ease-out;
+}
+
+.uiux_cta button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.uiux_cta_inner {
+    position: absolute;
+    top: 15%;
+    bottom: 0;
+    left: 5%;
+    width: 50%;
+    height: fit-content;
+}
+
+.uiux_cta_person {
+    display: none;
+}
+
+@media screen and (max-width: 991px) {
+    .why-wrapper {
+        padding: 40px 0;
+    }
+
+    .course-overview h3 {
+        background: linear-gradient(180deg, #ffffff 44%, transparent);
+        padding: 15px 50px;
+    }
+
+    .launch_sec::after {
+        content: "";
+        position: absolute;
+        height: 83%;
+        width: 100%;
+        top: 0;
+        background: linear-gradient(to bottom, #ffffff00 0%, #ffffff 100%);
+        z-index: 1;
+    }
+
+    .launch_sec .section_container {
+        z-index: 2;
+        position: relative;
+    }
+
+    .uiux-btn {
+        padding: 12px 10px;
+        font-size: 14px;
+        margin-top: 0;
+    }
+
+    .book_but {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+
+    .tab-content-parent {
+        left: 0 !important;
+        margin: auto;
+        right: 0 !important;
+        transform: none !important;
+        width: -webkit-fit-content;
+        width: fit-content;
+    }
+
+    .bottom_parent {
+        background-position: center;
+    }
+
+    .end_parent {
+        padding-top: 350px;
+    }
+
+    .chart-overlay,
+    .salary-pill {
+        position: static;
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .chart-wrapper.image-chart {
+        display: flex;
+        flex-direction: column-reverse;
+        padding-top: 15px;
+    }
+
+    .uiux_cta h3 {
+        font-size: 30px;
+    }
+
+    .uiux_cta_lg {
+        display: none;
+    }
+
+    .uiux_cta {
+        padding: 50px 0;
+        padding-bottom: 150px;
+        margin-bottom: 70px;
+        display: flex;
+        flex-direction: column-reverse;
+        background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .uiux_cta_person {
+        display: block;
+        position: absolute;
+        bottom: -50px;
+        right: 0;
+        width: 200px;
+        height: auto;
+    }
+
+    .uiux_cta_inner {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        padding: 20px;
+        right: 10%;
+        width: 100%;
+        left: 0;
+        margin: auto;
+        height: fit-content;
+        margin-bottom: 30px;
+    }
+
+    .uiux_cta button {
+        font-weight: bold;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+}

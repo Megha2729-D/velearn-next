@@ -3045,8 +3045,8 @@ section {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 0 20px 100px;
-    width: 100%;
+    padding: 0 20px 100px !important;
+    width: 100% !important;
   }
 
   .nav-elements ul .dropdown.open {
@@ -3055,8 +3055,8 @@ section {
 
   .nav-elements ul li {
     margin-right: unset;
-    width: 100%;
-    padding: 20px 0;
+    width: 100% !important;
+    padding: 10px 0 !important;
     border-bottom: 1px solid #cfcfcf;
   }
 
@@ -3276,6 +3276,7 @@ section {
   .nav-elements .dropdown.open .dropdown-menu,
   .nav-elements .sub-dropdown .sub-dropdown-menu.open {
     display: block;
+    padding: 0 10px !important;
   }
 
   .testimonial_img_wrap {
