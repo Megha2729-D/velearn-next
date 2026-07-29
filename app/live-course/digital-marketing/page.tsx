@@ -1383,7 +1383,7 @@ export default function DigitalMarketing() {
                                                 <div className="row justify-content-center w-100 m-auto">
                                                     <div className="cards-box">
                                                         <div className="card one">
-                                                            <div className="row">
+                                                            <div className="row align-items-center">
                                                                 <div className="col-2">
                                                                     <Image src={"/images/live-course/digital-marketing/process-1.png"}
                                                                         className="w-100 h-auto"
@@ -1405,7 +1405,7 @@ export default function DigitalMarketing() {
                                                             </div>
                                                         </div>
                                                         <div className="card two">
-                                                            <div className="row">
+                                                            <div className="row align-items-center">
                                                                 <div className="col-2">
                                                                     <Image src={"/images/live-course/digital-marketing/process-2.png"}
                                                                         className="w-100 h-auto"
@@ -1427,7 +1427,7 @@ export default function DigitalMarketing() {
                                                             </div>
                                                         </div>
                                                         <div className="card three">
-                                                            <div className="row">
+                                                            <div className="row align-items-center">
                                                                 <div className="col-2">
                                                                     <Image src={"/images/live-course/digital-marketing/process-3.png"}
                                                                         className="w-100 h-auto"
@@ -1449,7 +1449,7 @@ export default function DigitalMarketing() {
                                                             </div>
                                                         </div>
                                                         <div className="card four">
-                                                            <div className="row">
+                                                            <div className="row align-items-center">
                                                                 <div className="col-2">
                                                                     <Image src={"/images/live-course/digital-marketing/process-4.png"}
                                                                         className="w-100 h-auto"
