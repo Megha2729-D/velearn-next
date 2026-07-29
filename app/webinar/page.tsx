@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import "./style.css";
@@ -169,7 +170,7 @@ export default function Webinar() {
             setIsClosing(false);
         }, 400);
     };
-    
+
     const formatDate = (date: string) => {
         return new Date(date).toLocaleDateString("en-IN", {
             weekday: "short",
@@ -398,9 +399,11 @@ export default function Webinar() {
                         </div>
                         <div className="col-lg-4">
                             <div className="px-lg-5 py-3">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}webinar/webinar-bannner-end.png`}
                                     className="w-100"
+                                    width={310}
+                                    height={280}
                                     alt=""
                                 />
                             </div>
@@ -461,12 +464,14 @@ export default function Webinar() {
                                                     key={webinar.id}
                                                 >
                                                     <div className="webinar_card mt-3 mb-5 d-flex flex-column justify-content-center align-items-center">
-                                                        <img
+                                                        <Image
                                                             src={`${BASE_DYNAMIC_IMAGE_URL}webinars/${webinar.image}`}
                                                             alt={
                                                                 webinar.title
                                                             }
                                                             className="webinar_img"
+                                                            width={155}
+                                                            height={100}
                                                         />
                                                         <div className="webinar_card_body d-flex flex-column">
                                                             <div className="px-3">
@@ -792,9 +797,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-1.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">
@@ -806,9 +813,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-2.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">
@@ -820,9 +829,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-3.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">
@@ -834,9 +845,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-4.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">
@@ -847,9 +860,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-5.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">
@@ -861,9 +876,11 @@ export default function Webinar() {
                             <div className="col-xl-2 col-lg-4 col-md-4 col-6 my-2  webinar_highlights_inner">
                                 <div className="webinar_highlights_sub">
                                     <div className="px-3 d-flex justify-content-center align-items-center">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}webinar/key-highlights/highlights-6.png`}
                                             alt=""
+                                            width={130}
+                                            height={130}
                                         />
                                     </div>
                                     <p className="mb-0 text-black">

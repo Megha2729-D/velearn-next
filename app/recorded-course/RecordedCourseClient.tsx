@@ -416,10 +416,12 @@ export default function RecordedCoursePage() {
                         <div className="spinner"></div>
 
                         <div className="logo-bg">
-                            <img
+                            <Image
                                 src="https://velearn.in/assets/images/logo-icon.png"
                                 alt=""
                                 style={{ width: "40px" }}
+                                width={200}
+                                height={200}
                             />
                         </div>
                     </div>

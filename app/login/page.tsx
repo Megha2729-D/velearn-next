@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -147,8 +148,8 @@ export default function LoginPage() {
                                         >
                                             <i
                                                 className={`bi ${showPassword
-                                                        ? "bi-eye-slash"
-                                                        : "bi-eye"
+                                                    ? "bi-eye-slash"
+                                                    : "bi-eye"
                                                     }`}
                                             />
                                         </span>
@@ -217,9 +218,11 @@ export default function LoginPage() {
                             >
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/startup-launch.png"
+                                        <Image
+                                            src="/images/login-slide-1.png"
                                             loading="lazy"
+                                            width={590}
+                                            height={430}
                                             alt="Interactive Courses"
                                         />
                                     </div>
@@ -241,9 +244,11 @@ export default function LoginPage() {
 
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/cloud-storage.png"
+                                        <Image
+                                            src="/images/login-slide-2.png"
                                             loading="lazy"
+                                            width={590}
+                                            height={430}
                                             alt="Track Progress"
                                         />
                                     </div>
@@ -266,9 +271,11 @@ export default function LoginPage() {
 
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/cloud-storage.png"
+                                        <Image
+                                            src="/images/login-slide-3.png"
                                             loading="lazy"
+                                            width={590}
+                                            height={430}
                                             alt="Collaborate"
                                         />
                                     </div>

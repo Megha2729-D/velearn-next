@@ -80,10 +80,12 @@ export default function LiveCourse() {
                                         </div>
                                     </div>
                                     <div className="col-lg-4">
-                                        <img
+                                        <Image
                                             src={`${BASE_IMAGE_URL}live-course-banner-card.png`}
                                             className="w-100"
                                             alt={slide.alt}
+                                            width={420}
+                                            height={320}
                                         />
                                     </div>
                                 </div>
@@ -138,10 +140,12 @@ export default function LiveCourse() {
                                     className={`card_parent h-100 d-flex flex-column ${index % 2 === 0 ? "one" : "two"}`}
                                 >
                                     <div className="card_img_parent overflow-hidden position-relative">
-                                        <img
+                                        <Image
                                             src={course.img}
                                             className="card_img w-100"
                                             alt={course.title}
+                                            width={270}
+                                            height={200}
                                         />
                                         <div className="live_parent d-flex gap-2 align-items-center justify-content-center">
                                             <div className="live_icon"></div>
@@ -205,54 +209,66 @@ export default function LiveCourse() {
                     <div className="live_benefits_parent justify-content-center mt-4">
                         <div className="benefit_card b1 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-1.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Career Focused Guidance</h4>
                             </div>
                         </div>
                         <div className="benefit_card b2 big">
                             <div className="flex-column flex-md-row flex-lg-row">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-2.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Industry Tools & Technologies</h4>
                             </div>
                         </div>
                         <div className="benefit_card b3 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-3.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Live Industry Examples</h4>
                             </div>
                         </div>
                         <div className="benefit_card b4 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-4.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Hands-On Live Projects</h4>
                             </div>
                         </div>
                         <div className="benefit_card b5 big">
                             <div className="flex-column flex-md-row flex-lg-row">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-5.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Doubt Solving Sessions</h4>
                             </div>
                         </div>
                         <div className="benefit_card b6 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-6.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Mock Test & Practice Questions</h4>
                             </div>
@@ -260,63 +276,79 @@ export default function LiveCourse() {
 
                         <div className="benefit_card b7 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-7.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Placement Assistance</h4>
                             </div>
                         </div>
                         <div className="benefit_card b8 big">
                             <div className="flex-column flex-md-row flex-lg-row">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-8.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Weekdays / Weekend Live Classes</h4>
                             </div>
                         </div>
                         <div className="benefit_card b9 small">
                             <div className="flex-column">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-9.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Quick Tech Support</h4>
                             </div>
                         </div>
                         <div className="benefit_card b10 big">
                             <div className="flex-column flex-md-row flex-lg-row">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-10.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4>Industry Recognized Certificates</h4>
                             </div>
                         </div>
                         <div className="benefit_card b11 big">
                             <div className="position-relative flex-column flex-md-row flex-lg-row">
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-vector-11-1.png`}
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                                 <h4 className="mb-5 mb-lg-0">
                                     Invite Friends & Get Benefits
                                 </h4>
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-coin-full.png`}
                                     className="lc_coin lc_coin_1"
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-coin-full.png`}
                                     className="lc_coin lc_coin_2"
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
-                                <img
+                                <Image
                                     src={`${BASE_IMAGE_URL}live-course-vector/lc-coin-half.png`}
                                     className="lc_coin lc_coin_3"
                                     alt=""
+                                    width={100}
+                                    height={90}
                                 />
                             </div>
                         </div>
@@ -402,9 +434,11 @@ export default function LiveCourse() {
                         ].map((item, index) => (
                             <SwiperSlide key={index}>
                                 <div className="testimonial_card text-center">
-                                    <img
+                                    <Image
                                         src={`${BASE_IMAGE_URL}${item.img}`}
-                                    // alt={item.name}
+                                        width={230}
+                                        height={310}
+                                        alt=""
                                     />
                                     <p>{item.text}</p>
                                 </div>

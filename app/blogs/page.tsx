@@ -128,7 +128,7 @@ export default function Blogs() {
                                         <div className="blog_parent_card">
                                             <div className="bg-white blog_parent_card_inner">
                                                 <div className="mb-3">
-                                                    <img
+                                                    <Image
                                                         src={`${BASE_DYNAMIC_IMAGE_URL.replace("/uploads/", "/blogs/")}${blog.image.replace("/../public/", "")}`}
                                                         className="w-100"
                                                         width={320}

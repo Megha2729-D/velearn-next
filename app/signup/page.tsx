@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 
@@ -135,10 +135,12 @@ export default function SignUpPage() {
                             >
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/startup-launch.png"
-                                            alt="Learn at Your Pace"
-                                            className="img-fluid"
+                                        <Image
+                                            src="/images/login-slide-1.png"
+                                            loading="lazy"
+                                            width={590}
+                                            height={430}
+                                            alt="Interactive Courses"
                                         />
                                     </div>
 
@@ -159,10 +161,12 @@ export default function SignUpPage() {
 
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/cloud-storage.png"
-                                            alt="Personalized Learning"
-                                            className="img-fluid"
+                                        <Image
+                                            src="/images/login-slide-2.png"
+                                            loading="lazy"
+                                            width={590}
+                                            height={430}
+                                            alt="Track Progress"
                                         />
                                     </div>
 
@@ -183,10 +187,12 @@ export default function SignUpPage() {
 
                                 <SwiperSlide>
                                     <div className="slide-image">
-                                        <img
-                                            src="https://ismailvtl-images-project.vercel.app/cloud-storage.png"
-                                            alt="Connect with Mentors"
-                                            className="img-fluid"
+                                        <Image
+                                            src="/images/login-slide-3.png"
+                                            loading="lazy"
+                                            width={590}
+                                            height={430}
+                                            alt="Collaborate"
                                         />
                                     </div>
 

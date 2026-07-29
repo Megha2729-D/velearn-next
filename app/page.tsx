@@ -889,7 +889,7 @@ export default function HomePage() {
                         className={`card_parent h-100 d-flex flex-column ${index % 2 === 0 ? "one" : "two"}`}
                       >
                         <div className="card_img_parent overflow-hidden">
-                          <img
+                          <Image
                             // src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.image}`}
                             src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.image}`}
                             className="card_img w-100"

@@ -1171,9 +1171,11 @@ export default function CourseDetailsPage({
                                                                         </p>
 
                                                                         <div className="student_info">
-                                                                            <img
+                                                                            <Image
                                                                                 src={`${BASE_IMAGE_URL}recorded-course/student.png`}
                                                                                 alt=""
+                                                                                height={300}
+                                                                                width={300}
                                                                             />
                                                                             <h6>
                                                                                 Jennifer Lopez
@@ -1197,9 +1199,11 @@ export default function CourseDetailsPage({
                                                                         </p>
 
                                                                         <div className="student_info">
-                                                                            <img
+                                                                            <Image
                                                                                 src={`${BASE_IMAGE_URL}recorded-course/student.png`}
                                                                                 alt=""
+                                                                                width={300}
+                                                                                height={300}
                                                                             />
                                                                             <h6>
                                                                                 Arun Kumar
@@ -1280,10 +1284,12 @@ export default function CourseDetailsPage({
                                                     <div className="col-lg-7 d-flex align-items-start justify-content-center pt-4 px-lg-5 pb-lg-5">
                                                         <div className=" d-flex align-items-center justify-content-center">
                                                             <div className="col-lg-10">
-                                                                <img
+                                                                <Image
                                                                     src={`/images/recorded-course/certificate.png`}
                                                                     className="w-100 rounded-4"
                                                                     alt=""
+                                                                    width={340}
+                                                                    height={340}
                                                                 />
                                                             </div>
                                                         </div>
