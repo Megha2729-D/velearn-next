@@ -271,16 +271,28 @@ export default function Navbar() {
             console.log(error);
         }
     };
+
     const toggleDropdown = (
         key: string,
         e: React.MouseEvent
     ) => {
         e.stopPropagation();
 
-        setDropdownOpen((prev) => ({
-            ...prev,
-            [key]: !prev[key],
-        }));
+        if (window.innerWidth <= 991) {
+            // Mobile: open only one dropdown
+            setDropdownOpen((prev) => ({
+                [key]: !prev[key],
+            }));
+
+            // Close all sub-dropdowns when switching
+            setSubDropdownOpen({});
+        } else {
+            // Desktop: existing behavior
+            setDropdownOpen((prev) => ({
+                ...prev,
+                [key]: !prev[key],
+            }));
+        }
     };
 
     const toggleSubDropdown = (
@@ -289,10 +301,16 @@ export default function Navbar() {
     ) => {
         e.stopPropagation();
 
-        setSubDropdownOpen((prev) => ({
-            ...prev,
-            [key]: !prev[key],
-        }));
+        if (window.innerWidth <= 991) {
+            setSubDropdownOpen((prev) => ({
+                [key]: !prev[key],
+            }));
+        } else {
+            setSubDropdownOpen((prev) => ({
+                ...prev,
+                [key]: !prev[key],
+            }));
+        }
     };
 
     const handleMouseEnter = (key: string) => {

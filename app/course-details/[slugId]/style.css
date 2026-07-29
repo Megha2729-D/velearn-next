@@ -690,6 +690,10 @@
 }
 
 @media (max-width: 576px) {
+    .course_tabs_sticky::after {
+        right: -20px;
+    }
+
     .tabs-wrapper {
         display: flex;
         flex-direction: column;

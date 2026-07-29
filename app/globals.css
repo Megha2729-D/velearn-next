@@ -3303,7 +3303,7 @@ section {
   }
 
   .nav-elements .dropdown-menu li {
-    padding: 5px 15px;
+    padding: 5px 15px !important;
     /* indent */
   }
 

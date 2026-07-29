@@ -1287,7 +1287,7 @@ export default function CourseDetailsPage({
                                                             <div className="col-lg-10">
                                                                 <Image
                                                                     src={`/images/recorded-course/certificate.png`}
-                                                                    className="w-100 rounded-4"
+                                                                    className="w-100 h-auto rounded-4"
                                                                     alt=""
                                                                     width={340}
                                                                     height={340}
