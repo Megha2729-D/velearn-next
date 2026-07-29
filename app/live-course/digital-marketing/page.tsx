@@ -230,48 +230,74 @@ export default function DigitalMarketing() {
 
     const content = {
         1: {
-            title: "Foundations of Full Stack Development",
+            title: "All Modules",
             points: [
-                "How the web works (Client–Server architecture)",
-                "Frontend vs Backend vs Database",
-                "Developer tools & workflow",
-                "Introduction to Git & GitHub",
+                "Digital Marketing Foundations",
+                "Website & WordPress",
+                "SEO On - Page & Keyword Research",
+                "SEO Off - Page & Technical SEO ",
+                "Google Ads: Search & Display",
+                "Google Ads: Advanced & Automation",
+                "Social Media Marketing",
+                "Content, Copywriting & Email Marketing",
+                "Google Analytics 4 & Looker Studio",
+                "E - Commerce & Affiliate Marketing",
+                "AI Strategy, CRO & Omnichannel",
+                "Freelancing, Portfolio & Capstone",
             ],
         },
         2: {
-            title: "Frontend Development",
+            title: "Marketing Foundations",
             points: [
-                "HTML, CSS, JavaScript",
-                "Responsive UI & Grid Systems",
-                "React.js Fundamentals",
-                "State Management",
+                "Introduction to Digital Marketing",
+                "Marketing Funnel & Customer Journey",
+                "Brand Positioning & Target Audience",
+                "Content Marketing Fundamentals",
+                "Social Media Marketing Basics",
+                "SEO & Keyword Research",
+                "Email Marketing Essentials",
+                "Marketing Analytics & KPIs",
             ],
         },
         3: {
-            title: "Backend Development",
+            title: "Channels & Career",
             points: [
-                "Node.js & Express.js",
-                "REST APIs",
-                "Authentication & Authorization",
-                "Error Handling & Middleware",
+                "Google Search & Display Ads",
+                "Meta (Facebook & Instagram) Marketing",
+                "LinkedIn & YouTube Marketing",
+                "WhatsApp & Email Campaigns",
+                "Freelancing & Personal Branding",
+                "Resume & Portfolio Building",
+                "Interview Preparation",
+                "Career Opportunities in Digital Marketing",
             ],
         },
         4: {
-            title: "Database & Deployment",
+            title: "AI Sessions",
             points: [
-                "MongoDB / SQL Basics",
-                "Data Modeling & Queries",
-                "Cloud Deployment",
-                "CI/CD & Environment Variables",
+                "Introduction to AI in Marketing",
+                "Using ChatGPT for Content Creation",
+                "AI for SEO & Keyword Research",
+                "AI-Powered Social Media Strategies",
+                "AI Image & Video Generation",
+                "AI Tools for Email Marketing",
+                "Marketing Automation with AI",
+                "Prompt Engineering for Marketers",
+                "AI Analytics & Performance Insights",
+                "Ethical Use of AI in Marketing",
+                "Hands-on AI Marketing Projects",
+                "Latest AI Tools & Trends",
             ],
         },
         5: {
-            title: "Capstone & Job Preparation",
+            title: "Projects",
             points: [
-                "Real-World Project",
-                "Version Control",
-                "Resume & Portfolio",
-                "Mock Interviews",
+                "Live Marketing Campaign",
+                "SEO Audit Project",
+                "Social Media Content Calendar",
+                "Google Ads Campaign",
+                "Meta Ads Campaign",
+                "Capstone Marketing Project",
             ],
         },
     };
@@ -380,67 +406,70 @@ export default function DigitalMarketing() {
 
     const faqData = [
         {
-            question: "Who should enroll in this UI/UX Design course?",
+            question: "Is digital marketing a good career? ",
             answer: (
                 <>
                     <p>
-                        This UI/UX Design course is ideal for students, fresh
-                        graduates, working professionals, developers, graphic
-                        designers, and career switchers who want to build a
-                        strong foundation in user interface (UI) and user
-                        experience (UX) design. No prior design experience is
-                        required, making it beginner-friendly and
-                        career-oriented.
+                        Yes, it's one of the fastest-growing careers today. With AI changing every channel, AI-skilled marketers are in even higher demand. Velearn prepares you for this future-proof career.
                     </p>
                 </>
             ),
         },
         {
-            question: "Will I get hands-on experience during the course?",
+            question: "What is the difference between SEO and paid ads?",
             answer: (
                 <>
                     <p>
-                        This UI/UX Design course is ideal for students, fresh
-                        graduates, working professionals, developers, graphic
-                        designers, and career switchers who want to build a
-                        strong foundation in user interface (UI) and user
-                        experience (UX) design. No prior design experience is
-                        required, making it beginner-friendly and
-                        career-oriented.
+                        SEO (Search Engine Optimization) focuses on improving your
+                        website's organic ranking on search engines like Google. It
+                        takes time to build results but provides long-term, sustainable
+                        traffic without paying for every click. Paid ads, on the other
+                        hand, deliver immediate visibility by placing your business at
+                        the top of search results or social media platforms through
+                        advertising budgets. Both strategies are important and are
+                        covered in this course.
                     </p>
                 </>
             ),
         },
         {
-            question:
-                "What career support do you offer after the UI/UX course?",
+            question: "Which platform is best for running ads?",
             answer: (
                 <>
                     <p>
-                        This UI/UX Design course is ideal for students, fresh
-                        graduates, working professionals, developers, graphic
-                        designers, and career switchers who want to build a
-                        strong foundation in user interface (UI) and user
-                        experience (UX) design. No prior design experience is
-                        required, making it beginner-friendly and
-                        career-oriented.
+                        The best advertising platform depends on your business goals
+                        and target audience. Google Ads is ideal for capturing users
+                        actively searching for products or services, while Meta Ads
+                        (Facebook & Instagram) are excellent for brand awareness,
+                        engagement, and lead generation. During the course, you'll
+                        learn how to choose the right platform and create effective ad
+                        campaigns for different business needs.
                     </p>
                 </>
             ),
         },
         {
-            question:
-                "Is this UI/UX course suitable for non-design backgrounds?",
+            question: "Do you provide placement support after the course?",
             answer: (
                 <>
                     <p>
-                        This UI/UX Design course is ideal for students, fresh
-                        graduates, working professionals, developers, graphic
-                        designers, and career switchers who want to build a
-                        strong foundation in user interface (UI) and user
-                        experience (UX) design. No prior design experience is
-                        required, making it beginner-friendly and
-                        career-oriented.
+                        Yes. We provide placement assistance to eligible students after
+                        course completion. This includes resume building, portfolio
+                        guidance, mock interviews, career mentoring, and job referral
+                        support to help you prepare for digital marketing roles.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Will I get a certificate after completing the course?",
+            answer: (
+                <>
+                    <p>
+                        Yes. Upon successfully completing the Digital Marketing course,
+                        you will receive a course completion certificate that validates
+                        your skills and can be added to your resume, LinkedIn profile,
+                        and professional portfolio.
                     </p>
                 </>
             ),
@@ -453,6 +482,15 @@ export default function DigitalMarketing() {
         );
     };
 
+    const recruiters1 = [
+        "accenture.png",
+        "tech-mahindra.png",
+        "wipro.png",
+        "tcs.png",
+        "ibm.png",
+        "infosys.png",
+    ];
+
     const testimonials = [
         {
             image: "student-1.png",
@@ -464,14 +502,14 @@ export default function DigitalMarketing() {
         {
             image: "student-2.png",
             name: "Shalini",
-            text: "The live sessions were practical and easy to follow. I can confidently plan and run real digital marketing campaigns now.",
+            text: "I joined with zero marketing knowledge. The trainer explained everything clearly and helped me apply it in real projects.",
             colorOne: "#FF974B",
             colorTwo: "#73737300",
         },
         {
             image: "student-3.png",
             name: "Surya",
-            text: "The live sessions were practical and easy to follow. I can confidently plan and run real digital marketing campaigns now.",
+            text: "I joined with zero marketing knowledge. The trainer explained everything clearly and helped me apply it in real projects.",
             colorOne: "#354A63",
             colorTwo: "#73737300",
         },
@@ -540,38 +578,33 @@ export default function DigitalMarketing() {
             <section>
                 <div className="dm_main pb-1">
                     <div className="bg-white dm_top_sec">
-                        <div className="digital_marketing_banner pb-5">
+                        <div className="digital_marketing_banner pb-3">
                             <div className="section_container">
-                                <div className="row justify-content-between">
+                                <div className="row justify-content-lg-between justify-content-center   ">
                                     <div className="col-lg-7">
                                         <div className="banner_left_dm">
                                             <h1 className="fw-bold text-white">
-                                                Future-Proof{" "}
+                                                Live
                                                 <span className="text-c2">
-                                                    Your Career
-                                                </span>{" "}
-                                                with Live Digital Marketing
-                                                Training
+                                                    {" "}Digital Marketing{" "}
+                                                </span>
+                                                Online Course with AI Integration
                                             </h1>
                                             <p className="text-white mt-4">
-                                                This live Digital Marketing
-                                                training program is designed to
-                                                build job-ready skills through
-                                                hands-on campaign execution,
-                                                real-time tools, and expert
-                                                mentorship— preparing you for
-                                                high-growth roles in today’s
-                                                digital economy.
+                                                Learn Digital Marketing through live online sessions with AI-powered tools, real projects, and mentor guidance. The course covers SEO, Social Media Marketing, Google Ads, Content Marketing, and Analytics.
                                             </p>
-                                            <button
-                                                onClick={
-                                                    handleCourseAction
-                                                }
-                                            >
-                                                {isEnrolled
-                                                    ? "Start Course"
-                                                    : "Enroll Now"}
-                                            </button>
+                                            <div className="d-flex gap-2 justify-content-lg-start justify-content-center">
+                                                <button
+                                                    onClick={
+                                                        handleCourseAction
+                                                    }
+                                                >
+                                                    {isEnrolled
+                                                        ? "Start Course"
+                                                        : "Enroll Now"}
+                                                </button>
+                                                <button>Book a free Demo Class</button>
+                                            </div>
                                             <div className="pagination_parent d-lg-flex d-none">
                                                 <Link href={"/"}>Home</Link>
                                                 <span className="px-2"> /</span>
@@ -689,52 +722,67 @@ export default function DigitalMarketing() {
                                             </Link>
                                         </div>
                                     </div>
+                                    <div className="col-lg-12 mt-5">
+                                        <p className="text-center text-white mb-0">
+                                            Next Batch starts 15 June 2026 only 5 seats Remaining
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div className="banner_details">
                             <div className="section_container">
-                                <div className="col-12 d-flex justify-content-start">
+                                <div className="col-12 d-flex justify-content-lg-start justify-content-center">
                                     <div className="col-lg-12">
                                         <div className="ms-lg-5 ms-2 py-3">
-                                            <div className="row text-center">
-                                                <div className="col-6 col-lg-3 my-3 my-lg-0 banner_details_list d-flex justify-content-center border border-0">
+                                            <div className="row text-center justify-content-lg-evenly justify-content-center">
+                                                <div className="col-6 col-lg-2 mb-3 mb-lg-0 banner_details_list d-flex justify-content-center border-0">
                                                     <div className="d-flex justify-content-center align-items-center flex-column">
                                                         <p className="fw-bold mb-1 text-center">
-                                                            Expert
+                                                            Weeks
                                                         </p>
                                                         <p className="mb-0 text-center">
-                                                            Mentorship
+                                                            12
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div className="col-6 col-lg-3 my-3 my-lg-0 banner_details_list d-flex justify-content-center border border-0">
+                                                <div className="col-6 col-lg-2 mb-3 mb-lg-0 banner_details_list d-flex justify-content-center border-0">
                                                     <div className="d-flex justify-content-center align-items-center flex-column">
                                                         <p className="fw-bold mb-1 text-center">
-                                                            10+ Real Time
+                                                            Total Hours
                                                         </p>
                                                         <p className="mb-0 text-center">
-                                                            Projects
+                                                            120 hrs
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div className="col-6 col-lg-3 my-3 my-lg-0 banner_details_list d-flex justify-content-center border border-0">
+                                                <div className="col-6 col-lg-2 mb-3 mb-lg-0 banner_details_list d-flex justify-content-center border-0">
+                                                    <div className="d-flex justify-content-center align-items-center flex-column">
+                                                        <p className="fw-bold mb-1 text-center">
+                                                            Taught In
+                                                        </p>
+                                                        <p className="mb-0 text-center">
+                                                            தமிழ்
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6 col-lg-2 mb-3 mb-lg-0 banner_details_list d-flex justify-content-center border-0">
+                                                    <div className="d-flex justify-content-center align-items-center flex-column">
+                                                        <p className="fw-bold mb-1 text-center">
+                                                            1:1
+                                                        </p>
+                                                        <p className="mb-0 text-center">
+                                                            Doubt Sessions
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="col-6 col-lg-2 mb-3 mb-lg-0 banner_details_list d-flex justify-content-center border-0">
                                                     <div className="d-flex justify-content-center align-items-center flex-column">
                                                         <p className="fw-bold mb-1 text-center">
                                                             Placement
                                                         </p>
                                                         <p className="mb-0 text-center">
-                                                            Assistance
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-6 col-lg-3 my-3 my-lg-0 banner_details_list d-flex justify-content-center border border-0">
-                                                    <div className="d-flex justify-content-center align-items-center flex-column">
-                                                        <p className="fw-bold mb-1 text-center">
-                                                            Life Time
-                                                        </p>
-                                                        <p className="mb-0 text-center">
-                                                            Community Access
+                                                            Support
                                                         </p>
                                                     </div>
                                                 </div>
@@ -744,37 +792,35 @@ export default function DigitalMarketing() {
                                 </div>
                             </div>
                         </div>
-                        <div className="why_dm_sec py-4">
+                        <div className="why_dm_sec py-5">
                             <div className="section_container">
                                 <h3 className="text-center fw-bold text-white">
-                                    Why UI/UX Design Is a Beginner-Friendly
-                                    Career
+                                    Why Digital Marketing With AI Is the New Career Standard
                                 </h3>
-                                <div className="row justify-content-center mt-4">
-                                    <div className="col-lg-8">
+                                <p className="text-center mb-0 lh-lg small mt-3 text-white">
+                                    Digital marketing is going through its biggest shift since the rise of social media. Generative AI tools like ChatGPT, Gemini, and Perplexity are now part of every marketer's day, from keyword research and content creation to digital advertising and email campaigns. Our live online training reaches learners across Tamil Nadu, helping them combine modern digital marketing tools with AI to run real-world marketing campaigns that deliver results.
+                                </p>
+                                <div className="row justify-content-lg-start justify-content-center mt-5">
+                                    <div className="col-lg-9">
                                         <div className="row">
                                             <div className="col-lg-4 my-3">
                                                 <div className="why_dm_sub">
                                                     <p>
-                                                        Businesses depend on
-                                                        digital growth
-                                                        strategies
+                                                        One of the fastest-growing career fields today
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 my-3">
                                                 <div className="why_dm_sub">
                                                     <p>
-                                                        Practical skills with
-                                                        real-world applications
+                                                        Every business needs digital marketers to grow online
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 my-3">
                                                 <div className="why_dm_sub">
                                                     <p>
-                                                        Careers driven by
-                                                        results and performance
+                                                        Hiring booming across SEO, ads, social, and email
                                                     </p>
                                                 </div>
                                             </div>
@@ -783,26 +829,14 @@ export default function DigitalMarketing() {
                                             <div className="col-lg-4 my-3">
                                                 <div className="why_dm_sub">
                                                     <p>
-                                                        Work with brands across
-                                                        multiple industries
+                                                        Companies prefer marketers with AI tools experience
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="col-lg-4 my-3">
                                                 <div className="why_dm_sub">
                                                     <p>
-                                                        Faster skill-to-income
-                                                        conversion
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-lg-4 my-3">
-                                                <div className="why_dm_sub">
-                                                    <p>
-                                                        Evolving field with
-                                                        constant opportunities
+                                                        AI is rewriting how marketing strategies are built
                                                     </p>
                                                 </div>
                                             </div>
@@ -813,217 +847,96 @@ export default function DigitalMarketing() {
                         </div>
                     </div>
                     <div className="bg-white dm_single_sec">
-                        <div className="dm_overview">
+                        <div className="dm_tools_sec">
                             <div className="section_container">
-                                <div className="py-4">
-                                    <h3 className="text-black fw-bold text-center">
-                                        {" "}
-                                        Course{" "}
-                                        <span className="text-c2">
-                                            Overview
-                                        </span>
-                                    </h3>
-                                    <p className="text-center px-lg-4">
-                                        This Digital Marketing course is
-                                        designed to build a strong foundation
-                                        with practical, job-ready skills needed
-                                        in today’s digital-driven business
-                                        world. The program covers key areas such
-                                        as SEO, Social Media Marketing, Google
-                                        Ads, Content Marketing, Email Marketing,
-                                        and Analytics. Through live
-                                        instructor-led classes and hands-on
-                                        campaign practice, learners gain
-                                        real-world experience using industry
-                                        tools. The course focuses on
-                                        performance, data-based decision-making,
-                                        and practical application to help
-                                        participants confidently manage digital
-                                        campaigns and prepare for various
-                                        digital marketing career roles.
-                                    </p>
-                                </div>
-                                <div className="pb-5">
-                                    <h3 className="text-black text-center fw-bold">
-                                        Step Into a High-Growth
-                                        <span className="text-c2">
-                                            {" "}
-                                            Digital Marketing Career
-                                        </span>
-                                    </h3>
-                                    <div className="row justify-content-center">
-                                        <div className="col-lg-6 d-flex flex-column justify-content-center align-items-center">
-                                            <div className="dm_steps">
-                                                <div className="dm_steps_sub dm_step_one my-4">
-                                                    <div></div>
-                                                    <p>
-                                                        Master in-demand digital
-                                                        marketing channels and
-                                                        tools
-                                                    </p>
+                                <h2 className="fw-bold text-white text-center py-5">
+                                    Skills & AI Tools You Need for Digital Marketing
+                                </h2>
+                                <div className="position-relative">
+                                    <div className="tools_top_parent">
+                                        <div className="row justify-content-center">
+                                            <div className="col-lg-12 px-lg-5">
+                                                <div className="row justify-content-center text-white">
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner one">
+                                                            <p>SEO (Search Engine Optimization)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner two">
+                                                            <p>Google Ads and paid campaigns</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner three">
+                                                            <p>Meta Ads (Facebook & Instagram)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner four">
+                                                            <p>Social media growth and content</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="dm_steps_sub dm_step_two my-4">
-                                                    <div></div>
-                                                    <p>
-                                                        Work on live campaigns
-                                                        with expert-led guidance
-                                                    </p>
+                                                <div className="row justify-content-center text-white">
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner five">
+                                                            <p>Copywriting and content marketing</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner six">
+                                                            <p>Email marketing and automation</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner seven">
+                                                            <p>WordPress website building</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="dm_steps_sub dm_step_three my-4">
-                                                    <div></div>
-                                                    <p>
-                                                        Gain hands-on experience
-                                                        through real business
-                                                        case studies
-                                                    </p>
-                                                </div>
-                                                <div className="dm_steps_sub dm_step_four my-4">
-                                                    <div></div>
-                                                    <p>
-                                                        Learn performance
-                                                        tracking, optimization,
-                                                        and ROI measurement
-                                                    </p>
+                                                <div className="row justify-content-center text-white">
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner eight">
+                                                            <p>Google Analytics and CRO</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-3">
+                                                        <div className="tools_points_inner nine">
+                                                            <p>AI-powered marketing workflows</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <button
-                                                type="button"
-                                                onClick={handleCourseAction}
-                                            >
-                                                {isEnrolled
-                                                    ? "Start Course"
-                                                    : "Start Learning"}
-                                            </button>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="pb-5 dm_skills">
-                                    <div className="row justify-content-center">
-                                        <div className="col-lg-11">
-                                            <h3 className="text-black text-center fw-bold">
-                                                Build the Skills{" "}
-                                                <span className="text-c2">
-                                                    Behind Digital Success
-                                                </span>
-                                            </h3>
-                                            <p className="text-center">
-                                                Develop powerful digital skills
-                                                through practical,
-                                                performance-based learning.
-                                            </p>
-                                            <div className="row mt-4">
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Search Engine
-                                                            Optimization (SEO)
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Google Ads & Paid
-                                                            Campaigns
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Content Marketing
-                                                            Strategy
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Email & Marketing
-                                                            Automation
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Analytics &
-                                                            Performance Tracking
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 my-4 px-4">
-                                                    <div className="dm_skils_sub rounded-4">
-                                                        <p className="mb-0 p-3 text-center text-black">
-                                                            Conversion
-                                                            Optimization
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div className="image_parent">
+                                        <Image src={"/images/live-course/digital-marketing/dm-tools.svg"} height={400} width={1500} className="w-100 h-auto" alt="" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             <section>
                 <div className="bg-white pt-0 dm_single_sec bg-white">
-                    <div className="dm_tools py-5">
-                        <div className="section_container">
-                            <div className="row w-100 m-auto justify-content-center">
-                                <div className="col-12">
-                                    <h3 className="text-white text-center fw-bold">
-                                        Tools That
-                                        <span className="text-c2">
-                                            {" "}
-                                            Power Digital Marketing
-                                        </span>
-                                    </h3>
-                                    <p className="text-center text-white">
-                                        Gain practical experience using
-                                        professional marketing tools.
-                                    </p>
-                                </div>
-                                <div className="row justify-content-center">
-                                    <div className="col-lg-10">
-                                        <div className="col-12 position-relative">
-                                            <Image
-                                                src={`${BASE_IMAGE_URL}live-course/digital-marketing/dm-logo.png`}
-                                                className="w-100 h-auto"
-                                                width={1100}
-                                                height={1100}
-                                                alt=""
-                                            />
-                                            <div className="dm_tools_center">
-                                                <h5 className="text-black mb-0 text-center text-uppercase">
-                                                    Digital Marketing
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div className="dm_path mt-2">
-                        <div className="section_container py-5">
-                            <div className="pb-5">
+                        <div className="section_container pt-3 pb-lg-5">
+                            <div className="dm_modules_parent">
                                 <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                                    A Structured Path to Master{" "}
+                                    Full Curriculum of Our
                                     <span className="text-c2">
                                         {" "}
                                         Digital Marketing
+                                        {" "}
                                     </span>
+                                    Online Training
                                 </h3>
                                 <div className="row justify-content-center">
-                                    <div className="col-lg-5">
+                                    <div className="col-lg-11">
                                         <p className="text-black text-center px-lg-5">
-                                            Each module at Velearn focuses on
-                                            practical skills to prepare you for
-                                            real jobs.
+                                            Our 90-day curriculum covers every essential channel of modern digital marketing, from our WordPress online course and SEO course online modules to Google Ads, social media, and AI-integrated workflows. Every module is hands-on, project-based, and built on real-world case studies so you build practical skills you can use from day one.
                                         </p>
                                     </div>
                                 </div>
@@ -1032,17 +945,16 @@ export default function DigitalMarketing() {
                                     ref={tabsWrapperRef}
                                 >
                                     <div className="tabs">
-                                        {[1, 2, 3, 4, 5].map((num, index) => (
+                                        {Object.entries(content).map(([key, item], index) => (
                                             <button
-                                                key={num}
+                                                key={key}
                                                 ref={(el) => {
                                                     tabRefs.current[index] = el;
                                                 }}
-                                                className={`tab ${activeTab === num ? "active" : ""
-                                                    }`}
-                                                onClick={() => setActiveTab(num)}
+                                                className={`tab ${activeTab === Number(key) ? "active" : ""}`}
+                                                onClick={() => setActiveTab(Number(key))}
                                             >
-                                                Module {num}
+                                                {item.title} ({item.points.length})
                                             </button>
                                         ))}
                                     </div>
@@ -1058,43 +970,39 @@ export default function DigitalMarketing() {
                                     />
 
                                     <div
-                                        className="tab-content-box positioned"
+                                        className="tab-content-parent"
                                         style={{
                                             position: "absolute",
                                             top: "70px",
                                             left: `${contentLeft}px`,
                                             transform: "translateX(-50%)",
+                                            zIndex: '1',
                                         }}
                                     >
-                                        <h6 className="mb-3">{currentContent.title}</h6>
+                                        {/* <h6 className="mb-3">{currentContent.title}</h6> */}
 
-                                        <ul>
-                                            {currentContent.points.map((point, index) => (
-                                                <li key={index}>{point}</li>
-                                            ))}
-                                        </ul>
-                                        <div className="col-12 d-flex justify-content-end">
-                                            <div className="download_icon">
-                                                <i className="bi bi-download text-white"></i>
-                                            </div>
+                                        <div className="tab-content-box positioned">
+                                            <ul>
+                                                {currentContent.points.map((point, index) => (
+                                                    <li key={index}>{point}</li>
+                                                ))}
+                                            </ul>
                                         </div>
+                                        <div className="download_syll_butt mt-3">
+                                            <div className="download_icon">
+                                                <i className="bi bi-download text-black"></i>
+                                            </div>
+                                            <span>Download Full Syllabus</span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div className="my-5 dm_ways_main">
                                 <div className="row w-100 m-auto justify-content-center">
-                                    <div className="col-lg-7">
+                                    <div className="col-lg-8">
                                         <h3 className="text-black text-center fw-bold">
-                                            A Smarter Way to
-                                            <span className="text-c2">
-                                                {" "}
-                                                Master Digital Marketing
-                                            </span>{" "}
-                                            At
-                                            <span className="text-c2">
-                                                {" "}
-                                                Velearn
-                                            </span>
+                                            Dedicated Sessions in Our Digital Marketing With AI Course
                                         </h3>
                                     </div>
                                     <div className="col-12 ">
@@ -1102,52 +1010,31 @@ export default function DigitalMarketing() {
                                             <div className="d-flex dm_way_points_card_parent justify-content-between">
                                                 <div className="dm_way_points_parent my-3 d-flex justify-content-lg-start justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Hands-On Learning
-                                                            That Builds Real
-                                                            Skills
+                                                        <h6 className="fw-bold">
+                                                            AI Foundations
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Every topic is
-                                                            delivered through
-                                                            practical exercises,
-                                                            live demos, and real
-                                                            campaign-style
-                                                            execution
+                                                            Get hands-on with ChatGPT, Gemini, and Copilot, the foundational AI tools for digital marketing research, strategy, and competitor analysis.
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="dm_way_points_parent my-3 d-flex justify-content-lg-start justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Real-World Campaign
-                                                            Exposure
+                                                        <h6 className="fw-bold">
+                                                            AI SEO Tools
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Work on practical
-                                                            assignments that
-                                                            reflect how brands
-                                                            generate traffic,
-                                                            leads, and
-                                                            conversions in the
-                                                            real market.
+                                                            Speed up content creation with SurferSEO, Frase, NeuronWriter, and ChatGPT.
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="dm_way_points_parent my-3 d-flex justify-content-lg-start justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Job-Ready Resume
-                                                            Development
+                                                        <h6 className="fw-bold">
+                                                            AI Google Ads
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Build a resume that
-                                                            highlights campaign
-                                                            results, tools
-                                                            handled, and
-                                                            practical marketing
-                                                            experience, not just
-                                                            course names.
+                                                            Build Performance Max creatives, use Smart Bidding, and reach the right target audience with AI.
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1159,255 +1046,107 @@ export default function DigitalMarketing() {
                                             <div className="d-flex dm_way_points_card_parent justify-content-between">
                                                 <div className="dm_way_points_parent my-3 d-flex flex-column justify-content-lg-end justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Hands-On Learning
-                                                            That Builds Real
-                                                            Skills
+                                                        <h6 className="fw-bold">
+                                                            AI for Websites
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Every topic is
-                                                            delivered through
-                                                            practical exercises,
-                                                            live demos, and real
-                                                            campaign-style
-                                                            execution
+                                                            Use AI to write landing page copy, build pages with Divi AI, and analyze user behaviour.
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="dm_way_points_parent my-3 d-flex flex-column justify-content-lg-end justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Real-World Campaign
-                                                            Exposure
+                                                        <h6 className="fw-bold">
+                                                            AI Technical SEO
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Work on practical
-                                                            assignments that
-                                                            reflect how brands
-                                                            generate traffic,
-                                                            leads, and
-                                                            conversions in the
-                                                            real market.
+                                                            Generate structured data code and interpret site audits using ChatGPT and AI workflows.
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div className="dm_way_points_parent my-3 d-flex flex-column justify-content-lg-end justify-content-center">
                                                     <div className="dm_way_points">
-                                                        <h6>
-                                                            Job-Ready Resume
-                                                            Development
+                                                        <h6 className="fw-bold">
+                                                            AI Ads Automation
                                                         </h6>
                                                         <p className="mb-0">
-                                                            Build a resume that
-                                                            highlights campaign
-                                                            results, tools
-                                                            handled, and
-                                                            practical marketing
-                                                            experience, not just
-                                                            course names.
+                                                            Automate Google Ads scripts and run AI-powered data analysis on search terms and bids.
                                                         </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button
+                                    {/* <button
                                         type="button"
                                         onClick={handleCourseAction}
                                     >
                                         {isEnrolled
                                             ? "Start Course"
                                             : "Start Learning"}
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="dm_skills_main py-5">
-                        <div className="section_container pb-5">
-                            <div className="row justify-content-center">
-                                <h3 className="text-center fw-bold text-white">
-                                    Turn
-                                    <span className="text-c2">
-                                        {" "}
-                                        Digital Skills
-                                    </span>{" "}
-                                    into In-Demand
-                                    <span className="text-c2"> Job Roles</span>
-                                </h3>
-                                <div className="col-lg-7">
-                                    <p className="text-center text-white">
-                                        Explore multiple career paths where
-                                        businesses actively hire digital
-                                        marketers with practical, job-ready
-                                        skills.
-                                    </p>
+                    <div className="dm_career_path_parent">
+                        <div className="section_container pt-5">
+                            <div className="row w-100 m-auto justify-content-center">
+                                <div className="col-lg-8">
+                                    <h3 className="text-center fw-bold text-white">
+                                        Top Career Paths Through Our Online
+                                        <span className="text-c2">{" "}Digital Marketing Courses</span>
+                                    </h3>
                                 </div>
-                                <div className="col-12" ref={containerRef}>
-                                    <div className="row justify-content-center">
-                                        <div className="col-lg-4">
-                                            <div className="d-flex dm_skill_path">
-                                                <div className="row justify-content-center w-100 m-auto">
-                                                    <div className="cards-box">
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹8
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Full-Time
-                                                                    Roles
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Digital
-                                                                    Marketing
-                                                                    Executive
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    SEO
-                                                                    Executive /
-                                                                    SEO Analyst
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Social Media
-                                                                    Marketing
-                                                                    Specialist
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Performance
-                                                                    Marketing
-                                                                    Executive
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Content
-                                                                    Marketing
-                                                                    Specialist
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Email
-                                                                    Marketing
-                                                                    Specialist
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="card">
-                                                            <div className="d-flex flex-column align-items-center">
-                                                                <div className="h4">
-                                                                    ₹3 LPA – ₹7
-                                                                    LPA
-                                                                </div>
-                                                                <p className="h4">
-                                                                    Overall
-                                                                    Average
-                                                                    Salary Range
-                                                                </p>
-                                                            </div>
-                                                        </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-5 d-flex align-items-center justify-content-center">
+                                    <Image src={"/images/live-course/digital-marketing/career-path-element.svg"} 
+                                    className="w-100 h-auto ms-lg-0 ms-5" height={400} width={400} alt="" />
+                                </div>
+                                <div className="col-lg-7 py-lg-5 d-flex align-item-center">
+                                    <div className="row py-lg-5 py-3 text-white">
+                                        <div className="col-lg-4 d-flex align-items-end my-3 my-lg-0">
+                                            <div>
+                                                <p className="fw-bold">Junior Digital Marketing Executive</p>
+                                                <div className="career_package_child one">
+                                                    <div>
+                                                        <p className="text-white">₹3 – 15 LPA</p>
+                                                        <p className="small mb-0">
+                                                            Starts building practical experience by supporting campaigns, learning Search Engine Optimization, and using essential AI Tools.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4 d-flex align-items-end my-3 my-lg-0">
+                                            <div>
+                                                <p className="fw-bold">Junior Digital Marketing Executive</p>
+                                                <div className="career_package_child two">
+                                                    <div>
+                                                        <p className="text-white">₹3 – 15 LPA</p>
+                                                        <p className="small mb-0">
+                                                            Starts building practical experience by supporting campaigns, learning Search Engine Optimization, and using essential AI Tools.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-4 d-flex align-items-end my-3 my-lg-0">
+                                            <div>
+                                                <p className="fw-bold">Junior Digital Marketing Executive</p>
+                                                <div className="career_package_child three">
+                                                    <div>
+                                                        <p className="text-white">₹3 – 15 LPA</p>
+                                                        <p className="small mb-0">
+                                                            Starts building practical experience by supporting campaigns, learning Search Engine Optimization, and using essential AI Tools.
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="row pt-5 w-100 m-auto">
-                            <h3 className="text-center fw-bold text-white">
-                                <span className="text-c2"> Learning</span>{" "}
-                                Experiences Shared by
-                                <span className="text-c2"> Our Students</span>
-                            </h3>
-                            <div className="testimonial_section pb-0">
-                                <Swiper
-                                    modules={[Autoplay]}
-                                    loop={true}
-                                    centeredSlides={true}
-                                    slidesPerView={3.5}
-                                    autoplay={{
-                                        delay: 2000,
-                                        disableOnInteraction: false,
-                                    }}
-                                    breakpoints={{
-                                        320: { slidesPerView: 1 },
-                                        576: { slidesPerView: 2 },
-                                        992: { slidesPerView: 3.5 },
-                                        1200: { slidesPerView: 3.5 },
-                                    }}
-                                >
-                                    {sliderTestimonalData.map((item, index) => (
-                                        <SwiperSlide key={index}>
-                                            <div
-                                                className="dm_testimonial_card position-relative"
-                                                style={{
-                                                    background: `linear-gradient(90deg, ${item.colorOne} 0%, ${item.colorTwo} 100%)`,
-                                                }}
-                                            >
-                                                <Image
-                                                    src={`${BASE_IMAGE_URL}live-course/digital-marketing/testimonial/${item.image}`}
-                                                    alt={item.name}
-                                                    width={200}
-                                                    height={250}
-                                                />
-                                                <div>
-                                                    <p className="testimonial_text text-center">
-                                                        {item.text}
-                                                    </p>
-                                                    <h4>{item.name}</h4>
-                                                </div>
-                                            </div>
-                                        </SwiperSlide>
-                                    ))}
-                                </Swiper>
                             </div>
                         </div>
                     </div>
@@ -1417,16 +1156,12 @@ export default function DigitalMarketing() {
                                 <div className="row justify-content-center">
                                     <div className="col-lg-7">
                                         <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                                            A Smart{" "}
+                                            Transform
                                             <span className="text-c2">
                                                 {" "}
-                                                Learning Journey{" "}
+                                                Your Career{" "}
                                             </span>
-                                            That Leads to{" "}
-                                            <span className="text-c2">
-                                                {" "}
-                                                Real Careers
-                                            </span>
+                                            With Velearn's Digital Marketing Online Courses
                                         </h3>
                                     </div>
                                 </div>
@@ -1560,16 +1295,241 @@ export default function DigitalMarketing() {
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="dm_project_parent">
+                        <div className="section_container px-0 py-5">
+                            <div className="row w-100 m-auto justify-content-center">
+                                <h3 className="text-white text-center fw-bold text-white">
+                                    Real-Time Projects You'll Build in This Course
+                                </h3>
+                            </div>
+                            <div className="row w-100 m-auto justify-content-center">
+                                <div className="col-lg-6 mt-3">
+                                    <Image src={"/images/live-course/digital-marketing/project-snap-dm.svg"}
+                                        className="w-100 h-auto"
+                                        height={400}
+                                        width={700}
+                                        alt="" />
+                                </div>
+                            </div>
+                            <div className="pt-5 w-100 m-auto">
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-7">
+                                        <h3 className="text-center fw-bold text-white">
+                                            Rated Among the Best Online Digital Marketing Courses
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div className="testimonial_section mt-4 pb-0">
+                                    <Swiper
+                                        modules={[Autoplay]}
+                                        loop={true}
+                                        centeredSlides={true}
+                                        slidesPerView={3.5}
+                                        autoplay={{
+                                            delay: 2000,
+                                            disableOnInteraction: false,
+                                        }}
+                                        breakpoints={{
+                                            320: { slidesPerView: 1 },
+                                            576: { slidesPerView: 2 },
+                                            992: { slidesPerView: 3.5 },
+                                            1200: { slidesPerView: 3.5 },
+                                        }}
+                                    >
+                                        {sliderTestimonalData.map((item, index) => (
+                                            <SwiperSlide key={index}>
+                                                <div
+                                                    className="dm_testimonial_card position-relative"
+                                                    style={{
+                                                        background: `linear-gradient(90deg, ${item.colorOne} 0%, ${item.colorTwo} 100%)`,
+                                                    }}
+                                                >
+                                                    <Image
+                                                        src={`${BASE_IMAGE_URL}live-course/digital-marketing/testimonial/${item.image}`}
+                                                        alt={item.name}
+                                                        width={200}
+                                                        height={250}
+                                                    />
+                                                    <div>
+                                                        <p className="testimonial_text text-center">
+                                                            {item.text}
+                                                        </p>
+                                                        <h4>{item.name}</h4>
+                                                    </div>
+                                                </div>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="row justify-content-center">
+                                    <div className="col-lg-7">
+                                        <h3 className="text-center fw-bold text-white mb-3">
+                                            Get Hired With Our Digital Marketing
+                                            <span className="text-c2">
+                                                {" "}
+                                                Course Online With Placement
+                                            </span>{" "}
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div className="col-12" ref={containerRef}>
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-5">
+                                            <div className="d-flex dm_skill_path">
+                                                <div className="row justify-content-center w-100 m-auto">
+                                                    <div className="cards-box">
+                                                        <div className="card one">
+                                                            <div className="row">
+                                                                <div className="col-2">
+                                                                    <Image src={"/images/live-course/digital-marketing/process-1.png"}
+                                                                        className="w-100 h-auto"
+                                                                        height={100}
+                                                                        width={100}
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <div className="col-10">
+                                                                    <div>
+                                                                        <p className="fw-bold">
+                                                                            Resume & Portfolio Review
+                                                                        </p>
+                                                                    </div>
+                                                                    <p className="small">
+                                                                        Placement support starts with personalized resume and case study portfolio feedback.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="card two">
+                                                            <div className="row">
+                                                                <div className="col-2">
+                                                                    <Image src={"/images/live-course/digital-marketing/process-2.png"}
+                                                                        className="w-100 h-auto"
+                                                                        height={100}
+                                                                        width={100}
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <div className="col-10">
+                                                                    <div>
+                                                                        <p className="fw-bold">
+                                                                            LinkedIn Profile Optimization
+                                                                        </p>
+                                                                    </div>
+                                                                    <p className="small">
+                                                                        Build a recruiter-ready LinkedIn profile that powers your career in digital marketing.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="card three">
+                                                            <div className="row">
+                                                                <div className="col-2">
+                                                                    <Image src={"/images/live-course/digital-marketing/process-3.png"}
+                                                                        className="w-100 h-auto"
+                                                                        height={100}
+                                                                        width={100}
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <div className="col-10">
+                                                                    <div>
+                                                                        <p className="fw-bold">
+                                                                            Mock Interviews & Mentorship
+                                                                        </p>
+                                                                    </div>
+                                                                    <p className="small">
+                                                                        One-on-one mock interviews with mentors sharing real-world tools and techniques.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="card four">
+                                                            <div className="row">
+                                                                <div className="col-2">
+                                                                    <Image src={"/images/live-course/digital-marketing/process-4.png"}
+                                                                        className="w-100 h-auto"
+                                                                        height={100}
+                                                                        width={100}
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <div className="col-10">
+                                                                    <div>
+                                                                        <p className="fw-bold">
+                                                                            Hiring Partner Network
+                                                                        </p>
+                                                                    </div>
+                                                                    <p className="small">
+                                                                        Direct introductions to marketing teams hiring our online digital marketing courses graduates.
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="dm_from_start_sec logo_swiper py-3">
                         <div className="section_container">
+                            <div>
+                                <h3 className="text-black text-center fw-bold px-3 lh-sm">
+                                    Trusted by
+                                    <span className="text-c2">
+                                        {" "}Top Hiring{" "}
+                                    </span>
+                                    Partners
+                                </h3>
+                                <div className="pb-5">
+                                    <Swiper
+                                        className="pt-3"
+                                        modules={[Autoplay]}
+                                        spaceBetween={30}
+                                        slidesPerView={5}
+                                        speed={3000}
+                                        autoplay={{
+                                            delay: 0,
+                                            disableOnInteraction: false,
+                                            reverseDirection: true,
+                                        }}
+                                        loop={true}
+                                        grabCursor={false}
+                                        allowTouchMove={false}
+                                        breakpoints={{
+                                            320: { slidesPerView: 2 },
+                                            768: { slidesPerView: 3 },
+                                            1024: { slidesPerView: 5 },
+                                        }}
+                                    >
+                                        {recruiters1.map((logo, index) => (
+                                            <SwiperSlide key={index}>
+                                                <Image
+                                                    src={`/images/prime-recruiters/${logo}`}
+                                                    alt={`Partner ${index + 1}`}
+                                                    className="partner-logo"
+                                                    height={50}
+                                                    width={150}
+
+                                                />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </div>
+                            </div>
                             <div className="row justify-content-center">
-                                <div className="col-lg-6">
+                                <div className="col-lg-9">
                                     <h3 className="text-black text-center fw-bold px-3 lh-sm">
-                                        A{" "}
-                                        <span className="text-c2">
-                                            {" "}
-                                            Certification
-                                        </span>{" "}
-                                        That Reflects What You Can Do
+                                        Boost Your Resume With a Digital Marketing Online Course With Certificate
                                     </h3>
                                 </div>
                             </div>
@@ -1579,44 +1539,26 @@ export default function DigitalMarketing() {
                                         <div className="col-lg-6 d-flex flex-column justify-content-center">
                                             <div className="mb-2">
                                                 <h5 className="text-black fw-bold mb-3">
-                                                    Design Skill–Verified
-                                                    Certification
+                                                    Validate Your Achievement
                                                 </h5>
                                                 <p className="text-black mb-4">
-                                                    {" "}
-                                                    This certification validates
-                                                    your UI thinking, user
-                                                    research, wireframing, and
-                                                    visual design skills —
-                                                    proven through real design
-                                                    tasks and projects.
+                                                    Earn an industry-recognized professional certificate that proves your hands-on skills in SEO, ads, social, content, and AI marketing, trusted across our online digital marketing courses.
                                                 </p>
                                             </div>
                                             <div className="mb-2">
                                                 <h5 className="text-black fw-bold mb-3">
-                                                    Globally Relevant Design
-                                                    Credential
+                                                    Build a Professional Skill Portfolio
                                                 </h5>
                                                 <p className="text-black mb-4">
-                                                    Showcase your UI/UX
-                                                    expertise with a certificate
-                                                    aligned to modern design
-                                                    standards, valued by
-                                                    startups and product teams
-                                                    worldwide.
+                                                    Pair your certificate with real-world case studies and AI-powered workflows, a portfolio that wins interviews and freelance projects.
                                                 </p>
                                             </div>
                                             <div className="mb-2">
                                                 <h5 className="text-black fw-bold mb-3">
-                                                    Portfolio & Career Booster
+                                                    Share Your Success
                                                 </h5>
                                                 <p className="text-black mb-4">
-                                                    More than a certificate —
-                                                    this strengthens your
-                                                    portfolio, resume, and
-                                                    interviews, helping you
-                                                    stand out as a job-ready
-                                                    UI/UX designer.
+                                                    Add your certificate to LinkedIn, resume, and freelance profiles, and boost your career in digital marketing instantly.
                                                 </p>
                                             </div>
                                         </div>
@@ -1625,7 +1567,7 @@ export default function DigitalMarketing() {
                                                 <div className="col-lg-10">
                                                     <Image
                                                         src={`/images/details-page/certificate.jpg`}
-                                                        className="w-100 h-auto"
+                                                        className="w-100 h-auto rounded-5"
                                                         height={500}
                                                         width={500}
                                                         alt=""
@@ -1636,14 +1578,211 @@ export default function DigitalMarketing() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="py-5">
+                                <div className="section_container px-0">
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-12">
+                                            <h3 className="fw-bold text-center text-black">
+                                                Live Batches for
+                                                <span className="text-c2">{" "}Our Digital Marketing{" "}</span>
+                                                Classes Online
+                                            </h3>
+                                        </div>
+                                        <div className="col-lg-11 mt-4">
+                                            <div className="row justify-content-evenly">
+                                                <div className="col-lg-4 col-md-6 my-lg-3 my-2">
+                                                    <div className="dm_batch_inner">
+                                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                                        <p className="fw-bold">Monday - Friday</p>
+                                                        <p className="small">
+                                                            3 Month / 120 Hours<br />
+                                                            (include Doubt Clearing)
+                                                        </p>
+                                                        <p>Session Recordings Included</p>
+                                                        <button>Enroll In Weekday Batch</button>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-4 col-md-6 my-lg-3 my-2">
+                                                    <div className="dm_batch_inner">
+                                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                                        <p className="fw-bold">Monday - Friday</p>
+                                                        <p className="small">
+                                                            3 Month / 120 Hours<br />
+                                                            (include Doubt Clearing)
+                                                        </p>
+                                                        <p>Session Recordings Included</p>
+                                                        <button>Enroll In Weekday Batch</button>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-8 col-md-12 my-lg-5 my-2 batch_parent">
+                                                    <div className="dm_batch_inner">
+                                                        <div className="col-lg-12 ">
+                                                            <div className="row batch_child">
+                                                                <div className="col-lg-6 d-flex align-items-center">
+                                                                    <div>
+                                                                        <h5 className="text-black fw-bold">Self-Paced</h5>
+                                                                        <p className="text-black">Learn at your own schedule </p>
+                                                                        <p className="text-black small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
+
+                                                                        <div className="col-12 mt-4 d-flex justify-content-start">
+                                                                            <button>Explore self-paced course</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-lg-6 d-flex align-items-center mt-lg-0 mt-4">
+                                                                    <ul className="p-0 m-0">
+                                                                        <li>All recordings + materials</li>
+                                                                        <li>Lifetime access</li>
+                                                                        <li>Certificate of completion</li>
+                                                                        <li>Learn at your own pace</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="pt-4 pb-2 dm_pricing_plan">
+                                <div className="section_container">
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-7">
+                                            <div className="pricing_card">
+                                                <h3 className="fw-bold">
+                                                    Check Our
+                                                    <span className="text-c2">
+                                                        {" "}Digital Marketing{" "}
+                                                    </span>
+                                                    Online Course Fees
+                                                </h3>
+                                                <div className="features mt-4 px-lg-3 px-0">
+                                                    <ul>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ One-Time Payment – No hidden charges</p>
+                                                        </li>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ Lifetime Course Access</p>
+                                                        </li>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ Live Interactive Classes</p>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ Real-Time Hands-On Projects</p>
+                                                        </li>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ Portfolio Building & Resume Review</p>
+                                                        </li>
+                                                        <li>
+                                                            <p className="small fw-medium">✓ Mock Interviews + Placement Support</p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div className="price_box">
+                                                    <div className="d-flex align-items-center justify-content-center gap-4">
+                                                        <span className="old_price mb-0">
+                                                            ₹50,000
+                                                        </span>
+                                                        <span className="h2 new_price mb-0">
+                                                            ₹15,000/-
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <button
+                                                    className="apply_btn"
+                                                    onClick={handleCourseAction}
+                                                >
+                                                    {isEnrolled
+                                                        ? "Start Course"
+                                                        : "Apply Now"}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="faq_section pb-5">
+                                <div className="section_container p-xl text-center mt-lg-5">
+                                    <h3 className="section_base_heading">
+                                        Frequently Asked{" "}
+                                        <span className="text-c2"> Questions</span>
+                                    </h3>
+                                    <p className="text-center">Everything you need to know before you enroll</p>
+                                    <div className="row mt-5 justify-content-center align-items-center">
+                                        <div className="col-lg-9 text-start">
+                                            {faqData.map((item, index) => (
+                                                <div
+                                                    className={`faq_item mb-3  ${activeFaqIndex === index
+                                                        ? "active"
+                                                        : ""
+                                                        }`}
+                                                    key={index}
+                                                >
+                                                    <button
+                                                        className={`faq_question justify-content-between ${activeFaqIndex === index
+                                                            ? "active"
+                                                            : ""
+                                                            }`}
+                                                        onClick={() => toggleFaq(index)}
+                                                    >
+                                                        {item.question}
+
+                                                        <span className="icon">
+                                                            {activeFaqIndex !== index && (
+                                                                <Image
+                                                                    src="/images/icons/faq-icon.png"
+                                                                    alt="toggle"
+                                                                    height={35}
+                                                                    width={35}
+                                                                    className="faq_toggle_icon"
+                                                                />
+                                                            )}
+                                                        </span>
+                                                    </button>
+
+                                                    {activeFaqIndex ===
+                                                        index && (
+                                                            <div className="faq_answer">
+                                                                {item.answer}
+                                                            </div>
+                                                        )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div className="py-5 price_section_parent_top position-relative top-0">
+                        <section className="dm_cta position-relative">
+                            <Image src={"/images/live-course/digital-marketing/cta-person.svg"} className="dm_cta_person" width={3000} height={500} alt="" />
+                            <Image src={"/images/live-course/digital-marketing/cta-banner.svg"} className="dm_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
+                            <div className="section_container">
+                                <div className="row justify-content-center align-items-center w-100 m-auto">
+                                    <div className="dm_cta_inner mt-lg-5">
+                                        <h3 className="fw-bold text-black text-lg-start text-center">Enroll Now and Become an AI-Powered Digital Marketer </h3>
+                                        <p className="small lh-lg text-black text-lg-start text-center">Take the next step in your career in digital marketing. Learn live, build real campaigns with AI, and walk away ready to get hired or freelance from day one. </p>
+                                        <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
+                                            <button>Enroll Now</button>
+                                            <button>Talk to Counsellors</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        {/* <div className="py-5 price_section_parent_top position-relative top-0">
                             <div className="text-center d-flex justify-content-center">
                                 <div className="row w-100 justify-content-center">
                                     <div className="col-lg-6 mt-4 d-flex justify-content-center ">
                                         <div className="parent_price">
                                             <div className="price_section d-flex flex-column align-items-center justify-content-center px-2 px-lg-4 py-4">
-                                                {/* PRICE TABS */}
                                                 <h3 className="fw-bold mb-3 text-white px-3 px-lg-2">
                                                     Digital Marketing Unlimited
                                                     Access Plan
@@ -1663,7 +1802,6 @@ export default function DigitalMarketing() {
                                                     </div>
                                                 </div>
 
-                                                {/* CONTENT BOX */}
                                                 <div className="price_card w-100 text-white">
                                                     <div className="row w-100 m-auto text-start">
                                                         <div className="col-6">
@@ -1729,7 +1867,6 @@ export default function DigitalMarketing() {
                                 </h3>
 
                                 <div className="row mt-5 justify-content-center align-items-center">
-                                    {/* FAQ Accordion */}
                                     <div className="col-lg-9 text-start">
                                         {faqData.map((item, index) => (
                                             <div
@@ -1772,7 +1909,7 @@ export default function DigitalMarketing() {
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
                     </div>
                 </div>
             </section>

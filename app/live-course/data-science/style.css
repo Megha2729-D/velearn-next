@@ -5,7 +5,7 @@
 }
 
 .ds_top_sec {
-    background: url(/images//live-course/data-science/ds-banner-bg.png);
+    background: url(/images/live-course/data-science/ds-banner-bg.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -113,7 +113,7 @@
 }
 
 .ds_course_overview {
-    background: url(/images//live-course/data-science/bg-overview.png),
+    background: url(/images/live-course/data-science/bg-overview.png),
         linear-gradient(180deg, #000000 25.25%, #00000057 47.83%, #00000000 80.65%);
     background-size: cover;
     overflow: hidden;
@@ -320,7 +320,7 @@
 }
 
 .ds_career_outcome {
-    background: url(/images//live-course/data-science/bg-career-role-bg.png);
+    background: url(/images/live-course/data-science/bg-career-role-bg.png);
     background-size: cover;
     background-position: center 170px;
 }
@@ -454,7 +454,7 @@
 }
 
 .ds_bottom_end {
-    background: url(/images//live-course/data-science/ds-bottom-bg.png);
+    background: url(/images/live-course/data-science/ds-bottom-bg.png);
     background-size: cover;
 }
 
@@ -495,7 +495,7 @@
 .ui_ux_journey .journey_bg_icon {
     position: absolute;
     inset: 0;
-    background: url("/images//live-course/ui-ux/journey/watermark.png") center/contain no-repeat;
+    background: url("/images/live-course/ui-ux/journey/watermark.png") center/contain no-repeat;
     opacity: 0.04;
     filter: brightness(0) invert(1);
     pointer-events: none;

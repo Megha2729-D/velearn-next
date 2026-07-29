@@ -1,6 +1,6 @@
 .uiux-hero {
     min-height: 100%;
-    background: url(/images//live-course/ui-ux/bg-1.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/ui-ux/bg-1.png), linear-gradient(#000000, #000000);
     background-size: cover;
     background-position: center;
     color: #fff;
@@ -379,7 +379,7 @@
 
 /* why learn start */
 .uiux_whylearn {
-    background: url(/images//live-course/ui-ux/bg-2.png), linear-gradient(#ffffff, var(--c2));
+    background: url(/images/live-course/ui-ux/bg-2.png), linear-gradient(#ffffff, var(--c2));
     background-size: cover;
     padding-bottom: 250px;
 }
@@ -775,7 +775,7 @@
 
 /* .scale_uiux_chart {
     background-color: #000000;
-    background: url(/images//live-course/ui-ux/bg-3.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/ui-ux/bg-3.png), linear-gradient(#000000, #000000);
     background-size: cover;
 }
     
@@ -794,7 +794,7 @@
 .ui_ux_journey .journey_bg_icon {
     position: absolute;
     inset: 0;
-    background: url("/images//live-course/ui-ux/journey/watermark.png") center/contain no-repeat;
+    background: url("/images/live-course/ui-ux/journey/watermark.png") center/contain no-repeat;
     opacity: 0.04;
     filter: brightness(0) invert(1);
     pointer-events: none;
@@ -890,7 +890,7 @@
 
 /* pricing start */
 .uiux_pricing_plan {
-    /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images//live-course/ui-ux/bg-4.png);
+    /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images/live-course/ui-ux/bg-4.png);
     background-size: cover; */
     display: flex;
     justify-content: center;
@@ -924,7 +924,7 @@
 }
 
 .uiux_pricing_plan .price_box {
-    background: url(/images//live-course/ui-ux/bg-4.png), linear-gradient(#ffffff00, #ffffff00);
+    background: url(/images/live-course/ui-ux/bg-4.png), linear-gradient(#ffffff00, #ffffff00);
     background-size: 300%;
     background-position: center;
     margin: 25px auto;

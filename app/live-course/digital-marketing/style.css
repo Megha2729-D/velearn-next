@@ -1,4 +1,3 @@
-
 .dm_main {
     background: linear-gradient(var(--c2), #ffffff);
 }
@@ -13,8 +12,16 @@
     padding: 10px;
 }
 
+.dm_tools_sec {
+    background: url(/images/live-course/digital-marketing/tools-bg.svg), linear-gradient(#000000, #000000);
+    background-size: cover;
+    background-position: center;
+    /* padding-top: 150px; */
+    border-radius: 45px;
+}
+
 .digital_marketing_banner {
-    background: url(/images//live-course/digital-marketing/bg-1.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/digital-marketing/bg-1.png), linear-gradient(#000000, #000000);
     background-size: cover;
     padding-top: 150px;
     border-radius: 45px;
@@ -70,7 +77,7 @@
 }
 
 .why_dm_sec {
-    background: url(/images//live-course/digital-marketing/bg-2-1.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/digital-marketing/bg-2-1.png), linear-gradient(#000000, #000000);
     background-size: cover;
     border-radius: 45px;
     position: relative;
@@ -83,7 +90,7 @@
     bottom: 0;
     height: 100%;
     width: 100%;
-    background: url(/images//live-course/digital-marketing/bg-2-2.png);
+    background: url(/images/live-course/digital-marketing/bg-2-2.png);
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
@@ -109,9 +116,84 @@
 }
 
 .dm_overview {
-    background: url(/images//live-course/digital-marketing/bg-3.png), linear-gradient(#fff5f5, #fff5f5);
+    background: url(/images/live-course/digital-marketing/bg-3.png), linear-gradient(#fff5f5, #fff5f5);
     background-size: cover;
     border-radius: 45px;
+}
+
+.tools_points_inner {
+    border-radius: 12px;
+    box-shadow:
+        inset 0 1px 6px #0000002e,
+        inset 0 -1px 4px #ffffffcc;
+    padding: 10px;
+    margin: 20px 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tools_points_inner:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: 1;
+}
+
+.tools_top_parent {
+    right: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    margin: auto;
+    top: 0;
+}
+
+.dm_tools_sec .image_parent {
+    padding-top: 350px;
+}
+
+.tools_points_inner.one:before {
+    background: radial-gradient(circle at left, #78FF00 0%, #78FF0031 50%, #78FF0000 70%);
+}
+
+.tools_points_inner.two:before {
+    background: radial-gradient(circle at left, #FF0000 0%, #FF000031 50%, #FF000000 70%);
+}
+
+.tools_points_inner.three:before {
+    background: radial-gradient(circle at left, #55FF00 0%, #55FF0031 50%, #55FF0000 70%);
+}
+
+.tools_points_inner.four:before {
+    background: radial-gradient(circle at left, #FFA100 0%, #FFA10031 50%, #FFA10000 70%);
+}
+
+.tools_points_inner.five:before {
+    background: radial-gradient(circle at left, #005DFF 0%, #005DFF31 50%, #005DFF00 70%);
+}
+
+.tools_points_inner.six:before {
+    background: radial-gradient(circle at left, #FF0099 0%, #FF009931 50%, #FF009900 70%);
+}
+
+.tools_points_inner.seven:before {
+    background: radial-gradient(circle at left, #57309C 0%, #57309C31 50%, #57309C00 70%);
+}
+
+.tools_points_inner.eight:before {
+    background: radial-gradient(circle at left, #FFAE00 0%, #FFAE0031 50%, #FFAE0000 70%);
+}
+
+.tools_points_inner.nine:before {
+    background: radial-gradient(circle at left, #00FF88 0%, #00FF8831 50%, #00FF8800 70%);
+}
+
+.tools_points_inner p {
+    margin-bottom: 0;
+    padding-left: 70px;
 }
 
 .dm_overview .dm_steps .dm_steps_sub {
@@ -170,7 +252,7 @@
 }
 
 .dm_tools {
-    background: url(/images//live-course/digital-marketing/bg-4.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/digital-marketing/bg-4.png), linear-gradient(#000000, #000000);
     background-size: cover;
     border-radius: 45px;
 }
@@ -194,18 +276,12 @@
 }
 
 .dm_path {
-    background: url(/images//live-course/digital-marketing/bg-5.png), linear-gradient(#fff5f5, #fff5f5);
+    background: url(/images/live-course/digital-marketing/bg-5.png), linear-gradient(#fff5f5, #fff5f5);
     background-size: cover;
     border-radius: 45px;
 }
 
-.dm_ways_main button {
-    background-color: var(--c1);
-    color: #ffffff;
-    padding: 8px 30px;
-    border-radius: 10px;
-    width: fit-content;
-    border: none;
+.dm_ways_main {
     margin-top: 100px;
     position: relative;
     z-index: 1;
@@ -231,7 +307,7 @@
 .dm_way_points_parent:after {
     content: "";
     background: linear-gradient(#24b8ec26 10%, #ffffff14 80%);
-    height: 255px;
+    height: 80%;
     width: 100%;
     position: absolute;
     z-index: 0;
@@ -243,7 +319,7 @@
 }
 
 .dm_skills_main {
-    background: url(/images//live-course/digital-marketing/bg-6.png), linear-gradient(#000000, #000000);
+    background: url(/images/live-course/digital-marketing/bg-6.png), linear-gradient(#000000, #000000);
     background-size: cover;
     border-radius: 45px;
     margin-top: 13px;
@@ -252,39 +328,52 @@
 
 .dm_skill_path .cards-box {
     position: relative;
-    min-height: 500px;
+    min-height: 450px;
 }
 
 .dm_skill_path .cards-box .card {
-    /* box-shadow: 0px 0px 8px -3px #cccccc inset; */
     padding: 30px 20px 20px;
     width: 100%;
     max-width: 100%;
     background: linear-gradient(180deg, #000000 10%, #686868 100%);
-    /* background: #07212b; */
     border: none;
     border-radius: 0 0 30px 30px;
     color: #ffffff;
     cursor: pointer;
 }
 
-.dm_skill_path .cards-box .card:not(.hide)[data-slide='0'] {
+.dm_skill_path .cards-box .card {
     padding: 50px 20px 20px;
-    background: linear-gradient(180deg, #000000 37.87%, #096301 100%);
 }
 
-.dm_skill_path .cards-box .card>div>div {
-    display: none;
+.dm_skill_path .cards-box .card.one {
+    background: linear-gradient(180deg, #09630105 37.87%, #096301 100%);
 }
+
+.dm_skill_path .cards-box .card.two {
+    background: linear-gradient(180deg, #4A302405 37.87%, #4A3024 100%);
+}
+
+.dm_skill_path .cards-box .card.three {
+    background: linear-gradient(180deg, #C7131605 61.85%, #C71316 100%);
+}
+
+.dm_skill_path .cards-box .card.four {
+    background: linear-gradient(180deg, #F0B61C05 37.87%, #F0B61C 100%);
+}
+
+/* .dm_skill_path .cards-box .card>div>div {
+    display: none;
+} */
 
 .dm_skill_path .cards-box .card>div>div,
 .dm_skill_path .cards-box .card>div>p {
-    color: #d8d8d8;
+    color: #ffffff;
 }
 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='0']>div>div,
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='0']>div>p {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     color: #ffffff;
 }
 
@@ -313,17 +402,17 @@
 }
 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='1'] {
-    transform: translate(0px, 115px);
+    transform: translate(0px, 100px);
     z-index: 8;
 }
 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='2'] {
-    transform: translate(0px, 170px);
+    transform: translate(0px, 200px);
     z-index: 7;
 }
 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='3'] {
-    transform: translate(0px, 230px);
+    transform: translate(0px, 300px);
     z-index: 6;
 }
 
@@ -332,6 +421,7 @@
     z-index: 5;
 }
 
+/* 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='5'] {
     transform: translate(0px, 340px);
     z-index: 4;
@@ -345,7 +435,7 @@
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='7'] {
     transform: translate(0px, 445px);
     z-index: 2;
-}
+} */
 
 .dm_skill_path .cards-box .card:not(.hide)[data-slide='0'] {
     transition: all 0.32s cubic-bezier(0.18, 0.98, 0.45, 1);
@@ -353,11 +443,11 @@
 
 .dm_skill_path .cards-box .card p {
     margin-bottom: 0;
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .dm_from_start_sec {
-    background: url(/images//live-course/digital-marketing/bg-7.png), linear-gradient(#fff5f5, #fff5f5);
+    background: url(/images/live-course/digital-marketing/bg-7.png), linear-gradient(#fff5f5, #fff5f5);
     background-size: cover;
     border-radius: 45px;
     margin-top: 13px;
@@ -700,6 +790,54 @@
     }
 }
 
+.download_icon {
+    background: #ffffff;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download_syll_butt {
+    position: relative;
+    z-index: 1;
+    background: #22346B33;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 10px 5px 5px;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.download_syll_butt:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.tab-content-box .download_icon {
+    background: var(--c1);
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dm_modules_parent {
+    padding-bottom: 115px;
+}
+
 /* module - end */
 .price_section_parent_top {
     position: absolute;
@@ -792,3 +930,453 @@
 }
 
 /* price end */
+
+.dm_career_path_parent {
+    background: url(/images/live-course/digital-marketing/career-path-bg.svg), linear-gradient(#000000, #000000);
+    background-size: cover;
+    border-radius: 45px;
+    margin: 10px 0;
+    position: relative;
+    overflow: hidden;
+    background-position: center;
+}
+
+.dm_career_path_parent:before {
+    content: "";
+    margin: 5px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #00000041 0, #000000ef 100%);
+    z-index: 1;
+}
+
+.dm_career_path_parent .section_container {
+    position: relative;
+    z-index: 2;
+}
+
+.career_package_child {
+    box-shadow: 0px 0px 2px 1px #ffffff61;
+    padding: 15px;
+    border-radius: 22px;
+    position: relative;
+    overflow: hidden;
+}
+
+.career_package_child.one {
+    background: #24B8EC33;
+}
+
+.career_package_child.two {
+    background: #FFFF0033;
+}
+
+.career_package_child.three {
+    background: #15B40033;
+}
+
+.career_package_child div {
+    position: relative;
+    z-index: 2;
+}
+
+.career_package_child:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1;
+}
+
+.career_package_child.one:after {
+    background: radial-gradient(circle at bottom, #24B8EC 0%, #24B8EC31 50%, #24B8EC00 70%);
+}
+
+.career_package_child.two:after {
+    background: radial-gradient(circle at bottom, #FFFF00 0%, #FFFF0031 50%, #FFFF0000 70%);
+}
+
+.career_package_child.three:after {
+    background: radial-gradient(circle at bottom, #15B400 0%, #15B40031 50%, #15B40000 70%);
+}
+
+.career_package_child.one p:last-child {
+    padding-bottom: 20px;
+}
+
+.career_package_child.two p:last-child {
+    padding-bottom: 60px;
+}
+
+.career_package_child.three p:last-child {
+    padding-bottom: 100px;
+}
+
+.dm_project_parent {
+    position: relative;
+    border-radius: 45px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.dm_project_parent:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    background: url(/images/live-course/digital-marketing/bottom-bg.svg), linear-gradient(#000000, #000000);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.dm_project_parent .section_container {
+    position: relative;
+    z-index: 2;
+}
+
+.dm_batch_inner {
+    background: linear-gradient(180deg, #24b8ec54 0%, #ffffff59 100%);
+    border: 1px solid #FFFFFF;
+    border-radius: 62px;
+    padding: 30px 40px;
+}
+
+.dm_batch_inner button {
+    background: var(--c1);
+    border-radius: 25px;
+    padding: 6px 15px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    transition: all .3s ease-out;
+}
+
+.dm_batch_inner button:hover {
+    background: var(--c2);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_parent .dm_batch_inner {
+    background: linear-gradient(90deg, #24b8ec33 0%, #00e1ff33 100%);
+}
+
+.batch_parent button {
+    border: 3px solid #FFFFFF1F;
+    background: #FFFFFF33;
+    border-radius: 25px;
+    padding: 6px 20px;
+    color: #000000;
+    font-weight: 600;
+    transition: all .3s ease-out;
+}
+
+.batch_parent button:hover {
+    border: 3px solid var(--c1);
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_child ul li {
+    margin: 10px 0;
+    padding: 10px;
+    color: #000000;
+    list-style: none;
+    border-left: 3px solid #000000c0;
+    background: linear-gradient(90deg, #ffffff66 0%, #ffffff00 100%);
+}
+
+.dm_cta {
+    margin-top: -70px;
+}
+
+.dm_cta h3 {
+    font-size: 50px;
+}
+
+.dm_cta button {
+    background: linear-gradient(90deg, #999696 0%, #FFFAFA 100%);
+    border-radius: 8px;
+    padding: 10px 30px;
+    border: none;
+    color: #000;
+    transition: all .3s ease-out;
+}
+
+.dm_cta button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.dm_cta_inner {
+    position: absolute;
+    top: 15%;
+    bottom: 0;
+    left: 5%;
+    width: 50%;
+    height: fit-content;
+}
+
+.dm_cta_person {
+    display: none;
+}
+
+
+/* pricing start */
+.dm_pricing_plan {
+    /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images/live-course/ui-ux/bg-4.png);
+    background-size: cover; */
+    display: flex;
+    justify-content: center;
+}
+
+.dm_pricing_plan .pricing_card {
+    background: linear-gradient(180deg, #24b8ec0d 0%, #ffffff59 100%);
+    border-radius: 62px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: -1px 9px 25px #0000000a inset;
+    backdrop-filter: blur(20px);
+}
+
+.dm_pricing_plan .features {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: left;
+}
+
+.dm_pricing_plan .features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dm_pricing_plan .features li {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.dm_pricing_plan .price_box {
+    background: url(/images/live-course/ui-ux/bg-4.png), linear-gradient(#ffffff00, #ffffff00);
+    background-size: 300%;
+    background-position: center;
+    margin: 25px auto;
+    padding: 15px 30px;
+    width: fit-content;
+    border-radius: 23px;
+    box-shadow: 0px 0px 12px 0px #e9e9e9 inset;
+    border: 1px solid #ffffffad;
+}
+
+.dm_pricing_plan .old_price {
+    text-decoration: line-through;
+    font-size: 24px;
+    color: #555;
+}
+
+.dm_pricing_plan .new_price {
+    background: #2FFF362B;
+    color: #378128;
+    font-size: 28px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 20px;
+}
+
+.dm_pricing_plan .apply_btn {
+    background: var(--c1);
+    color: #fff;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dm_pricing_plan .apply_btn:hover {
+    background: var(--c2);
+    color: #000;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .dm_pricing_plan .features {
+        flex-direction: column;
+    }
+}
+
+/* pricing end */
+
+
+.dm_cta {
+    margin-top: -70px;
+}
+
+.dm_cta h3 {
+    font-size: 35px;
+}
+
+.dm_cta button {
+    background: linear-gradient(90deg, #999696 0%, #FFFAFA 100%);
+    border-radius: 8px;
+    padding: 10px 30px;
+    border: none;
+    color: #000;
+    transition: all .3s ease-out;
+}
+
+.dm_cta button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.dm_cta_inner {
+    position: absolute;
+    top: 25%;
+    bottom: 0;
+    left: 5%;
+    width: 50%;
+    height: fit-content;
+    background: #D9D9D933;
+    border-radius: 32px;
+    padding: 20px;
+}
+
+.dm_cta_inner .dm_cta_button {
+    position: absolute;
+    width: 100%;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.dm_cta_person {
+    display: none;
+}
+
+@media screen and (max-width: 991px) {
+    .dm_tools_sec .image_parent {
+        padding-top: 870px;
+    }
+
+    .dm_career_path_parent:before {
+        background: linear-gradient(to right, #000000 0, #000000ef 100%);
+    }
+
+    .career_package_child:after {
+        height: 100%;
+    }
+
+    .career_package_child p:last-child {
+        padding-bottom: 0 !important;
+    }
+
+    .digital_marketing_banner .banner_left_dm button {
+        padding: 8px 10px;
+        font-size: 15.6px
+    }
+
+    .dm_pricing_plan .pricing_card {
+        padding: 30px 0px;
+    }
+
+    .dm_pricing_plan .new_price,
+    .dm_pricing_plan .old_price {
+        font-size: 21px;
+    }
+
+
+
+    .dm_cta h3 {
+        font-size: 30px;
+    }
+
+    .dm_cta_lg {
+        display: none;
+    }
+
+    .dm_cta {
+        padding: 40px 0;
+        padding-bottom: 60px;
+        margin-bottom: 70px;
+        display: flex;
+        flex-direction: column-reverse;
+        background: url("/images/live-course/digital-marketing/cta-bg.svg");
+        background-size: cover;
+        background-position: center;
+        margin-top: 0;
+    }
+
+    .dm_cta_person {
+        display: block;
+        position: absolute;
+        bottom: -50px;
+        right: 0;
+        width: 200px;
+        height: auto;
+    }
+
+    .dm_cta_inner {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        padding: 20px;
+        right: 10%;
+        width: 100%;
+        left: 0;
+        margin: auto;
+        height: fit-content;
+        margin-bottom: 30px;
+    }
+
+    /* .dm_cta h3, 
+    .dm_cta p{
+        color: #ffffff !important;
+    } */
+
+    .dm_cta button {
+        font-weight: bold;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .rocket_img {
+        right: 15px;
+        top: -20px;
+        height: 70px;
+    }
+}
+
+@media (min-width: 401px) and (max-width: 490px) {
+    .rocket_img {
+        height: 70px !important;
+        width: auto;
+        right: 0;
+        top: 180px;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .dm_pricing_plan .features {
+        flex-direction: column;
+    }
+
+    .dm_cta {
+        padding: 90px 0;
+        padding-bottom: 150px;
+
+    }
+}

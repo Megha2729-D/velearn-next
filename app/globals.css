@@ -3283,6 +3283,15 @@ section {
     right: 0;
   }
 
+  .tab-content-parent {
+    left: 0 !important;
+    margin: auto;
+    right: 0 !important;
+    transform: none !important;
+    width: -webkit-fit-content;
+    width: fit-content;
+  }
+
   .nav-elements ul a,
   .nav-elements span,
   .nav-elements .dropdown-toggle {
