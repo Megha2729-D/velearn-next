@@ -40,7 +40,7 @@ const LIVE_COURSE_ROUTES: Record<string, string> = {
     "Full Stack Web Development": "/live-course/full-stack-development",
     "UI UX Design": "/live-course/ui-ux-design",
     "Digital Marketing": "/live-course/digital-marketing",
-    "Data Science": "/live-course/data-science",
+    "Data Science": "/live-course/data-science-and-machine-learning",
 };
 
 export default function Navbar() {
@@ -343,7 +343,7 @@ export default function Navbar() {
     };
     const isNavbarTwo =
         pathname === "/live-course/digital-marketing" ||
-        pathname === "/live-course/data-science";
+        pathname === "/live-course/data-science-and-machine-learning";
 
     const isNavbarRefer = pathname === "/refer-and-earn";
 

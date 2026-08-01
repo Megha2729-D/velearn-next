@@ -37,7 +37,7 @@ const bannerSlides = [
     {
         title: "Data Science & AI",
         desc: "Learn Python, Pandas, Machine Learning, AI models and work on real datasets with industry mentors.",
-        link: "/live-course/data-science",
+        link: "/live-course/data-science-and-machine-learning",
         alt: "Data Science Course",
     },
 ];
@@ -129,7 +129,7 @@ export default function LiveCourse() {
                                 img: `${BASE_IMAGE_URL}live-course/data-science.webp`,
                                 desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
                                 duration: "3 Months",
-                                link: "/live-course/data-science",
+                                link: "/live-course/data-science-and-machine-learning",
                             },
                         ].map((course, index) => (
                             <div

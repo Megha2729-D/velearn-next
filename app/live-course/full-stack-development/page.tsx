@@ -1729,7 +1729,7 @@ export default function FullStackDevelopment() {
                     <div className="row justify-content-center w-100 m-auto">
                         <div className="col-lg-9 mt-4">
                             <div className="row justify-content-center batch_parent">
-                                <div className="col-lg-6 my-4">
+                                <div className="col-md-6 my-4">
                                     <div className="batch_child">
                                         <h4 className="text-white fw-bold text-center">Weekday Batch</h4>
                                         <div>
@@ -1742,7 +1742,7 @@ export default function FullStackDevelopment() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-6 my-4">
+                                <div className="col-md-6 my-4">
                                     <div className="batch_child">
                                         <h4 className="text-white fw-bold text-center">Weekend Batch</h4>
                                         <div>

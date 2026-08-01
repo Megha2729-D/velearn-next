@@ -103,7 +103,7 @@ export default function Footer() {
                                                         </Link>
                                                     </li>
                                                     <li>
-                                                        <Link href="/live-course/data-science">
+                                                        <Link href="/live-course/data-science-and-machine-learning">
                                                             Data Science
                                                         </Link>
                                                     </li>
@@ -296,7 +296,7 @@ export default function Footer() {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link href="/live-course/data-science">
+                                                <Link href="/live-course/data-science-and-machine-learning">
                                                     Data Science
                                                 </Link>
                                             </li>

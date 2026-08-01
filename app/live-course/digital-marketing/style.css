@@ -1093,43 +1093,6 @@
     background: linear-gradient(90deg, #ffffff66 0%, #ffffff00 100%);
 }
 
-.dm_cta {
-    margin-top: -70px;
-}
-
-.dm_cta h3 {
-    font-size: 50px;
-}
-
-.dm_cta button {
-    background: linear-gradient(90deg, #999696 0%, #FFFAFA 100%);
-    border-radius: 8px;
-    padding: 10px 30px;
-    border: none;
-    color: #000;
-    transition: all .3s ease-out;
-}
-
-.dm_cta button:hover {
-    background: var(--c1);
-    color: #ffffff;
-    transition: all .3s ease-out;
-}
-
-.dm_cta_inner {
-    position: absolute;
-    top: 15%;
-    bottom: 0;
-    left: 5%;
-    width: 50%;
-    height: fit-content;
-}
-
-.dm_cta_person {
-    display: none;
-}
-
-
 /* pricing start */
 .dm_pricing_plan {
     /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images/live-course/ui-ux/bg-4.png);

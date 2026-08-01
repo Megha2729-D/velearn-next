@@ -735,7 +735,7 @@ export default function HomePage() {
                 img: `${BASE_IMAGE_URL}live-course/data-science.webp`,
                 desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
                 duration: "3 Months",
-                link: "/live-course/data-science",
+                link: "/live-course/data-science-and-machine-learning",
               },
             ].map((course, index) => (
               <div
@@ -1052,7 +1052,7 @@ export default function HomePage() {
                     loop={true}
                     slidesPerGroup={2}
                     autoplay={{
-                      delay: 4000,
+                      delay: 2000,
                       disableOnInteraction: false,
                     }}
                     pagination={{ clickable: true }}
@@ -1165,8 +1165,11 @@ export default function HomePage() {
         <div className="highlights_parent w-100 h-100">
 
           <div className="section_container p-0">
-            <div className="highlights_parent_bg">
+            {/* <div className="highlights_parent_bg">
               <Image src="/images/highlights-bg.svg" height={2000} width={2000} alt="" />
+            </div> */}
+               <div>
+              <Image src="/images/highlights-top-cloud.svg" className="w-auto top_cloud" height={50} width={160} alt="" />
             </div>
             <div className="highlights_parent_content">
               <div className="section_container">
@@ -1217,6 +1220,9 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+              <Image src="/images/highlights-bottom.svg" className="w-100 h-auto" height={2000} width={2000} alt="" />
             </div>
           </div>
         </div>
