@@ -822,6 +822,16 @@ export default function HomePage() {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="col-12 d-flex justify-content-center more_butt_parent">
+            <Link href="/live-course">
+              <div className="d-flex more_butt">
+                <div className="butt">Show More</div>
+                <div className="icon_redirect">
+                  <i className="bi bi-arrow-right-short"></i>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
       {/* LiveCourse - End */}
@@ -1023,7 +1033,7 @@ export default function HomePage() {
               })}
             </Swiper>
 
-            <div className="col-12 d-flex justify-content-center more_butt_parent">
+            <div className="col-12 d-flex justify-content-center more_butt_parent" style={{marginTop: "10px !important"}}>
               <Link href="/recorded-course">
                 <div className="d-flex more_butt">
                   <div className="butt">Show More</div>
