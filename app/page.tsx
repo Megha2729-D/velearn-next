@@ -707,7 +707,34 @@ export default function HomePage() {
             <span className="text-c2"> Live</span> Online Courses With{" "}
             <span className="text-c2">Placement Support</span>
           </h3>
-          <div className="row">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={25}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            loop={false}
+            breakpoints={{
+              0: {
+                slidesPerView: 1,
+              },
+              576: {
+                slidesPerView: 1.2,
+              },
+              768: {
+                slidesPerView: 2,
+              },
+              992: {
+                slidesPerView: 3,
+              },
+              1200: {
+                slidesPerView: 4,
+              },
+            }}
+          >
             {[
               {
                 title: "Full Stack Development",
@@ -726,50 +753,51 @@ export default function HomePage() {
               {
                 title: "Digital Marketing",
                 img: `${BASE_IMAGE_URL}live-course/digital-marketing.webp`,
-                desc: "This live Digital Marketing training program is designed to build job-ready skills through hands-on campaign execution, real-time tools, and expert mentorship— preparing you for high-growth roles in today’s digital economy.",
+                desc: "This live Digital Marketing training program is designed to build job-ready skills through hands-on campaign execution, real-time tools, and expert mentorship.",
                 duration: "3 Months",
                 link: "/live-course/digital-marketing",
               },
               {
                 title: "Data Science & AI",
                 img: `${BASE_IMAGE_URL}live-course/data-science.webp`,
-                desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
+                desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects.",
                 duration: "3 Months",
                 link: "/live-course/data-science-and-machine-learning",
               },
+              {
+                title: "Data Analytics",
+                img: `${BASE_IMAGE_URL}live-course/data-analytics.webp`,
+                desc: "This live Data Analytics program equips you with in-demand skills in Excel, SQL, Power BI, Python, and data visualization.",
+                duration: "3 Months",
+                link: "/live-course/data-analytics",
+              },
             ].map((course, index) => (
-              <div
-                key={index}
-                className="col-xl-3 col-lg-6 col-md-6 col-12 mb-5 mb-xl-0"
-              >
+              <SwiperSlide key={index}>
                 <div
-                  className={`card_parent h-100 d-flex flex-column ${index % 2 === 0 ? "one" : "two"}`}
+                  className={`card_parent h-100 d-flex flex-column ${index % 2 === 0 ? "one" : "two"
+                    }`}
                 >
                   <div className="card_img_parent overflow-hidden position-relative">
                     <Image
-                      src={`${course.img}`}
+                      src={course.img}
                       className="card_img w-100"
                       alt={course.title}
-                      height={270}
                       width={270}
-
+                      height={200}
                     />
+
                     <div className="live_parent d-flex gap-2 align-items-center justify-content-center">
                       <div className="live_icon"></div>
-                      <span className="live_word">
-                        Live
-                      </span>
+                      <span className="live_word">Live</span>
                     </div>
                   </div>
 
                   <div className="pt-3 d-flex flex-column align-items-start flex-grow-1">
                     <h4>{course.title}</h4>
 
-                    <p className="mb-0">
-                      {course.desc}
-                    </p>
+                    <p className="mb-0">{course.desc}</p>
 
-                    <div className="duration_txt d-flex justify-content-end gap-3 w-100">
+                    <div className="duration_txt d-flex justify-content-end gap-3 w-100 mt-auto">
                       <div>
                         <i className="bi bi-clock pe-1"></i>
                         {course.duration}
@@ -778,33 +806,22 @@ export default function HomePage() {
                   </div>
 
                   <div className="col-12 card_abs_butt">
-                    <div className="col-12 d-flex justify-content-between">
+                    <div className="d-flex justify-content-between">
                       <div className="syllabus_butt">
                         <button>Syllabus</button>
                       </div>
+
                       <div className="view_more_butt">
-                        <Link href={`${course.link}`}>
-                          <button>
-                            View more
-                          </button>
+                        <Link href={course.link}>
+                          <button>View more</button>
                         </Link>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-            <div className="col-12 d-flex justify-content-center more_butt_parent">
-              <Link href="/live-course">
-                <div className="d-flex more_butt">
-                  <div className="butt">Show More</div>
-                  <div className="icon_redirect">
-                    <i className="bi bi-arrow-right-short"></i>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
+          </Swiper>
         </div>
       </section>
       {/* LiveCourse - End */}
@@ -1168,7 +1185,7 @@ export default function HomePage() {
             {/* <div className="highlights_parent_bg">
               <Image src="/images/highlights-bg.svg" height={2000} width={2000} alt="" />
             </div> */}
-               <div>
+            <div>
               <Image src="/images/highlights-top-cloud.svg" className="w-auto top_cloud" height={50} width={160} alt="" />
             </div>
             <div className="highlights_parent_content">
