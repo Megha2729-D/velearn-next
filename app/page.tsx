@@ -869,7 +869,7 @@ export default function HomePage() {
               slidesPerView={4}
               loop={true}
               navigation={true}
-              pagination={{ clickable: true }}
+              pagination={false}
               autoplay={{
                 delay: 4000,
                 disableOnInteraction: false,
