@@ -18,5 +18,9 @@ const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
 
 export default function DataAnalytics() {
-    
+    return (
+        <>
+
+        </>
+    );
 }
