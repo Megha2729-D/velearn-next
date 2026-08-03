@@ -116,7 +116,7 @@ export default function LiveCourse() {
                             delay: 3000,
                             disableOnInteraction: false,
                         }}
-                        loop={false}
+                        loop={true}
                         breakpoints={{
                             0: {
                                 slidesPerView: 1,
@@ -172,7 +172,7 @@ export default function LiveCourse() {
                                 link: "/live-course/data-analytics",
                             },
                         ].map((course, index) => (
-                            <SwiperSlide key={index}>
+                            <SwiperSlide key={index} className="pb-5 mb-3">
                                 <div
                                     className={`card_parent h-100 d-flex flex-column ${index % 2 === 0 ? "one" : "two"
                                         }`}
