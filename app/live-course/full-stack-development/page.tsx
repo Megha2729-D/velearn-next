@@ -1461,7 +1461,7 @@ export default function FullStackDevelopment() {
                                         <div className=" d-flex align-items-center justify-content-center">
                                             <div className="col-lg-10">
                                                 <Image
-                                                    src={`/images/details-page/certificate.jpg`}
+                                                    src={`/images/details-page/certificate.png`}
                                                     className="w-100 h-auto"
                                                     height={500}
                                                     width={500}

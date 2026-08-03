@@ -1566,8 +1566,8 @@ export default function DigitalMarketing() {
                                             <div className=" d-flex align-items-center justify-content-center">
                                                 <div className="col-lg-10">
                                                     <Image
-                                                        src={`/images/details-page/certificate.jpg`}
-                                                        className="w-100 h-auto rounded-5"
+                                                        src={`/images/details-page/certificate.png`}
+                                                        className="w-100 h-auto="
                                                         height={500}
                                                         width={500}
                                                         alt=""

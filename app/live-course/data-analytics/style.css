@@ -1,0 +1,529 @@
+.details_banner {
+    position: relative;
+    background: linear-gradient(#24b7ec8c 0%,
+            #24b7ec38 15%,
+            #24b7ec00 45%,
+            #24b7ec00 60%,
+            #24b7ec56 100%), url(/images/live-course/data-analytics/da-banner-bg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.details_banner .details_banner_inner {
+    position: relative;
+    /* overflow: hidden; */
+    padding: 50px 0 20px;
+}
+
+.details_banner .section_container {
+    position: relative;
+    z-index: 2;
+}
+
+.details_banner h1 {
+    font-weight: bold;
+    font-size: 40px;
+    /* line-height: 38.88px; */
+}
+
+.details_banner p {
+    font-size: 13px;
+}
+
+.details_banner button {
+    padding: 8px 20px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20.58px;
+    margin-top: 20px;
+    transition: all .3s ease-out;
+}
+
+.details_banner button:hover {
+    background-color: var(--c2);
+    border: 1px solid var(--c2);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.details_banner button.demo_butt {
+    background: linear-gradient(to bottom, var(--c2), #00000000);
+    border: none;
+    color: #ffffff;
+}
+
+.details_banner form {
+    background-color: #ffffff;
+    box-shadow: 0px 4.07px 4.07px 0px #00000040;
+    border-radius: 13px;
+    padding: 15px;
+}
+
+.details_banner form label {
+    font-weight: 600;
+    font-size: 12.92px;
+    line-height: 15.1px;
+    margin-bottom: 10px;
+}
+
+.details_banner form input {
+    border-radius: 7px;
+    background-color: #b8b8b8;
+    padding: 10px;
+    color: #000000;
+    border: none;
+}
+
+.details_banner form button {
+    background-color: var(--c2);
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 5px 30px;
+    font-size: 15px;
+    transition: all 0.3s ease-out;
+}
+
+.details_banner form button:hover {
+    background-color: var(--c1);
+    transition: all 0.3s ease-out;
+}
+
+.pagination_parent {
+    margin-top: 70px;
+}
+
+.details_banner form {
+    position: static;
+    width: 100%;
+    left: 0;
+    bottom: -40px;
+}
+
+.banner_details p {
+    font-size: 16px;
+    width: 100%;
+}
+
+.pagination_parent a,
+.pagination_parent span {
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 13px;
+    white-space: nowrap;
+    transition: all 0.3s ease-out;
+}
+
+.pagination_parent a:hover {
+    color: var(--c2);
+    transition: all 0.3s ease-out;
+}
+
+.why-card {
+    background: #0b0b0b;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0px 2.85px 31.37px 1.63px #24b8eca1;
+    transition: all 0.3s ease;
+}
+
+.details_desc_parent h3 {
+    font-size: 36px;
+}
+
+.details_desc_parent .big .why-card,
+.details_desc_parent .small .why-card {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+.details_desc_parent .big {
+    height: 50%;
+}
+
+.details_desc_parent .small {
+    height: 30.5%;
+}
+
+.why-card:hover {
+    transform: translateY(-6px);
+}
+
+.details_desc_parent .detail_overview p {
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.steps_details {
+    box-shadow: 0px 2.33px 25.73px 1.34px #24b8eca1 inset;
+    background: linear-gradient(270deg, #000000 0%, #0b3a4a 100%);
+    border-radius: 9px;
+    padding: 40px;
+    color: #ffffff;
+    transition: all 0.3s ease-out;
+}
+
+.steps_details:hover {
+    transform: translateY(-10px);
+    transition: all 0.3s ease-out;
+}
+
+.batch_details_parent {
+    background: url(/images/live-course/data-analytics/tools-bg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 0 70px 70px;
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid #ffffff61;
+}
+
+/* .batch_details_parent:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    height: 100px;
+    width: 100%;
+    background: linear-gradient(to bottom, #24B8EC00, #24b7ec, #24B8EC00);
+} */
+
+.batch_details_parent .section_container {
+    position: relative;
+    z-index: 2;
+}
+
+.batch_details div {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-top: 15px;
+}
+
+.batch_details p {
+    position: relative;
+    margin: 0;
+    padding: 8px 35px 20px;
+    background: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    border-top: 0;
+    border-radius: 0 0 50px 50px;
+    line-height: 1.2;
+}
+
+/* Left cut */
+.batch_details div::before {
+    content: "";
+    position: absolute;
+    left: -39px;
+    width: 40px;
+    height: 19px;
+    border-top: 1px solid #ffffff61;
+    border-right: 1px solid #fff;
+    border-radius: 0 50px 0 0;
+    top: -16px;
+}
+
+/* Right cut */
+.batch_details div::after {
+    content: "";
+    position: absolute;
+    right: -39px;
+    width: 40px;
+    height: 20px;
+    border-top: 1px solid #ffffff61;
+    border-left: 1px solid #fff;
+    border-radius: 50px 0 0 0;
+    top: -16px;
+}
+
+.da_career_card {
+    width: 245px;
+    position: absolute;
+    z-index: 1;
+}
+
+.da_career_card.one {
+    top: 15%;
+    left: 20%;
+}
+
+.da_career_card.two {
+    top: 15%;
+    right: 20%;
+}
+
+.da_career_card.three {
+    bottom: 0;
+    left: 8%;
+}
+
+.da_career_card.four {
+    bottom: 0;
+    right: 8%;
+}
+
+.bg_bottom {
+    background: url(/images/live-course/data-analytics/da-bg-spray.svg);
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    padding-top: 100px;
+    margin-top: -70px;
+}
+
+.tools_card {
+    position: relative;
+    padding-left: 15px;
+}
+
+.tools_card:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    background: linear-gradient(180deg, #24B8EC 0%, #FFFFFF 100%);
+    width: 10px;
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* module - start */
+.modules-section {
+    position: relative;
+    padding-bottom: 100px;
+}
+
+.modules-section .section_container {
+    padding-top: 90px;
+}
+
+.tabs-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+    padding-bottom: 430px;
+}
+
+.tabs {
+    background: #000;
+    display: flex;
+    gap: 20px;
+    padding: 10px 25px;
+    border-radius: 30px;
+    position: relative;
+    white-space: nowrap;
+    min-width: auto;
+    max-width: 80%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    user-select: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs.dragging {
+    cursor: grabbing;
+}
+
+.tab {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    transition: 0.2s;
+}
+
+.tab.active {
+    color: var(--c2);
+    font-weight: 600;
+}
+
+.tab:hover {
+    color: var(--c2);
+}
+
+.tab-indicator {
+    width: 35px;
+    height: 25px;
+    background: #000;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    transition: left 0.25s ease;
+    z-index: 1;
+}
+
+/* .tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 25px;
+    background: #000;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+} */
+
+.tab-content-box {
+    background:
+        linear-gradient(180deg, #d9d9d900 94.17%, #f5f3f9 99.03%),
+        linear-gradient(270deg, #d9d9d900 94.2%, #f5f3f9 100%),
+        linear-gradient(90deg, #ffffff00 93.23%, #ffffff 100%),
+        linear-gradient(180deg, #ffffff00 0%, #ffffff 0%, #ffffff00 22%),
+        linear-gradient(180deg, #ffffff00 0%, #24b8ec33 100%);
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin-top: 25px;
+    min-width: 285px;
+    max-width: 340px;
+    color: #000;
+    max-height: 285px;
+    overflow-y: auto;
+}
+
+.combo_syllabus_modal .modal-content {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.download_icon {
+    background: #ffffff;
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download_syll_butt {
+    position: relative;
+    z-index: 1;
+    background: #22346B33;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 10px 5px 5px;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: auto;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.download_syll_butt:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.tab-content-box .download_icon {
+    background: var(--c1);
+    padding: 10px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+}
+
+.swiper-button-prev {
+    left: 0;
+    transform: rotate(180deg);
+}
+
+.swiper-button-next {
+    right: 0;
+}
+
+.exp_bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.screen_parent {
+    margin-top: 150px;
+}
+
+@media screen and (max-width: 991px) {
+    .details_banner h1 {
+        font-weight: bold;
+        font-size: 28px;
+    }
+
+    .details_banner {
+        border-radius: 0;
+    }
+
+    .batch_details div {
+        margin-top: 0;
+    }
+
+    .batch_details div::after,
+    .batch_details div::before {
+        display: none;
+    }
+
+    .da_career_card {
+        width: 100%;
+        position: static;
+        margin: 30px 0;
+    }
+
+    .tools_card {
+        margin: 20px 0;
+    }
+
+    .rocket_img {
+        right: 20px;
+        top: 180px;
+        width: 45px !important;
+        height: 70px;
+    }
+
+    .swiper-slide-active img {
+        transform: scale(1) !important;
+    }
+
+    .screen_parent {
+        margin-top: 50px;
+    }
+}
