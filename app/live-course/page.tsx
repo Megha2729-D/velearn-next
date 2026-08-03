@@ -40,6 +40,12 @@ const bannerSlides = [
         link: "/live-course/data-science-and-machine-learning",
         alt: "Data Science Course",
     },
+    {
+        title: "Data Analytics",
+        desc: "Master Excel, SQL, Power BI, Python, and data visualization while analyzing real-world datasets with industry mentors.",
+        link: "/live-course/data-analytics",
+        alt: "Data Analytics Course",
+    },
 ];
 
 export default function LiveCourse() {
@@ -130,6 +136,13 @@ export default function LiveCourse() {
                                 desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
                                 duration: "3 Months",
                                 link: "/live-course/data-science-and-machine-learning",
+                            },
+                            {
+                                title: "Data Analytics",
+                                img: `${BASE_IMAGE_URL}live-course/data-analytics.webp`,
+                                desc: "This live Data Analytics program equips you with in-demand skills in Excel, SQL, Power BI, Python, and data visualization through hands-on projects, real-world datasets, and expert mentor guidance—preparing you for successful careers as a Data Analyst or Business Analyst.",
+                                duration: "3 Months",
+                                link: "/live-course/data-analytics",
                             },
                         ].map((course, index) => (
                             <div
