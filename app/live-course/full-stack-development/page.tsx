@@ -1742,7 +1742,7 @@ export default function FullStackDevelopment() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6 my-4">
+                                <div className="col-md-6 my-4 text-white">
                                     <div className="batch_child">
                                         <h4 className="text-white fw-bold text-center">Weekend Batch</h4>
                                         <div>
@@ -1755,7 +1755,7 @@ export default function FullStackDevelopment() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-lg-12 ">
+                                <div className="col-lg-12 text-white">
                                     <div className="row batch_child mt-5 mb-4">
                                         <div className="col-lg-6 d-flex align-items-center">
                                             <div>
@@ -1764,16 +1764,16 @@ export default function FullStackDevelopment() {
                                                 <p className="text-white small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                 <div className="col-12 mt-4 d-flex justify-content-start">
-                                                    <button>Explore self-paced course</button>
+                                                    <button className="text-white">Explore self-paced course</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="col-lg-6 d-flex align-items-center mt-lg-0 mt-4">
                                             <ul className="p-0 m-0">
-                                                <li>All recordings + materials</li>
-                                                <li>Lifetime access</li>
-                                                <li>Certificate of completion</li>
-                                                <li>Learn at your own pace</li>
+                                                <li className="text-white">All recordings + materials</li>
+                                                <li className="text-white">Lifetime access</li>
+                                                <li className="text-white">Certificate of completion</li>
+                                                <li className="text-white">Learn at your own pace</li>
                                             </ul>
                                         </div>
                                     </div>

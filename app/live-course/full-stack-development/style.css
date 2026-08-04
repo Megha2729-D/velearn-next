@@ -1214,7 +1214,7 @@
     filter: brightness(0) invert(1);
 }
 
-.batch_child {
+.batch_parent .batch_child {
     position: relative;
     overflow: hidden;
     background: #011B27;

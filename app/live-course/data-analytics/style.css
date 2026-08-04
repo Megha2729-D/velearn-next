@@ -280,7 +280,7 @@
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
-    padding-top: 100px;
+    padding: 100px 0 20px;
     margin-top: -70px;
 }
 
@@ -525,5 +525,405 @@
 
     .screen_parent {
         margin-top: 50px;
+    }
+}
+
+.profile_seciton {
+    background: url(/images/live-course/data-analytics/profile-bg.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.profile_content div {
+    padding: 0 50px;
+    position: relative;
+}
+
+.profile_content div:before {
+    content: "";
+    position: absolute;
+    background-color: #FF9304;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    left: 5px;
+    top: 10px;
+    z-index: 1;
+}
+
+.profile_content {
+    position: relative;
+}
+
+.profile_content:before {
+    content: "";
+    position: absolute;
+    background-color: #FFFFFF1A;
+    height: 100%;
+    width: 20px;
+    border-radius: 10px;
+    left: 0;
+    top: 0;
+    box-shadow: inset 0px 0px 3px 1px #b3b3b357;
+    z-index: 1;
+}
+
+.salary_seciton {
+    background: url(/images/live-course/data-analytics/salary-bg.svg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.person_circle_img {
+    position: relative;
+    margin-top: 50px;
+}
+
+.person_circle_img img {
+    position: relative;
+    z-index: 2;
+}
+
+.person_circle_img::before {
+    content: "";
+    position: absolute;
+    width: 85%;
+    height: 85%;
+    /* border: 1px solid #ffffff; */
+    box-shadow: inset 0px 0px 10px 0px #ffffffab;
+    border-radius: 50%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.person_circle_img::after {
+    content: "";
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    /* border: 1px solid #ffffff; */
+    box-shadow: 0px 0px 10px 0px #ffffffab;
+    border-radius: 50%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.salary_content_parent div {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    width: 300px;
+    position: absolute;
+    z-index: 3;
+}
+
+.salary_content_parent div.one {
+    top: 7%;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.salary_content_parent div.two {
+    top: 30%;
+    left: 13%;
+}
+
+.salary_content_parent div.three {
+    top: 30%;
+    right: 13%;
+}
+
+.partner-logo {
+    filter: brightness(0) invert(1);
+}
+
+.da_testimonial_card {
+    background: #ffffff;
+    padding: 15px;
+    width: 100%;
+    min-height: 240px;
+    height: 100%;
+    text-align: center;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 16.8px 0px #FFFFFF;
+    border-radius: 12px;
+}
+
+.da_testimonial_card i {
+    color: #FDD264;
+    margin: 0 3px;
+}
+
+.da_testimonial_card i:last-child {
+    color: #FFEEC1;
+}
+
+.da_tesimonial_swiper_parent {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+}
+
+.da_tesimonial_swiper_students {
+    margin-top: -50px;
+}
+
+.da_batch_inner {
+    background: linear-gradient(180deg, #24b8ec54 0%, #ffffff59 100%);
+    border: 1px solid #FFFFFF;
+    border-radius: 62px;
+    padding: 30px 40px;
+}
+
+.da_batch_inner button {
+    background: var(--c1);
+    border-radius: 25px;
+    padding: 6px 15px;
+    font-weight: bold;
+    color: #ffffff;
+    border: none;
+    transition: all .3s ease-out;
+}
+
+.da_batch_inner button:hover {
+    background: var(--c2);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_parent .da_batch_inner {
+    background: linear-gradient(90deg, #24b8ec33 0%, #00e1ff33 100%);
+}
+
+.batch_parent .da_batch_inner button {
+    border: 3px solid #FFFFFF1F;
+    background: #FFFFFF33;
+    border-radius: 25px;
+    padding: 6px 20px;
+    color: #000000;
+    font-weight: 600;
+    transition: all .3s ease-out;
+}
+
+.batch_parent .da_batch_inner button:hover {
+    border: 3px solid var(--c1);
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.batch_child ul li {
+    margin: 10px 0;
+    padding: 10px;
+    color: #000000;
+    list-style: none;
+    border-left: 3px solid #000000c0;
+    background: linear-gradient(90deg, #ffffff66 0%, #ffffff00 100%);
+}
+
+/* pricing start */
+.da_pricing_plan {
+    /* background: linear-gradient(#00000000 90%, #ffffffbb 95%, #ffffff 100%), url(/images/live-course/ui-ux/bg-4.png);
+    background-size: cover; */
+    display: flex;
+    justify-content: center;
+}
+
+.da_pricing_plan .pricing_card {
+    background: linear-gradient(180deg, #24b8ec2e 0%, #24b7ec15 100%);
+    border-radius: 62px;
+    padding: 30px 25px;
+    text-align: center;
+    box-shadow: -1px 9px 25px #0000000a inset;
+    backdrop-filter: blur(20px);
+}
+
+.da_pricing_plan .features {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: left;
+}
+
+.da_pricing_plan .features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.da_pricing_plan .features li {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.da_pricing_plan .price_box {
+    margin: 40px 0;
+}
+
+.da_pricing_plan .old_price {
+    text-decoration: line-through;
+    font-size: 24px;
+    color: #555;
+}
+
+.da_pricing_plan .new_price {
+    background: #2FFF362B;
+    color: #378128;
+    font-size: 28px;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 20px;
+}
+
+.da_pricing_plan .apply_btn {
+    background: var(--c1);
+    color: #fff;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.da_pricing_plan .apply_btn:hover {
+    background: var(--c2);
+    color: #000;
+}
+
+
+
+.da_cta {
+    margin-top: -70px;
+}
+
+.da_cta h3 {
+    font-size: 50px;
+}
+
+.da_cta button {
+    background: linear-gradient(90deg, #999696 0%, #FFFAFA 100%);
+    border-radius: 8px;
+    padding: 10px 30px;
+    border: none;
+    color: #000;
+    transition: all .3s ease-out;
+}
+
+.da_cta button:hover {
+    background: var(--c1);
+    color: #ffffff;
+    transition: all .3s ease-out;
+}
+
+.da_cta_inner {
+    position: absolute;
+    top: 15%;
+    bottom: 0;
+    left: 5%;
+    width: 50%;
+    height: fit-content;
+}
+
+.da_cta_person {
+    display: none;
+}
+
+.footer_sec {
+    margin-top: -50px;
+}
+
+
+@media (max-width: 768px) {
+    .da_pricing_plan .features {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 991px) {
+    .da_pricing_plan .new_price {
+        font-size: 20px;
+    }
+
+    .da_pricing_plan .old_price {
+        font-size: 18px;
+    }
+
+    .da_cta h3 {
+        font-size: 30px;
+    }
+
+    .da_cta_lg {
+        display: none;
+    }
+
+    .da_cta {
+        padding: 50px 0;
+        padding-bottom: 150px;
+        margin-top: 0;
+        display: flex;
+        flex-direction: column-reverse;
+        background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .da_cta_person {
+        display: block;
+        position: absolute;
+        bottom: -50px;
+        right: 0;
+        width: 260px;
+        height: auto;
+    }
+
+    .da_cta_inner {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        padding: 20px;
+        right: 10%;
+        width: 100%;
+        left: 0;
+        margin: auto;
+        height: fit-content;
+        margin-bottom: 30px;
+    }
+
+    .da_cta button {
+        font-weight: bold;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+
+    .da_tesimonial_swiper_parent {
+        position: static;
+        padding-bottom: 50px;
+    }
+
+    .da_tesimonial_swiper_students {
+        margin-top: 0;
+    }
+
+    .salary_content_parent div {
+        position: static;
+        margin: 15px auto;
     }
 }

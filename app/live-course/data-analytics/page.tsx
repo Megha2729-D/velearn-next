@@ -348,6 +348,87 @@ export default function DataAnalytics() {
         };
     }, [activeTab]);
 
+    const recruiters1 = [
+        "accenture.png",
+        "tech-mahindra.png",
+        "wipro.png",
+        "tcs.png",
+        "ibm.png",
+        "infosys.png",
+    ];
+
+    const faqData = [
+        {
+            question: "What is the purpose of a data analytics course?",
+            answer: (
+                <>
+                    <p>
+                        It teaches you to clean and analyze data to find insights that drive business decisions, using tools like Excel, SQL, Python, Power BI, and Tableau to start a career as a data analyst.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: " Is there a difference between data science and data analysis?",
+            answer: (
+                <>
+                    <p>
+                        Yes. Data analysis focuses on examining existing data to identify
+                        trends, generate reports, and support business decisions. Data
+                        science is a broader field that includes data analysis along with
+                        machine learning, predictive modeling, programming, and building
+                        data-driven solutions using large datasets.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Are the classes live or recorded?",
+            answer: (
+                <>
+                    <p>
+                        The course includes live instructor-led sessions for interactive
+                        learning. Recordings of the classes are also provided, allowing
+                        you to revisit lessons anytime and learn at your own pace if you
+                        miss a session.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Will I get a certificate after completing the course?",
+            answer: (
+                <>
+                    <p>
+                        Yes. Upon successfully completing the course and meeting the
+                        required assessment criteria, you will receive a course
+                        completion certificate that you can showcase on your resume and
+                        professional profiles.
+                    </p>
+                </>
+            ),
+        },
+        {
+            question: "Do you provide placement assistance?",
+            answer: (
+                <>
+                    <p>
+                        Yes. We provide placement assistance that includes resume
+                        building, LinkedIn profile optimization, mock interviews,
+                        portfolio guidance, and job referrals to help you prepare for
+                        data science career opportunities.
+                    </p>
+                </>
+            ),
+        },
+    ];
+
+    const toggleFaq = (index: number) => {
+        setActiveFaqIndex((prev) =>
+            prev === index ? null : index
+        );
+    };
+
     return (
         <>
             <section className="banner_top_sec_parent">
@@ -631,7 +712,7 @@ export default function DataAnalytics() {
                 </div>
             </section>
             <section className="bg_bottom">
-                <div className="section_container pb-5">
+                <div className="section_container">
                     <div className="row justify-content-center">
                         <h3 className="text-black text-center fw-bold px-3 lh-sm">
                             Master the Core Data Analyst
@@ -902,7 +983,7 @@ export default function DataAnalytics() {
                     </div>
                     <div>
                         <div className="row justify-content-center">
-                            <div className="col-lg-10">
+                            <div className="col-lg-10 position-relative z-1">
                                 <h3 className="text-black text-center fw-bold px-3 lh-sm">
                                     Projects That
                                     <span className="text-c2">
@@ -920,10 +1001,10 @@ export default function DataAnalytics() {
                                             slidesPerView={1}
                                             modules={[Autoplay, Navigation]}
                                             navigation={true}
-                                            // autoplay={{
-                                            //     delay: 2000,
-                                            //     disableOnInteraction: false,
-                                            // }}
+                                        // autoplay={{
+                                        //     delay: 2000,
+                                        //     disableOnInteraction: false,
+                                        // }}
                                         // breakpoints={{
                                         //     0: { slidesPerView: 2.3 },
                                         //     576: { slidesPerView: 2.3 },
@@ -1012,6 +1093,424 @@ export default function DataAnalytics() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="profile_seciton py-3">
+                    <div className="section_container">
+                        <h3 className="text-white text-center fw-bold px-3 lh-sm">
+                            Data Analytics Online Course with
+                            <span className="text-c2">
+                                {" "}Placement Assistance
+                            </span>
+                        </h3>
+                        <div className="row mt-4 justify-content-center">
+                            <div className="col-lg-6">
+                                <div className="profile_content">
+                                    <div className="my-4">
+                                        <h5 className="text-white fw-bold">Resume & Portfolio Building</h5>
+                                        <p className="text-white mb-0">
+                                            Build a strong data analyst resume and showcase your capstone projects and dashboards to employers.
+                                        </p>
+                                    </div>
+                                    <div className="my-4">
+                                        <h5 className="text-white fw-bold">Interview Preparation</h5>
+                                        <p className="text-white mb-0">
+                                            Practice real data analytics interview questions with mock interviews and expert feedback.
+                                        </p>
+                                    </div>
+                                    <div className="my-4">
+                                        <h5 className="text-white fw-bold">Job Referrals & Openings</h5>
+                                        <p className="text-white mb-0">
+                                            Get connected to relevant data analyst jobs and referrals from our hiring network.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-6 d-flex justify-content-center align-items-center">
+                                <Image src={"/images/live-course/data-analytics/profile.png"} className="h-auto" width={200} height={200} alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="salary_seciton pt-3">
+                    <div className="section_container">
+                        <h3 className="text-white text-center fw-bold px-3 lh-sm">
+                            Explore Career Roles and Salaries in Data Analytics
+                        </h3>
+                        <div className="row w-100 m-auto justify-content-center position-relative">
+                            <div className="col-lg-7 d-flex justify-content-center align-items-center">
+                                <div className="person_circle_img">
+                                    <Image src={"/images/live-course/data-analytics/person-circle.svg"} className="w-100 h-auto" width={200} height={200} alt="" />
+                                </div>
+                            </div>
+                            <div className="salary_content_parent">
+                                <div className="one">
+                                    <p className="fw-bold text-black mb-2">
+                                        Mid-Level BI Analyst <br /> ₹6 – 12 LPA
+                                    </p>
+                                    <p className="small mb-0 text-black">
+                                        Builds advanced dashboards, defines KPIs, and turns data into insights for decision making.
+                                    </p>
+                                </div>
+                                <div className="two">
+                                    <p className="fw-bold text-black mb-2">
+                                        Junior Data Analyst<br />₹3.5 – 6 LPA
+                                    </p>
+                                    <p className="small mb-0 text-black">
+                                        Cleans data, builds reports and dashboards, and tracks KPIs to support business teams.
+                                    </p>
+                                </div>
+                                <div className="three">
+                                    <p className="fw-bold text-black mb-2">
+                                        Senior Data Scientist<br />₹15 – 25 LPA
+                                    </p>
+                                    <p className="small mb-0 text-black">
+                                        Applies machine learning and predictive models to solve complex business problems.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="section_container p-xl text-center mt-lg-3 logo_swiper">
+                        <h3 className="section_base_heading text-white text-center">
+                            Trusted by Top Hiring Partners
+                        </h3>
+                        <div className="pb-5">
+                            <Swiper
+                                className="pt-3"
+                                modules={[Autoplay]}
+                                spaceBetween={30}
+                                slidesPerView={5}
+                                speed={3000}
+                                autoplay={{
+                                    delay: 0,
+                                    disableOnInteraction: false,
+                                    reverseDirection: true,
+                                }}
+                                loop={true}
+                                grabCursor={false}
+                                allowTouchMove={false}
+                                breakpoints={{
+                                    320: { slidesPerView: 2 },
+                                    768: { slidesPerView: 3 },
+                                    1024: { slidesPerView: 5 },
+                                }}
+                            >
+                                {recruiters1.map((logo, index) => (
+                                    <SwiperSlide key={index}>
+                                        <Image
+                                            src={`/images/prime-recruiters/${logo}`}
+                                            alt={`Partner ${index + 1}`}
+                                            className="partner-logo"
+                                            height={50}
+                                            width={150}
+
+                                        />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </div>
+                    </div>
+                    <div className="section_container mt-4 da_tesimonial_swiper_main">
+                        <h3 className="section_base_heading text-white text-center">
+                            Success Written by Our Students
+                        </h3>
+                        <div className="col-12">
+                            <div className="position-relative">
+                                <div className="da_tesimonial_swiper_students">
+                                    <Image src={"/images/live-course/data-analytics/testimonial-persons.png"}
+                                        className="w-100 h-auto"
+                                        width={1300}
+                                        height={700}
+                                        alt="" />
+                                </div>
+                                <div className="da_tesimonial_swiper_parent row justify-content-center">
+                                    <div className="col-lg-10">
+                                        <Swiper
+                                            loop={true}
+                                            pagination={false}
+                                            slidesPerView={4}
+                                            modules={[Autoplay, Navigation]}
+                                            navigation={true}
+                                            autoplay={{
+                                                delay: 2000,
+                                                disableOnInteraction: false,
+                                            }}
+                                            spaceBetween={10}
+                                            breakpoints={{
+                                                0: { slidesPerView: 1, spaceBetween: 10 },
+                                                576: { slidesPerView: 1, spaceBetween: 10 },
+                                                768: { slidesPerView: 2, spaceBetween: 15 },
+                                                991: { slidesPerView: 2, spaceBetween: 20 },
+                                                1024: { slidesPerView: 4, spaceBetween: 20 },
+                                                1200: { slidesPerView: 4, spaceBetween: 20 },
+                                            }}
+                                        >
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                <div className="da_testimonial_card">
+                                                    <p className="fw-bold text-black">Ava Thompson</p>
+                                                    <p>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                    </p>
+                                                    <p className="small mb-0">
+                                                        "This product has been a game changer for me! The ease of use and the attention to detail make it perfect for everyday tasks. Highly recommended!"
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                <div className="da_testimonial_card">
+                                                    <p className="fw-bold text-black">James Collins</p>
+                                                    <p>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                    </p>
+                                                    <p className="small mb-0">
+                                                        "Top-notch product with exceptional craftsmanship. It’s both functional and stylish, which is hard to find. I’m really satisfied with my experience!"
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                <div className="da_testimonial_card">
+                                                    <p className="fw-bold text-black">Olivia Rodriguez</p>
+                                                    <p>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                    </p>
+                                                    <p className="small mb-0">
+                                                        "I couldn’t be happier with my purchase. The quality is excellent, and it works flawlessly. It’s definitely worth every penny!"
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                <div className="da_testimonial_card">
+                                                    <p className="fw-bold text-black">Michael Carter</p>
+                                                    <p>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                    </p>
+                                                    <p className="small mb-0">
+                                                        "From the moment I received it, I knew this product was special. The performance is impressive, and the design is sleek and modern. I’ll definitely be recommending it to friends."
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                            <SwiperSlide className="d-flex justify-content-center">
+                                                <div className="da_testimonial_card">
+                                                    <p className="fw-bold text-black">Ava Thompson</p>
+                                                    <p>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                        <i className="bi bi-star-fill"></i>
+                                                    </p>
+                                                    <p className="small mb-0">
+                                                        "This product has been a game changer for me! The ease of use and the attention to detail make it perfect for everyday tasks. Highly recommended!"
+                                                    </p>
+                                                </div>
+                                            </SwiperSlide>
+                                        </Swiper>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="section_container py-4">
+                    <div className="row justify-content-center">
+                        <h3 className="text-black text-center fw-bold px-3">
+                            Pick Your Batch and Learn on Your Schedule
+                        </h3>
+                        <div className="col-lg-10 mt-4">
+                            <div className="row justify-content-evenly">
+                                <div className="col-lg-4 my-3">
+                                    <div className="da_batch_inner">
+                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                        <p className="fw-bold">Monday - Friday</p>
+                                        <p className="small">
+                                            3 Month / 120 Hours<br />
+                                            (include Doubt Clearing)
+                                        </p>
+                                        <p>Session Recordings Included</p>
+                                        <button>Enroll In Weekday Batch</button>
+                                    </div>
+                                </div>
+                                <div className="col-lg-4 my-3">
+                                    <div className="da_batch_inner">
+                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                        <p className="fw-bold">Monday - Friday</p>
+                                        <p className="small">
+                                            3 Month / 120 Hours<br />
+                                            (include Doubt Clearing)
+                                        </p>
+                                        <p>Session Recordings Included</p>
+                                        <button>Enroll In Weekday Batch</button>
+                                    </div>
+                                </div>
+                                <div className="col-lg-8 my-5 batch_parent">
+                                    <div className="da_batch_inner">
+                                        <div className="col-lg-12 ">
+                                            <div className="row batch_child">
+                                                <div className="col-lg-6 d-flex align-items-center">
+                                                    <div>
+                                                        <h5 className="text-black fw-bold">Self-Paced</h5>
+                                                        <p className="text-black">Learn at your own schedule </p>
+                                                        <p className="text-black small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
+
+                                                        <div className="col-12 mt-4 d-flex justify-content-start">
+                                                            <button>Explore self-paced course</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-6 d-flex align-items-center mt-lg-0 mt-4">
+                                                    <ul className="p-0 m-0">
+                                                        <li>All recordings + materials</li>
+                                                        <li>Lifetime access</li>
+                                                        <li>Certificate of completion</li>
+                                                        <li>Learn at your own pace</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row justify-content-center mt-5">
+                                        <div className="col-lg-12 da_pricing_plan">
+                                            <div className="pricing_card">
+                                                <h3 className="fw-bold text-black">
+                                                    An Investment in Your Career That Pays You Back
+                                                </h3>
+                                                <div className="features mt-4 px-lg-4 px-0">
+                                                    <ul>
+                                                        <li>
+                                                            ✓ One-Time Payment – No hidden
+                                                            charges
+                                                        </li>
+                                                        <li>✓ Lifetime Course Access</li>
+                                                        <li>✓ Live Interactive Classes</li>
+                                                    </ul>
+
+                                                    <ul>
+                                                        <li>
+                                                            ✓ Real-Time Hands-On Projects
+                                                        </li>
+                                                        <li>
+                                                            ✓ Portfolio Building & Resume
+                                                            Review
+                                                        </li>
+                                                        <li>
+                                                            ✓ Mock Interviews + Placement
+                                                            Support
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div className="price_box">
+                                                    <div className="d-flex align-items-center justify-content-center gap-4">
+                                                        <span className="old_price mb-0">
+                                                            ₹50,000
+                                                        </span>
+                                                        <span className="h2 new_price mb-0">
+                                                            ₹15,000/-
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <button
+                                                    className="apply_btn"
+                                                    onClick={handleCourseAction}
+                                                >
+                                                    {isEnrolled
+                                                        ? "Start Course"
+                                                        : "Apply Now"}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-10">
+                                    <div className="faq_section pt-2 pb-5">
+                                        <div className="row justify-content-center">
+                                            <div className="col-lg-9">
+                                                <h3 className="section_base_heading text-center">
+                                                    Frequently Asked{" "}
+                                                    <span className="text-c2"> Questions</span>
+                                                </h3>
+                                                <p className="text-black text-center">
+                                                    These quick answers cover what most learners want to know about the course, classes, and career support.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {faqData.map((item, index) => (
+                                            <div
+                                                className={`faq_item mb-3  ${activeFaqIndex === index
+                                                    ? "active"
+                                                    : ""
+                                                    }`}
+                                                key={index}
+                                            >
+                                                <button
+                                                    className={`faq_question justify-content-between ${activeFaqIndex === index
+                                                        ? "active"
+                                                        : ""
+                                                        }`}
+                                                    onClick={() => toggleFaq(index)}
+                                                >
+                                                    {item.question}
+
+                                                    <span className="icon">
+                                                        {activeFaqIndex !== index && (
+                                                            <Image
+                                                                src="/images/icons/faq-icon.png"
+                                                                alt="toggle"
+                                                                height={35}
+                                                                width={35}
+                                                                className="faq_toggle_icon"
+                                                            />
+                                                        )}
+                                                    </span>
+                                                </button>
+
+                                                {activeFaqIndex ===
+                                                    index && (
+                                                        <div className="faq_answer">
+                                                            {item.answer}
+                                                        </div>
+                                                    )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="da_cta position-relative">
+                    <Image src={"/images/live-course/data-analytics/da-cta-person.png"} className="da_cta_person" width={3000} height={500} alt="" />
+                    <Image src={"/images/live-course/data-analytics/cta-banner.svg"} className="da_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
+                    <div className="section_container">
+                        <div className="row justify-content-center align-items-center w-100 m-auto">
+                            <div className="da_cta_inner mt-lg-5">
+                                <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
+                                <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
+                                <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
+                                    <button>Enroll Now</button>
+                                    <button>Talk to Counsellors</button>
                                 </div>
                             </div>
                         </div>
