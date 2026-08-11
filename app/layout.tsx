@@ -3,10 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+
 import BootstrapClient from "@/components/BootstrapClient";
-import Navbar from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-// import BodyClass from "./BodyClass";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import ProtectedRoute from "@/components/layout/ProtectedRoute";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,16 +35,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {/* <BodyClass /> */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}`}
+      >
         <BootstrapClient />
-        <Navbar />
-
-        <main>
-          {children}
-        </main>
-
-        <Footer />
+        <ProtectedRoute>
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
+        </ProtectedRoute>
       </body>
     </html>
   );

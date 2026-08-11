@@ -179,7 +179,12 @@
 } */
 
 .top-banner {
-    background-color: var(--c1);
+    background: url("/images/home-banner.svg");
+    background-position: center;
+    background-size: cover;
+    /* background-attachment: fixed; */
+    width: 100%;
+    /* background-color: var(--c1); */
     color: #ffffff;
     text-align: center;
 }

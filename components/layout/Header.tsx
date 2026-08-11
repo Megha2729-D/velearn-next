@@ -655,7 +655,7 @@ export default function Navbar() {
                                 </li>
 
                                 {/* PRACTICE */}
-                                <li
+                                {/* <li
                                     className={`dropdown ${dropdownOpen.practice ? "open" : ""}`}
                                     onClick={(e) =>
                                         toggleDropdown("practice", e)
@@ -689,9 +689,8 @@ export default function Navbar() {
                                                 Debugging
                                             </Link>
                                         </li>
-                                        {/* <li><Link href="/practice/challenges" onClick={handleItemClick}>Challenges</Link></li> */}
                                     </ul>
-                                </li>
+                                </li> */}
 
                                 {/* RESOURCES */}
                                 <li

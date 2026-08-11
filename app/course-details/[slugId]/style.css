@@ -975,7 +975,7 @@
 }
 
 .enroll_btn:hover {
-    background: var(--c1);
+    background: var(--c1) !important;
     transition: all .3s ease-out;
 }
 
