@@ -57,21 +57,35 @@ export default function FullStackDevelopment() {
 
     const tabsWrapperRef = useRef<HTMLDivElement | null>(null);
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-    // const user = JSON.parse(localStorage.getItem("user") || "null");
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user") || "null");
+        const storedUser = localStorage.getItem("user");
 
-        if (user) {
-            setName(user.name || "");
-            setEmail(user.email || "");
+        if (!storedUser) {
+            setUser(null);
+            return;
+        }
+
+        try {
+            const parsedUser = JSON.parse(storedUser);
+
+            setUser(parsedUser);
+
+            setName(parsedUser.name || "");
+            setEmail(parsedUser.email || "");
+
             setPhone(
-                (user.phonenumber || user.phone || "")
+                (parsedUser.phonenumber || parsedUser.phone || "")
                     .replace(/^\+?91/, "")
                     .trim()
             );
 
-            checkEnrollment(user.id);
+            if (parsedUser.id) {
+                checkEnrollment(parsedUser.id);
+            }
+        } catch (error) {
+            console.error("Invalid user data:", error);
+            setUser(null);
         }
     }, []);
 
@@ -640,7 +654,7 @@ export default function FullStackDevelopment() {
                                                             ? "Login to Book Demo"
                                                             : isEnrolled
                                                                 ? "Book Demo"
-                                                                : "Enroll Now"
+                                                                : "Enroll Now for Demo"
                                                     }
                                                 </button>
                                             </div>

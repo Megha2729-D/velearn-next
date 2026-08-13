@@ -1,0 +1,167 @@
+.change_password_page {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    padding-top: 80px;
+    /* Space for fixed navbar */
+}
+
+.change_password_page .row {
+    width: 100%;
+    margin: 0;
+}
+
+.password_card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin: 0 auto;
+    max-width: 550px;
+    /* Ensure a comfortable width */
+}
+
+.password_card_header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.header_icon_circle {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(36, 184, 236, 0.3);
+}
+
+.header_icon_circle i {
+    font-size: 2rem;
+    color: #fff;
+}
+
+.password_card_header h3 {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.password_card_header p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.password_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form_group label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input_icon {
+    position: absolute;
+    left: 1rem;
+    color: #94a3b8;
+    font-size: 1.1rem;
+}
+
+.input_wrapper input {
+    width: 100%;
+    padding: 0.75rem 2.8rem;
+    border: 2px solid #f1f5f9;
+    border-radius: 12px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    font-family: var(--body-font);
+}
+
+.input_wrapper input:focus {
+    outline: none;
+    border-color: var(--c2);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(36, 184, 236, 0.1);
+}
+
+.toggle_eye {
+    position: absolute;
+    right: 1rem;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.3s;
+}
+
+.toggle_eye:hover {
+    color: var(--c1);
+}
+
+.btn_change_password {
+    margin-top: 1rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    border: none;
+    background: var(--c1);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-shadow: 0 6px 15px rgba(34, 52, 107, 0.3);
+}
+
+.btn_change_password:hover {
+    background: #1a2a5a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(34, 52, 107, 0.4);
+}
+
+.alert_box {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.alert_box.success {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.alert_box.error {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+.error_text {
+    color: #ef4444;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
