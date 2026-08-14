@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -9,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import BootstrapClient from "@/components/BootstrapClient";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import PagePreloader from "@/components/PagePreloader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,10 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ScrollToTop />
+
         <BootstrapClient />
+
+        <PagePreloader />
 
         <ProtectedRoute>
           <LayoutWrapper>

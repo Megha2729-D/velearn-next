@@ -30,7 +30,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c1);
 } */
-
+html {
+  scroll-behavior: smooth;
+}
+section {
+    scroll-margin-top: 100px;
+}
 .z-1 {
   z-index: 1 !important;
 }

@@ -36,3 +36,531 @@
     margin-bottom: 6px;
     font-size: 15px;
 }
+
+.banner_points_tc span {
+    background: #ffffff21;
+    backdrop-filter: blur(10px);
+    border: 1px solid #ffffff60;
+    padding: 5px 15px;
+    margin: 0 10px;
+    border-radius: 50px;
+}
+
+/* =========================================
+   IMPORTANT TERMS BOX
+========================================= */
+
+.important-terms-box {
+    background: #fff9eb;
+    border: 1px solid var(--c1);
+    border-left: 6px solid var(--c1);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 35px 0 45px;
+}
+
+.important-terms-box h2 {
+    color: var(--c1);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.important-terms-box h2 i {
+    font-size: 17px;
+    color: var(--c1);
+}
+
+.important-term-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-bottom: 8px;
+}
+
+.important-term-item:last-child {
+    margin-bottom: 0;
+}
+
+.important-term-icon {
+    flex: 0 0 17px;
+    width: 17px;
+    height: 17px;
+    background: var(--c1);
+    color: #fff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: 3px;
+}
+
+.important-term-item p {
+    margin: 0;
+    color: #202020;
+    font-size: 15px;
+    line-height: 1.55;
+}
+
+.important-term-item p strong {
+    color: var(--c1);
+    font-weight: 700;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+    .important-terms-box {
+        padding: 18px 16px;
+        margin: 25px 0 35px;
+        border-left-width: 5px;
+    }
+
+    .important-terms-box h2 {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+
+    .important-term-item {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .important-term-item p {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .important-term-icon {
+        flex: 0 0 16px;
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+    }
+}
+
+/* ==========================================
+   TERMS & CONDITIONS
+========================================== */
+
+.policy-content section {
+    scroll-margin-top: 100px;
+}
+
+.policy-content section h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #20204f;
+    font-size: 20px;
+    font-weight: 700;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #dce1ff;
+}
+
+/* Number circle */
+
+.terms-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    background: var(--c1);
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   REFUND SECTION
+========================================== */
+
+.refund-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 10px 0;
+}
+
+.refund-box {
+    border-radius: 10px;
+    padding: 13px 14px;
+
+    border: 1px solid;
+}
+
+.refund-box h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.refund-box ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.refund-box li {
+    position: relative;
+    padding-left: 17px;
+    margin-bottom: 7px;
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.refund-box li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* Green box */
+
+.refund-success {
+    background: #effdf7;
+    border-color: #8ee8c6;
+}
+
+.refund-success h3 {
+    color: #16845d;
+}
+
+.refund-success li::before {
+    content: "✓";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    color: #16845d;
+    font-weight: 700;
+}
+
+
+/* Red box */
+
+.refund-danger {
+    background: #fff1f1;
+    border-color: #ffbebe;
+}
+
+.refund-danger h3 {
+    color: #d11d1d;
+}
+
+.refund-danger li::before {
+    content: "×";
+    position: absolute;
+    left: 0;
+    top: -6px;
+    color: #d11d1d;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* Refund bottom note */
+.refund-note {
+    margin-top: 10px;
+    padding: 10px 13px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 9px;
+    color: #4d5968;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+/* ==========================================
+   PLACEMENT SUPPORT
+========================================== */
+
+.placement-warning {
+    margin-top: 10px;
+    padding: 10px 13px;
+    background: #fffaf0;
+    border: 1px solid var(--c1);
+    border-radius: 9px;
+    color: #4d5968;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.placement-warning strong {
+    color: var(--c1);
+}
+
+.placement-description {
+    color: #697586;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+/* ==========================================
+   CONTENT LIST
+========================================== */
+
+.terms-contents ol {
+    padding-left: 25px;
+}
+
+.terms-contents li {
+    margin-bottom: 5px;
+}
+
+.terms-contents a {
+    color: #20204f;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.terms-contents a:hover {
+    color: var(--c2);
+    text-decoration: underline;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 767px) {
+    .banner_points_tc {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+.banner_points_tc span{
+    width: fit-content;
+    margin: auto;
+}
+    .refund-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .policy-content section h2 {
+        font-size: 18px;
+    }
+
+    .refund-box {
+        padding: 12px;
+    }
+
+    .refund-box li {
+        font-size: 12px;
+    }
+
+    .refund-note,
+    .placement-warning,
+    .placement-description {
+        font-size: 12px;
+    }
+}
+
+/* ==========================================
+   SECTION 13 - GOVERNING LAW
+========================================== */
+
+.governing-list {
+    margin: 8px 0 20px;
+    padding-left: 17px;
+}
+
+.governing-list li {
+    padding-left: 2px;
+    margin-bottom: 7px;
+    color: #293347;
+    line-height: 1.55;
+}
+
+.governing-list li::marker {
+    color: var(--c1);
+    font-size: 12px;
+}
+
+.governing-list strong {
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   SECTION 14 - CONTACT
+========================================== */
+
+.contact-terms-section {
+    margin-top: 20px;
+    padding-top: 0;
+}
+
+.contact-terms-box {
+    background: url(/images/velearn-banner.png);
+    background-size: cover;
+    border-radius: 14px;
+    padding: 22px 25px 21px;
+
+    color: #ffffff;
+}
+
+.contact-terms-box h2 {
+    border: 0 !important;
+    color: #ffffff !important;
+
+    padding: 0 !important;
+    margin: 0 0 7px !important;
+
+    font-size: 19px !important;
+    font-weight: 700;
+}
+
+.contact-intro {
+    margin: 0 0 17px;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* Contact cards */
+
+.contact-terms-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 13px;
+}
+
+.contact-terms-card {
+    min-height: 82px;
+    padding: 12px 14px;
+    border-radius: 9px;
+    border: 1px solid #ffffff47;
+    background: #ffffff1a;
+    backdrop-filter: blur(7px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-terms-card span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+}
+
+.contact-terms-card strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.contact-terms-card small {
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+
+/* ==========================================
+   FINAL DISCLAIMER
+========================================== */
+
+.terms-disclaimer {
+    margin-top: 19px;
+    padding: 11px 15px 2px;
+    border-top: 1px solid #dfe3eb;
+    text-align: center;
+}
+
+.terms-disclaimer p {
+    margin: 0;
+    color: #687386;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.terms-disclaimer strong {
+    color: #30394a;
+}
+
+.footer-separator {
+    margin: 0 7px;
+    color: #687386;
+}
+
+.terms-footer-title {
+    margin-top: 3px !important;
+
+    color: #4d5665 !important;
+    font-weight: 500;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 767px) {
+
+    .contact-terms-box {
+        padding: 20px 16px;
+        border-radius: 11px;
+    }
+
+    .contact-terms-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .contact-terms-card {
+        min-height: auto;
+        padding: 12px;
+    }
+
+    .governing-list {
+        padding-left: 18px;
+    }
+
+    .governing-list li {
+        font-size: 12px;
+    }
+
+    .terms-disclaimer {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
