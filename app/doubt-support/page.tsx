@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 import Sidebar from "@/components/layout/Sidebar";
 import "./style.css";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 
 interface TechData {
     title: string;

@@ -8,11 +8,11 @@ import NotificationsModal from "@/components/layout/NotificationsModal";
 
 import "./style.css";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_UPLOAD_URL_MAIN =
-    "https://velearn.in/velearn-crm/uploads/main_projects/";
+    "https://crm.velearn.in/uploads/main_projects/";
 const BASE_UPLOAD_URL_MINI =
-    "https://velearn.in/velearn-crm/public/uploads/mini_projects/";
+    "https://crm.velearn.in/public/uploads/mini_projects/";
 
 type ProjectType = "mini" | "main";
 

@@ -13,13 +13,16 @@ const isProduction =
     (window.location.hostname === "velearn.in" ||
         window.location.hostname === "www.velearn.in");
 
-const BASE_API_URL = isProduction
-    ? "https://velearn.in/velearn-crm/api/"
-    : `http://${typeof window !== "undefined" ? window.location.hostname : "localhost"}:8000/api/`;
+// const BASE_API_URL = isProduction
+//     ? "https://crm.velearn.in/api/"
+//     : `http://${typeof window !== "undefined" ? window.location.hostname : "localhost"}:8000/api/`;
+const BASE_API_URL = "https://crm.velearn.in/api/";
+const BASE_DYNAMIC_IMAGE_URL = "https://crm.velearn.in/public/";
 
-const BASE_DYNAMIC_IMAGE_URL = isProduction
-    ? "https://velearn.in/velearn-crm/public/"
-    : `http://${typeof window !== "undefined" ? window.location.hostname : "localhost"}:8000/`;
+
+// const BASE_DYNAMIC_IMAGE_URL = isProduction
+//     ? "https://crm.velearn.in/public/"
+//     : `http://${typeof window !== "undefined" ? window.location.hostname : "localhost"}:8000/`;
 
 type Course = {
     id: number;
@@ -51,31 +54,38 @@ type Notification = {
 const liveCourses = [
     {
         title: "Full Stack Development",
-        img: "https://velearn.in/assets/images/live-course/full-stack-development.jpg",
+        img: "/images/live-course/full-stack-development.jpg",
         desc: "A live, mentor-led Full Stack Development program designed to take you from fundamentals to production-ready applications — with real projects, real tools, and real career support.",
         duration: "3 Months",
         link: "/live-course/full-stack-development",
     },
     {
         title: "UI/UX Design",
-        img: "https://velearn.in/assets/images/live-course/ui-ux.webp",
+        img: "/images/live-course/ui-ux.webp",
         desc: "Learn UI/UX design through live classes, hands-on projects, and expert mentorship. Master user research, UX strategy, and modern UI design to become job-ready with a strong portfolio.",
         duration: "3 Months",
         link: "/live-course/ui-ux-design",
     },
     {
         title: "Digital Marketing",
-        img: "https://velearn.in/assets/images/live-course/digital-marketing.webp",
+        img: "/images/live-course/digital-marketing.webp",
         desc: "This live Digital Marketing training program is designed to build job-ready skills through hands-on campaign execution, real-time tools, and expert mentorship— preparing you for high-growth roles in today’s digital economy.",
         duration: "3 Months",
         link: "/live-course/digital-marketing",
     },
     {
         title: "Data Science & AI",
-        img: "https://velearn.in/assets/images/live-course/data-science.webp",
+        img: "/images/live-course/data-science.webp",
         desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
         duration: "3 Months",
-        link: "/live-course/data-science",
+        link: "/live-course/data-science-and-machine-learning",
+    },
+    {
+        title: "Data Analytics",
+        img: "/images/live-course/data-analytics.webp",
+        desc: "This live Data Analytics program helps you build practical skills in data analysis, visualization, SQL, Excel, Python, and real-world datasets through hands-on projects and expert mentor guidance—preparing you for job-ready roles in today’s data-driven industry.",
+        duration: "3 Months",
+        link: "/live-course/data-analytics",
     },
 ];
 

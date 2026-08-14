@@ -4,6 +4,8 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+import { Toaster } from "react-hot-toast";
+
 import BootstrapClient from "@/components/BootstrapClient";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
@@ -39,11 +41,23 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
         <BootstrapClient />
+
         <ProtectedRoute>
           <LayoutWrapper>
             {children}
           </LayoutWrapper>
         </ProtectedRoute>
+
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 3000,
+          }}
+          containerStyle={{
+            zIndex: 999999,
+          }}
+        />
       </body>
     </html>
   );

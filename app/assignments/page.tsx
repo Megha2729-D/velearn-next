@@ -14,10 +14,10 @@ import "./style.css";
 // ======================================================
 
 const BASE_API_URL =
-    "https://velearn.in/velearn-crm/api/";
+    "https://crm.velearn.in/api/";
 
 const BASE_UPLOAD_URL =
-    "https://velearn.in/velearn-crm/public/uploads/assignments/";
+    "https://crm.velearn.in/public/uploads/assignments/";
 
 // ======================================================
 // TYPES

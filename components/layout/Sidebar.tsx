@@ -25,7 +25,7 @@ interface StoredUser {
 
 const BASE_API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
-    "https://velearn.in/velearn-crm/api/";
+    "https://crm.velearn.in/api/";
 
 export default function Sidebar({
     recordedCoursesCount = 0,
@@ -203,53 +203,85 @@ export default function Sidebar({
                         "Sidebar: Fetching live courses for count..."
                     );
 
-                    const token =
-                        localStorage.getItem(
-                            "token"
-                        );
-
-                    const headers: HeadersInit =
-                        token
-                            ? {
-                                Authorization: `Bearer ${token}`,
-                            }
-                            : {};
+                    const token = localStorage.getItem("token");
 
                     const response = await fetch(
                         `${BASE_API_URL}live-course-history/${userId}`,
                         {
-                            headers,
+                            headers: {
+                                Accept: "application/json",
+                                ...(token
+                                    ? {
+                                        Authorization: `Bearer ${token}`,
+                                    }
+                                    : {}),
+                            },
                         }
                     );
 
                     console.log(
-                        "Sidebar: Fetch live response status:",
+                        "Sidebar: Live API URL:",
+                        `${BASE_API_URL}live-course-history/${userId}`
+                    );
+
+                    console.log(
+                        "Sidebar: Live API status:",
                         response.status
                     );
+
+                    const contentType =
+                        response.headers.get("content-type");
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+
+                        console.error(
+                            "Live course API error:",
+                            response.status,
+                            errorText.substring(0, 500)
+                        );
+
+                        setLiveCount(0);
+                        return;
+                    }
+
+                    if (!contentType?.includes("application/json")) {
+                        const text = await response.text();
+
+                        console.error(
+                            "Live course API returned non-JSON:",
+                            text.substring(0, 500)
+                        );
+
+                        setLiveCount(0);
+                        return;
+                    }
 
                     const data = await response.json();
 
                     console.log(
-                        "Sidebar: Fetch live response data:",
+                        "Sidebar: Live course response:",
                         data
                     );
 
                     if (data.status) {
                         const count =
-                            data.data?.length || 0;
+                            Array.isArray(data.data)
+                                ? data.data.length
+                                : 0;
 
                         setLiveCount(count);
-
-                        console.log(
-                            "Sidebar: Set liveCount to:",
-                            count
-                        );
+                    } else {
+                        setLiveCount(0);
                     }
+
                 } catch (error) {
                     console.error(
-                        "Error fetching live courses count in Sidebar:",
+                        "Error fetching live courses count:",
                         error
                     );
+
+                    setLiveCount(0);
                 }
             }
         };

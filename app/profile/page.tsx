@@ -12,11 +12,11 @@ import "./style.css"
 
 const BASE_API_URL =
     process.env.NEXT_PUBLIC_API_URL ||
-    "https://velearn.in/velearn-crm/api/";
+    "https://crm.velearn.in/api/";
 
 const BASE_IMAGE_URL =
     process.env.NEXT_PUBLIC_IMAGE_URL ||
-    "https://velearn.in/velearn-crm/public/";
+    "https://crm.velearn.in/public/";
 
 // --------------------------------------------------
 // TYPES
@@ -565,7 +565,26 @@ export default function Profile() {
     ) => {
         const file = e.target.files?.[0];
 
-        if (!file || !userId) return;
+        if (!file) return;
+
+        if (!userId) {
+            toast.error("User ID not found");
+            return;
+        }
+
+        // Validate image
+        if (!file.type.startsWith("image/")) {
+            toast.error("Please select an image file");
+            e.target.value = "";
+            return;
+        }
+
+        // Optional 5MB limit
+        if (file.size > 5 * 1024 * 1024) {
+            toast.error("Image must be less than 5MB");
+            e.target.value = "";
+            return;
+        }
 
         const formData = new FormData();
 
@@ -574,83 +593,134 @@ export default function Profile() {
 
         setUploadLoading(true);
 
-        const uploadToast =
-            toast.loading("Updating photo...");
+        const uploadToast = toast.loading("Uploading photo...");
 
         try {
-            const res = await axios.post(
+            console.log("Uploading:", {
+                url: `${BASE_API_URL}update-logo`,
+                userId,
+                fileName: file.name,
+                fileType: file.type,
+                fileSize: file.size,
+            });
+
+            const response = await axios.post(
                 `${BASE_API_URL}update-logo`,
                 formData,
                 {
                     headers: {
-                        "Content-Type":
-                            "multipart/form-data",
-
                         ...(token
                             ? {
                                 Authorization: `Bearer ${token}`,
                             }
                             : {}),
                     },
+
+                    timeout: 30000,
                 }
             );
 
-            if (res.data.status) {
-                const newImage =
-                    res.data.image ||
-                    res.data.data?.image;
+            console.log("Upload response:", response.data);
 
-                toast.success("Uploaded!", {
-                    id: uploadToast,
-                });
+            if (
+                response.data?.status === true ||
+                response.data?.status === 1 ||
+                response.data?.success === true
+            ) {
+                const newImage =
+                    response.data?.image ||
+                    response.data?.data?.image ||
+                    response.data?.data?.image_url;
+
+                if (!newImage) {
+                    console.warn(
+                        "Upload succeeded but image path was not returned",
+                        response.data
+                    );
+                }
 
                 setProfile((prev) => ({
                     ...(prev || {}),
-                    image: newImage,
+                    image: newImage || prev?.image || "",
                 }));
 
                 // Update local storage
-                const currentStoredUser: StoredUser =
-                    JSON.parse(
-                        localStorage.getItem("user") ||
-                        "{}"
+                try {
+                    const currentUser: StoredUser = JSON.parse(
+                        localStorage.getItem("user") || "{}"
                     );
 
-                const updatedUser = {
-                    ...currentStoredUser,
-                    image: newImage,
-                };
+                    const updatedUser = {
+                        ...currentUser,
+                        image: newImage || currentUser.image,
+                    };
 
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(updatedUser)
-                );
+                    localStorage.setItem(
+                        "user",
+                        JSON.stringify(updatedUser)
+                    );
 
-                setStoredUser(updatedUser);
+                    setStoredUser(updatedUser);
 
-                window.dispatchEvent(
-                    new Event("storage-update")
-                );
+                    window.dispatchEvent(
+                        new Event("storage-update")
+                    );
+                } catch (storageError) {
+                    console.error(
+                        "Local storage update error:",
+                        storageError
+                    );
+                }
+
+                toast.success("Profile photo uploaded successfully!", {
+                    id: uploadToast,
+                });
 
                 await fetchProfile();
             } else {
-                toast.error("Upload failed", {
-                    id: uploadToast,
-                });
-            }
-        } catch (error) {
-            console.error("Upload error:", error);
+                console.error(
+                    "Upload API returned failure:",
+                    response.data
+                );
 
-            toast.error("Upload failed", {
-                id: uploadToast,
-            });
+                toast.error(
+                    response.data?.message ||
+                    response.data?.error ||
+                    "Upload failed",
+                    {
+                        id: uploadToast,
+                    }
+                );
+            }
+        } catch (error: any) {
+            console.error("UPLOAD ERROR:", error);
+
+            if (error.response) {
+                console.log("Status:", error.response.status);
+                console.log("Response:", error.response.data);
+
+                const validationErrors = error.response.data?.errors;
+
+                if (validationErrors) {
+                    Object.values(validationErrors)
+                        .flat()
+                        .forEach((message: any) => {
+                            toast.error(String(message));
+                        });
+                } else {
+                    toast.error(
+                        error.response.data?.message ||
+                        "Validation failed"
+                    );
+                }
+            } else {
+                toast.error("Cannot connect to upload server");
+            }
         } finally {
             setUploadLoading(false);
-
             e.target.value = "";
         }
     };
-
     // --------------------------------------------------
     // REMOVE PHOTO
     // --------------------------------------------------
@@ -830,8 +900,8 @@ export default function Profile() {
 
                             <div
                                 className={`avatar_main ${uploadLoading
-                                        ? "opacity-50"
-                                        : ""
+                                    ? "opacity-50"
+                                    : ""
                                     }`}
                             >
                                 {getProfileImage() ? (
@@ -1065,9 +1135,9 @@ export default function Profile() {
                                         <button
                                             type="button"
                                             className={`tab_btn ${courseTab ===
-                                                    "recorded"
-                                                    ? "active"
-                                                    : ""
+                                                "recorded"
+                                                ? "active"
+                                                : ""
                                                 }`}
                                             onClick={() =>
                                                 setCourseTab(
@@ -1084,9 +1154,9 @@ export default function Profile() {
                                     <button
                                         type="button"
                                         className={`tab_btn ${courseTab ===
-                                                "live"
-                                                ? "active"
-                                                : ""
+                                            "live"
+                                            ? "active"
+                                            : ""
                                             }`}
                                         onClick={() =>
                                             setCourseTab(
@@ -1246,9 +1316,9 @@ export default function Profile() {
 
                                                                             <span
                                                                                 className={`status_label ${progress ===
-                                                                                        100
-                                                                                        ? "status_comp"
-                                                                                        : "status_in"
+                                                                                    100
+                                                                                    ? "status_comp"
+                                                                                    : "status_in"
                                                                                     }`}
                                                                             >
                                                                                 {progress ===
@@ -1359,9 +1429,9 @@ export default function Profile() {
 
                                                                     <span
                                                                         className={`status_label mb-2 ${course.status ==
-                                                                                1
-                                                                                ? "status_in"
-                                                                                : "status_up"
+                                                                            1
+                                                                            ? "status_in"
+                                                                            : "status_up"
                                                                             }`}
                                                                     >
                                                                         {course.status ==
@@ -1593,9 +1663,9 @@ export default function Profile() {
                                         <button
                                             type="button"
                                             className={`tab_btn ${invoiceTab ===
-                                                    "recorded"
-                                                    ? "active"
-                                                    : ""
+                                                "recorded"
+                                                ? "active"
+                                                : ""
                                                 }`}
                                             onClick={() =>
                                                 setInvoiceTab(
@@ -1615,9 +1685,9 @@ export default function Profile() {
                                         <button
                                             type="button"
                                             className={`tab_btn ${invoiceTab ===
-                                                    "live"
-                                                    ? "active"
-                                                    : ""
+                                                "live"
+                                                ? "active"
+                                                : ""
                                                 }`}
                                             onClick={() =>
                                                 setInvoiceTab(
@@ -1751,8 +1821,8 @@ export default function Profile() {
 
                                                                     <span
                                                                         className={`inv_status ${isPaid
-                                                                                ? "paid"
-                                                                                : "pending"
+                                                                            ? "paid"
+                                                                            : "pending"
                                                                             }`}
                                                                     >
                                                                         <span className="status_dot"></span>{" "}

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 // Import your CSS according to your Next.js setup.
 import "./style.css";
 
-const BASE_API_URL = "https://velearn.in/velearn-crm/api/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 
 interface User {
     id: number | string;
