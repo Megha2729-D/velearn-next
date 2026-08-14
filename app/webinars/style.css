@@ -580,8 +580,6 @@
     margin-bottom: 25px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
-
 .profile_breadcrumb h2 {
     font-family: 'Playfair Display', serif !important;
     font-size: 20px;
