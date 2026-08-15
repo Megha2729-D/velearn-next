@@ -30,7 +30,7 @@ const Preloader = () => {
                         }}
                     >
                         <Image
-                            src={`${BASE_IMAGE_URL}logo-icon.png`}
+                            src={`/images/logo-icon.png`}
                             alt="Logo"
                             width={60}
                             height={60}

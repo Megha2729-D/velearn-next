@@ -529,10 +529,10 @@ export default function HomePage() {
                         Have any questions ?
                       </p> */}
                       <p className="fw-bold mb-0">
-                        <a href="tel:5555555555">
+                        <a href="tel:919087551188">
                           <span className="text-c2 fw-bold"> Confused? Talk to Our Experts for
                             <br />
-                            Free </span>5555555555
+                            Free </span>+91 90875 51188
                         </a>
                       </p>
                     </div>

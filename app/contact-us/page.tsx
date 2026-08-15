@@ -401,8 +401,8 @@ export default function ContactUs() {
                                             Help & Support
                                         </h5>
                                         <p className="mb-0 text-white text-center">
-                                            <a href="tel:919988776655">
-                                                +91 99887 76655
+                                            <a href="tel:919087551188">
+                                                +91 90875 51188
                                             </a>
                                         </p>
                                     </div>
@@ -431,8 +431,8 @@ export default function ContactUs() {
                                             E-mail
                                         </h5>
                                         <p className="mb-0 text-white text-center">
-                                            <a href="mailto:velearn@gmail.com">
-                                                velearn@gmail.com
+                                            <a href="mailto:info@velearn.in">
+                                                info@velearn.in
                                             </a>
                                         </p>
                                     </div>
