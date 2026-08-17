@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import NotificationsModal from "@/components/layout/NotificationsModal";
 
@@ -17,12 +17,293 @@ interface AttendanceItem {
     status: "present" | "absent" | "none";
 }
 
+interface CourseProgress {
+    percentage: number;
+    completed: number;
+    total: number;
+}
+
+interface AssignmentProgress {
+    percentage: number;
+    submitted: number;
+    total: number;
+    average: number;
+}
+
+interface MiniProject {
+    id: number | string;
+    title: string;
+    module: string;
+    meta: string;
+    score: number;
+    status: string;
+    status_type: "completed" | "changes_needed" | "pending";
+}
+
+interface MainProjectReview {
+    id: number | string;
+    review_number: number;
+    date: string;
+    status: string;
+    score: number | null;
+    description: string;
+    locked?: boolean;
+}
+
+interface MainProject {
+    title: string;
+    current_review: number;
+    total_reviews: number;
+    reviews: MainProjectReview[];
+}
+
+interface LiveDashboardData {
+    student?: {
+        name: string;
+        course: string;
+        batch: string;
+    };
+
+    course_progress?: CourseProgress;
+
+    assignments?: AssignmentProgress;
+
+    attendance?: {
+        month: string;
+        year: number;
+        present: number;
+        absent: number;
+        no_class: number;
+        percentage: number;
+        minimum_percentage: number;
+        days: AttendanceItem[];
+    };
+
+    mini_projects?: MiniProject[];
+
+    main_project?: MainProject;
+}
+
+interface ApiResponse {
+    status: boolean;
+    data?: LiveDashboardData;
+}
+
+interface StoredUser {
+    id?: number | string;
+    auth_id?: number | string;
+    name?: string;
+    email?: string;
+    image?: string;
+}
 const LiveDashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] =
         useState(false);
 
     const [isNotifOpen, setIsNotifOpen] =
         useState(false);
+
+    const [dashboardData, setDashboardData] =
+        useState<LiveDashboardData | null>(null);
+
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
+
+    const [storedUser, setStoredUser] =
+        useState<StoredUser | null>(null);
+    const [userId, setUserId] =
+        useState<number | string | null>(null);
+
+    useEffect(() => {
+        if (typeof window === "undefined") return;
+
+        try {
+            const userString =
+                localStorage.getItem("user");
+
+            if (!userString) {
+                console.warn(
+                    "Sidebar: No user found in localStorage"
+                );
+                return;
+            }
+
+            const user: StoredUser =
+                JSON.parse(userString);
+
+            setStoredUser(user);
+
+            const id = user?.id || user?.auth_id;
+
+            setUserId(id || null);
+        } catch (error) {
+            console.error(
+                "Sidebar: Error reading user from localStorage:",
+                error
+            );
+        }
+    }, []);
+
+    const userName =
+        storedUser?.name || "Velearn";
+
+    const firstLetter =
+        userName.charAt(0).toUpperCase();
+
+    // ==========================================
+    // FETCH LIVE DASHBOARD
+    // ==========================================
+    useEffect(() => {
+        const fetchDashboard = async () => {
+            try {
+                setLoading(true);
+                setError("");
+
+                const storedUser =
+                    localStorage.getItem("user");
+
+                if (!storedUser) {
+                    setError(
+                        "User information not found."
+                    );
+                    return;
+                }
+
+                const user = JSON.parse(storedUser);
+
+                if (!user?.id) {
+                    setError(
+                        "Invalid user information."
+                    );
+                    return;
+                }
+
+                const response = await fetch(
+                    `https://crm.velearn.in/api/my-courses/${user.id}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        `API Error: ${response.status}`
+                    );
+                }
+
+                const data: ApiResponse =
+                    await response.json();
+
+                if (data.status && data.data) {
+                    setDashboardData(data.data);
+                } else {
+                    setError(
+                        "Unable to load dashboard data."
+                    );
+                }
+            } catch (err) {
+                console.error(
+                    "Error fetching live dashboard:",
+                    err
+                );
+
+                setError(
+                    "Something went wrong while loading your dashboard."
+                );
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDashboard();
+    }, []);
+
+    const student =
+        dashboardData?.student;
+
+    const courseProgress =
+        dashboardData?.course_progress;
+
+    const assignments =
+        dashboardData?.assignments;
+
+    const attendance =
+        dashboardData?.attendance;
+
+    const miniProjects =
+        dashboardData?.mini_projects || [];
+
+    const mainProject =
+        dashboardData?.main_project;
+
+    // ==========================================
+    // LOADING
+    // ==========================================
+
+    if (loading) {
+        return (
+            <div className="dashboard_layout">
+
+                <Sidebar
+                    activePage="live-dash"
+                    isOpen={isSidebarOpen}
+                    onClose={() =>
+                        setIsSidebarOpen(false)
+                    }
+                />
+
+                <div className="dashboard_main_content">
+                    <div className="text-center py-5">
+                        <div
+                            className="spinner-border text-primary"
+                            role="status"
+                        />
+
+                        <h5 className="mt-3">
+                            Loading Dashboard...
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // ==========================================
+    // ERROR
+    // ==========================================
+
+    if (error) {
+        return (
+            <div className="dashboard_layout">
+
+                <Sidebar
+                    activePage="live-dash"
+                    isOpen={isSidebarOpen}
+                    onClose={() =>
+                        setIsSidebarOpen(false)
+                    }
+                />
+
+                <div className="dashboard_main_content">
+
+                    <div className="text-center py-5">
+
+                        <i className="bi bi-exclamation-circle fs-1 text-danger" />
+
+                        <h5 className="mt-3">
+                            {error}
+                        </h5>
+
+                    </div>
+
+                </div>
+            </div>
+        );
+    }
 
     // ==========================================
     // ATTENDANCE DATA
@@ -65,6 +346,25 @@ const LiveDashboard = () => {
         { day: 30, status: "none" },
     ];
 
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+
+        if (hour < 12) {
+            return "Good morning";
+        }
+
+        if (hour < 17) {
+            return "Good afternoon";
+        }
+
+        if (hour < 21) {
+            return "Good evening";
+        }
+
+        return "Good night";
+    };
+
+    const greeting = getGreeting();
     // ==========================================
     // RENDER
     // ==========================================
@@ -151,16 +451,15 @@ const LiveDashboard = () => {
                     <div className="welcome_stats_banner">
 
                         <div className="welcome_text">
-
                             <h1>
-                                Good morning, Arjun! 👋
+                                {greeting},{" "}
+                                {userName || "Student"}! 👋
                             </h1>
-
                             <p>
-                                Full Stack Web Dev • Batch
-                                FSW-2024-07
+                                {student?.course || "Live Course"}
+                                {" • "}
+                                {student?.batch || "Batch"}
                             </p>
-
                         </div>
 
                     </div>

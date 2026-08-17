@@ -144,8 +144,12 @@ const Placement = () => {
                 }
 
                 const response = await fetch(
-                    `${getApiUrl()}my-courses/${user.id}`
+                    `https://crm.velearn.in/api/my-courses/${user.id}`
                 );
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
 
                 const data: ApiResponse = await response.json();
 
@@ -166,22 +170,13 @@ const Placement = () => {
 
                     setCourses({
                         all: sortLatest(data.data?.all || []),
-                        ongoing: sortLatest(
-                            data.data?.ongoing || []
-                        ),
-                        completed: sortLatest(
-                            data.data?.completed || []
-                        ),
-                        inactive: sortLatest(
-                            data.data?.inactive || []
-                        ),
+                        ongoing: sortLatest(data.data?.ongoing || []),
+                        completed: sortLatest(data.data?.completed || []),
+                        inactive: sortLatest(data.data?.inactive || []),
                     });
                 }
             } catch (error) {
-                console.error(
-                    "Error fetching courses:",
-                    error
-                );
+                console.error("Error fetching courses:", error);
             } finally {
                 setLoading(false);
             }
@@ -474,10 +469,10 @@ const Placement = () => {
                                             >
                                                 <div
                                                     className={`card_parent h-100 d-flex flex-column position-relative ${index %
-                                                            2 ===
-                                                            0
-                                                            ? "one"
-                                                            : "two"
+                                                        2 ===
+                                                        0
+                                                        ? "one"
+                                                        : "two"
                                                         } ${isInactive
                                                             ? "locked_card"
                                                             : ""
@@ -595,12 +590,12 @@ const Placement = () => {
                                                             >
                                                                 <div
                                                                     className={`mt-3 paid_butt ${progress ===
-                                                                            100
-                                                                            ? "certificate_butt"
-                                                                            : progress ===
-                                                                                0
-                                                                                ? "start_course_butt"
-                                                                                : "continue_course_butt"
+                                                                        100
+                                                                        ? "certificate_butt"
+                                                                        : progress ===
+                                                                            0
+                                                                            ? "start_course_butt"
+                                                                            : "continue_course_butt"
                                                                         }`}
                                                                 >
                                                                     {progress ===

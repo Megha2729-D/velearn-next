@@ -881,6 +881,7 @@ export default function Navbar() {
                                             <div className="dropdown-menu-custom">
                                                 <div className="user-info">
                                                     <strong>{user.name}</strong>
+                                                    {/* <strong>{user.id}</strong> */}
                                                     <small>{user.email}</small>
                                                 </div>
                                                 <ul>
