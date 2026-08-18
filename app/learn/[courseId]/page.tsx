@@ -1026,7 +1026,7 @@ export default function LearnCoursePage() {
 
                     <div className="video_box mainstream_video">
                         <div className="video_preview">
-                            <video
+                            {/* <video
                                 key={activeVideo.id}
                                 ref={videoRef}
                                 controls
@@ -1068,7 +1068,7 @@ export default function LearnCoursePage() {
                                         }
                                     />
                                 )}
-                            </video>
+                            </video> */}
                         </div>
                     </div>
 
@@ -1103,17 +1103,14 @@ export default function LearnCoursePage() {
                                 <i className="bi bi-award me-2"></i>
                                 Topic Assessment
 
-                                {quizMap[String(activeVideo.id)] && (
+                                {/* {quizMap[String(activeVideo.id)] && (
                                     <span className="tab_indicator_dot"></span>
-                                )}
+                                )} */}
                             </button>
                         </div>
 
-                        <div className="learn_tab_pane">
-                            {/* =================================================
-                                SCRIPT TAB
-                            ================================================== */}
-
+                        {/* <div className="learn_tab_pane">
+                         
                             {activeTab === "script" ? (
                                 <div className="active_video_details p-4 bg-white rounded-4 shadow-sm border border-light">
                                     <h3 className="fw-bold mb-2">
@@ -1168,10 +1165,6 @@ export default function LearnCoursePage() {
                                     )}
                                 </div>
                             ) : (
-                                /* =================================================
-                                   QUIZ TAB
-                                ================================================== */
-
                                 <div className="quiz_section p-4 bg-white rounded-4 shadow-sm border border-light">
                                     {quizMap[
                                         String(activeVideo.id)
@@ -1242,10 +1235,6 @@ export default function LearnCoursePage() {
                                                     </button>
                                                 </div>
                                             ) : (
-                                                /* =================================
-                                                   QUIZ RESULT
-                                                ================================== */
-
                                                 <div className="quiz_result_box p-0 border-0 shadow-none">
                                                     <div className="result_badge_container mb-4">
                                                         <div
@@ -1385,10 +1374,6 @@ export default function LearnCoursePage() {
                                     ) : quizMap[
                                         String(activeVideo.id)
                                     ] === false ? (
-                                        /* =====================================
-                                           NO QUIZ
-                                        ====================================== */
-
                                         <div className="quiz_empty_box text-center p-5 bg-transparent border-0 shadow-none">
                                             <div className="mb-4">
                                                 <div
@@ -1413,10 +1398,6 @@ export default function LearnCoursePage() {
                                             </p>
                                         </div>
                                     ) : (
-                                        /* =====================================
-                                           QUIZ LOADING
-                                        ====================================== */
-
                                         <div className="text-center py-5">
                                             <div
                                                 className="spinner-border text-c2 mb-3"
@@ -1434,7 +1415,7 @@ export default function LearnCoursePage() {
                                     )}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -1462,7 +1443,7 @@ export default function LearnCoursePage() {
                         </div>
 
                         <div className="lesson_items_container">
-                            {videos.map((video, index) => (
+                            {/* {videos.map((video, index) => (
                                 <div
                                     key={video.id}
                                     className={`lesson_item ${activeVideo.id === video.id
@@ -1503,7 +1484,7 @@ export default function LearnCoursePage() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                 </div>
