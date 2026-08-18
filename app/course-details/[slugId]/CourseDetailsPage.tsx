@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "./style.css"
+import { toast } from "react-hot-toast";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -28,6 +29,10 @@ export default function CourseDetailsPage({
     slugId,
 }: CourseDetailsPageProps) {
     const [showModal, setShowModal] = useState(false);
+    const [showEnrollFormModal, setShowEnrollFormModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [showEnrollSuccessModal, setShowEnrollSuccessModal] = useState(false);
+
     const [course, setCourse] = useState<any>(null);
     const [user, setUser] = useState<any>(null);
     const [contentLeft, setContentLeft] = useState<number>(0);
@@ -49,7 +54,9 @@ export default function CourseDetailsPage({
 
     const topPartRef = useRef<HTMLDivElement>(null);
     const [stopFixed, setStopFixed] = useState(false);
-
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -64,10 +71,242 @@ export default function CourseDetailsPage({
     const router = useRouter();
 
     const goToLearnPage = () => {
-        if (course) {
-            router.push(`/learn/${course.slug}?courseId=${course.id}`);
+        if (course?.id) {
+            router.push(`/learn/${course.id}`);
         } else {
             router.push("/my-courses");
+        }
+    };
+
+    const handleSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ) => {
+        e.preventDefault();
+
+        if (!validate()) return;
+
+        setShowEnrollFormModal(false);
+        setShowConfirmModal(true);
+    };
+
+    const validateForm = () => {
+        const newErrors: any = {};
+
+        const cleanName = name.trim();
+        const cleanPhone = phone.trim();
+        const cleanEmail = email.trim();
+
+        if (!cleanName) {
+            newErrors.name = "Name is required";
+        }
+
+        if (!cleanPhone) {
+            newErrors.phone = "Phone is required";
+        } else if (!/^[0-9]{10}$/.test(cleanPhone)) {
+            newErrors.phone =
+                "Enter valid 10 digit phone number";
+        }
+
+        if (!cleanEmail) {
+            newErrors.email = "Email is required";
+        } else if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                cleanEmail
+            )
+        ) {
+            newErrors.email =
+                "Enter valid email address";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleEnroll = (
+        e?: React.FormEvent<HTMLFormElement>
+    ) => {
+        e?.preventDefault();
+
+        const storedUser = localStorage.getItem("user");
+
+        if (!storedUser) {
+            router.push("/login");
+            return;
+        }
+
+        if (!validateForm()) {
+            return;
+        }
+
+        setShowConfirmModal(true);
+    };
+
+    const confirmEnroll = async () => {
+        try {
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                router.push("/login");
+                return;
+            }
+
+            const loggedUser = JSON.parse(storedUser);
+            const token = localStorage.getItem("token");
+
+            // IMPORTANT:
+            // course.id comes from your dynamic recorded course API
+            if (!course?.id) {
+                toast.error("Course information not available");
+                console.error("Course ID missing:", course);
+                return;
+            }
+
+            const payload = {
+                name: formData.name.trim(),
+                phone: formData.phone.trim(),
+                email: formData.email.trim(),
+                lead_source: "Website",
+                course_id: Number(course.id),
+                auth_id: Number(loggedUser.id),
+            };
+
+            console.log("=================================");
+            console.log("RECORDED COURSE ENROLLMENT");
+            console.log("Sending enrollment payload:", payload);
+            console.log("Course:", course);
+            console.log("User:", loggedUser);
+            console.log("=================================");
+
+            const response = await fetch(
+                `${BASE_API_URL}enroll-now`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+
+                        ...(token
+                            ? {
+                                Authorization: `Bearer ${token}`,
+                            }
+                            : {}),
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            const responseText = await response.text();
+
+            console.log(
+                "Enrollment API status:",
+                response.status
+            );
+
+            console.log(
+                "Enrollment API response:",
+                responseText
+            );
+
+            let data: any = {};
+
+            try {
+                data = JSON.parse(responseText);
+            } catch {
+                console.error(
+                    "Enrollment API returned invalid JSON:",
+                    responseText
+                );
+            }
+
+            // ============================
+            // API ERROR
+            // ============================
+
+            if (!response.ok) {
+                console.error(
+                    "Enrollment API error:",
+                    response.status,
+                    data
+                );
+
+                toast.error(
+                    data?.message ||
+                    "Enrollment failed"
+                );
+
+                return;
+            }
+
+            // ============================
+            // SUCCESS
+            // ============================
+
+            if (data?.status === true) {
+                toast.success(
+                    data?.message ||
+                    "Enrollment successful!"
+                );
+
+                // Close confirmation modal
+                setShowConfirmModal(false);
+
+                // Close enrollment form
+                setShowEnrollFormModal(false);
+
+                // IMPORTANT:
+                // Don't only rely on local state.
+                // Re-check enrollment from API.
+                await checkEnrollment(
+                    Number(loggedUser.id),
+                    Number(course.id)
+                );
+
+                // Show success modal
+                setShowEnrollSuccessModal(true);
+
+                return;
+            }
+
+            // ============================
+            // ALREADY ENROLLED
+            // ============================
+
+            if (
+                typeof data?.message === "string" &&
+                data.message
+                    .toLowerCase()
+                    .includes("already")
+            ) {
+                toast.success(data.message);
+
+                setShowConfirmModal(false);
+                setShowEnrollFormModal(false);
+
+                setIsEnrolled(true);
+
+                setShowEnrollSuccessModal(true);
+
+                return;
+            }
+
+            // ============================
+            // STATUS FALSE
+            // ============================
+
+            toast.error(
+                data?.message ||
+                "Enrollment failed"
+            );
+        } catch (error) {
+            console.error(
+                "Recorded course enrollment error:",
+                error
+            );
+
+            toast.error(
+                "Something went wrong while enrolling"
+            );
         }
     };
 
@@ -123,6 +362,9 @@ export default function CourseDetailsPage({
                 // Fetch course details
                 const detailRes = await fetch(`https://crm.velearn.in/api/${endpoint}`);
                 const detailResult = await detailRes.json();
+
+                console.log("Course Detail Result:", detailResult);
+                console.log("Course Detail Data:", detailResult.data);
 
                 if (detailResult.status) {
                     setCourse(detailResult.data);
@@ -208,53 +450,106 @@ export default function CourseDetailsPage({
         return valid;
     };
 
-    const checkEnrollment = async (userId: number, courseId: number) => {
+    const checkEnrollment = async (
+        userId: number,
+        courseId: number
+    ) => {
         try {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `https://crm.velearn.in/api/my-courses/${userId}`,
+                `${BASE_API_URL}my-courses/${userId}`,
                 {
-                    headers: token
-                        ? {
-                            Authorization: `Bearer ${token}`,
-                        }
-                        : {},
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+
+                        ...(token
+                            ? {
+                                Authorization: `Bearer ${token}`,
+                            }
+                            : {}),
+                    },
                 }
             );
 
-            const result = await response.json();
-            console.log(result);
+            const responseText = await response.text();
 
-            if (result.status) {
-                const enrolled = (result.data.all || []).some(
-                    (item: any) => item.id === Number(courseId)
+            if (!response.ok) {
+                console.error(
+                    "My courses API error:",
+                    response.status,
+                    responseText
+                );
+
+                setIsEnrolled(false);
+                return;
+            }
+
+            const data = JSON.parse(responseText);
+
+            console.log(
+                "My courses response:",
+                data
+            );
+
+            if (
+                data?.status &&
+                data?.data
+            ) {
+                const allCourses = Array.isArray(
+                    data.data.all
+                )
+                    ? data.data.all
+                    : [];
+
+                const enrolled = allCourses.some(
+                    (item: any) =>
+                        Number(item.id) ===
+                        Number(courseId)
+                );
+
+                console.log(
+                    "Checking recorded course:",
+                    courseId
+                );
+
+                console.log(
+                    "Is enrolled:",
+                    enrolled
                 );
 
                 setIsEnrolled(enrolled);
+            } else {
+                setIsEnrolled(false);
             }
-        } catch (err) {
-            console.error("Enrollment check failed:", err);
+        } catch (error) {
+            console.error(
+                "Check enrollment error:",
+                error
+            );
+
+            setIsEnrolled(false);
         }
     };
 
-    const handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>
-    ) => {
+    // const handleSubmit = async (
+    //     e: React.FormEvent<HTMLFormElement>
+    // ) => {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        if (!validate()) return;
+    //     if (!validate()) return;
 
-        console.log(formData);
+    //     console.log(formData);
 
-        // Call your API here
+    //     // Call your API here
 
-        // Example:
-        // await fetch(...)
+    //     // Example:
+    //     // await fetch(...)
 
-        alert("Enrolled Successfully");
-    };
+    //     alert("Enrolled Successfully");
+    // };
 
     const tabs = [
         { id: "overview", label: "Course Overview" },
@@ -338,6 +633,7 @@ export default function CourseDetailsPage({
             slider.removeEventListener("mousemove", mouseMove);
         };
     }, []);
+
     useEffect(() => {
         const slider = listRef.current;
         if (!slider) return;
@@ -357,6 +653,7 @@ export default function CourseDetailsPage({
             slider.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
 
@@ -584,6 +881,302 @@ export default function CourseDetailsPage({
     };
     return (
         <>
+            {/* ================= CONFIRM ENROLLMENT MODAL ================= */}
+            {showConfirmModal && (
+                <div
+                    className="modal fade show d-block"
+                    style={{
+                        background: "rgba(0,0,0,0.7)",
+                        zIndex: 10002,
+                    }}
+                >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div
+                            className="modal-content border-0 shadow-lg"
+                            style={{
+                                borderRadius: "15px",
+                            }}
+                        >
+                            <div className="modal-body text-center p-5">
+                                <div className="mb-4">
+                                    <i
+                                        className="bi bi-question-circle-fill text-warning"
+                                        style={{
+                                            fontSize: "70px",
+                                        }}
+                                    ></i>
+                                </div>
+
+                                <h3 className="fw-bold mb-3">
+                                    Confirm Enrollment
+                                </h3>
+
+                                <p className="text-muted mb-4">
+                                    Are you sure you want to enroll in the{" "}
+                                    <strong>
+                                        Full Stack Web Development
+                                    </strong>{" "}
+                                    live program?
+                                </p>
+
+                                <div className="d-flex gap-3 justify-content-center">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary px-4 py-2"
+                                        onClick={() =>
+                                            setShowConfirmModal(false)
+                                        }
+                                        style={{
+                                            borderRadius: "10px",
+                                        }}
+                                    >
+                                        No, Cancel
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary px-4 py-2"
+                                        onClick={confirmEnroll}
+                                        style={{
+                                            borderRadius: "10px",
+                                            backgroundColor: "#22346b",
+                                            border: "none",
+                                        }}
+                                    >
+                                        Yes, Enroll Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ================= ENROLLMENT SUCCESS MODAL ================= */}
+            {showEnrollSuccessModal && (
+                <div
+                    className="modal fade show d-block"
+                    style={{
+                        background: "rgba(0,0,0,0.7)",
+                        zIndex: 10001,
+                    }}
+                >
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div
+                            className="modal-content border-0 shadow-lg"
+                            style={{
+                                borderRadius: "15px",
+                            }}
+                        >
+                            <div className="modal-body text-center p-5">
+                                <div className="mb-4">
+                                    <i
+                                        className="bi bi-check-circle-fill text-success"
+                                        style={{
+                                            fontSize: "70px",
+                                        }}
+                                    ></i>
+                                </div>
+
+                                <h3 className="fw-bold mb-3">
+                                    Enrollment Successful!
+                                </h3>
+
+                                <p className="text-muted mb-4">
+                                    Your request has been received. Would
+                                    you like to view your live course
+                                    history now?
+                                </p>
+
+                                <div className="d-flex gap-3 justify-content-center">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary px-4 py-2"
+                                        onClick={() =>
+                                            setShowEnrollSuccessModal(false)
+                                        }
+                                        style={{
+                                            borderRadius: "10px",
+                                        }}
+                                    >
+                                        Stay Here
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary px-4 py-2"
+                                        onClick={() =>
+                                            router.push(
+                                                "/live-course-history"
+                                            )
+                                        }
+                                        style={{
+                                            borderRadius: "10px",
+                                            backgroundColor: "#22346b",
+                                            border: "none",
+                                        }}
+                                    >
+                                        Go to History
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* ================= ENROLL FORM MODAL ================= */}
+            {showEnrollFormModal && (
+                <div
+                    className="success_modal_overlay"
+                    onClick={() => setShowEnrollFormModal(false)}
+                >
+                    <div
+                        className="modalbox animate"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <form
+                            className="position-relative shadow-0"
+                            onSubmit={handleEnroll}
+                        >
+                            <div className="d-flex position-relative justify-content-between align-items-center">
+                                <h4 className="fw-bold mb-0">
+                                    Enroll Now - Full Stack Web Development
+                                </h4>
+
+                                <button
+                                    type="button"
+                                    className="modal_close_icon border-0 bg-transparent"
+                                    onClick={() =>
+                                        setShowEnrollFormModal(false)
+                                    }
+                                    style={{
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <i className="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+
+                            {/* NAME */}
+                            <div className="d-flex align-items-start flex-column w-100 my-3">
+                                <label htmlFor="modal-name">
+                                    Name
+                                </label>
+
+                                <input
+                                    id="modal-name"
+                                    type="text"
+                                    name="name"
+                                    value={name}
+                                    onChange={(e) =>
+                                        setName(e.target.value)
+                                    }
+                                    className={`form-control ${errors.name
+                                        ? "is-invalid"
+                                        : ""
+                                        }`}
+                                />
+
+                                {errors.name && (
+                                    <span className="error-msg">
+                                        {errors.name}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* PHONE */}
+                            <div className="d-flex align-items-start flex-column w-100 my-3">
+                                <label htmlFor="modal-phone">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    id="modal-phone"
+                                    type="tel"
+                                    name="phone"
+                                    maxLength={10}
+                                    value={phone}
+                                    onChange={(e) =>
+                                        setPhone(
+                                            e.target.value.replace(
+                                                /\D/g,
+                                                ""
+                                            )
+                                        )
+                                    }
+                                    className={`form-control ${errors.phone
+                                        ? "is-invalid"
+                                        : ""
+                                        }`}
+                                />
+
+                                {errors.phone && (
+                                    <span className="error-msg">
+                                        {errors.phone}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* EMAIL */}
+                            <div className="d-flex align-items-start flex-column w-100 my-3">
+                                <label htmlFor="modal-email">
+                                    Email
+                                </label>
+
+                                <input
+                                    id="modal-email"
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) =>
+                                        setEmail(e.target.value)
+                                    }
+                                    className={`form-control ${errors.email
+                                        ? "is-invalid"
+                                        : ""
+                                        }`}
+                                />
+
+                                <input
+                                    type="hidden"
+                                    name="lead_source"
+                                    value="Website"
+                                />
+
+                                {errors.email && (
+                                    <span className="error-msg">
+                                        {errors.email}
+                                    </span>
+                                )}
+                            </div>
+
+                            {/* BUTTON */}
+                            <div className="col-12 d-flex justify-content-center">
+                                {isEnrolled ? (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            router.push(
+                                                "/live-course-history"
+                                            )
+                                        }
+                                    >
+                                        Start Course
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                    >
+                                        Enroll Now
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
             <div className="rc_body">
                 {/* Hero Section */}
                 <div className="rc_top_part" ref={topPartRef}>
