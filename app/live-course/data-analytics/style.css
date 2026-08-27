@@ -809,9 +809,26 @@
 }
 
 
-
 .da_cta {
-    margin-top: -70px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 70px;
+}
+
+.da_cta .section_container {
+    padding: 10px 50px 75px;
+}
+
+.da_cta_person {
+    display: block;
+    position: absolute;
+    bottom: -50px;
+    right: 0;
+    width: auto;
+    height: 120%;
 }
 
 .da_cta h3 {
@@ -834,22 +851,17 @@
 }
 
 .da_cta_inner {
-    position: absolute;
+    /* position: absolute;
     top: 15%;
     bottom: 0;
-    left: 5%;
-    width: 50%;
-    height: fit-content;
-}
-
-.da_cta_person {
-    display: none;
+    left: 5%; */
+    /* width: 50%;
+    height: fit-content; */
 }
 
 .footer_sec {
     margin-top: -50px;
 }
-
 
 @media (max-width: 768px) {
     .da_pricing_plan .features {
@@ -858,6 +870,17 @@
 }
 
 @media (max-width: 991px) {
+    .v-navbar.navbar_two .nav-elements {
+        background-color: #0e465b;
+        border: none;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .v-navbar.navbar_two .dropdown-menu {
+        background-color: #0e465b;
+    }
+
     .da_pricing_plan .new_price {
         font-size: 20px;
     }
@@ -870,28 +893,8 @@
         font-size: 30px;
     }
 
-    .da_cta_lg {
-        display: none;
-    }
-
-    .da_cta {
-        padding: 50px 0;
-        padding-bottom: 150px;
-        margin-top: 0;
-        display: flex;
-        flex-direction: column-reverse;
-        background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
-        background-size: cover;
-        background-position: center;
-    }
-
-    .da_cta_person {
-        display: block;
-        position: absolute;
-        bottom: -50px;
-        right: 0;
-        width: 260px;
-        height: auto;
+    .da_cta .section_container {
+        padding: 10px 10px 200px;
     }
 
     .da_cta_inner {
@@ -905,6 +908,15 @@
         margin: auto;
         height: fit-content;
         margin-bottom: 30px;
+    }
+
+    .da_cta_person {
+        position: absolute;
+        bottom: -50px;
+        right: 0;
+        left: auto;
+        width: 75%;
+        height: auto;
     }
 
     .da_cta button {

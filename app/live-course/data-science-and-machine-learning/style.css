@@ -1559,6 +1559,31 @@
     background-size: cover;
 }
 
+.ds_cta {
+
+    margin-bottom: 70px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: url("/images/live-course/digital-marketing/cta-bg.svg");
+    background-size: cover;
+    background-position: center;
+    margin-top: 0;
+}
+
+.ds_cta .section_container {
+    padding: 40px 0;
+    padding-bottom: 60px;
+}
+
+.ds_cta_person {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: auto;
+    height: 100%;
+}
+
 .ds_cta h3 {
     font-size: 35px;
 }
@@ -1579,10 +1604,10 @@
 }
 
 .ds_cta_inner {
-    position: absolute;
+    /* position: absolute;
     top: 25%;
     bottom: 0;
-    left: 5%;
+    left: 5%; */
     width: 50%;
     height: fit-content;
     background: #D9D9D933;
@@ -1599,8 +1624,17 @@
     margin: auto;
 }
 
-.ds_cta_person {
-    display: none;
+.ds_cta_inner {
+    /* position: relative;
+    top: 0;
+    bottom: 0; */
+    padding: 20px;
+    right: 10%;
+    width: 100%;
+    left: 0;
+    margin: auto;
+    height: fit-content;
+    margin-bottom: 30px;
 }
 
 @media screen and (max-width: 991px) {
@@ -1608,42 +1642,12 @@
         font-size: 30px;
     }
 
-    .ds_cta_lg {
-        display: none;
-    }
-
     .ds_cta {
-        padding: 40px 0;
-        padding-bottom: 60px;
-        margin-bottom: 70px;
-        display: flex;
-        flex-direction: column-reverse;
-        background: url("/images/live-course/digital-marketing/cta-bg.svg");
-        background-size: cover;
-        background-position: center;
-        margin-top: 0;
+        padding: 0;
     }
 
-    .ds_cta_person {
-        display: block;
-        position: absolute;
-        bottom: -50px;
-        right: 0;
-        width: 200px;
-        height: auto;
-    }
-
-    .ds_cta_inner {
-        position: relative;
-        top: 0;
-        bottom: 0;
-        padding: 20px;
-        right: 10%;
-        width: 100%;
-        left: 0;
-        margin: auto;
-        height: fit-content;
-        margin-bottom: 30px;
+    .ds_cta .section_container {
+        padding: 25px 0 280px;
     }
 
     .ds_cta button {
@@ -1700,7 +1704,12 @@
     }
 
     .ds_cta_person {
-        bottom: -121px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 200px;
+        height: auto;
     }
 
     .rocket_img {
@@ -1713,13 +1722,15 @@
     .ds_stories_parent_main img {
         left: 0;
     }
-}
 
-@media screen and (max-width:500px) {
-
-    .ds_cta {
-        padding: 90px 0;
-        padding-bottom: 150px;
-
+    .nav-elements .dropdown-menu {
+        background: #000000;
     }
 }
+
+/* @media screen and (max-width:500px) {
+
+    .ds_cta {
+        padding: 0;
+    }
+} */

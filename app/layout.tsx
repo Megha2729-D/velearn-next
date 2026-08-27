@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 
 import BootstrapClient from "@/components/BootstrapClient";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import RouteRefresh from "@/components/RouteRefresh";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import PagePreloader from "@/components/PagePreloader";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -41,6 +42,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <RouteRefresh />
+
         <ScrollToTop />
 
         <BootstrapClient />

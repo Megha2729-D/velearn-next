@@ -2494,22 +2494,28 @@ export default function DataScience() {
                             </div>
                         </div>
                     </div>
-                    <section className="ds_cta position-relative">
-                        <Image src={"/images/live-course/data-science/cta-person.png"} className="ds_cta_person" width={3000} height={500} alt="" />
-                        <Image src={"/images/live-course/data-science/cta-banner.svg"} className="ds_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
-                        <div className="section_container">
-                            <div className="row justify-content-center align-items-center w-100 m-auto">
-                                <div className="ds_cta_inner mt-lg-5">
-                                    <h3 className="fw-bold text-black text-lg-start text-center">Start Your Online AI Machine Learning Course Today</h3>
-                                    <p className="small lh-lg text-black text-lg-start text-center">Stop researching. Start enrolling. Join the Best Data Science Program Online Live, kick off with Introduction to Python, and graduate as a Data Scientist or AI Engineer.</p>
-                                    <div className="ds_cta_button col-12 d-flex justify-content-center gap-3">
-                                        <button>Enroll Now</button>
-                                        <button>Talk to Counsellors</button>
+                    <div className="ds_cta">
+                        {/* <Image src={"/images/live-course/data-science/cta-banner.svg"} className="ds_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" /> */}
+                        <div className="section_container position-relative">
+                            <Image src={"/images/live-course/data-science/cta-person.png"} className="ds_cta_person" width={3000} height={500} alt="" />
+                            <div className="row justify-content-start w-100 m-auto">
+                                <div className="col-lg-8">
+                                    <div className="row justify-content-start">
+                                        <div className="col-lg-10">
+                                            <div className="ds_cta_inner mt-lg-5 position-relative">
+                                                <h3 className="fw-bold text-black text-lg-start text-center">Start Your Online AI Machine Learning Course Today</h3>
+                                                <p className="small lh-lg text-black text-lg-start text-center">Stop researching. Start enrolling. Join the Best Data Science Program Online Live, kick off with Introduction to Python, and graduate as a Data Scientist or AI Engineer.</p>
+                                                <div className="ds_cta_button col-12 d-flex justify-content-center gap-3">
+                                                    <button>Enroll Now</button>
+                                                    <button>Talk to Counsellors</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </section>
             </section>
         </>

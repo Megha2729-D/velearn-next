@@ -6,6 +6,10 @@
     background-repeat: no-repeat;
 }
 
+main {
+    overflow-x: hidden;
+}
+
 /* .banner_top_sec {
     background-color: #ffffff;
     border-radius: 0 0 94px 94px;
@@ -1221,8 +1225,8 @@
     border: 5px solid rgba(0, 145, 217, 0.2);
     border-radius: 45px;
     padding: 20px 25px;
-    margin: 0 50px;
-    /* width: fit-content; */
+    margin: 0 auto;
+    width: fit-content;
     isolation: isolate;
 }
 
@@ -1266,11 +1270,16 @@
     background: linear-gradient(90deg, #ffffff33 0%, #ffffff00 100%);
 }
 
-/* .mern_cta {
-    background: url("/images/live-course/mern/cta-banner.svg");
+.mern_cta {
+    /* padding: 50px 0; */
+    /* padding-bottom: 150px; */
+    margin-bottom: 70px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: url("/images/live-course/mern/cta-gradient.svg");
+    height: 100%;
     background-size: cover;
-    padding-bottom: 180px;
-} */
+}
 
 .mern_cta button {
     background: linear-gradient(90deg, #fffafa80 0%, #99969680 100%);
@@ -1291,36 +1300,36 @@
     background: #D9D9D933;
     border-radius: 32px;
     padding: 30px;
-    position: absolute;
-    top: 10%;
+    /* position: absolute; */
+    /* top: 10%;
     bottom: 0;
-    right: 10%;
-    width: 50%;
+    right: 10%; */
+    width: 100%;
     height: fit-content;
 }
 
 .mern_cta_person {
-    display: none;
+    position: absolute;
+    bottom: -50px;
+    left: 5%;
+    width: auto;
+    height: 100%;
 }
 
-@media screen and (max-width: 991px) {
-    .mern_cta_lg {
-        display: none;
-    }
+/* .mern_cta_person {
+    display: none;
+} */
 
-    .mern_cta {
-        padding: 50px 0;
-        padding-bottom: 150px;
-        margin-bottom: 70px;
-        display: flex;
-        flex-direction: column-reverse;
-        background: url("/images/live-course/mern/cta-gradient.svg");
-        background-size: cover;
+@media screen and (max-width: 991px) {
+    /* .mern_cta_lg {
+        display: none;
+    } */
+
+    .mern_cta .section_container {
+        padding: 50px 0 150px 0;
     }
 
     .mern_cta_person {
-        display: block;
-        position: absolute;
         bottom: -50px;
         left: 0;
         width: 200px;
@@ -1605,7 +1614,7 @@
 
 @media screen and (max-width: 490px) {
     .batch_child {
-        margin: 0 !important;
+        margin: auto !important;
     }
 
     .testimonial-card.active {

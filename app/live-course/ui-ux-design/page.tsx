@@ -2208,17 +2208,22 @@ export default function UIUX() {
                     </div>
                 </div>
             </section>
-            <section className="uiux_cta position-relative">
-                <Image src={"/images/live-course/ui-ux/uiux-cta-person.svg"} className="uiux_cta_person" width={3000} height={500} alt="" />
-                <Image src={"/images/live-course/ui-ux/cta-bg.svg"} className="uiux_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
-                <div className="section_container">
+            <section className="uiux_cta">
+                {/* <Image src={"/images/live-course/ui-ux/cta-bg.svg"} className="uiux_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" /> */}
+                <div className="section_container position-relative">
+                    <Image src={"/images/live-course/ui-ux/uiux-cta-person.svg"} className="uiux_cta_person" width={3000} height={500} alt="" />
                     <div className="row justify-content-center align-items-center w-100 m-auto">
-                        <div className="uiux_cta_inner mt-lg-5">
-                            <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
-                            <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
-                            <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
-                                <button>Enroll Now</button>
-                                <button>Talk to Counsellors</button>
+
+                        <div className="row justify-content-start w-100 m-auto">
+                            <div className="col-lg-7">
+                                <div className="uiux_cta_inner">
+                                    <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
+                                    <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
+                                    <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
+                                        <button>Enroll Now</button>
+                                        <button>Talk to Counsellors</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

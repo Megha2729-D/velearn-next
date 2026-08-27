@@ -2049,7 +2049,7 @@ export default function DigitalMarketing() {
                                                 <div className="col-lg-10">
                                                     <Image
                                                         src={`/images/details-page/certificate.png`}
-                                                        className="w-100 h-auto="
+                                                        className="w-100 h-auto"
                                                         height={500}
                                                         width={500}
                                                         alt=""
@@ -2071,29 +2071,33 @@ export default function DigitalMarketing() {
                                             </h3>
                                         </div>
                                         <div className="col-lg-11 mt-4">
-                                            <div className="row justify-content-evenly">
-                                                <div className="col-lg-4 col-md-6 my-lg-3 my-2">
-                                                    <div className="dm_batch_inner">
-                                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
-                                                        <p className="fw-bold">Monday - Friday</p>
-                                                        <p className="small">
-                                                            3 Month / 120 Hours<br />
-                                                            (include Doubt Clearing)
-                                                        </p>
-                                                        <p>Session Recordings Included</p>
-                                                        <button>Enroll In Weekday Batch</button>
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-4 col-md-6 my-lg-3 my-2">
-                                                    <div className="dm_batch_inner">
-                                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
-                                                        <p className="fw-bold">Monday - Friday</p>
-                                                        <p className="small">
-                                                            3 Month / 120 Hours<br />
-                                                            (include Doubt Clearing)
-                                                        </p>
-                                                        <p>Session Recordings Included</p>
-                                                        <button>Enroll In Weekday Batch</button>
+                                            <div className="row justify-content-center">
+                                                <div className="col-lg-10">
+                                                    <div className="row justify-content-evenly">
+                                                        <div className="col-lg-4 col-md-6 my-lg-3 my-2">
+                                                            <div className="dm_batch_inner">
+                                                                <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                                                <p className="fw-bold">Monday - Friday</p>
+                                                                <p className="small">
+                                                                    3 Month / 120 Hours<br />
+                                                                    (include Doubt Clearing)
+                                                                </p>
+                                                                <p>Session Recordings Included</p>
+                                                                <button>Enroll In Weekday Batch</button>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-4 col-md-6 my-lg-3 my-2">
+                                                            <div className="dm_batch_inner">
+                                                                <h4 className="text-c2 fw-bold">Weekday Batch</h4>
+                                                                <p className="fw-bold">Monday - Friday</p>
+                                                                <p className="small">
+                                                                    3 Month / 120 Hours<br />
+                                                                    (include Doubt Clearing)
+                                                                </p>
+                                                                <p>Session Recordings Included</p>
+                                                                <button>Enroll In Weekday Batch</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-8 col-md-12 my-lg-5 my-2 batch_parent">
@@ -2243,17 +2247,23 @@ export default function DigitalMarketing() {
                             </div>
 
                         </div>
-                        <section className="dm_cta position-relative">
-                            <Image src={"/images/live-course/digital-marketing/cta-person.svg"} className="dm_cta_person" width={3000} height={500} alt="" />
-                            <Image src={"/images/live-course/digital-marketing/cta-banner.svg"} className="dm_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
-                            <div className="section_container">
-                                <div className="row justify-content-center align-items-center w-100 m-auto">
-                                    <div className="dm_cta_inner mt-lg-5">
-                                        <h3 className="fw-bold text-black text-lg-start text-center">Enroll Now and Become an AI-Powered Digital Marketer </h3>
-                                        <p className="small lh-lg text-black text-lg-start text-center">Take the next step in your career in digital marketing. Learn live, build real campaigns with AI, and walk away ready to get hired or freelance from day one. </p>
-                                        <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
-                                            <button>Enroll Now</button>
-                                            <button>Talk to Counsellors</button>
+                        <section className="dm_cta">
+                            {/* <Image src={"/images/live-course/digital-marketing/cta-banner.svg"} className="dm_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" /> */}
+                            <div className="section_container position-relative">
+                                <Image src={"/images/live-course/digital-marketing/cta-person.svg"} className="dm_cta_person" width={3000} height={500} alt="" />
+                                <div className="row justify-content-start w-100 m-auto">
+                                    <div className="col-lg-8">
+                                        <div className="row justify-content-start">
+                                            <div className="col-lg-10">
+                                                <div className="dm_cta_inner mt-lg-5">
+                                                    <h3 className="fw-bold text-black text-lg-start text-center">Enroll Now and Become an AI-Powered Digital Marketer </h3>
+                                                    <p className="small lh-lg text-black text-lg-start text-center">Take the next step in your career in digital marketing. Learn live, build real campaigns with AI, and walk away ready to get hired or freelance from day one. </p>
+                                                    <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
+                                                        <button>Enroll Now</button>
+                                                        <button>Talk to Counsellors</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

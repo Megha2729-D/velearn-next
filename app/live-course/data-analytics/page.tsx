@@ -1981,17 +1981,24 @@ export default function DataAnalytics() {
                         </div>
                     </div>
                 </div>
-                <div className="da_cta position-relative">
-                    <Image src={"/images/live-course/data-analytics/da-cta-person.png"} className="da_cta_person" width={3000} height={500} alt="" />
-                    <Image src={"/images/live-course/data-analytics/cta-banner.svg"} className="da_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
-                    <div className="section_container">
-                        <div className="row justify-content-center align-items-center w-100 m-auto">
-                            <div className="da_cta_inner mt-lg-5">
-                                <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
-                                <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
-                                <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
-                                    <button>Enroll Now</button>
-                                    <button>Talk to Counsellors</button>
+                <div className="da_cta">
+                    {/* <Image src={"/images/live-course/data-analytics/cta-banner.svg"} className="da_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" /> */}
+                    <div className="section_container position-relative">
+                        <Image src={"/images/live-course/data-analytics/da-cta-person.png"} className="da_cta_person" width={3000} height={500} alt="" />
+
+                        <div className="row justify-content-start w-100 m-auto">
+                            <div className="col-lg-8">
+                                <div className="row justify-content-start">
+                                    <div className="col-lg-10">
+                                        <div className="da_cta_inner mt-lg-5">
+                                            <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
+                                            <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
+                                            <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
+                                                <button>Enroll Now</button>
+                                                <button>Talk to Counsellors</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -2388,17 +2388,23 @@ export default function FullStackDevelopment() {
                     </div>
                 </div>
             </section>
-            <section className="mern_cta position-relative">
-                <Image src={"/images/live-course/mern/cta-person.svg"} className="mern_cta_person" width={3000} height={500} alt="" />
-                <Image src={"/images/live-course/mern/cta-banner.svg"} className="mern_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" />
-                <div className="section_container">
-                    <div className="row justify-content-center w-100 m-auto">
-                        <div className="mern_cta_inner mt-lg-5">
-                            <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
-                            <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
-                            <div className="col-12 d-flex justify-content-center gap-3">
-                                <button>Enroll Now</button>
-                                <button>Talk to Counsellors</button>
+            <section className="mern_cta">
+                {/* <Image src={"/images/live-course/mern/cta-banner.svg"} className="mern_cta_lg w-100 h-auto" style={{ objectFit: 'cover' }} width={3000} height={500} alt="" /> */}
+                <div className="section_container position-relative">
+                    <Image src={"/images/live-course/mern/cta-person.svg"} className="mern_cta_person" width={3000} height={500} alt="" />
+                    <div className="row justify-content-end w-100 m-auto">
+                        <div className="col-lg-8">
+                            <div className="row justify-content-center">
+                                <div className="col-lg-10">
+                                    <div className="mern_cta_inner my-lg-5">
+                                        <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
+                                        <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
+                                        <div className="col-12 d-flex justify-content-center gap-3">
+                                            <button>Enroll Now</button>
+                                            <button>Talk to Counsellors</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

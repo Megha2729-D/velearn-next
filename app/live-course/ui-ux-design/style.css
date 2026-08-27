@@ -1593,6 +1593,20 @@
     margin-top: -70px;
 }
 
+.uiux_cta {
+    margin-bottom: 70px;
+    display: flex;
+    flex-direction: column-reverse;
+    background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
+    background-size: cover;
+    background-position: center;
+}
+
+.uiux_cta .section_container {
+    padding: 50px 0;
+    padding-bottom: 70px;
+}
+
 .uiux_cta h3 {
     font-size: 50px;
 }
@@ -1613,17 +1627,24 @@
 }
 
 .uiux_cta_inner {
-    position: absolute;
-    top: 15%;
-    bottom: 0;
-    left: 5%;
-    width: 50%;
+    border-radius: 32px;
+    padding: 30px;
+    width: 100%;
     height: fit-content;
 }
 
 .uiux_cta_person {
-    display: none;
+    /* display: block; */
+    position: absolute;
+    bottom: -50px;
+    right: 0;
+    width: auto;
+    height: 100%;
 }
+
+/* .uiux_cta_person {
+    display: none;
+} */
 
 @media screen and (max-width: 991px) {
     .why-wrapper {
@@ -1696,26 +1717,9 @@
         font-size: 30px;
     }
 
-    .uiux_cta_lg {
-        display: none;
-    }
-
-    .uiux_cta {
-        padding: 50px 0;
-        padding-bottom: 150px;
-        margin-bottom: 70px;
-        display: flex;
-        flex-direction: column-reverse;
-        background: url("/images/live-course/ui-ux/uiux-cta-bg.svg");
-        background-size: cover;
-        background-position: center;
-    }
-
     .uiux_cta_person {
-        display: block;
-        position: absolute;
         bottom: -50px;
-        right: 0;
+        left: 0;
         width: 200px;
         height: auto;
     }
