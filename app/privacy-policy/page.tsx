@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
                             If you have any questions regarding this Privacy Policy,
                             please contact us.
                         </p>
-                        <p>Email: support@velearn.in</p>
+                        <p>Email: info@velearn.in</p>
                     </section>
 
                 </div>

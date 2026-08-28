@@ -101,7 +101,7 @@ export default function RefundPolicy() {
                             If you have any questions or would like to request a refund,
                             please contact our support team.
                         </p>
-                        <p>Email: support@velearn.in</p>
+                        <p>Email: info@velearn.in</p>
                     </section>
 
                 </div>
