@@ -688,7 +688,7 @@ export default function Footer() {
                                     </div>
                                     <div className="one">
                                         <a
-                                            href=""
+                                            href="/refer-and-earn"
                                             target="_blank"
                                             rel="noreferrer"
                                         >

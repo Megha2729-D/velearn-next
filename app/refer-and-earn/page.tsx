@@ -13,6 +13,7 @@ const BASE_DYNAMIC_IMAGE_URL =
     "https://crm.velearn.in/public/uploads/";
 
 export default function ReferAndEarn() {
+    const [user, setUser] = useState<any>(null);
     const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(0);
 
     useEffect(() => {
@@ -21,6 +22,23 @@ export default function ReferAndEarn() {
         return () => {
             document.body.classList.remove("bg-refer");
         };
+    }, []);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                setUser(parsedUser);
+            } catch (error) {
+                console.error("Invalid user data in localStorage");
+                localStorage.removeItem("user");
+                setUser(null);
+            }
+        } else {
+            setUser(null);
+        }
     }, []);
 
     const faqData = [
@@ -105,7 +123,9 @@ export default function ReferAndEarn() {
                         <p className="text-black mt-2">
                             The More you Refer, The More You Earn
                         </p>
-                        <button className="mt-4">Refer Now</button>
+                        <button className="mt-4">
+                            {user ? "Refer Now" : "Login to refer"}
+                        </button>
                     </div>
                     {/* <div className="re_right_banner"></div> */}
                 </div>
@@ -124,7 +144,7 @@ export default function ReferAndEarn() {
                             </h3>
                             <div className="col-12 d-flex justify-content-center my-5">
                                 <button className="refer_butt">
-                                    Login to refer
+                                    {user ? "Refer Now" : "Login to refer"}
                                 </button>
                             </div>
                             <h3 className="fw-bold text-white text-center">

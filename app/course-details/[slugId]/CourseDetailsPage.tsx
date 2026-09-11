@@ -19,6 +19,19 @@ interface User {
     phone?: string;
     phonenumber?: string;
 }
+interface FAQ {
+    id: number;
+    course_id: number;
+    question: string;
+    answer: string;
+}
+
+interface Course {
+    id: number;
+    // your existing fields...
+
+    faqs?: FAQ[];
+}
 // const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_API_URL = "https://crm.velearn.in/api/";
 const BASE_IMAGE_URL = "https://velearn-next.onrender.com/images/";
@@ -558,7 +571,7 @@ export default function CourseDetailsPage({
         { id: "process", label: "Learning Process" },
         { id: "reviews", label: "Reviews" },
         { id: "certificate", label: "Certificate" },
-        { id: "fee", label: "Duration & Fee" },
+        { id: "fees", label: "Duration & Fee" },
         { id: "faq", label: "FAQ" },
     ];
 
@@ -1393,63 +1406,30 @@ export default function CourseDetailsPage({
                                         <div className="rc_overview_box">
                                             <div>
                                                 <h2 className="rc_heading text-c1 fw-bold">
-                                                    What You'll Learn In This Java Online Course
+                                                    {course?.learning_title || (
+                                                        <>
+                                                            What You'll Learn In This {course?.cour_language} Online Course
+                                                        </>
+                                                    )}
                                                 </h2>
 
                                                 <p className="rc_text">
-                                                    This free Java course helps beginners build strong fundamentals in Java programming from the ground up. By the end of this course, you will write real-world Java code with confidence. You will apply core language concepts in practical projects.
+                                                    {course?.learning_description || (
+                                                        <>
+                                                            {course?.about_course}
+                                                        </>
+                                                    )}
                                                 </p>
 
                                                 <ul className="rc_points ps-0">
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Learn Java from scratch with easy hands-on practice
-                                                    </li>
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Master data types, variables, and control structures step by step
-                                                    </li>
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Understand object oriented programming the simple way
-                                                    </li>
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Build a strong foundation in data structures for software development
-                                                    </li>
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Write basic Java programs for beginners with real
-                                                        examples
-                                                    </li>
-
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Write basic Java programs for beginners with real examples
-                                                    </li>
-                                                    <li>
-                                                        <span className="icon">
-                                                            <i className="bi bi-arrow-right-short"></i>
-                                                        </span>
-                                                        Get career-ready as a Java developer or software engineer
-                                                    </li>
+                                                    {course?.leans?.map((item: any) => (
+                                                        <li key={item.id}>
+                                                            <span className="icon">
+                                                                <i className="bi bi-arrow-right-short"></i>
+                                                            </span>
+                                                            {item.title}
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
@@ -1467,68 +1447,59 @@ export default function CourseDetailsPage({
                                             {/* Left Content */}
                                             <div className="col-lg-8">
                                                 <h2 className="fw-bold text-white text-center mb-3">
-                                                    Why Our{" "}
-                                                    <span className="text-c2">
-                                                        Java Online Course
-                                                    </span>{" "}
-                                                    Stands Out For Beginners
+                                                    {course?.why_us_title || (
+                                                        <>
+                                                            Why Our{" "}
+                                                            <span className="text-c2">
+                                                                {course?.cour_language} Online Course
+                                                            </span>{" "}
+                                                            Stands Out For Beginners
+                                                        </>
+                                                    )}
                                                 </h2>
+
                                                 <p className="rc_sec_desc text-center text-white">
-                                                    Built by experts and designed for beginners. Here's why our free Java programming course is the perfect way to learn Java and kickstart your career in software development.
+                                                    {course?.why_us_description ||
+                                                        `Built by experts and designed for beginners. Here's why our ${course?.cour_language} online course is the perfect way to learn and kickstart your career in software development.`}
                                                 </p>
 
                                                 <div className="row g-4 mt-2">
-                                                    <div className="col-md-6">
-                                                        <div className="rc_feature_card_parent">
-                                                            <div className="rc_feature_card">
-                                                                <div>
-                                                                    <h5 className="fw-bold text-black"> Zero To Java <span className="text-c2"> Hero Path</span></h5>
-                                                                    <p className="text-black">
-                                                                        Start with basic Java programs for beginners and move step by step into object oriented programming with zero coding background needed.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {[
+                                                        {
+                                                            heading: course?.why_us_heading_1,
+                                                            description: course?.why_us_desc_1,
+                                                        },
+                                                        {
+                                                            heading: course?.why_us_heading_2,
+                                                            description: course?.why_us_desc_2,
+                                                        },
+                                                        {
+                                                            heading: course?.why_us_heading_3,
+                                                            description: course?.why_us_desc_3,
+                                                        },
+                                                        {
+                                                            heading: course?.why_us_heading_4,
+                                                            description: course?.why_us_desc_4,
+                                                        },
+                                                    ]
+                                                        .filter((item) => item.heading || item.description)
+                                                        .map((item, index) => (
+                                                            <div className="col-md-6" key={index}>
+                                                                <div className="rc_feature_card_parent">
+                                                                    <div className="rc_feature_card">
+                                                                        <div>
+                                                                            <h5 className="fw-bold text-black">
+                                                                                {item.heading}
+                                                                            </h5>
 
-                                                    <div className="col-md-6">
-                                                        <div className="rc_feature_card_parent">
-                                                            <div className="rc_feature_card">
-                                                                <div>
-                                                                    <h5 className="fw-bold text-black">Learn From <span className="text-c2"> Industry Experts</span></h5>
-                                                                    <p className="text-black">
-                                                                        Learn from real Java developers who write Java code every day. They share real world examples from actual software development projects, so you learn what truly works.
-                                                                    </p>
+                                                                            <p className="text-black mb-0">
+                                                                                {item.description}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="rc_feature_card_parent">
-                                                            <div className="rc_feature_card">
-                                                                <div>
-                                                                    <h5 className="fw-bold text-black">Industry-Recognized Java <span className="text-c2">Certificate</span></h5>
-                                                                    <p className="text-black">
-                                                                        Complete the course and earn a  free Java course with a certificate that adds real value to your resume and LinkedIn profile.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-md-6">
-                                                        <div className="rc_feature_card_parent">
-                                                            <div className="rc_feature_card">
-                                                                <div>
-                                                                    <h5 className="fw-bold text-black">Watch, Pause, <span className="text-c2">Replay Anytime</span></h5>
-                                                                    <p className="text-black">
-                                                                        Enjoy lifetime free access to recorded Java tutorial videos so you can learn Java at your own speed without any pressure.
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                        ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -1600,27 +1571,39 @@ export default function CourseDetailsPage({
                                             <div className="px-lg-4">
                                                 <div>
                                                     <h2 className="fw-bold text-white text-center mb-3">
-                                                        Skills You Will Gain From Our Java Programming{" "}
-                                                        <span className="text-c2">
-                                                            Classes Online
-                                                        </span>{" "}
+                                                        {course?.skills_title || (
+                                                            <>
+                                                                Skills You Will Gain From Our{" "}
+                                                                <span className="text-c2">
+                                                                    {course?.cour_language} Classes Online
+                                                                </span>
+                                                            </>
+                                                        )}
                                                     </h2>
+
                                                     <p className="text-center text-white">
-                                                        Here are the Java skills you will pick up in this course to start your journey as a Java developer
+                                                        {course?.skills_description ||
+                                                            `Here are the ${course?.cour_language} skills you will pick up in this course to start your journey as a ${course?.cour_language} developer.`}
                                                     </p>
                                                 </div>
                                                 <div className="rc_modules">
                                                     <div className="row g-3">
-                                                        {modules.map((item, index) => (
-                                                            <div
-                                                                key={index}
-                                                                className={`${colClasses[index % colClasses.length]} col-md-6`}
-                                                            >
-                                                                <div className="module_box">
-                                                                    <p>{item}</p>
-                                                                </div>
-                                                            </div>
-                                                        ))}
+                                                        {Array.isArray(course?.skills) &&
+                                                            course.skills.map(
+                                                                (
+                                                                    item: { id?: number; name?: string },
+                                                                    index: number
+                                                                ) => (
+                                                                    <div
+                                                                        key={item?.id || index}
+                                                                        className={`${colClasses[index % colClasses.length]} col-md-6`}
+                                                                    >
+                                                                        <div className="module_box">
+                                                                            <p>{item?.name}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -1631,6 +1614,7 @@ export default function CourseDetailsPage({
                         </div>
 
                         {/* modules */}
+                        {/* Modules */}
                         <div id="modules">
                             <div className="rc_sec_6 pt-5 pb-3">
                                 <div className="section_container">
@@ -1638,64 +1622,110 @@ export default function CourseDetailsPage({
                                         <div className="col-lg-8">
                                             <div className="pb-5">
                                                 <h2 className="text-black text-center fw-bold px-3 lh-sm">
-                                                    Java Programming For  {" "}
-                                                    <span className="text-c2">
-                                                        {" "}
-                                                        Beginners
-                                                    </span>
-                                                    – Course Modules
+                                                    {course?.cour_language} Programming For{" "}
+                                                    <span className="text-c2">Beginners</span> – Course Modules
                                                 </h2>
+
                                                 <p className="text-black text-center px-lg-5 mb-5">
-                                                    Start your Java journey with a clear roadmap built just for beginners. These 5 modules walk you through Java programming step by step, from basic concepts to object oriented programming. No prior coding experience needed, just curiosity and a little practice.
+                                                    Start your{" "}
+                                                    {course?.cour_language} journey with a clear roadmap built
+                                                    just for beginners. These{" "}
+                                                    {course?.curricula?.length || 0} modules walk you through{" "}
+                                                    {course?.cour_language} programming step by step, from basic
+                                                    concepts to object oriented programming. No prior coding
+                                                    experience needed, just curiosity and a little practice.
                                                 </p>
-                                                <div
-                                                    className="tabs-wrapper position-relative"
-                                                    ref={tabsWrapperRef}
-                                                >
-                                                    <div className="tabs">
-                                                        {[1, 2, 3, 4, 5].map((num, index) => (
-                                                            <button
-                                                                key={num}
-                                                                ref={(el) => {
-                                                                    tabRefs.current[index] = el;
+
+                                                {Array.isArray(course?.curricula) &&
+                                                    course.curricula.length > 0 && (
+                                                        <div
+                                                            className="tabs-wrapper position-relative mb-5"
+                                                            ref={tabsWrapperRef}
+                                                        >
+                                                            {/* Tabs */}
+                                                            <div className="tabs">
+                                                                {course.curricula.map(
+                                                                    (
+                                                                        module: {
+                                                                            id?: number;
+                                                                            title?: string;
+                                                                        },
+                                                                        index: number
+                                                                    ) => (
+                                                                        <button
+                                                                            key={module.id || index}
+                                                                            ref={(el) => {
+                                                                                tabRefs.current[index] = el;
+                                                                            }}
+                                                                            className={`tab ${activeTab === index + 1
+                                                                                ? "active"
+                                                                                : ""
+                                                                                }`}
+                                                                            onClick={() =>
+                                                                                setActiveTab(index + 1)
+                                                                            }
+                                                                        >
+                                                                            Module {index + 1}
+                                                                        </button>
+                                                                    )
+                                                                )}
+                                                            </div>
+
+                                                            {/* Active tab indicator */}
+                                                            <div
+                                                                className="tab-indicator"
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    top: "45px",
+                                                                    left: `${contentLeft}px`,
+                                                                    transform: "translateX(-50%)",
                                                                 }}
-                                                                className={`tab ${activeTab === num ? "active" : ""
-                                                                    }`}
-                                                                onClick={() => setActiveTab(num)}
-                                                            >
-                                                                Module {num}
-                                                            </button>
-                                                        ))}
-                                                    </div>
+                                                            />
 
-                                                    <div
-                                                        className="tab-indicator"
-                                                        style={{
-                                                            position: "absolute",
-                                                            top: "45px",
-                                                            left: `${contentLeft}px`,
-                                                            transform: "translateX(-50%)",
-                                                        }}
-                                                    />
+                                                            {/* Active module content */}
+                                                            {course.curricula[activeTab - 1] && (
+                                                                <div
+                                                                    className="tab-content-box positioned"
+                                                                    style={{
+                                                                        position: "absolute",
+                                                                        top: "70px",
+                                                                        left: `${contentLeft}px`,
+                                                                        transform: "translateX(-50%)",
+                                                                    }}
+                                                                >
+                                                                    <h6 className="mb-3">
+                                                                        {course.curricula[activeTab - 1]?.title}
+                                                                    </h6>
 
-                                                    <div
-                                                        className="tab-content-box positioned"
-                                                        style={{
-                                                            position: "absolute",
-                                                            top: "70px",
-                                                            left: `${contentLeft}px`,
-                                                            transform: "translateX(-50%)",
-                                                        }}
-                                                    >
-                                                        <h6 className="mb-3">{currentContent.title}</h6>
-
-                                                        <ul>
-                                                            {currentContent.points.map((point, index) => (
-                                                                <li key={index}>{point}</li>
-                                                            ))}
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                                    <ul>
+                                                                        {Array.isArray(
+                                                                            course.curricula[activeTab - 1]
+                                                                                ?.descriptions
+                                                                        ) &&
+                                                                            course.curricula[
+                                                                                activeTab - 1
+                                                                            ].descriptions.map(
+                                                                                (
+                                                                                    item: {
+                                                                                        id?: number;
+                                                                                        description?: string;
+                                                                                    },
+                                                                                    index: number
+                                                                                ) => (
+                                                                                    <li
+                                                                                        key={
+                                                                                            item.id || index
+                                                                                        }
+                                                                                    >
+                                                                                        {item.description}
+                                                                                    </li>
+                                                                                )
+                                                                            )}
+                                                                    </ul>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    )}
                                             </div>
                                         </div>
                                     </div>
@@ -1711,40 +1741,38 @@ export default function CourseDetailsPage({
                                         <div className="col-lg-8">
                                             <div>
                                                 <h2 className="fw-bold text-white text-center mb-3">
-                                                    Who Can  {" "}
-                                                    <span className="text-c2">
-                                                        Benefit
-                                                    </span>{" "}
-                                                    from This {" "}
-                                                    <span className="text-c2">
-                                                        Course
-                                                    </span>
+                                                    Who Can{" "}
+                                                    <span className="text-c2">Benefit</span>{" "}
+                                                    from This{" "}
+                                                    <span className="text-c2">Course</span>
                                                 </h2>
                                             </div>
+
                                             <div className="row justify-content-center">
                                                 <div className="col-lg-10">
                                                     <div className="benefits_card_parent">
                                                         <div className="row">
-                                                            <div className="col-lg-6">
-                                                                <div>
-                                                                    <p className="text-white text-center mb-0">Complete Beginners</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div>
-                                                                    <p className="text-white text-center mb-0">Students & Working Professionals</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div>
-                                                                    <p className="text-white text-center mb-0">Aspiring Java Developers</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-lg-6">
-                                                                <div>
-                                                                    <p className="text-white text-center mb-0">Career Switchers to IT</p>
-                                                                </div>
-                                                            </div>
+                                                            {Array.isArray(course?.benefits) &&
+                                                                course.benefits.map(
+                                                                    (
+                                                                        item: {
+                                                                            id?: number;
+                                                                            description?: string;
+                                                                        },
+                                                                        index: number
+                                                                    ) => (
+                                                                        <div
+                                                                            className="col-lg-6"
+                                                                            key={item?.id || index}
+                                                                        >
+                                                                            <div>
+                                                                                <p className="text-white text-center mb-0">
+                                                                                    {item?.description}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1756,96 +1784,125 @@ export default function CourseDetailsPage({
                         </div>
 
                         {/* Reviews */}
+                        {/* Reviews */}
                         <div id="reviews" className="bg-white">
                             <div className="rc_sec_8">
                                 <div className="section_container">
                                     <div className="row">
                                         <div className="col-lg-8">
                                             <div className="py-5">
+
                                                 <h3 className="text-black fw-bold text-center">
                                                     Success Stories from{" "}
-                                                    <span className="text-c2"> Java Learners</span>{" "}
+                                                    <span className="text-c2">
+                                                        {course?.cour_language} Learners
+                                                    </span>
                                                 </h3>
+
                                                 <div className="row justify-content-center">
                                                     <div className="col-lg-10">
                                                         <div className="rc_testimonial">
+
                                                             <h5 className="fw-bold text-black text-center">
-                                                                Our Student Review
+                                                                Our Student Reviews
                                                             </h5>
 
-                                                            <Swiper
-                                                                modules={[
-                                                                    Autoplay,
-                                                                    Pagination,
-                                                                ]}
-                                                                autoplay={{
-                                                                    delay: 3500,
-                                                                    disableOnInteraction: false,
-                                                                }}
-                                                                loop={true}
-                                                                spaceBetween={30}
-                                                                slidesPerView={1}
-                                                                className="testimonial_swiper mt-4"
-                                                            >
-                                                                {/* Slide 1 */}
-                                                                <SwiperSlide>
-                                                                    <div className="rc_testimonial_card">
-                                                                        <div className="testimonial_content">
-                                                                            <p>
-                                                                                I started this Java recorded course with no coding experience at all. The concepts were
-                                                                                explained in a very clear and simple way.Learning at my own pace helped me
-                                                                                understand Python without pressure.Now I feel confident writing basic programs on my own.
-                                                                            </p>
+                                                            {Array.isArray(course?.testimonials) &&
+                                                                course.testimonials.length > 0 ? (
+                                                                <Swiper
+                                                                    modules={[Autoplay, Pagination]}
+                                                                    autoplay={{
+                                                                        delay: 3500,
+                                                                        disableOnInteraction: false,
+                                                                    }}
+                                                                    pagination={{
+                                                                        clickable: true,
+                                                                    }}
+                                                                    loop={course.testimonials.length > 1}
+                                                                    spaceBetween={30}
+                                                                    slidesPerView={1}
+                                                                    className="testimonial_swiper mt-4"
+                                                                >
+                                                                    {course.testimonials.map(
+                                                                        (
+                                                                            testimonial: {
+                                                                                id?: number;
+                                                                                name?: string;
+                                                                                content?: string;
+                                                                                rating?: string | number;
+                                                                                image?: string;
+                                                                            },
+                                                                            index: number
+                                                                        ) => {
+                                                                            const rating = Math.min(
+                                                                                5,
+                                                                                Math.max(
+                                                                                    0,
+                                                                                    Number(testimonial?.rating) || 0
+                                                                                )
+                                                                            );
 
-                                                                            <div className="student_info">
-                                                                                <Image
-                                                                                    src={`${BASE_IMAGE_URL}recorded-course/student.png`}
-                                                                                    alt=""
-                                                                                    height={300}
-                                                                                    width={300}
-                                                                                />
-                                                                                <h6>
-                                                                                    Jennifer Lopez
-                                                                                </h6>
-                                                                                <div className="stars">
-                                                                                    ★★★★★
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </SwiperSlide>
+                                                                            return (
+                                                                                <SwiperSlide
+                                                                                    key={
+                                                                                        testimonial?.id ||
+                                                                                        index
+                                                                                    }
+                                                                                >
+                                                                                    <div className="rc_testimonial_card">
+                                                                                        <div className="testimonial_content">
 
-                                                                {/* Slide 2 */}
-                                                                <SwiperSlide>
-                                                                    <div className="rc_testimonial_card">
-                                                                        <div className="testimonial_content">
-                                                                            <p>
-                                                                                I started this Java recorded course with no coding experience at all. The concepts were
-                                                                                explained in a very clear and simple way.Learning at my own pace helped me
-                                                                                understand Python without pressure.Now I feel confident writing basic programs on my own.
-                                                                            </p>
+                                                                                            <p>
+                                                                                                {testimonial?.content}
+                                                                                            </p>
 
-                                                                            <div className="student_info">
-                                                                                <Image
-                                                                                    src={`${BASE_IMAGE_URL}recorded-course/student.png`}
-                                                                                    alt=""
-                                                                                    width={300}
-                                                                                    height={300}
-                                                                                />
-                                                                                <h6>
-                                                                                    Arun Kumar
-                                                                                </h6>
-                                                                                <div className="stars">
-                                                                                    ★★★★★
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </SwiperSlide>
-                                                            </Swiper>
+                                                                                            <div className="student_info">
+
+                                                                                                <Image
+                                                                                                    src={
+                                                                                                        testimonial?.image
+                                                                                                            ? `${BASE_DYNAMIC_IMAGE_URL}testimonials/${testimonial.image}`
+                                                                                                            : `${BASE_IMAGE_URL}recorded-course/student.png`
+                                                                                                    }
+                                                                                                    alt={
+                                                                                                        testimonial?.name ||
+                                                                                                        "Student"
+                                                                                                    }
+                                                                                                    width={300}
+                                                                                                    height={300}
+                                                                                                />
+
+                                                                                                <h6>
+                                                                                                    {testimonial?.name}
+                                                                                                </h6>
+
+                                                                                                <div
+                                                                                                    className="stars"
+                                                                                                    aria-label={`${rating} out of 5 stars`}
+                                                                                                >
+                                                                                                    {"★".repeat(
+                                                                                                        rating
+                                                                                                    )}
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </SwiperSlide>
+                                                                            );
+                                                                        }
+                                                                    )}
+                                                                </Swiper>
+                                                            ) : (
+                                                                <p className="text-center text-black mt-4 mb-0">
+                                                                    No student reviews available yet.
+                                                                </p>
+                                                            )}
+
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -1931,6 +1988,7 @@ export default function CourseDetailsPage({
                         </div>
 
                         {/* Duration & Fee */}
+                        {/* Course Duration & Fee */}
                         <div id="fees" className="course_fee_section py-5">
                             <div className="section_container">
                                 <div className="row">
@@ -1940,153 +1998,468 @@ export default function CourseDetailsPage({
                                         <div className="row justify-content-center">
                                             <div className="col-lg-10 text-center mb-5">
                                                 <h3 className="text-black fw-bold text-center">
-                                                    Java Course {" "}
+                                                    {course?.cour_language} Course{" "}
                                                     <span className="text-c2">
                                                         Duration & Fee
-                                                        {" "}
                                                     </span>
                                                 </h3>
+
                                                 <p className="text-muted">
-                                                    Learn Java at your own pace with lifetime free access to all
-                                                    recorded lessons and beginner friendly tutorials. Get complete
-                                                    value with an affordable fee and a clear learning path designed
-                                                    to make you job-ready.
+                                                    {course?.course_type === "free"
+                                                        ? `Learn ${course?.cour_language} at your own pace with lifetime access to all recorded lessons and beginner-friendly tutorials. Start learning today at no cost and build practical skills through a structured learning path.`
+                                                        : `Learn ${course?.cour_language} at your own pace with lifetime access to all recorded lessons and beginner-friendly tutorials. Get complete value with an affordable fee and a clear learning path designed to make you job-ready.`}
                                                 </p>
                                             </div>
                                         </div>
+
                                         <div className="row g-4 align-items-stretch">
 
                                             {/* Left Card */}
                                             <div className="col-lg-7">
                                                 <div className="details_card h-100">
-                                                    <h4 className="fw-bold mb-4">Course Details</h4>
+
+                                                    <h4 className="fw-bold mb-4">
+                                                        Course Details
+                                                    </h4>
+
                                                     <div className="row gy-4">
+
+                                                        {/* Format */}
                                                         <div className="col-6">
                                                             <div className="course_item">
                                                                 <i className="bi bi-play-circle"></i>
+
                                                                 <div>
                                                                     <h6>Format</h6>
-                                                                    <span>Self-Paced Recorded</span>
+                                                                    <span>
+                                                                        Self-Paced Recorded
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Duration */}
                                                         <div className="col-6">
                                                             <div className="course_item">
                                                                 <i className="bi bi-clock"></i>
+
                                                                 <div>
                                                                     <h6>Duration</h6>
-                                                                    <span>Lifetime</span>
+                                                                    <span>
+                                                                        {course?.duration ||
+                                                                            "Lifetime Access"}
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Modules */}
                                                         <div className="col-6">
                                                             <div className="course_item">
                                                                 <i className="bi bi-box"></i>
+
                                                                 <div>
                                                                     <h6>Modules</h6>
-                                                                    <span>5 Modules</span>
+                                                                    <span>
+                                                                        {Array.isArray(course?.curricula)
+                                                                            ? `${course.curricula.length} Modules`
+                                                                            : "Modules"}
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Lessons */}
                                                         <div className="col-6">
                                                             <div className="course_item">
-                                                                <i className="bi bi-calendar-check"></i>
+                                                                <i className="bi bi-camera-video"></i>
+
                                                                 <div>
-                                                                    <h6>Time Commitments</h6>
-                                                                    <span>Flexible</span>
+                                                                    <h6>Lessons</h6>
+                                                                    <span>
+                                                                        {course?.recorded_content || 0} Lessons
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Certificate */}
                                                         <div className="col-6">
                                                             <div className="course_item">
                                                                 <i className="bi bi-award"></i>
+
                                                                 <div>
                                                                     <h6>Certificate</h6>
-                                                                    <span>Included</span>
+                                                                    <span>
+                                                                        {Number(course?.with_certificate) > 0
+                                                                            ? "Included"
+                                                                            : "Not Included"}
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        {/* Device Support */}
                                                         <div className="col-6">
                                                             <div className="course_item">
                                                                 <i className="bi bi-laptop"></i>
+
                                                                 <div>
                                                                     <h6>Device Support</h6>
-                                                                    <span>All Devices</span>
+                                                                    <span>
+                                                                        All Devices
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
                                             </div>
+
                                             {/* Right Card */}
                                             <div className="col-lg-5 ps-lg-0">
                                                 <div className="price_card h-100">
-                                                    <span className="offer_badge">
-                                                        Launch Offer
-                                                    </span>
-                                                    <h5 className="mt-4">Pricing</h5>
-                                                    <div className="price_box">
-                                                        <h2>₹7,500</h2>
-                                                        <del>₹15,000</del>
-                                                    </div>
-                                                    <span className="discount">Save 50%</span>
-                                                    <span className="text-muted small">
-                                                        Limited time offer!
-                                                    </span>
-                                                    <div className="price_info">
-                                                        <div className="row">
-                                                            <div className="col-5">
-                                                                <span>EMI Starts at</span>
+
+                                                    {course?.course_type === "free" ? (
+
+                                                        /* ================= FREE COURSE ================= */
+                                                        <>
+                                                            <span className="offer_badge">
+                                                                Free Course
+                                                            </span>
+
+                                                            <h5 className="mt-4">
+                                                                Start Learning
+                                                            </h5>
+
+                                                            <div className="price_box">
+                                                                <h2>FREE</h2>
+
+                                                                {Number(course?.mrp_price) > 0 && (
+                                                                    <del>
+                                                                        ₹
+                                                                        {Number(
+                                                                            course.mrp_price
+                                                                        ).toLocaleString("en-IN")}
+                                                                    </del>
+                                                                )}
                                                             </div>
-                                                            <div className="col-7">
-                                                                <strong>₹2,025/mo</strong>
+
+                                                            <span className="discount">
+                                                                100% Free
+                                                            </span>
+
+                                                            <span className="text-muted small">
+                                                                Learn anytime, anywhere!
+                                                            </span>
+
+                                                            <div className="price_info">
+
+                                                                {/* Access */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>Access</span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            Lifetime
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Lessons */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>Lessons</span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            {course?.recorded_content || 0}
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Certificate */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>Certificate</span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            {Number(
+                                                                                course?.with_certificate
+                                                                            ) > 0
+                                                                                ? "Included"
+                                                                                : "Not Included"}
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-5">
-                                                                <span>Access</span>
+
+                                                            <button className="btn enroll_btn w-100 mt-4">
+                                                                Start Learning →
+                                                            </button>
+
+                                                            <p className="secure_text mt-3">
+                                                                <i className="bi bi-check-circle-fill text-muted pe-2"></i>
+                                                                No Payment Required
+                                                            </p>
+                                                        </>
+
+                                                    ) : (
+
+                                                        /* ================= PAID COURSE ================= */
+                                                        <>
+                                                            <span className="offer_badge">
+                                                                Launch Offer
+                                                            </span>
+
+                                                            <h5 className="mt-4">
+                                                                Pricing
+                                                            </h5>
+
+                                                            <div className="price_box">
+
+                                                                <h2>
+                                                                    ₹
+                                                                    {Number(
+                                                                        course?.offer_price ||
+                                                                        course?.buy_price ||
+                                                                        0
+                                                                    ).toLocaleString("en-IN")}
+                                                                </h2>
+
+                                                                {Number(course?.mrp_price) > 0 && (
+                                                                    <del>
+                                                                        ₹
+                                                                        {Number(
+                                                                            course.mrp_price
+                                                                        ).toLocaleString("en-IN")}
+                                                                    </del>
+                                                                )}
+
                                                             </div>
-                                                            <div className="col-7">
-                                                                <strong>Lifetime</strong>
+
+                                                            {/* Discount */}
+                                                            {Number(course?.mrp_price) > 0 &&
+                                                                Number(course?.offer_price) > 0 && (
+                                                                    <span className="discount">
+                                                                        Save{" "}
+                                                                        {Math.round(
+                                                                            ((Number(course.mrp_price) -
+                                                                                Number(
+                                                                                    course.offer_price
+                                                                                )) /
+                                                                                Number(
+                                                                                    course.mrp_price
+                                                                                )) *
+                                                                            100
+                                                                        )}
+                                                                        %
+                                                                    </span>
+                                                                )}
+
+                                                            <span className="text-muted small">
+                                                                Limited time offer!
+                                                            </span>
+
+                                                            <div className="price_info">
+
+                                                                {/* Regular Price */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>
+                                                                            Regular Price
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            ₹
+                                                                            {Number(
+                                                                                course?.buy_price || 0
+                                                                            ).toLocaleString("en-IN")}
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Access */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>
+                                                                            Access
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            Lifetime
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Payment */}
+                                                                <div className="row">
+                                                                    <div className="col-5">
+                                                                        <span>
+                                                                            Payment
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div className="col-7">
+                                                                        <strong>
+                                                                            UPI, Cards, Net Banking
+                                                                        </strong>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-5">
-                                                                <span>Payment</span>
-                                                            </div>
-                                                            <div className="col-7">
-                                                                <strong>UPI, Cards, Net Banking</strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button className="btn enroll_btn w-100 mt-4">
-                                                        Enroll Now →
-                                                    </button>
-                                                    <p className="secure_text mt-3">
-                                                        <i className="bi bi-lock-fill text-muted pe-2"></i>
-                                                        Secure & Safe Payments
-                                                    </p>
+
+                                                            <button className="btn enroll_btn w-100 mt-4">
+                                                                Enroll Now →
+                                                            </button>
+
+                                                            <p className="secure_text mt-3">
+                                                                <i className="bi bi-lock-fill text-muted pe-2"></i>
+                                                                Secure & Safe Payments
+                                                            </p>
+                                                        </>
+                                                    )}
+
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         {/* faq */}
+                        <div className="faq_section pb-5" id="faq">
+                            <div className="section_container">
+                                <div className="row">
+                                    <div className="col-lg-8">
+
+                                        {/* Heading */}
+                                        <div className="row justify-content-center">
+                                            <h3 className="section_base_heading text-center">
+                                                Frequently Asked{" "}
+                                                <span className="text-c2">
+                                                    Questions
+                                                </span>
+                                            </h3>
+
+                                            <div className="row mt-5 justify-content-center align-items-center">
+                                                <div className="col-lg-12 text-start">
+
+                                                    {Array.isArray(course?.faqs) &&
+                                                        course.faqs.length > 0 ? (
+                                                        course.faqs.map(
+                                                            (
+                                                                item: FAQ,
+                                                                index: number
+                                                            ) => (
+                                                                <div
+                                                                    key={item.id || index}
+                                                                    className={`faq_item mb-3 ${activeFaqIndex === index
+                                                                        ? "active"
+                                                                        : ""
+                                                                        }`}
+                                                                >
+                                                                    <button
+                                                                        type="button"
+                                                                        className={`faq_question justify-content-between ${activeFaqIndex === index
+                                                                            ? "active"
+                                                                            : ""
+                                                                            }`}
+                                                                        onClick={() =>
+                                                                            toggleFaq(index)
+                                                                        }
+                                                                    >
+                                                                        <span>
+                                                                            {item.question}
+                                                                        </span>
+
+                                                                        <span className="icon">
+                                                                            {activeFaqIndex !==
+                                                                                index && (
+                                                                                    <Image
+                                                                                        src="/images/icons/faq-icon.png"
+                                                                                        alt="toggle"
+                                                                                        height={35}
+                                                                                        width={35}
+                                                                                        className="faq_toggle_icon"
+                                                                                    />
+                                                                                )}
+                                                                        </span>
+                                                                    </button>
+
+                                                                    {activeFaqIndex === index && (
+                                                                        <div className="faq_answer">
+                                                                            {item.answer}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            )
+                                                        )
+                                                    ) : (
+                                                        <p className="text-center text-muted">
+                                                            No frequently asked questions
+                                                            available.
+                                                        </p>
+                                                    )}
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <section id="rc-cta" className="rc_cta py-5">
                     <div>
                         <div className="section_container">
                             <div className="row justify-content-center">
-                                <h3 className="text-white text-center">Learn Java and Start Your Journey Today</h3>
+
+                                <h3 className="text-white text-center">
+                                    {course?.end_card_title ||
+                                        `Learn ${course?.cour_language} and Start Your Journey Today`}
+                                </h3>
+
                                 <p className="text-white text-center mt-2">
-                                    Enroll in our  free Java online course today and step confidently into your career as a Java developer.
+                                    {course?.end_card_description ||
+                                        `Enroll in our ${course?.cour_language} online course today and step confidently into your career.`}
                                 </p>
+
                                 <div className="d-flex justify-content-center gap-3 mt-4">
-                                    <button className="rc-cta-1">Enroll Now</button>
-                                    <button className="rc-cta-2">Download Syllabus</button>
+
+                                    {/* Enroll / Start Learning */}
+                                    <button className="rc-cta-1">
+                                        {course?.course_type === "free"
+                                            ? "Start Learning"
+                                            : "Enroll Now"}
+                                    </button>
+
+                                    {/* Download Syllabus */}
+                                    {course?.syllabus_pdf && (
+                                        <a
+                                            href={`${BASE_IMAGE_URL}${course.syllabus_pdf}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="rc-cta-2"
+                                        >
+                                            Download Syllabus
+                                        </a>
+                                    )}
+
                                 </div>
                             </div>
                         </div>

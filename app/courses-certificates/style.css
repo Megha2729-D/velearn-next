@@ -1,0 +1,531 @@
+.certificates_page {
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.certificate_card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.certificate_card:hover {
+    transform: translateY(-5px);
+}
+
+.cert_card_icon {
+    font-size: 3rem;
+    color: #22346b;
+}
+
+.cert_card_content h5 {
+    margin: 0;
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.view_cert_btn {
+    background: #22346b;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.view_cert_btn:hover {
+    background: #24b8ec;
+}
+
+.download_btn {
+    background: linear-gradient(135deg, #22346b 0%, #1a2a56 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 20px rgba(34, 52, 107, 0.2);
+    cursor: pointer;
+}
+
+.download_btn:hover {
+    background: linear-gradient(135deg, #24b8ec 0%, #1a8fb8 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(36, 184, 236, 0.3);
+    color: white;
+}
+
+/* Modal */
+.cert_modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.cert_modal_content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 950px;
+    /* Reduced for better display */
+    width: 95%;
+    position: relative;
+    max-height: 90vh;
+    margin: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cert_modal_close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #eee;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 100;
+}
+
+.cert_modal_close:hover {
+    background: #ff4d4d;
+    color: white;
+}
+
+/* Certificate Template - Ultra Premium Academy Version */
+.certificate_template_wrapper {
+    background: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    /* Allow horizontal scroll on very small screens */
+}
+
+@media (max-width: 1024px) {
+    .certificate_main {
+        transform: scale(0.8);
+        margin: -50px 0;
+        /* Compensation for scale */
+    }
+}
+
+@media (max-width: 768px) {
+    .certificate_main {
+        transform: scale(0.6);
+        margin: -100px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .certificate_main {
+        transform: scale(0.35);
+        margin: -200px 0;
+    }
+}
+
+.certificate_main {
+    width: 980px;
+    /* Slightly wider for better content distribution */
+    height: 660px;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cert_outer_frame {
+    border: 1px solid #c5a059;
+    padding: 6px;
+    height: 100%;
+    position: relative;
+    background: #fff;
+}
+
+.cert_academic_border {
+    border: 15px solid #22346b;
+    height: 100%;
+    padding: 8px;
+    position: relative;
+}
+
+.cert_inner_border {
+    border: 2px double #c5a059;
+    height: 100%;
+    padding: 20px 60px;
+    /* Increased right/left padding */
+    position: relative;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+        url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+}
+
+/* Corner Accents */
+.cert_inner_border::before,
+.cert_inner_border::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    z-index: 5;
+}
+
+.cert_inner_border::before {
+    top: 10px;
+    left: 10px;
+    border-top: 4px solid #c5a059;
+    border-left: 4px solid #c5a059;
+}
+
+.cert_inner_border::after {
+    bottom: 10px;
+    right: 10px;
+    border-bottom: 4px solid #c5a059;
+    border-right: 4px solid #c5a059;
+}
+
+.verified_ribbon {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    /* Moved inside to prevent cutting */
+    background: linear-gradient(135deg, #22346b 0%, #24b8ec 100%);
+    color: white;
+    padding: 6px 30px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    clip-path: polygon(0% 0%, 100% 0%, 92% 50%, 100% 100%, 0% 100%);
+    z-index: 10;
+    letter-spacing: 2px;
+}
+
+.cert_header_row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.cert_logo_img {
+    height: 60px;
+}
+
+.cert_content_body {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 5px;
+}
+
+.cert_main_title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #22346b;
+    letter-spacing: 4px;
+    margin: 0;
+    line-height: 1;
+}
+
+.cert_divider_ornate {
+    width: 300px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c5a059, transparent);
+    margin: 10px auto 20px;
+    position: relative;
+}
+
+.cert_divider_ornate::after {
+    content: '◈';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 0 12px;
+    color: #c5a059;
+    font-size: 1rem;
+}
+
+.cert_intro_text {
+    font-size: 0.95rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.cert_user_name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d4af37;
+    display: inline-block;
+    padding: 0 25px 5px;
+}
+
+.cert_completion_text {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.cert_course_title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #22346b;
+    margin-bottom: 10px;
+    max-width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cert_gold_seal {
+    position: relative;
+    margin: 5px auto 10px;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(#f9d976, #b8860b);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(184, 134, 11, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.cert_gold_seal::before {
+    content: '';
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    border: 2px dashed #b8860b;
+    border-radius: 50%;
+    animation: rotate 25s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.seal_inner {
+    border: 2px solid white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.cert_footer_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.cert_footer_left {
+    text-align: left;
+    border-left: 3px solid #22346b;
+    padding-left: 15px;
+}
+
+.cert_footer_right {
+    text-align: center;
+}
+
+.cert_meta_info {
+    font-size: 0.85rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.cert_meta_info strong {
+    color: #22346b;
+}
+
+.cert_signature_area {
+    width: 250px;
+}
+
+.cert_signature_img {
+    height: 50px;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.cert_signature_line {
+    border-top: 2px solid #333;
+    padding-top: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.cert_signature_role {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.cert_watermark_svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.05;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMjM0NmIiIGZpbGwtb3BhY2l0eT0iMC40Ij48cGF0aCBkPSJNMCAwaDEwdjEwaC0xMFpNMTAgMTBoMTB2MTBoLTEwa1pNMjAgMjBoMTB2MTBoLTEwa1pNMzAgMzBoMTB2MTBoLTEwa1pNMTAgMGgxMHYxMGgtMTBaTTIwIDEwaDEwdjEwaC0xMFpNMzAgMjBoMTB2MTBoLTEwa1pNMDAgMTBoMTB2MTBoLTEwa1pNMTAgMjBoMTB2MTBoLTEwa1pNMjAgMzBoMTB2MTBoLTEwa1pNMCAyMGgxMHYxMGgtMTBaTTEwIDMwaDEwdjEwaC0xMFpNMCAzMGgxMHYxMGgtMTBaTTIwIDBoMTB2MTBoLTEwa1pNMzAgMTBoMTB2MTBoLTEwa1pNMzAgMGgxMHYxMGgtMTBaIi8+PC9nPjwvZz48L3N2Zz4=');
+}
+
+.cert_footer_note {
+    font-size: 0.65rem;
+    color: #999;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+/* TOTAL ISOLATION PRINT ENGINE - THE ONLY STABLE SOLUTION */
+@media print {
+
+    /* 1. Reset Page and Landscape Orientation */
+    @page {
+        size: A4 landscape;
+        margin: 0;
+    }
+
+    /* 2. COMPLETELY HIDE EVERYTHING on the page by default */
+    html,
+    body,
+    #root,
+    .certificates_page {
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        background: white !important;
+    }
+
+    /* 3. Using visibility toggle to isolate only the target */
+    body * {
+        visibility: hidden !important;
+        display: none !important;
+    }
+
+    /* 4. Restore only the modal for printing */
+    .cert_modal_overlay,
+    .cert_modal_overlay *,
+    .cert_modal_content,
+    .cert_modal_content *,
+    .certificate_template_wrapper,
+    .certificate_template_wrapper *,
+    .certificate_main,
+    .certificate_main * {
+        visibility: visible !important;
+        display: flex !important;
+        opacity: 1 !important;
+    }
+
+    /* 5. Force the modal overlay to be the only thing in the print viewport */
+    .cert_modal_overlay {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: white !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        z-index: 10000000 !important;
+    }
+
+    /* 6. Strip modal artifacts */
+    .cert_modal_content {
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+    }
+
+    /* 7. Hide UI specific items */
+    .cert_modal_actions,
+    .cert_modal_close {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* 8. Align Certificate perfectly on the A4 page */
+    .certificate_template_wrapper {
+        padding: 0 !important;
+        flex: 1 !important;
+    }
+
+    .certificate_main {
+        width: 1000px !important;
+        min-height: 700px !important;
+        margin: 0 auto !important;
+        transform: scale(0.9) !important;
+        /* Professional margins */
+        transform-origin: center center !important;
+    }
+
+    /* 9. Preserve High Quality Icons & Seal */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
