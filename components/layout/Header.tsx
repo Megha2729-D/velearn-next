@@ -56,9 +56,9 @@ const LIVE_COURSE_ROUTES: Record<string, string> = {
 };
 
 const COURSE_LIST_ROUTES = {
-    paid: "/courses?type=paid",
-    combo: "/courses?type=combo",
-    free: "/courses?type=free",
+    paid: "/recorded-course#paid",
+    combo: "/recorded-course#combo",
+    free: "/recorded-course#free",
 };
 
 type MenuKey =
