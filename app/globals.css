@@ -295,10 +295,19 @@ img {
 }
 
 .v-navbar.navbar_two {
+  background: transparent;
   position: fixed;
   z-index: 99;
   width: 100%;
-  top: 15px;
+  top: 35px;
+}
+
+.main-menu>li>.menu-button {
+  color: #000000;
+}
+
+.v-navbar.navbar_two .main-menu>li>.menu-button {
+  color: #ffffff;
 }
 
 .v-navbar.navbar_two .navbar_links {
@@ -334,7 +343,23 @@ img {
   background: #000000;
 }
 
+@media screen and (min-width: 992px) {
+
+  .v-navbar.navbar_two .logo-section img {
+    filter: brightness(0) invert(1);
+  }
+
+  .v-navbar.navbar_two .user-dropdown .avatar-icon::after {
+    color: #ffffff;
+  }
+
+  .fixed-nav.navbar_two {
+    background: #000000;
+  }
+}
+
 @media screen and (max-width: 991px) {
+
   .v-navbar.navbar_two .nav-elements {
     background-color: #000000;
     border: 10.5px solid #ffffff;

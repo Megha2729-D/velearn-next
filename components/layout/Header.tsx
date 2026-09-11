@@ -258,7 +258,7 @@ export default function Header() {
 
     useEffect(() => {
         const onScroll = () => {
-            setScrolled(window.scrollY > 20);
+            setScrolled(window.scrollY > 50);
         };
 
         window.addEventListener(
@@ -477,7 +477,8 @@ export default function Header() {
                 </p>
             </div>
 
-            <header className="kmbf-header v-navbar">
+            <header className={`kmbf-header v-navbar ${scrolled ? "fixed-nav" : ""
+                } ${isNavbarTwo ? "navbar_two" : ""}`}>
 
                 {/* =================================================
                     DESKTOP HEADER
@@ -491,11 +492,7 @@ export default function Header() {
                         <Link href="/">
                             <div className="logo-section">
                                 <Image
-                                    src={
-                                        isNavbarTwo
-                                            ? "/images/logo-white.png"
-                                            : "/images/velearn-logo.png"
-                                    }
+                                    src={"/images/velearn-logo.png"}
                                     alt="Velearn Logo"
                                     height={100}
                                     width={220}
@@ -535,9 +532,9 @@ export default function Header() {
                                             )
                                         }
                                         className={`menu-button ${openMenu ===
-                                                "investors"
-                                                ? "active"
-                                                : ""
+                                            "investors"
+                                            ? "active"
+                                            : ""
                                             }`}
                                     >
                                         Self Paced
@@ -765,9 +762,9 @@ export default function Header() {
                                             )
                                         }
                                         className={`menu-button ${openMenu ===
-                                                "company"
-                                                ? "active"
-                                                : ""
+                                            "company"
+                                            ? "active"
+                                            : ""
                                             }`}
                                     >
                                         Live Courses
@@ -832,9 +829,9 @@ export default function Header() {
                                             )
                                         }
                                         className={`menu-button ${openMenu ===
-                                                "care"
-                                                ? "active"
-                                                : ""
+                                            "care"
+                                            ? "active"
+                                            : ""
                                             }`}
                                     >
                                         Resources
@@ -1028,8 +1025,8 @@ export default function Header() {
 
                                             <div
                                                 className={`avatar-icon ${userDropdownOpen
-                                                        ? "active"
-                                                        : ""
+                                                    ? "active"
+                                                    : ""
                                                     }`}
                                                 onClick={() =>
                                                     setUserDropdownOpen(
@@ -1145,11 +1142,7 @@ export default function Header() {
 
                     <div className="logo d-flex align-items-center justify-content-center">
                         <Image
-                            src={
-                                isNavbarTwo
-                                    ? "/images/logo-white.png"
-                                    : "/images/velearn-logo.png"
-                            }
+                            src={"/images/velearn-logo.png"}
                             alt="Velearn Logo"
                             height={100}
                             width={220}
@@ -1177,8 +1170,8 @@ export default function Header() {
 
                                     <div
                                         className={`avatar-icon ${userDropdownOpen
-                                                ? "active"
-                                                : ""
+                                            ? "active"
+                                            : ""
                                             }`}
                                         onClick={() =>
                                             setUserDropdownOpen(
@@ -1287,8 +1280,8 @@ export default function Header() {
 
                 <aside
                     className={`mobile-sidebar ${mobileOpen
-                            ? "mobile-sidebar-open"
-                            : ""
+                        ? "mobile-sidebar-open"
+                        : ""
                         }`}
                 >
 
