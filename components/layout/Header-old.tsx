@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import "./Styles/Header.css"
+import "./Styles/header-old.css"
 
 // const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_API_URL = "https://crm.velearn.in/api/";

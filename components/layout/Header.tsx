@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import "./Styles/header-new.css";
+import "./Styles/Header.css";
 
 // const BASE_API_URL = "http://localhost:5000/api/";
 const BASE_API_URL = "https://crm.velearn.in/api/";
@@ -164,8 +164,8 @@ export default function Header() {
                     {
                         headers: token
                             ? {
-                                  Authorization: `Bearer ${token}`,
-                              }
+                                Authorization: `Bearer ${token}`,
+                            }
                             : {},
                     }
                 );
@@ -394,7 +394,7 @@ export default function Header() {
                     type: "live",
                     route:
                         LIVE_COURSE_ROUTES[
-                            title
+                        title
                         ],
                 }));
 
@@ -432,11 +432,11 @@ export default function Header() {
 
     const isNavbarTwo =
         pathname ===
-            "/live-course/digital-marketing" ||
+        "/live-course/digital-marketing" ||
         pathname ===
-            "/live-course/data-analytics" ||
+        "/live-course/data-analytics" ||
         pathname ===
-            "/live-course/data-science-and-machine-learning";
+        "/live-course/data-science-and-machine-learning";
 
     /* =========================================================
        SEARCH RESULT LINK
@@ -534,12 +534,11 @@ export default function Header() {
                                                 "investors"
                                             )
                                         }
-                                        className={`menu-button ${
-                                            openMenu ===
-                                            "investors"
+                                        className={`menu-button ${openMenu ===
+                                                "investors"
                                                 ? "active"
                                                 : ""
-                                        }`}
+                                            }`}
                                     >
                                         Self Paced
                                         Courses
@@ -564,7 +563,7 @@ export default function Header() {
                                             <ul className="nested-submenu">
 
                                                 {paidCourses.length >
-                                                0 ? (
+                                                    0 ? (
                                                     paidCourses.map(
                                                         (
                                                             course
@@ -627,7 +626,7 @@ export default function Header() {
                                             <ul className="nested-submenu">
 
                                                 {comboCourses.length >
-                                                0 ? (
+                                                    0 ? (
                                                     comboCourses.map(
                                                         (
                                                             course
@@ -690,7 +689,7 @@ export default function Header() {
                                             <ul className="nested-submenu">
 
                                                 {freeCourses.length >
-                                                0 ? (
+                                                    0 ? (
                                                     freeCourses.map(
                                                         (
                                                             course
@@ -765,12 +764,11 @@ export default function Header() {
                                                 "company"
                                             )
                                         }
-                                        className={`menu-button ${
-                                            openMenu ===
-                                            "company"
+                                        className={`menu-button ${openMenu ===
+                                                "company"
                                                 ? "active"
                                                 : ""
-                                        }`}
+                                            }`}
                                     >
                                         Live Courses
 
@@ -833,12 +831,11 @@ export default function Header() {
                                                 "care"
                                             )
                                         }
-                                        className={`menu-button ${
-                                            openMenu ===
-                                            "care"
+                                        className={`menu-button ${openMenu ===
+                                                "care"
                                                 ? "active"
                                                 : ""
-                                        }`}
+                                            }`}
                                     >
                                         Resources
 
@@ -947,7 +944,7 @@ export default function Header() {
                                                 <div className="blog_search_results_box">
 
                                                     {searchResults.length >
-                                                    0 ? (
+                                                        0 ? (
                                                         searchResults.map(
                                                             (
                                                                 item
@@ -1015,14 +1012,14 @@ export default function Header() {
                                             }
                                             onMouseEnter={() =>
                                                 window.innerWidth >
-                                                    500 &&
+                                                500 &&
                                                 setUserDropdownOpen(
                                                     true
                                                 )
                                             }
                                             onMouseLeave={() =>
                                                 window.innerWidth >
-                                                    500 &&
+                                                500 &&
                                                 setUserDropdownOpen(
                                                     false
                                                 )
@@ -1030,11 +1027,10 @@ export default function Header() {
                                         >
 
                                             <div
-                                                className={`avatar-icon ${
-                                                    userDropdownOpen
+                                                className={`avatar-icon ${userDropdownOpen
                                                         ? "active"
                                                         : ""
-                                                }`}
+                                                    }`}
                                                 onClick={() =>
                                                     setUserDropdownOpen(
                                                         !userDropdownOpen
@@ -1180,11 +1176,10 @@ export default function Header() {
                                 >
 
                                     <div
-                                        className={`avatar-icon ${
-                                            userDropdownOpen
+                                        className={`avatar-icon ${userDropdownOpen
                                                 ? "active"
                                                 : ""
-                                        }`}
+                                            }`}
                                         onClick={() =>
                                             setUserDropdownOpen(
                                                 !userDropdownOpen
@@ -1291,11 +1286,10 @@ export default function Header() {
                 ================================================= */}
 
                 <aside
-                    className={`mobile-sidebar ${
-                        mobileOpen
+                    className={`mobile-sidebar ${mobileOpen
                             ? "mobile-sidebar-open"
                             : ""
-                    }`}
+                        }`}
                 >
 
                     {/* SIDEBAR HEADER */}
@@ -1410,63 +1404,63 @@ export default function Header() {
 
                     {mobileMenu ===
                         "self-paced-courses" && (
-                        <MobileSubMenu
-                            title="Self-Paced Courses"
-                            onBack={
-                                closeMobileMenu
-                            }
-                        >
+                            <MobileSubMenu
+                                title="Self-Paced Courses"
+                                onBack={
+                                    closeMobileMenu
+                                }
+                            >
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "paid-courses"
-                                        )
-                                    }
-                                >
-                                    Paid Courses
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            openMobileMenu(
+                                                "paid-courses"
+                                            )
+                                        }
+                                    >
+                                        Paid Courses
+                                        <span>
+                                            ›
+                                        </span>
+                                    </button>
+                                </li>
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "paid-combo"
-                                        )
-                                    }
-                                >
-                                    Paid Combo
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            openMobileMenu(
+                                                "paid-combo"
+                                            )
+                                        }
+                                    >
+                                        Paid Combo
+                                        <span>
+                                            ›
+                                        </span>
+                                    </button>
+                                </li>
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "free-courses"
-                                        )
-                                    }
-                                >
-                                    Free Courses
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            openMobileMenu(
+                                                "free-courses"
+                                            )
+                                        }
+                                    >
+                                        Free Courses
+                                        <span>
+                                            ›
+                                        </span>
+                                    </button>
+                                </li>
 
-                        </MobileSubMenu>
-                    )}
+                            </MobileSubMenu>
+                        )}
 
                     {/* =================================================
                         PAID COURSES
@@ -1474,25 +1468,25 @@ export default function Header() {
 
                     {mobileMenu ===
                         "paid-courses" && (
-                        <MobileCourseMenu
-                            title="Paid Courses"
-                            courses={
-                                paidCourses
-                            }
-                            viewAllHref={
-                                COURSE_LIST_ROUTES.paid
-                            }
-                            viewAllText="View All Paid"
-                            onBack={() =>
-                                openMobileMenu(
-                                    "self-paced-courses"
-                                )
-                            }
-                            onClose={
-                                closeAllMobile
-                            }
-                        />
-                    )}
+                            <MobileCourseMenu
+                                title="Paid Courses"
+                                courses={
+                                    paidCourses
+                                }
+                                viewAllHref={
+                                    COURSE_LIST_ROUTES.paid
+                                }
+                                viewAllText="View All Paid"
+                                onBack={() =>
+                                    openMobileMenu(
+                                        "self-paced-courses"
+                                    )
+                                }
+                                onClose={
+                                    closeAllMobile
+                                }
+                            />
+                        )}
 
                     {/* =================================================
                         PAID COMBO
@@ -1500,25 +1494,25 @@ export default function Header() {
 
                     {mobileMenu ===
                         "paid-combo" && (
-                        <MobileCourseMenu
-                            title="Paid Combo"
-                            courses={
-                                comboCourses
-                            }
-                            viewAllHref={
-                                COURSE_LIST_ROUTES.combo
-                            }
-                            viewAllText="View All Combo"
-                            onBack={() =>
-                                openMobileMenu(
-                                    "self-paced-courses"
-                                )
-                            }
-                            onClose={
-                                closeAllMobile
-                            }
-                        />
-                    )}
+                            <MobileCourseMenu
+                                title="Paid Combo"
+                                courses={
+                                    comboCourses
+                                }
+                                viewAllHref={
+                                    COURSE_LIST_ROUTES.combo
+                                }
+                                viewAllText="View All Combo"
+                                onBack={() =>
+                                    openMobileMenu(
+                                        "self-paced-courses"
+                                    )
+                                }
+                                onClose={
+                                    closeAllMobile
+                                }
+                            />
+                        )}
 
                     {/* =================================================
                         FREE COURSES
@@ -1526,25 +1520,25 @@ export default function Header() {
 
                     {mobileMenu ===
                         "free-courses" && (
-                        <MobileCourseMenu
-                            title="Free Courses"
-                            courses={
-                                freeCourses
-                            }
-                            viewAllHref={
-                                COURSE_LIST_ROUTES.free
-                            }
-                            viewAllText="View All Free"
-                            onBack={() =>
-                                openMobileMenu(
-                                    "self-paced-courses"
-                                )
-                            }
-                            onClose={
-                                closeAllMobile
-                            }
-                        />
-                    )}
+                            <MobileCourseMenu
+                                title="Free Courses"
+                                courses={
+                                    freeCourses
+                                }
+                                viewAllHref={
+                                    COURSE_LIST_ROUTES.free
+                                }
+                                viewAllText="View All Free"
+                                onBack={() =>
+                                    openMobileMenu(
+                                        "self-paced-courses"
+                                    )
+                                }
+                                onClose={
+                                    closeAllMobile
+                                }
+                            />
+                        )}
 
                     {/* =================================================
                         LIVE COURSES
@@ -1552,39 +1546,39 @@ export default function Header() {
 
                     {mobileMenu ===
                         "live-courses" && (
-                        <MobileSubMenu
-                            title="Live Courses"
-                            onBack={
-                                closeMobileMenu
-                            }
-                        >
+                            <MobileSubMenu
+                                title="Live Courses"
+                                onBack={
+                                    closeMobileMenu
+                                }
+                            >
 
-                            {Object.entries(
-                                LIVE_COURSE_ROUTES
-                            ).map(
-                                ([
-                                    title,
-                                    route,
-                                ]) => (
-                                    <MobileLink
-                                        key={
-                                            title
-                                        }
-                                        href={
-                                            route
-                                        }
-                                        text={
-                                            title
-                                        }
-                                        onClick={
-                                            closeAllMobile
-                                        }
-                                    />
-                                )
-                            )}
+                                {Object.entries(
+                                    LIVE_COURSE_ROUTES
+                                ).map(
+                                    ([
+                                        title,
+                                        route,
+                                    ]) => (
+                                        <MobileLink
+                                            key={
+                                                title
+                                            }
+                                            href={
+                                                route
+                                            }
+                                            text={
+                                                title
+                                            }
+                                            onClick={
+                                                closeAllMobile
+                                            }
+                                        />
+                                    )
+                                )}
 
-                        </MobileSubMenu>
-                    )}
+                            </MobileSubMenu>
+                        )}
 
                     {/* =================================================
                         RESOURCES
@@ -1592,47 +1586,47 @@ export default function Header() {
 
                     {mobileMenu ===
                         "resources" && (
-                        <MobileSubMenu
-                            title="Resources"
-                            onBack={
-                                closeMobileMenu
-                            }
-                        >
-
-                            <MobileLink
-                                href="/webinar"
-                                text="Webinars"
-                                onClick={
-                                    closeAllMobile
+                            <MobileSubMenu
+                                title="Resources"
+                                onBack={
+                                    closeMobileMenu
                                 }
-                            />
+                            >
 
-                            <MobileLink
-                                href="/refer-and-earn"
-                                text="Referral"
-                                onClick={
-                                    closeAllMobile
-                                }
-                            />
+                                <MobileLink
+                                    href="/webinar"
+                                    text="Webinars"
+                                    onClick={
+                                        closeAllMobile
+                                    }
+                                />
 
-                            <MobileLink
-                                href="/blogs"
-                                text="Blog"
-                                onClick={
-                                    closeAllMobile
-                                }
-                            />
+                                <MobileLink
+                                    href="/refer-and-earn"
+                                    text="Referral"
+                                    onClick={
+                                        closeAllMobile
+                                    }
+                                />
 
-                            <MobileLink
-                                href="/faq"
-                                text="FAQ"
-                                onClick={
-                                    closeAllMobile
-                                }
-                            />
+                                <MobileLink
+                                    href="/blogs"
+                                    text="Blog"
+                                    onClick={
+                                        closeAllMobile
+                                    }
+                                />
 
-                        </MobileSubMenu>
-                    )}
+                                <MobileLink
+                                    href="/faq"
+                                    text="FAQ"
+                                    onClick={
+                                        closeAllMobile
+                                    }
+                                />
+
+                            </MobileSubMenu>
+                        )}
 
                 </aside>
             </header>
