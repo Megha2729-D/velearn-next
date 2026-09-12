@@ -2,7 +2,7 @@
    KMBF HEADER
 ========================================================= */
 
-.kmbf-header {
+.velearn-header {
     width: 100%;
     background: #fff;
     position: relative;
@@ -349,7 +349,9 @@
     /* Sidebar */
 
     .mobile-sidebar {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         position: fixed;
         top: 0;
         left: 0;
@@ -372,6 +374,7 @@
         min-height: 90px;
         padding: 12px 15px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
         gap: 10px;
         /* background: var(--c1); */
@@ -506,7 +509,7 @@
         background: #192853 !important;
         color: #fff !important;
         font-size: 16px !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         justify-content: flex-start !important;
         gap: 10px;
         position: relative;
@@ -1112,4 +1115,484 @@
 .mobile-submenu-page button:active,
 .mobile-inner-page button:active {
     transform: translateX(3px);
+}
+
+
+.app_img div {
+    background-color: #000;
+    width: fit-content;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app_img div.one {
+    width: 115px;
+}
+
+.app_img div.two {
+    width: fit-content;
+}
+
+.app_img div a {
+    font-size: 15px;
+    color: #ffffff;
+}
+
+.app_img img {
+    width: 100%;
+    height: auto;
+}
+
+.mbl_app_link {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #000000;
+}
+
+.hamburger-title {
+    color: #000000;
+    font-size: 25px;
+    margin-bottom: 20px;
+    /* position: relative;
+    z-index: 1; */
+}
+
+.mobile-main-menu li {
+    display: flex;
+    padding-left: 10px;
+}
+
+.mbl_nav_icon {
+    background-color: #ddf2fe;
+    color: var(--c1);
+    height: 40px;
+    width: 40px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+/* =================================================
+   QUICK LINKS
+================================================= */
+
+.mobile-quick-links {
+    margin: 10px 20px 0;
+    padding-top: 15px;
+    border-top: 1px solid #e7e7e7;
+}
+
+.mobile-section-title {
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+
+    color: #687792;
+}
+
+.mobile-quick-link {
+    min-height: 43px;
+
+    padding: 7px 5px 7px 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: #192853;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    border-bottom: 1px solid #f1f3f6;
+}
+
+.mobile-quick-link:last-child {
+    border-bottom: 0;
+}
+
+.mobile-quick-link>span {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-quick-link>span i {
+    color: var(--c1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.mobile-quick-link>i {
+    font-size: 12px;
+    color: #192853;
+}
+
+
+/* =================================================
+   LEARNING CTA
+================================================= */
+
+.mobile-learning-card {
+    margin: 18px 20px;
+
+    padding: 17px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(135deg,
+            #eefaff 0%,
+            #f5fbfe 100%);
+
+    border: 1px solid #d9f0f8;
+}
+
+.mobile-learning-icon {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #dff5fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #21b1e3;
+
+    font-size: 25px;
+}
+
+.mobile-learning-content {
+    flex: 1;
+}
+
+.mobile-learning-content h4 {
+    margin: 0 0 4px;
+
+    font-size: 15px;
+    line-height: 1.25;
+
+    color: #192853;
+}
+
+.mobile-learning-content p {
+    margin: 0 0 10px;
+
+    font-size: 11px;
+    line-height: 1.45;
+
+    color: #687792;
+}
+
+.mobile-learning-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    border-radius: 30px;
+
+    background: #21b1e3;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.mobile-learning-btn i {
+    font-size: 12px;
+}
+
+
+/* =================================================
+   FOOTER
+================================================= */
+
+.mobile-sidebar-footer {
+    flex-shrink: 0;
+
+    padding: 14px 20px 12px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e8edf2;
+
+    box-shadow: 0 -5px 20px rgba(25, 40, 83, 0.04);
+}
+
+
+/* =================================================
+   CONTACT
+================================================= */
+
+.mobile-contact-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.mobile-contact-item {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    text-decoration: none;
+
+    color: #192853;
+}
+
+.mobile-contact-icon {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #eef9fd;
+
+    color: #21b1e3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+}
+
+.mobile-contact-text {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.mobile-contact-text small {
+    margin-bottom: 1px;
+
+    font-size: 9px;
+
+    color: #8a94a6;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* =================================================
+   SOCIAL
+================================================= */
+
+.mobile-social-section {
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #edf1f5;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mobile-footer-title {
+    font-size: 10px;
+    font-weight: 700;
+
+    color: #687792;
+
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.mobile-social-links {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.mobile-social-links a {
+    width: 27px;
+    height: 27px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f7fa;
+
+    color: #192853;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    transition: all 0.2s ease;
+}
+
+.mobile-social-links a:hover {
+    background: #21b1e3;
+    color: #ffffff;
+}
+
+
+/* =================================================
+   APP DOWNLOAD
+================================================= */
+
+.mobile-app-section {
+    margin-top: 12px;
+
+    padding: 11px 12px;
+
+    border-radius: 11px;
+
+    background: #f3faff;
+
+    border: 1px solid #e2f2f8;
+}
+
+.mobile-app-title {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 8px;
+}
+
+.mobile-app-title>i {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+
+    background: #dff5fc;
+
+    color: #21b1e3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+}
+
+.mobile-app-title div {
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-app-title strong {
+    font-size: 12px;
+    color: #192853;
+}
+
+.mobile-app-title small {
+    margin-top: 1px;
+
+    font-size: 9px;
+    color: #7b8799;
+}
+
+.mobile-app-links {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding-left: 39px;
+}
+
+.mobile-app-links a {
+    display: block;
+}
+
+.mobile-app-links img {
+    width: 100px;
+    height: auto;
+
+    display: block;
+}
+
+
+/* =================================================
+   COPYRIGHT
+================================================= */
+
+.mobile-sidebar-copy {
+    padding-top: 9px;
+
+    text-align: center;
+
+    font-size: 9px;
+
+    color: #8a94a6;
+}
+
+
+/* =================================================
+   SMALL MOBILE
+================================================= */
+
+@media (max-width: 480px) {
+
+    .mobile-sidebar {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .mobile-sidebar-header {
+        min-height: 70px;
+        padding: 12px 18px;
+    }
+
+    .mobile-sidebar-logo img {
+        width: 155px;
+    }
+
+    .mobile-quick-links {
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    .mobile-learning-card {
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    .mobile-sidebar-footer {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .mobile-app-links img {
+        width: 92px;
+    }
 }

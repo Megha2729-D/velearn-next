@@ -477,7 +477,7 @@ export default function Header() {
                 </p>
             </div>
 
-            <header className={`kmbf-header v-navbar ${scrolled ? "fixed-nav" : ""
+            <header className={`velearn-header v-navbar ${scrolled ? "fixed-nav" : ""
                 } ${isNavbarTwo ? "navbar_two" : ""}`}>
 
                 {/* =================================================
@@ -1277,131 +1277,231 @@ export default function Header() {
                 {/* =================================================
                     MOBILE SIDEBAR
                 ================================================= */}
-
                 <aside
-                    className={`mobile-sidebar ${mobileOpen
-                        ? "mobile-sidebar-open"
-                        : ""
+                    className={`mobile-sidebar ${mobileOpen ? "mobile-sidebar-open" : ""
                         }`}
                 >
-
-                    {/* SIDEBAR HEADER */}
-
-                    <div className="mobile-sidebar-header">
-
-                        <button
-                            type="button"
-                            onClick={
-                                closeAllMobile
-                            }
-                            className="mobile-close-button"
-                            aria-label="Close menu"
-                        >
-                            <i className="bi bi-x-lg text-black"></i>
-                        </button>
-
-                        <Link
-                            href="/"
-                            className="mobile-sidebar-logo"
-                            onClick={
-                                closeAllMobile
-                            }
-                        >
-                            <div className="logo-section mbl_inner_logo">
-                                <Image
-                                    src={
-                                        isNavbarTwo
-                                            ? "/images/logo-white.png"
-                                            : "/images/velearn-logo.png"
-                                    }
-                                    alt="Velearn Logo"
-                                    height={100}
-                                    width={220}
-                                />
-                            </div>
-                        </Link>
-
-                    </div>
-
                     {/* =================================================
-                        MOBILE MAIN MENU
-                    ================================================= */}
+                            SIDEBAR SCROLLABLE CONTENT
+                        ================================================= */}
+                    <div className="mobile-sidebar-content">
 
-                    {mobileMenu === null && (
-                        <ul className="mobile-main-menu">
+                        {/* =================================================
+                                SIDEBAR HEADER
+                            ================================================= */}
+                        <div className="mobile-sidebar-header">
 
-                            {/* SELF PACED */}
+                            <Link
+                                href="/"
+                                className="mobile-sidebar-logo"
+                                onClick={closeAllMobile}
+                            >
+                                <div className="logo-section mbl_inner_logo">
+                                    <Image
+                                        src={
+                                            isNavbarTwo
+                                                ? "/images/logo-white.png"
+                                                : "/images/velearn-logo.png"
+                                        }
+                                        alt="Velearn Logo"
+                                        height={100}
+                                        width={220}
+                                    />
+                                </div>
+                            </Link>
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "self-paced-courses"
-                                        )
-                                    }
-                                >
-                                    Self-Paced
-                                    Courses
+                            <button
+                                type="button"
+                                onClick={closeAllMobile}
+                                className="mobile-close-button"
+                                aria-label="Close menu"
+                            >
+                                <i className="bi bi-x-lg text-black"></i>
+                            </button>
 
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                        </div>
 
-                            {/* LIVE */}
+                        {/* =================================================
+                                MOBILE MAIN MENU
+                                DO NOT CHANGE
+                            ================================================= */}
+                        {mobileMenu === null && (
+                            <>
+                                <ul className="mobile-main-menu">
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "live-courses"
-                                        )
-                                    }
-                                >
-                                    Live Courses
+                                    {/* SELF PACED */}
 
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                                    <li>
+                                        <div className="mbl_nav_icon"><i className="bi bi-mortarboard-fill"></i></div>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                openMobileMenu(
+                                                    "self-paced-courses"
+                                                )
+                                            }
+                                        >
+                                            Self-Paced Courses
 
-                            {/* RESOURCES */}
+                                            <span>
+                                                ›
+                                            </span>
+                                        </button>
+                                    </li>
 
-                            <li>
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        openMobileMenu(
-                                            "resources"
-                                        )
-                                    }
-                                >
-                                    Resources
+                                    {/* LIVE */}
 
-                                    <span>
-                                        ›
-                                    </span>
-                                </button>
-                            </li>
+                                    <li>
+                                        <div className="mbl_nav_icon"><i className="bi bi-file-earmark-play-fill"></i></div>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                openMobileMenu(
+                                                    "live-courses"
+                                                )
+                                            }
+                                        >
+                                            Live Courses
 
-                        </ul>
-                    )}
+                                            <span>
+                                                ›
+                                            </span>
+                                        </button>
+                                    </li>
 
-                    {/* =================================================
-                        SELF PACED COURSES
-                    ================================================= */}
+                                    {/* RESOURCES */}
 
-                    {mobileMenu ===
-                        "self-paced-courses" && (
+                                    <li>
+                                        <div className="mbl_nav_icon"><i className="bi bi-file-earmark-bar-graph-fill"></i></div>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                openMobileMenu(
+                                                    "resources"
+                                                )
+                                            }
+                                        >
+                                            Resources
+
+                                            <span>
+                                                ›
+                                            </span>
+                                        </button>
+                                    </li>
+
+                                </ul>
+
+                                {/* =================================================
+                                        QUICK LINKS
+                                    ================================================= */}
+                                <div className="mobile-quick-links">
+
+                                    <div className="mobile-section-title">
+                                        Quick Links
+                                    </div>
+
+                                    <Link
+                                        href="/about-us"
+                                        onClick={closeAllMobile}
+                                        className="mobile-quick-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-info-circle"></i>
+                                            About Us
+                                        </span>
+                                        <i className="bi bi-chevron-right"></i>
+                                    </Link>
+
+                                    <Link
+                                        href="/contact-us"
+                                        onClick={closeAllMobile}
+                                        className="mobile-quick-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-envelope"></i>
+                                            Contact Us
+                                        </span>
+                                        <i className="bi bi-chevron-right"></i>
+                                    </Link>
+
+                                    <Link
+                                        href="/doubt-support"
+                                        onClick={closeAllMobile}
+                                        className="mobile-quick-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-headset"></i>
+                                            Doubt Support
+                                        </span>
+                                        <i className="bi bi-chevron-right"></i>
+                                    </Link>
+
+                                    <Link
+                                        href="/faq"
+                                        onClick={closeAllMobile}
+                                        className="mobile-quick-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-question-circle"></i>
+                                            FAQs
+                                        </span>
+                                        <i className="bi bi-chevron-right"></i>
+                                    </Link>
+
+                                    <Link
+                                        href="/refund-policy"
+                                        onClick={closeAllMobile}
+                                        className="mobile-quick-link"
+                                    >
+                                        <span>
+                                            <i className="bi bi-arrow-counterclockwise"></i>
+                                            Refund Policy
+                                        </span>
+                                        <i className="bi bi-chevron-right"></i>
+                                    </Link>
+
+                                </div>
+
+                                {/* =================================================
+                                        LEARNING CTA
+                                    ================================================= */}
+                                <div className="mobile-learning-card">
+
+                                    <div className="mobile-learning-icon">
+                                        <Image src={"/images/mobile-explore-icon.webp"} className="w-100 h-auto" height={200} width={200} alt="" />
+                                    </div>
+
+                                    <div className="mobile-learning-content">
+                                        <h4>
+                                            Start Learning Today
+                                        </h4>
+
+                                        <p>
+                                            Build real skills and take
+                                            the next step in your career.
+                                        </p>
+
+                                        <Link
+                                            href="/recorded-course"
+                                            onClick={closeAllMobile}
+                                            className="mobile-learning-btn"
+                                        >
+                                            Explore Courses
+                                            <i className="bi bi-arrow-right"></i>
+                                        </Link>
+                                    </div>
+
+                                </div>
+                            </>
+                        )}
+
+                        {/* =================================================
+                                SELF PACED COURSES
+                            ================================================= */}
+                        {mobileMenu === "self-paced-courses" && (
                             <MobileSubMenu
                                 title="Self-Paced Courses"
-                                onBack={
-                                    closeMobileMenu
-                                }
+                                onBack={closeMobileMenu}
                             >
 
                                 <li>
@@ -1455,114 +1555,77 @@ export default function Header() {
                             </MobileSubMenu>
                         )}
 
-                    {/* =================================================
-                        PAID COURSES
-                    ================================================= */}
-
-                    {mobileMenu ===
-                        "paid-courses" && (
+                        {/* =================================================
+                                PAID COURSES
+                            ================================================= */}
+                        {mobileMenu === "paid-courses" && (
                             <MobileCourseMenu
                                 title="Paid Courses"
-                                courses={
-                                    paidCourses
-                                }
-                                viewAllHref={
-                                    COURSE_LIST_ROUTES.paid
-                                }
+                                courses={paidCourses}
+                                viewAllHref={COURSE_LIST_ROUTES.paid}
                                 viewAllText="View All Paid"
                                 onBack={() =>
                                     openMobileMenu(
                                         "self-paced-courses"
                                     )
                                 }
-                                onClose={
-                                    closeAllMobile
-                                }
+                                onClose={closeAllMobile}
                             />
                         )}
 
-                    {/* =================================================
-                        PAID COMBO
-                    ================================================= */}
-
-                    {mobileMenu ===
-                        "paid-combo" && (
+                        {/* =================================================
+                                PAID COMBO
+                            ================================================= */}
+                        {mobileMenu === "paid-combo" && (
                             <MobileCourseMenu
                                 title="Paid Combo"
-                                courses={
-                                    comboCourses
-                                }
-                                viewAllHref={
-                                    COURSE_LIST_ROUTES.combo
-                                }
+                                courses={comboCourses}
+                                viewAllHref={COURSE_LIST_ROUTES.combo}
                                 viewAllText="View All Combo"
                                 onBack={() =>
                                     openMobileMenu(
                                         "self-paced-courses"
                                     )
                                 }
-                                onClose={
-                                    closeAllMobile
-                                }
+                                onClose={closeAllMobile}
                             />
                         )}
 
-                    {/* =================================================
-                        FREE COURSES
-                    ================================================= */}
-
-                    {mobileMenu ===
-                        "free-courses" && (
+                        {/* =================================================
+                                FREE COURSES
+                            ================================================= */}
+                        {mobileMenu === "free-courses" && (
                             <MobileCourseMenu
                                 title="Free Courses"
-                                courses={
-                                    freeCourses
-                                }
-                                viewAllHref={
-                                    COURSE_LIST_ROUTES.free
-                                }
+                                courses={freeCourses}
+                                viewAllHref={COURSE_LIST_ROUTES.free}
                                 viewAllText="View All Free"
                                 onBack={() =>
                                     openMobileMenu(
                                         "self-paced-courses"
                                     )
                                 }
-                                onClose={
-                                    closeAllMobile
-                                }
+                                onClose={closeAllMobile}
                             />
                         )}
 
-                    {/* =================================================
-                        LIVE COURSES
-                    ================================================= */}
-
-                    {mobileMenu ===
-                        "live-courses" && (
+                        {/* =================================================
+                                LIVE COURSES
+                            ================================================= */}
+                        {mobileMenu === "live-courses" && (
                             <MobileSubMenu
                                 title="Live Courses"
-                                onBack={
-                                    closeMobileMenu
-                                }
+                                onBack={closeMobileMenu}
                             >
 
                                 {Object.entries(
                                     LIVE_COURSE_ROUTES
                                 ).map(
-                                    ([
-                                        title,
-                                        route,
-                                    ]) => (
+                                    ([title, route]) => (
                                         <MobileLink
-                                            key={
-                                                title
-                                            }
-                                            href={
-                                                route
-                                            }
-                                            text={
-                                                title
-                                            }
+                                            key={title}
+                                            href={route}
+                                            text={title}
                                             onClick={
                                                 closeAllMobile
                                             }
@@ -1573,53 +1636,178 @@ export default function Header() {
                             </MobileSubMenu>
                         )}
 
-                    {/* =================================================
-                        RESOURCES
-                    ================================================= */}
-
-                    {mobileMenu ===
-                        "resources" && (
+                        {/* =================================================
+                                RESOURCES
+                            ================================================= */}
+                        {mobileMenu === "resources" && (
                             <MobileSubMenu
                                 title="Resources"
-                                onBack={
-                                    closeMobileMenu
-                                }
+                                onBack={closeMobileMenu}
                             >
 
                                 <MobileLink
                                     href="/webinar"
                                     text="Webinars"
-                                    onClick={
-                                        closeAllMobile
-                                    }
+                                    onClick={closeAllMobile}
                                 />
 
                                 <MobileLink
                                     href="/refer-and-earn"
                                     text="Referral"
-                                    onClick={
-                                        closeAllMobile
-                                    }
+                                    onClick={closeAllMobile}
                                 />
 
                                 <MobileLink
                                     href="/blogs"
                                     text="Blog"
-                                    onClick={
-                                        closeAllMobile
-                                    }
+                                    onClick={closeAllMobile}
                                 />
 
                                 <MobileLink
                                     href="/faq"
                                     text="FAQ"
-                                    onClick={
-                                        closeAllMobile
-                                    }
+                                    onClick={closeAllMobile}
                                 />
 
                             </MobileSubMenu>
                         )}
+
+                    </div>
+
+                    {/* =================================================
+                            SIDEBAR FOOTER
+                        ================================================= */}
+                    <div className="mobile-sidebar-footer">
+
+                        {/* =================================================
+                                CONTACT INFO
+                            ================================================= */}
+                        <div className="mobile-contact-info">
+
+                            <a
+                                href="mailto:info@velearn.com"
+                                className="mobile-contact-item"
+                            >
+                                <span className="mobile-contact-icon">
+                                    <i className="bi bi-envelope"></i>
+                                </span>
+
+                                <span className="mobile-contact-text">
+                                    <small>Email</small>
+                                    info@velearn.com
+                                </span>
+                            </a>
+
+                            <a
+                                href="tel:+919087551188"
+                                className="mobile-contact-item"
+                            >
+                                <span className="mobile-contact-icon">
+                                    <i className="bi bi-telephone"></i>
+                                </span>
+
+                                <span className="mobile-contact-text">
+                                    <small>Phone</small>
+                                    +91 90875 51188
+                                </span>
+                            </a>
+
+                        </div>
+
+                        {/* =================================================
+                                SOCIAL MEDIA
+                            ================================================= */}
+                        <div className="mobile-social-section">
+
+                            <span className="mobile-footer-title">
+                                Follow Us
+                            </span>
+
+                            <div className="mobile-social-links">
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="Facebook"
+                                >
+                                    <i className="bi bi-facebook"></i>
+                                </a>
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="Instagram"
+                                >
+                                    <i className="bi bi-instagram"></i>
+                                </a>
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="YouTube"
+                                >
+                                    <i className="bi bi-youtube"></i>
+                                </a>
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="LinkedIn"
+                                >
+                                    <i className="bi bi-linkedin"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        {/* =================================================
+                                APP DOWNLOAD
+                            ================================================= */}
+                        <div className="mobile-app-section">
+                            <div className="col-lg-12 d-flex justify-content-evenly align-items-center app_img">
+                                <div className="one">
+                                    <a
+                                        href=""
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <Image
+                                            src={`${BASE_IMAGE_URL}icons/google-play.png`}
+                                            alt="google-play"
+                                            height={100}
+                                            width={100}
+                                        />
+                                    </a>
+                                </div>
+                                <div className="one">
+                                    <a
+                                        href=""
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <Image
+                                            src={`${BASE_IMAGE_URL}icons/apple-store.png`}
+                                            alt="apple-store"
+                                            height={100}
+                                            width={100}
+                                        />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {/* =================================================
+                                COPYRIGHT
+                            ================================================= */}
+                        <div className="mobile-sidebar-copy">
+                            © 2026 VeLearn. All rights reserved.
+                        </div>
+
+                    </div>
 
                 </aside>
             </header>
