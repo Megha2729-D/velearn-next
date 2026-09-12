@@ -1033,7 +1033,7 @@ export default function HomePage() {
               })}
             </Swiper>
 
-            <div className="col-12 d-flex justify-content-center more_butt_parent" style={{marginTop: "10px !important"}}>
+            <div className="col-12 d-flex justify-content-center more_butt_parent" style={{ marginTop: "10px !important" }}>
               <Link href="/recorded-course">
                 <div className="d-flex more_butt">
                   <div className="butt">Show More</div>
