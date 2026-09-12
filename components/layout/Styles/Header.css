@@ -261,6 +261,7 @@
         padding: 10px 15px;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 15px;
         background: #ffffff;
     }
@@ -834,6 +835,13 @@
 }
 
 @media (max-width: 991px) {
+    .logo img {
+        width: 220px !important;
+        height: auto;
+    }
+}
+
+@media (max-width: 500px) {
     .logo img {
         width: 85%;
         height: auto;
