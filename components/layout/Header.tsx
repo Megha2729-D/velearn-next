@@ -1694,141 +1694,143 @@ export default function Header() {
                     {/* =================================================
                             SIDEBAR FOOTER
                         ================================================= */}
-                    <div className="mobile-sidebar-footer">
+                    <div>
+                        <div className="mobile-sidebar-footer">
 
-                        {/* =================================================
+                            {/* =================================================
                                 CONTACT INFO
                             ================================================= */}
-                        <div className="mobile-contact-info">
+                            <div className="mobile-contact-info">
 
-                            <a
-                                href="mailto:info@velearn.com"
-                                className="mobile-contact-item"
-                            >
-                                <div className="mbl_nav_icon" style={{ backgroundColor: "#0e9bf526" }}>
-                                    <i className="bi bi-envelope-fill small" style={{ color: "#0e9bf5" }}></i>
-                                </div>
-                                <span className="mobile-contact-text">
-                                    <small>Email</small>
-                                    info@velearn.com
-                                </span>
-                            </a>
-                            <a
-                                href="tel:+919087551188"
-                                className="mobile-contact-item"
-                            >
-                                <div className="mbl_nav_icon" style={{ backgroundColor: "#14882726" }}>
-                                    <i className="bi bi-telephone-fill small" style={{ color: "#148827" }}></i>
-                                </div>
-                                <span className="mobile-contact-text">
-                                    <small>Phone</small>
-                                    +91 90875 51188
-                                </span>
-                            </a>
-                        </div>
+                                <a
+                                    href="mailto:info@velearn.com"
+                                    className="mobile-contact-item"
+                                >
+                                    <div className="mbl_nav_icon" style={{ backgroundColor: "#0e9bf526" }}>
+                                        <i className="bi bi-envelope-fill small" style={{ color: "#0e9bf5" }}></i>
+                                    </div>
+                                    <span className="mobile-contact-text">
+                                        <small>Email</small>
+                                        info@velearn.com
+                                    </span>
+                                </a>
+                                <a
+                                    href="tel:+919087551188"
+                                    className="mobile-contact-item"
+                                >
+                                    <div className="mbl_nav_icon" style={{ backgroundColor: "#14882726" }}>
+                                        <i className="bi bi-telephone-fill small" style={{ color: "#148827" }}></i>
+                                    </div>
+                                    <span className="mobile-contact-text">
+                                        <small>Phone</small>
+                                        +91 90875 51188
+                                    </span>
+                                </a>
+                            </div>
 
-                        {/* =================================================
+                            {/* =================================================
                                 SOCIAL MEDIA
                             ================================================= */}
-                        <div className="mobile-social-section mb-3">
+                            <div className="mobile-social-section mb-3">
 
-                            <span className="mobile-footer-title">
-                                Follow Us
-                            </span>
+                                <span className="mobile-footer-title">
+                                    Follow Us
+                                </span>
 
-                            <div className="mobile-social-links">
+                                <div className="mobile-social-links">
 
-                                <a
-                                    href="#"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="Facebook"
-                                >
-                                    <Image src={"/images/icons/facebook.png"} width={30} height={30} alt="" />
-                                </a>
+                                    <a
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="Facebook"
+                                    >
+                                        <Image src={"/images/icons/facebook.png"} width={30} height={30} alt="" />
+                                    </a>
 
-                                <a
-                                    href="#"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="Instagram"
-                                >
-                                    <Image src={"/images/icons/instagram.png"} width={30} height={30} alt="" />
-                                </a>
+                                    <a
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="Instagram"
+                                    >
+                                        <Image src={"/images/icons/instagram.png"} width={30} height={30} alt="" />
+                                    </a>
 
-                                <a
-                                    href="#"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="YouTube"
-                                >
-                                    <Image src={"/images/icons/youtube.png"} width={30} height={30} alt="" />
-                                </a>
+                                    <a
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="YouTube"
+                                    >
+                                        <Image src={"/images/icons/youtube.png"} width={30} height={30} alt="" />
+                                    </a>
 
-                                <a
-                                    href="#"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="LinkedIn"
-                                >
-                                    <Image src={"/images/icons/linkedin.png"} width={30} height={30} alt="" />
-                                </a>
-                                <a
-                                    href="#"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="Twitter"
-                                >
-                                    <Image src={"/images/icons/twitter.png"} width={30} height={30} alt="" />
-                                </a>
+                                    <a
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="LinkedIn"
+                                    >
+                                        <Image src={"/images/icons/linkedin.png"} width={30} height={30} alt="" />
+                                    </a>
+                                    <a
+                                        href="#"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="Twitter"
+                                    >
+                                        <Image src={"/images/icons/twitter.png"} width={30} height={30} alt="" />
+                                    </a>
+
+                                </div>
 
                             </div>
 
-                        </div>
-
-                        {/* =================================================
+                            {/* =================================================
                                 APP DOWNLOAD
                             ================================================= */}
-                        <div className="mobile-app-section">
-                            <div className="col-lg-12 d-flex justify-content-evenly align-items-center app_img">
-                                <div className="one">
-                                    <a
-                                        href=""
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <Image
-                                            src={`${BASE_IMAGE_URL}icons/google-play.png`}
-                                            alt="google-play"
-                                            height={100}
-                                            width={100}
-                                        />
-                                    </a>
-                                </div>
-                                <div className="one">
-                                    <a
-                                        href=""
-                                        target="_blank"
-                                        rel="noreferrer"
-                                    >
-                                        <Image
-                                            src={`${BASE_IMAGE_URL}icons/apple-store.png`}
-                                            alt="apple-store"
-                                            height={100}
-                                            width={100}
-                                        />
-                                    </a>
+                            <div className="mobile-app-section">
+                                <div className="col-lg-12 d-flex justify-content-evenly align-items-center app_img">
+                                    <div className="one">
+                                        <a
+                                            href=""
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <Image
+                                                src={`${BASE_IMAGE_URL}icons/google-play.png`}
+                                                alt="google-play"
+                                                height={100}
+                                                width={100}
+                                            />
+                                        </a>
+                                    </div>
+                                    <div className="one">
+                                        <a
+                                            href=""
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            <Image
+                                                src={`${BASE_IMAGE_URL}icons/apple-store.png`}
+                                                alt="apple-store"
+                                                height={100}
+                                                width={100}
+                                            />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {/* =================================================
+                            {/* =================================================
                                 COPYRIGHT
                             ================================================= */}
-                        <div className="mobile-sidebar-copy">
-                            © 2026 VeLearn. All rights reserved.
+                            <div className="mobile-sidebar-copy">
+                                © 2026 VeLearn. All rights reserved.
+                            </div>
                         </div>
+                        <Image src={"/images/mobile-menu-bg.webp"} className="mbl_footer_img w-100 h-auto" width={500} height={200} alt="" style={{ marginTop: "-60px" }} />
                     </div>
-                    <Image src={"/images/mobile-menu-bg.webp"} className="w-100 h-auto" width={500} height={200} alt="" style={{ marginTop: "-60px" }} />
                 </aside>
             </header>
         </>
