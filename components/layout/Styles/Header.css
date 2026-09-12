@@ -337,12 +337,9 @@
 
     .mobile-overlay {
         display: block;
-
         position: fixed;
         inset: 0;
-
         background: rgba(0, 0, 0, 0.45);
-
         z-index: 1998;
     }
 
@@ -462,7 +459,7 @@
     .mobile-inner-page a {
         width: 100%;
         min-height: 52px;
-        padding: 5px 18px 34px;
+        padding: 18px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1162,7 +1159,8 @@
 
 .mobile-main-menu li {
     display: flex;
-    padding-left: 10px;
+    padding-left: 18px;
+    align-items: center;
 }
 
 .mbl_nav_icon {
@@ -1193,8 +1191,24 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.7px;
-
+    position: relative;
     color: #687792;
+}
+
+.mobile-section-title div {
+    position: relative;
+}
+
+.mobile-section-title div:after {
+    content: "";
+    position: absolute;
+    left: 30%;
+    top: -20px;
+    bottom: 0;
+    margin: auto;
+    height: 2px;
+    width: 13%;
+    background-color: var(--c2);
 }
 
 .mobile-quick-link {
@@ -1231,7 +1245,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .mobile-quick-link>i {
@@ -1246,35 +1260,24 @@
 
 .mobile-learning-card {
     margin: 18px 20px;
-
+    background: #f4fcff;
     padding: 17px;
-
     display: flex;
     align-items: center;
-
     gap: 14px;
-
     border-radius: 14px;
-
-    background: linear-gradient(135deg,
-            #eefaff 0%,
-            #f5fbfe 100%);
-
-    border: 1px solid #d9f0f8;
+    border: 1px solid #d2ebf3;
 }
 
 .mobile-learning-icon {
-    width: 90px;
-    height: 90px;
+    width: 115px;
+    height: 115px;
     flex-shrink: 0;
     border-radius: 12px;
-    background: #dff5fc;
     display: flex;
     align-items: center;
     justify-content: center;
-
     color: #21b1e3;
-
     font-size: 25px;
 }
 
@@ -1330,14 +1333,11 @@
 
 .mobile-sidebar-footer {
     flex-shrink: 0;
-
     padding: 14px 20px 12px;
-
-    background: #ffffff;
-
     border-top: 1px solid #e8edf2;
-
     box-shadow: 0 -5px 20px rgba(25, 40, 83, 0.04);
+    position: relative;
+    z-index: 1;
 }
 
 
@@ -1348,8 +1348,14 @@
 .mobile-contact-info {
     display: flex;
     flex-direction: column;
-
     gap: 9px;
+    margin-bottom: 20px;
+}
+
+.mobile-contact-info .mbl_nav_icon {
+    height: 30px;
+    width: 30px;
+    font-size: 18px;
 }
 
 .mobile-contact-item {
@@ -1405,14 +1411,10 @@
 /* =================================================
    SOCIAL
 ================================================= */
-
 .mobile-social-section {
     margin-top: 12px;
-
     padding-top: 10px;
-
     border-top: 1px solid #edf1f5;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1421,9 +1423,8 @@
 .mobile-footer-title {
     font-size: 10px;
     font-weight: 700;
-
+    /* margin-bottom: 10px; */
     color: #687792;
-
     text-transform: uppercase;
     letter-spacing: 0.6px;
 }
@@ -1431,28 +1432,20 @@
 .mobile-social-links {
     display: flex;
     align-items: center;
-
-    gap: 7px;
+    gap: 15px;
 }
 
 .mobile-social-links a {
     width: 27px;
     height: 27px;
-
     border-radius: 50%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #f1f7fa;
-
     color: #192853;
-
     text-decoration: none;
-
     font-size: 12px;
-
     transition: all 0.2s ease;
 }
 
@@ -1461,11 +1454,9 @@
     color: #ffffff;
 }
 
-
 /* =================================================
    APP DOWNLOAD
 ================================================= */
-
 .mobile-app-section {
     margin-top: 12px;
 
@@ -1548,14 +1539,10 @@
 
 .mobile-sidebar-copy {
     padding-top: 9px;
-
     text-align: center;
-
-    font-size: 9px;
-
-    color: #8a94a6;
+    font-size: 11px;
+    color: #5d5d5d;
 }
-
 
 /* =================================================
    SMALL MOBILE
@@ -1595,4 +1582,19 @@
     .mobile-app-links img {
         width: 92px;
     }
+}
+
+.mbl_inner_sub {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: var(--c1);
+    margin-bottom: 0
+}
+
+.mbl_inner_sub span {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    display: block;
+    color: #363636;
 }

@@ -1332,17 +1332,22 @@ export default function Header() {
                                     {/* SELF PACED */}
 
                                     <li>
-                                        <div className="mbl_nav_icon"><i className="bi bi-mortarboard-fill"></i></div>
+                                        <div className="mbl_nav_icon" style={{ backgroundColor: "#083ddb26" }}>
+                                            <i className="bi bi-mortarboard-fill" style={{ color: "#083ddb" }}></i>
+                                        </div>
                                         <button
                                             type="button"
+                                            className="d-flex"
                                             onClick={() =>
                                                 openMobileMenu(
                                                     "self-paced-courses"
                                                 )
                                             }
                                         >
-                                            Self-Paced Courses
-
+                                            <p className="mbl_inner_sub">
+                                                Self-Paced Courses
+                                                <span>Learn at your own pace, anytime</span>
+                                            </p>
                                             <span>
                                                 ›
                                             </span>
@@ -1352,7 +1357,9 @@ export default function Header() {
                                     {/* LIVE */}
 
                                     <li>
-                                        <div className="mbl_nav_icon"><i className="bi bi-file-earmark-play-fill"></i></div>
+                                        <div className="mbl_nav_icon" style={{ backgroundColor: "#1c168f26" }}>
+                                            <i className="bi bi-file-earmark-play-fill" style={{ color: "#1c168f" }}></i>
+                                        </div>
                                         <button
                                             type="button"
                                             onClick={() =>
@@ -1361,8 +1368,10 @@ export default function Header() {
                                                 )
                                             }
                                         >
-                                            Live Courses
-
+                                            <p className="mbl_inner_sub">
+                                                Live Courses
+                                                <span>Join live sessions & interact</span>
+                                            </p>
                                             <span>
                                                 ›
                                             </span>
@@ -1372,7 +1381,9 @@ export default function Header() {
                                     {/* RESOURCES */}
 
                                     <li>
-                                        <div className="mbl_nav_icon"><i className="bi bi-file-earmark-bar-graph-fill"></i></div>
+                                        <div className="mbl_nav_icon" style={{ backgroundColor: "#16602726" }}>
+                                            <i className="bi bi-file-earmark-bar-graph-fill" style={{ color: "#166027" }}></i>
+                                        </div>
                                         <button
                                             type="button"
                                             onClick={() =>
@@ -1381,8 +1392,10 @@ export default function Header() {
                                                 )
                                             }
                                         >
-                                            Resources
-
+                                            <p className="mbl_inner_sub">
+                                                Resources
+                                                <span>Tools, guides & learning materials</span>
+                                            </p>
                                             <span>
                                                 ›
                                             </span>
@@ -1398,6 +1411,7 @@ export default function Header() {
 
                                     <div className="mobile-section-title">
                                         Quick Links
+                                        <div></div>
                                     </div>
 
                                     <Link
@@ -1406,10 +1420,11 @@ export default function Header() {
                                         className="mobile-quick-link"
                                     >
                                         <span>
-                                            <i className="bi bi-info-circle"></i>
+                                            <div className="mbl_nav_icon" style={{ backgroundColor: "#0663f026" }}>
+                                                <i className="bi bi-info-circle-fill" style={{ color: "#0663f0" }}></i>
+                                            </div>
                                             About Us
                                         </span>
-                                        <i className="bi bi-chevron-right"></i>
                                     </Link>
 
                                     <Link
@@ -1418,7 +1433,9 @@ export default function Header() {
                                         className="mobile-quick-link"
                                     >
                                         <span>
-                                            <i className="bi bi-envelope"></i>
+                                            <div className="mbl_nav_icon" style={{ backgroundColor: "#1c168f26" }}>
+                                                <i className="bi bi-envelope-fill" style={{ color: "#1c168f" }}></i>
+                                            </div>
                                             Contact Us
                                         </span>
                                         <i className="bi bi-chevron-right"></i>
@@ -1430,7 +1447,9 @@ export default function Header() {
                                         className="mobile-quick-link"
                                     >
                                         <span>
-                                            <i className="bi bi-headset"></i>
+                                            <div className="mbl_nav_icon" style={{ backgroundColor: "#16602726" }}>
+                                                <i className="bi bi-headset" style={{ color: "#166027" }}></i>
+                                            </div>
                                             Doubt Support
                                         </span>
                                         <i className="bi bi-chevron-right"></i>
@@ -1442,7 +1461,9 @@ export default function Header() {
                                         className="mobile-quick-link"
                                     >
                                         <span>
-                                            <i className="bi bi-question-circle"></i>
+                                            <div className="mbl_nav_icon" style={{ backgroundColor: "#fe9f0b3d" }}>
+                                                <i className="bi bi-question-circle-fill" style={{ color: "#fe9f0b" }}></i>
+                                            </div>
                                             FAQs
                                         </span>
                                         <i className="bi bi-chevron-right"></i>
@@ -1454,7 +1475,9 @@ export default function Header() {
                                         className="mobile-quick-link"
                                     >
                                         <span>
-                                            <i className="bi bi-arrow-counterclockwise"></i>
+                                            <div className="mbl_nav_icon" style={{ backgroundColor: "#ec172e26" }}>
+                                                <i className="bi bi-shield-shaded" style={{ color: "#ec172e" }}></i>
+                                            </div>
                                             Refund Policy
                                         </span>
                                         <i className="bi bi-chevron-right"></i>
@@ -1466,21 +1489,13 @@ export default function Header() {
                                         LEARNING CTA
                                     ================================================= */}
                                 <div className="mobile-learning-card">
-
-                                    <div className="mobile-learning-icon">
-                                        <Image src={"/images/mobile-explore-icon.webp"} className="w-100 h-auto" height={200} width={200} alt="" />
-                                    </div>
-
                                     <div className="mobile-learning-content">
-                                        <h4>
+                                        <p className="text-uppercase fw-bold">
                                             Start Learning Today
-                                        </h4>
-
-                                        <p>
-                                            Build real skills and take
-                                            the next step in your career.
                                         </p>
-
+                                        <h4 className="mb-2">
+                                            Build real skills and take the next step in your career.
+                                        </h4>
                                         <Link
                                             href="/recorded-course"
                                             onClick={closeAllMobile}
@@ -1490,7 +1505,9 @@ export default function Header() {
                                             <i className="bi bi-arrow-right"></i>
                                         </Link>
                                     </div>
-
+                                    <div className="mobile-learning-icon">
+                                        <Image src={"/images/mobile-explore-img.webp"} className="w-100 h-auto" height={200} width={200} alt="" />
+                                    </div>
                                 </div>
                             </>
                         )}
@@ -1688,36 +1705,32 @@ export default function Header() {
                                 href="mailto:info@velearn.com"
                                 className="mobile-contact-item"
                             >
-                                <span className="mobile-contact-icon">
-                                    <i className="bi bi-envelope"></i>
-                                </span>
-
+                                <div className="mbl_nav_icon" style={{ backgroundColor: "#0e9bf526" }}>
+                                    <i className="bi bi-envelope-fill small" style={{ color: "#0e9bf5" }}></i>
+                                </div>
                                 <span className="mobile-contact-text">
                                     <small>Email</small>
                                     info@velearn.com
                                 </span>
                             </a>
-
                             <a
                                 href="tel:+919087551188"
                                 className="mobile-contact-item"
                             >
-                                <span className="mobile-contact-icon">
-                                    <i className="bi bi-telephone"></i>
-                                </span>
-
+                                <div className="mbl_nav_icon" style={{ backgroundColor: "#14882726" }}>
+                                    <i className="bi bi-telephone-fill small" style={{ color: "#148827" }}></i>
+                                </div>
                                 <span className="mobile-contact-text">
                                     <small>Phone</small>
                                     +91 90875 51188
                                 </span>
                             </a>
-
                         </div>
 
                         {/* =================================================
                                 SOCIAL MEDIA
                             ================================================= */}
-                        <div className="mobile-social-section">
+                        <div className="mobile-social-section mb-3">
 
                             <span className="mobile-footer-title">
                                 Follow Us
@@ -1731,7 +1744,7 @@ export default function Header() {
                                     rel="noreferrer"
                                     aria-label="Facebook"
                                 >
-                                    <i className="bi bi-facebook"></i>
+                                    <Image src={"/images/icons/facebook.png"} width={30} height={30} alt="" />
                                 </a>
 
                                 <a
@@ -1740,7 +1753,7 @@ export default function Header() {
                                     rel="noreferrer"
                                     aria-label="Instagram"
                                 >
-                                    <i className="bi bi-instagram"></i>
+                                    <Image src={"/images/icons/instagram.png"} width={30} height={30} alt="" />
                                 </a>
 
                                 <a
@@ -1749,7 +1762,7 @@ export default function Header() {
                                     rel="noreferrer"
                                     aria-label="YouTube"
                                 >
-                                    <i className="bi bi-youtube"></i>
+                                    <Image src={"/images/icons/youtube.png"} width={30} height={30} alt="" />
                                 </a>
 
                                 <a
@@ -1758,7 +1771,15 @@ export default function Header() {
                                     rel="noreferrer"
                                     aria-label="LinkedIn"
                                 >
-                                    <i className="bi bi-linkedin"></i>
+                                    <Image src={"/images/icons/linkedin.png"} width={30} height={30} alt="" />
+                                </a>
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    aria-label="Twitter"
+                                >
+                                    <Image src={"/images/icons/twitter.png"} width={30} height={30} alt="" />
                                 </a>
 
                             </div>
@@ -1806,9 +1827,8 @@ export default function Header() {
                         <div className="mobile-sidebar-copy">
                             © 2026 VeLearn. All rights reserved.
                         </div>
-
                     </div>
-
+                    <Image src={"/images/mobile-menu-bg.webp"} className="w-100 h-auto" width={500} height={200} alt="" style={{ marginTop: "-60px" }} />
                 </aside>
             </header>
         </>
