@@ -1829,7 +1829,7 @@ export default function Header() {
                                 © 2026 VeLearn. All rights reserved.
                             </div>
                         </div>
-                        <Image src={"/images/mobile-menu-bg.webp"} className="mbl_footer_img w-100 h-auto" width={500} height={200} alt="" style={{ marginTop: "-46px" }} />
+                        <Image src={"/images/mobile-menu-bg.webp"} className="mbl_footer_img w-100 h-auto position-relative" width={500} height={200} alt="" style={{ marginTop: "-46px" }} />
                     </div>
                 </aside>
             </header>
