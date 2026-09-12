@@ -1297,7 +1297,7 @@ export default function Header() {
                             className="mobile-close-button"
                             aria-label="Close menu"
                         >
-                            <i className="bi bi-x-lg text-white"></i>
+                            <i className="bi bi-x-lg text-black"></i>
                         </button>
 
                         <Link
