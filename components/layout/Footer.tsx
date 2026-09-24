@@ -205,7 +205,7 @@ export default function Footer() {
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div className="col-lg-3 mb-3">
+                                        {/* <div className="col-lg-3 mb-3">
                                             <div>
                                                 <h3>Practice</h3>
                                                 <ul className="p-0">
@@ -221,7 +221,7 @@ export default function Footer() {
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="col-lg-3 mb-3">
                                             <div>
                                                 <h3>Company</h3>

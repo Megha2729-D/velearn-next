@@ -2260,7 +2260,9 @@ export default function DigitalMarketing() {
                                                     <p className="small lh-lg text-black text-lg-start text-center">Take the next step in your career in digital marketing. Learn live, build real campaigns with AI, and walk away ready to get hired or freelance from day one. </p>
                                                     <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
                                                         <button>Enroll Now</button>
-                                                        <button>Talk to Counsellors</button>
+                                                        <Link href={"/contact-us"}>
+                                                    <button>Talk to Counsellors</button>
+                                                </Link>
                                                     </div>
                                                 </div>
                                             </div>

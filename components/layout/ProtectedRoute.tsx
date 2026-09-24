@@ -17,7 +17,6 @@ const protectedRoutes = [
     "/webinars",
     "/doubt-support",
     "/projects",
-    "/forgot-password",
 ];
 
 export default function ProtectedRoute({

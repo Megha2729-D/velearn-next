@@ -2506,8 +2506,18 @@ export default function DataScience() {
                                                 <h3 className="fw-bold text-black text-lg-start text-center">Start Your Online AI Machine Learning Course Today</h3>
                                                 <p className="small lh-lg text-black text-lg-start text-center">Stop researching. Start enrolling. Join the Best Data Science Program Online Live, kick off with Introduction to Python, and graduate as a Data Scientist or AI Engineer.</p>
                                                 <div className="ds_cta_button col-12 d-flex justify-content-center gap-3">
-                                                    <button>Enroll Now</button>
-                                                    <button>Talk to Counsellors</button>
+                                                    <button
+                                                        onClick={handleCourseAction}
+                                                    >
+                                                        {isEnrolled
+                                                            ? "Start Course"
+                                                            : user
+                                                                ? "Enroll Now"
+                                                                : "Login to Enroll"}
+                                                    </button>
+                                                    <Link href={"/contact-us"}>
+                                                        <button>Talk to Counsellors</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

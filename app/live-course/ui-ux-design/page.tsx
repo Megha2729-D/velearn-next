@@ -2221,7 +2221,9 @@ export default function UIUX() {
                                     <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
                                     <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
                                         <button>Enroll Now</button>
-                                        <button>Talk to Counsellors</button>
+                                        <Link href={"/contact-us"}>
+                                                    <button>Talk to Counsellors</button>
+                                                </Link>
                                     </div>
                                 </div>
                             </div>

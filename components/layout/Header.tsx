@@ -141,8 +141,7 @@ export default function Header() {
 
     useEffect(() => {
         const loadUser = async () => {
-            const storedUser =
-                localStorage.getItem("user");
+            const storedUser = localStorage.getItem("user");
 
             if (!storedUser) {
                 setUser(null);
@@ -151,16 +150,15 @@ export default function Header() {
             }
 
             try {
-                const parsedUser: User =
-                    JSON.parse(storedUser);
+                const parsedUser: User = JSON.parse(storedUser);
 
+                // Set user immediately
                 setUser(parsedUser);
 
-                const token =
-                    localStorage.getItem("token");
+                const token = localStorage.getItem("token");
 
                 const res = await axios.get(
-                    `https://crm.velearn.in/api/my-courses/${parsedUser.id}`,
+                    `${BASE_API_URL}my-courses/${parsedUser.id}`,
                     {
                         headers: token
                             ? {
@@ -172,16 +170,20 @@ export default function Header() {
 
                 if (res.data.status) {
                     setEnrolledCourses(
-                        res.data.data.all || []
+                        res.data.data?.all || []
                     );
+                } else {
+                    setEnrolledCourses([]);
                 }
-            } catch (error) {
-                console.log(
-                    "User loading error:",
-                    error
-                );
 
-                setUser(null);
+            } catch (error) {
+                console.log("My courses loading error:", error);
+
+                // ❌ DO NOT do this:
+                // setUser(null);
+
+                // User is still logged in.
+                // Only enrolled courses failed to load.
                 setEnrolledCourses([]);
             }
         };
@@ -593,19 +595,17 @@ export default function Header() {
                                                     </li>
                                                 )}
 
-                                                <li className="view-all-course">
-                                                    <Link
-                                                        href={
-                                                            COURSE_LIST_ROUTES.paid
-                                                        }
-                                                        onClick={
-                                                            handleItemClick
-                                                        }
-                                                    >
-                                                        View All
-                                                        Paid
-                                                    </Link>
-                                                </li>
+                                                {/* PAID */}
+                                                {paidCourses.length > 0 && (
+                                                    <li className="view-all-course">
+                                                        <Link
+                                                            href={COURSE_LIST_ROUTES.paid}
+                                                            onClick={handleItemClick}
+                                                        >
+                                                            View All Paid
+                                                        </Link>
+                                                    </li>
+                                                )}
                                             </ul>
                                         </li>
 
@@ -656,19 +656,17 @@ export default function Header() {
                                                     </li>
                                                 )}
 
-                                                <li className="view-all-course">
-                                                    <Link
-                                                        href={
-                                                            COURSE_LIST_ROUTES.combo
-                                                        }
-                                                        onClick={
-                                                            handleItemClick
-                                                        }
-                                                    >
-                                                        View All
-                                                        Combo
-                                                    </Link>
-                                                </li>
+                                                {/* COMBO */}
+                                                {comboCourses.length > 0 && (
+                                                    <li className="view-all-course">
+                                                        <Link
+                                                            href={COURSE_LIST_ROUTES.combo}
+                                                            onClick={handleItemClick}
+                                                        >
+                                                            View All Combo
+                                                        </Link>
+                                                    </li>
+                                                )}
                                             </ul>
                                         </li>
 
@@ -719,19 +717,17 @@ export default function Header() {
                                                     </li>
                                                 )}
 
-                                                <li className="view-all-course">
-                                                    <Link
-                                                        href={
-                                                            COURSE_LIST_ROUTES.free
-                                                        }
-                                                        onClick={
-                                                            handleItemClick
-                                                        }
-                                                    >
-                                                        View All
-                                                        Free
-                                                    </Link>
-                                                </li>
+                                                {/* FREE */}
+                                                {freeCourses.length > 0 && (
+                                                    <li className="view-all-course">
+                                                        <Link
+                                                            href={COURSE_LIST_ROUTES.free}
+                                                            onClick={handleItemClick}
+                                                        >
+                                                            View All Free
+                                                        </Link>
+                                                    </li>
+                                                )}
                                             </ul>
                                         </li>
                                     </ul>

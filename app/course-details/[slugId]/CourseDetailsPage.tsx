@@ -704,24 +704,24 @@ export default function CourseDetailsPage({
         "col-lg-6",
     ];
 
-    useEffect(() => {
-        const index = activeTab - 1;
+    // useEffect(() => {
+    //     const index = activeTab - 1;
 
-        setTimeout(() => {
-            const tabEl = tabRefs.current[index];
-            const wrapperEl = tabsWrapperRef.current;
+    //     setTimeout(() => {
+    //         const tabEl = tabRefs.current[index];
+    //         const wrapperEl = tabsWrapperRef.current;
 
-            if (!tabEl || !wrapperEl) return;
+    //         if (!tabEl || !wrapperEl) return;
 
-            const tabRect = tabEl.getBoundingClientRect();
-            const wrapperRect = wrapperEl.getBoundingClientRect();
+    //         const tabRect = tabEl.getBoundingClientRect();
+    //         const wrapperRect = wrapperEl.getBoundingClientRect();
 
-            const centerX = tabRect.left + tabRect.width / 2;
-            const relativeLeft = centerX - wrapperRect.left;
+    //         const centerX = tabRect.left + tabRect.width / 2;
+    //         const relativeLeft = centerX - wrapperRect.left;
 
-            setContentLeft(relativeLeft);
-        }, 0);
-    }, [activeTab]);
+    //         setContentLeft(relativeLeft);
+    //     }, 0);
+    // }, [activeTab]);
 
     const content = {
         1: {
@@ -789,18 +789,36 @@ export default function CourseDetailsPage({
     };
 
     useEffect(() => {
-        // updatePosition(0);
+        const updateContentPosition = () => {
+            const index = activeTab - 1;
 
-        const handleResize = () => {
-            updatePosition(activeTab - 1);
+            const tabEl = tabRefs.current[index];
+            const wrapperEl = tabsWrapperRef.current;
+
+            if (!tabEl || !wrapperEl) {
+                return;
+            }
+
+            const tabRect = tabEl.getBoundingClientRect();
+            const wrapperRect = wrapperEl.getBoundingClientRect();
+
+            const centerX = tabRect.left + tabRect.width / 2;
+            const relativeLeft = centerX - wrapperRect.left;
+
+            setContentLeft(relativeLeft);
         };
 
-        window.addEventListener("resize", handleResize);
+        // Wait until DOM/layout is painted
+        requestAnimationFrame(() => {
+            requestAnimationFrame(updateContentPosition);
+        });
+
+        window.addEventListener("resize", updateContentPosition);
 
         return () => {
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("resize", updateContentPosition);
         };
-    }, [activeTab]);
+    }, [activeTab, course?.curricula]);
 
     const faqData = [
         {
@@ -1614,7 +1632,6 @@ export default function CourseDetailsPage({
                         </div>
 
                         {/* modules */}
-                        {/* Modules */}
                         <div id="modules">
                             <div className="rc_sec_6 pt-5 pb-3">
                                 <div className="section_container">
