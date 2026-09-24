@@ -1546,7 +1546,7 @@ export default function CourseDetailsPage({
                                             <div className="position-relative">
                                                 <div className="d-flex justify-content-center align-items-center">
                                                     <Image
-                                                        src={`/images/recorded-course/circle-icons.png`}
+                                                        src={`/images/recorded-course/circle-icons.svg`}
                                                         className="h-auto"
                                                         width={610}
                                                         height={600}
@@ -2476,7 +2476,6 @@ export default function CourseDetailsPage({
                                             Download Syllabus
                                         </a>
                                     )}
-
                                 </div>
                             </div>
                         </div>
