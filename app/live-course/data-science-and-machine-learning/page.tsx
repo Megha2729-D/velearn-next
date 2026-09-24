@@ -2323,7 +2323,13 @@ export default function DataScience() {
                                                 <p className="text-white small">Session Recordings Included</p>
                                             </div>
                                             <div className="col-12 d-flex justify-content-center">
-                                                <button>Enroll In Weekday Batch</button>
+                                                <button
+                                                    onClick={handleCourseAction}
+                                                >
+                                                    {isEnrolled
+                                                        ? "Start Course"
+                                                        : "Enroll In Weekday Batch"}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -2336,7 +2342,13 @@ export default function DataScience() {
                                                 <p className="text-white small">Session Recordings Included</p>
                                             </div>
                                             <div className="col-12 d-flex justify-content-center">
-                                                <button>Enroll In Weekend Batch</button>
+                                                <button
+                                                    onClick={handleCourseAction}
+                                                >
+                                                    {isEnrolled
+                                                        ? "Start Course"
+                                                        : "Enroll In Weekend Batch"}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -2349,7 +2361,9 @@ export default function DataScience() {
                                                     <p className="text-white small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                     <div className="col-12 mt-4 d-flex justify-content-start">
-                                                        <button>Explore self-paced course</button>
+                                                        <Link href={"/recorded-course"}>
+                                                            <button>Explore self-paced course</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

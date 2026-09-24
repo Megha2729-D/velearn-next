@@ -1828,19 +1828,31 @@ export default function DataAnalytics() {
                                             (include Doubt Clearing)
                                         </p>
                                         <p>Session Recordings Included</p>
-                                        <button>Enroll In Weekday Batch</button>
+                                        <button
+                                            onClick={handleCourseAction}
+                                        >
+                                            {isEnrolled
+                                                ? "Start Course"
+                                                : "Enroll In Weekday Batch"}
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="col-lg-4 my-3">
                                     <div className="da_batch_inner">
-                                        <h4 className="text-c2 fw-bold">Weekday Batch</h4>
-                                        <p className="fw-bold">Monday - Friday</p>
+                                        <h4 className="text-c2 fw-bold">Weekend Batch</h4>
+                                        <p className="fw-bold">Saturday - Sunday</p>
                                         <p className="small">
-                                            3 Month / 120 Hours<br />
+                                            5 Month / 160 Hours<br />
                                             (include Doubt Clearing)
                                         </p>
                                         <p>Session Recordings Included</p>
-                                        <button>Enroll In Weekday Batch</button>
+                                        <button
+                                            onClick={handleCourseAction}
+                                        >
+                                            {isEnrolled
+                                                ? "Start Course"
+                                                : "Enroll In Weekend Batch"}
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="col-lg-8 my-5 batch_parent">
@@ -1854,7 +1866,7 @@ export default function DataAnalytics() {
                                                         <p className="text-black small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                         <div className="col-12 mt-4 d-flex justify-content-start">
-                                                            <button>Explore self-paced course</button>
+                                                            <button></button>
                                                         </div>
                                                     </div>
                                                 </div>

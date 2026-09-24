@@ -2218,7 +2218,13 @@ export default function FullStackDevelopment() {
                                             <p className="text-white small">Session Recordings Included</p>
                                         </div>
                                         <div className="col-12 d-flex justify-content-center">
-                                            <button>Enroll In Weekday Batch</button>
+                                            <button
+                                                onClick={handleCourseAction}
+                                            >
+                                                {isEnrolled
+                                                    ? "Start Course"
+                                                    : "Enroll In Weekday Batch"}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -2231,7 +2237,13 @@ export default function FullStackDevelopment() {
                                             <p className="text-white small">Session Recordings Included</p>
                                         </div>
                                         <div className="col-12 d-flex justify-content-center">
-                                            <button>Enroll In Weekend Batch</button>
+                                            <button
+                                                onClick={handleCourseAction}
+                                            >
+                                                {isEnrolled
+                                                    ? "Start Course"
+                                                    : "Enroll In Weekend Batch"}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -2244,7 +2256,9 @@ export default function FullStackDevelopment() {
                                                 <p className="text-white small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                 <div className="col-12 mt-4 d-flex justify-content-start">
-                                                    <button className="text-white">Explore self-paced course</button>
+                                                    <Link href={"/recorded-course"}>
+                                                        <button className="text-white">Explore self-paced course</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -2400,10 +2414,18 @@ export default function FullStackDevelopment() {
                                         <h4 className="fw-bold text-black">Start Your Career Today with the MERN Stack Online Training</h4>
                                         <p className="small lh-lg text-black">Your developer journey starts today. Join the MERN stack online course built for real careers, real projects, and real placement support. Enroll now and step into a future where you build, code, and create web applications that matter.</p>
                                         <div className="col-12 d-flex justify-content-center gap-3">
-                                            <button>Enroll Now</button>
+                                            <button
+                                                onClick={handleCourseAction}
+                                            >
+                                                {isEnrolled
+                                                    ? "Start Course"
+                                                    : user
+                                                        ? "Enroll Now"
+                                                        : "Login to Enroll"}
+                                            </button>
                                             <Link href={"/contact-us"}>
-                                                    <button>Talk to Counsellors</button>
-                                                </Link>
+                                                <button>Talk to Counsellors</button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

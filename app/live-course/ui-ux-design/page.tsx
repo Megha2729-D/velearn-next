@@ -2046,7 +2046,13 @@ export default function UIUX() {
                                                 (include Doubt Clearing)
                                             </p>
                                             <p>Session Recordings Included</p>
-                                            <button>Enroll In Weekday Batch</button>
+                                            <button
+                                                onClick={handleCourseAction}
+                                            >
+                                                {isEnrolled
+                                                    ? "Start Course"
+                                                    : "Enroll In Weekday Batch"}
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="col-lg-4 my-3">
@@ -2058,7 +2064,13 @@ export default function UIUX() {
                                                 (include Doubt Clearing)
                                             </p>
                                             <p>Session Recordings Included</p>
-                                            <button>Enroll In Weekday Batch</button>
+                                            <button
+                                                onClick={handleCourseAction}
+                                            >
+                                                {isEnrolled
+                                                    ? "Start Course"
+                                                    : "Enroll In Weekend Batch"}
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="col-lg-8 my-5 batch_parent">
@@ -2072,7 +2084,9 @@ export default function UIUX() {
                                                             <p className="text-black small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                             <div className="col-12 mt-4 d-flex justify-content-start">
-                                                                <button>Explore self-paced course</button>
+                                                                <Link href={"/recorded-course"}>
+                                                                    <button>Explore self-paced course</button>
+                                                                </Link>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2220,10 +2234,18 @@ export default function UIUX() {
                                     <h3 className="fw-bold text-white text-lg-start text-center">Join Our UI UX Online Course Today </h3>
                                     <p className="small lh-lg text-white text-lg-start text-center">Take the next step in your UI UX career. Join our UI UX design course online and learn live with industry mentors, real projects, and AI integration, all in one program.</p>
                                     <div className="col-12 d-flex justify-content-center justify-content-lg-start gap-3">
-                                        <button>Enroll Now</button>
+                                        <button
+                                            onClick={handleCourseAction}
+                                        >
+                                            {isEnrolled
+                                                ? "Start Course"
+                                                : user
+                                                    ? "Enroll Now"
+                                                    : "Login to Enroll"}
+                                        </button>
                                         <Link href={"/contact-us"}>
-                                                    <button>Talk to Counsellors</button>
-                                                </Link>
+                                            <button>Talk to Counsellors</button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

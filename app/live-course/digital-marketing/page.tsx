@@ -2083,19 +2083,30 @@ export default function DigitalMarketing() {
                                                                     (include Doubt Clearing)
                                                                 </p>
                                                                 <p>Session Recordings Included</p>
-                                                                <button>Enroll In Weekday Batch</button>
+                                                                <button
+                                                                    onClick={handleCourseAction}
+                                                                >
+                                                                    {isEnrolled
+                                                                        ? "Start Course"
+                                                                        : "Enroll In Weekday Batch"}
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div className="col-lg-4 col-md-6 my-lg-3 my-2">
                                                             <div className="dm_batch_inner">
-                                                                <h4 className="text-c2 fw-bold">Weekday Batch</h4>
-                                                                <p className="fw-bold">Monday - Friday</p>
-                                                                <p className="small">
-                                                                    3 Month / 120 Hours<br />
-                                                                    (include Doubt Clearing)
-                                                                </p>
-                                                                <p>Session Recordings Included</p>
-                                                                <button>Enroll In Weekday Batch</button>
+                                                                <h4 className="text-white fw-bold text-center">Weekend Batch</h4>
+                                                                <div>
+                                                                    <p className="text-white small">Saturday – Sunday</p>
+                                                                    <p className="text-white small">5 Months / 160 Hours <br /> (include Doubt Clearing)</p>
+                                                                    <p className="text-white small">Session Recordings Included</p>
+                                                                </div>
+                                                                <button
+                                                                    onClick={handleCourseAction}
+                                                                >
+                                                                    {isEnrolled
+                                                                        ? "Start Course"
+                                                                        : "Enroll In Weekend Batch"}
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2111,7 +2122,9 @@ export default function DigitalMarketing() {
                                                                         <p className="text-black small mb-0">Prefer to learn on your own time? Get the full recorded course with lifetime access.</p>
 
                                                                         <div className="col-12 mt-4 d-flex justify-content-start">
-                                                                            <button>Explore self-paced course</button>
+                                                                            <Link href={"/recorded-course"}>
+                                                                                <button>Explore self-paced course</button>
+                                                                            </Link>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2259,10 +2272,18 @@ export default function DigitalMarketing() {
                                                     <h3 className="fw-bold text-black text-lg-start text-center">Enroll Now and Become an AI-Powered Digital Marketer </h3>
                                                     <p className="small lh-lg text-black text-lg-start text-center">Take the next step in your career in digital marketing. Learn live, build real campaigns with AI, and walk away ready to get hired or freelance from day one. </p>
                                                     <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
-                                                        <button>Enroll Now</button>
+                                                        <button
+                                                            onClick={handleCourseAction}
+                                                        >
+                                                            {isEnrolled
+                                                                ? "Start Course"
+                                                                : user
+                                                                    ? "Enroll Now"
+                                                                    : "Login to Enroll"}
+                                                        </button>
                                                         <Link href={"/contact-us"}>
-                                                    <button>Talk to Counsellors</button>
-                                                </Link>
+                                                            <button>Talk to Counsellors</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
