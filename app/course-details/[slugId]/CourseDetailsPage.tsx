@@ -135,7 +135,28 @@ export default function CourseDetailsPage({
 
         return Object.keys(newErrors).length === 0;
     };
+    const handleCourseAction = () => {
+        // Not logged in → Login
+        if (!user) {
+            router.push("/login");
+            return;
+        }
 
+        // Already enrolled → Learn page
+        if (isEnrolled) {
+            goToLearnPage();
+            return;
+        }
+
+        // Logged in + not enrolled → Open enrollment form
+        setErrors({
+            name: "",
+            email: "",
+            phone: "",
+        });
+
+        setShowEnrollFormModal(true);
+    };
     const handleEnroll = (
         e?: React.FormEvent<HTMLFormElement>
     ) => {
@@ -154,6 +175,51 @@ export default function CourseDetailsPage({
 
         setShowConfirmModal(true);
     };
+
+    // const handleCourseAction = () => {
+    //     const storedUser = localStorage.getItem("user");
+
+    //     if (!storedUser) {
+    //         router.push("/login");
+    //         return;
+    //     }
+
+    //     try {
+    //         const parsedUser = JSON.parse(storedUser);
+
+    //         setUser(parsedUser);
+
+    //         // Populate form with logged-in user
+    //         setName(parsedUser.name || "");
+
+    //         setEmail(parsedUser.email || "");
+
+    //         setPhone(
+    //             (
+    //                 parsedUser.phonenumber ||
+    //                 parsedUser.phone ||
+    //                 ""
+    //             )
+    //                 .replace(/^\+?91/, "")
+    //                 .trim()
+    //         );
+
+    //         if (isEnrolled) {
+    //             router.push("/live-course-history");
+    //             return;
+    //         }
+
+    //         setErrors({});
+    //         setShowEnrollFormModal(true);
+    //     } catch (error) {
+    //         console.error(
+    //             "User parse error:",
+    //             error
+    //         );
+
+    //         router.push("/login");
+    //     }
+    // };
 
     const confirmEnroll = async () => {
         try {
@@ -944,10 +1010,10 @@ export default function CourseDetailsPage({
 
                                 <p className="text-muted mb-4">
                                     Are you sure you want to enroll in the{" "}
-                                    <strong>
-                                        Full Stack Web Development
+                                    <strong className="course_title_modal">
+                                        <span>{course?.title}</span>
                                     </strong>{" "}
-                                    live program?
+                                    program?
                                 </p>
 
                                 <div className="d-flex gap-3 justify-content-center">
@@ -1015,7 +1081,7 @@ export default function CourseDetailsPage({
 
                                 <p className="text-muted mb-4">
                                     Your request has been received. Would
-                                    you like to view your live course
+                                    you like to view your course
                                     history now?
                                 </p>
 
@@ -1072,7 +1138,7 @@ export default function CourseDetailsPage({
                         >
                             <div className="d-flex position-relative justify-content-between align-items-center">
                                 <h4 className="fw-bold mb-0">
-                                    Enroll Now - Full Stack Web Development
+                                    Enroll Now - <span>{course?.title}</span>
                                 </h4>
 
                                 <button
@@ -1222,27 +1288,17 @@ export default function CourseDetailsPage({
                                         {course?.sub_description}
                                     </p>
                                     <div className="d-flex justify-content-lg-start justify-content-center mb-3">
-                                        {isEnrolled ? (
-                                            <button
-                                                type="button"
-                                                onClick={goToLearnPage}
-                                                className="btn_theme_primary mt-2 mb-3"
-                                            >
-                                                Start Course
-                                            </button>
-                                        ) : (
-                                            <button
-                                                type={user ? "submit" : "button"}
-                                                onClick={() => {
-                                                    if (!user) {
-                                                        router.push("/login");
-                                                    }
-                                                }}
-                                                className="btn_theme_primary mt-2 mb-3"
-                                            >
-                                                {user ? "Enroll Now" : "Login to Enroll"}
-                                            </button>
-                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={handleCourseAction}
+                                            className="btn_theme_primary mt-2 mb-3"
+                                        >
+                                            {!user
+                                                ? "Login to Enroll"
+                                                : isEnrolled
+                                                    ? "Start Course"
+                                                    : "Enroll Now"}
+                                        </button>
                                     </div>
                                     <div className="col-12">
                                         <div className="row rc_description mt-4 w-100 m-auto">
@@ -2217,10 +2273,20 @@ export default function CourseDetailsPage({
                                                                 </div>
 
                                                             </div>
-
-                                                            <button className="btn enroll_btn w-100 mt-4">
-                                                                Start Learning →
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleCourseAction}
+                                                                className="btn enroll_btn w-100 mt-4"
+                                                            >
+                                                                {!user
+                                                                    ? "Login to Enroll"
+                                                                    : isEnrolled
+                                                                        ? "Start Course"
+                                                                        : "Enroll Now"}
                                                             </button>
+                                                            {/* <button className="btn enroll_btn w-100 mt-4">
+                                                                Start Learning →
+                                                            </button> */}
 
                                                             <p className="secure_text mt-3">
                                                                 <i className="bi bi-check-circle-fill text-muted pe-2"></i>
@@ -2337,10 +2403,20 @@ export default function CourseDetailsPage({
 
                                                             </div>
 
-                                                            <button className="btn enroll_btn w-100 mt-4">
+                                                            {/* <button className="btn enroll_btn w-100 mt-4">
                                                                 Enroll Now →
+                                                            </button> */}
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleCourseAction}
+                                                                className="btn enroll_btn w-100 mt-4"
+                                                            >
+                                                                {!user
+                                                                    ? "Login to Enroll"
+                                                                    : isEnrolled
+                                                                        ? "Start Course"
+                                                                        : "Enroll Now"}
                                                             </button>
-
                                                             <p className="secure_text mt-3">
                                                                 <i className="bi bi-lock-fill text-muted pe-2"></i>
                                                                 Secure & Safe Payments
@@ -2459,17 +2535,28 @@ export default function CourseDetailsPage({
                                 <div className="d-flex justify-content-center gap-3 mt-4">
 
                                     {/* Enroll / Start Learning */}
-                                    <button className="rc-cta-1">
+                                    <button
+                                        className="rc-cta-1"
+                                    // onClick={handleCourseAction}
+                                    >
+                                        {isEnrolled
+                                            ? "Start Course"
+                                            : user
+                                                ? "Enroll Now"
+                                                : "Login to Enroll"}
+                                    </button>
+                                    {/* <button className="rc-cta-1">
                                         {course?.course_type === "free"
                                             ? "Start Learning"
                                             : "Enroll Now"}
-                                    </button>
+                                    </button> */}
 
                                     {/* Download Syllabus */}
                                     {course?.syllabus_pdf && (
                                         <a
-                                            href={`${BASE_IMAGE_URL}${course.syllabus_pdf}`}
+                                            href={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.syllabus_pdf}`}
                                             target="_blank"
+                                            download={true}
                                             rel="noopener noreferrer"
                                             className="rc-cta-2"
                                         >

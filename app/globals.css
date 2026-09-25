@@ -3850,6 +3850,16 @@ section {
   z-index: 9999;
 }
 
+.success_modal_overlay h4 span {
+  display: block;
+}
+
+.success_modal_overlay h4 span,
+.course_title_modal {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 /* ===== SUCCESS BOX ===== */
 .modalbox.success {
   width: 360px;

@@ -541,8 +541,24 @@ export default function Profile() {
     // PROFILE IMAGE
     // --------------------------------------------------
 
-    const getProfileImage = (): string | null => {
-        if (!profile?.image) return null;
+    // const getProfileImage = (): string | null => {
+    //     if (!?.image) return null;
+
+    //     if (profile.image.startsWith("http")) {
+    //         return profile.image;
+    //     }
+
+    //     const imageName =
+    //         profile.image.split("/").pop();
+
+    //     if (!imageName) return null;
+
+    //     return `${BASE_IMAGE_URL}uploads/students/${imageName}`;
+    // };
+    const getProfileImage = () => {
+        if (!profile?.image) {
+            return "/images/icons/user.png";
+        }
 
         if (profile.image.startsWith("http")) {
             return profile.image;
@@ -551,11 +567,8 @@ export default function Profile() {
         const imageName =
             profile.image.split("/").pop();
 
-        if (!imageName) return null;
-
-        return `${BASE_IMAGE_URL}uploads/students/${imageName}`;
+        return `https://crm.velearn.in/public/uploads/students/${imageName}`;
     };
-
     // --------------------------------------------------
     // IMAGE UPLOAD
     // --------------------------------------------------
