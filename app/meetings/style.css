@@ -38,8 +38,14 @@
 }
 
 .profile_breadcrumb h2 {
-    font-family: 'Playfair Display', serif !important;
+      font-family: var(--heading-font) !important;
     font-size: 24px;
+}
+
+.profile_breadcrumb span {
+    color: #94a3b8;
+    font-size: 16px;
+    margin-left: 8px;
 }
 
 .current_meeting_card {
@@ -99,7 +105,7 @@
 }
 
 .section_title_serif {
-    font-family: 'Playfair Display', serif !important;
+      font-family: var(--heading-font) !important;
     font-size: 16px;
     font-weight: 700;
     color: #1e293b;

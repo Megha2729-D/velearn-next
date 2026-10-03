@@ -1,649 +1,1037 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-import "./style.css";
 import Sidebar from "@/components/layout/Sidebar";
-import NotificationsModal from "@/components/layout/NotificationsModal";
+import "./style.css";
 
-interface Notification {
-    message: string;
-    time: string;
-    color: string;
-    unread: boolean;
+const BASE_API_URL = "https://crm.velearn.in/api/";
+
+interface User {
+    id?: number | string;
+    auth_id?: number | string;
+    name?: string;
+    email?: string;
+    phonenumber?: string;
+    phone?: string;
 }
 
-interface Enrollment {
-    status?: string;
-    enrolled_at?: string;
-    completed_quizzes?: number | string;
-    total_quizzes?: number | string;
-}
-
-interface Course {
+interface Webinar {
     id: number | string;
     title: string;
-    slug: string;
-    thumbnail?: string | null;
-    price?: number | string;
-    enrollment?: Enrollment;
+    date: string;
+    from_time?: string | null;
+    to_time?: string | null;
+    instructor_name?: string | null;
+    category?: string | null;
+    description?: string | null;
+    meeting_link?: string | null;
+    zoom_link?: string | null;
+    join_link?: string | null;
 }
 
-interface Courses {
-    all: Course[];
-    ongoing: Course[];
-    completed: Course[];
-    inactive: Course[];
-}
+type WebinarStatus = "Live Now" | "Completed" | "Upcoming";
 
-interface ApiResponse {
-    status: boolean;
-    data?: {
-        all?: Course[];
-        ongoing?: Course[];
-        completed?: Course[];
-        inactive?: Course[];
-    };
-}
+const WebinarDashboard = () => {
+    const [webinars, setWebinars] = useState<Webinar[]>([]);
+    const [registeredWebinars, setRegisteredWebinars] = useState<
+        (number | string)[]
+    >([]);
 
-type FilterType =
-    | "all"
-    | "in-progress"
-    | "completed"
-    | "not-started";
+    const [loading, setLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-const isProduction =
-    typeof window !== "undefined" &&
-    (window.location.hostname === "velearn.in" ||
-        window.location.hostname === "www.velearn.in");
+    const [selectedWebinar, setSelectedWebinar] =
+        useState<Webinar | null>(null);
 
-const getApiUrl = () => {
-    if (typeof window === "undefined") {
-        return "https://crm.velearn.in/api/";
-    }
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
 
-    return isProduction
-        ? "https://crm.velearn.in/api/"
-        : `http://${window.location.hostname}:8000/api/`;
-};
+    const [recordedCount, setRecordedCount] = useState(0);
+    const [liveCount, setLiveCount] = useState(0);
 
-const getDynamicImageUrl = () => {
-    if (typeof window === "undefined") {
-        return "https://crm.velearn.in/public/";
-    }
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [user, setUser] = useState<User | null>(null);
+    const [userId, setUserId] = useState<number | string | null>(null);
 
-    return isProduction
-        ? "https://crm.velearn.in/public/"
-        : `http://${window.location.hostname}:8000/`;
-};
-
-const Placement = () => {
-    const [filter, setFilter] = useState<FilterType>("all");
-    const [search, setSearch] = useState("");
-
-    const [courses, setCourses] = useState<Courses>({
-        all: [],
-        ongoing: [],
-        completed: [],
-        inactive: [],
-    });
-
-    const [loading, setLoading] = useState<boolean>(true);
-    const [isSidebarOpen, setIsSidebarOpen] =
-        useState<boolean>(false);
-    const [isNotifOpen, setIsNotifOpen] =
-        useState<boolean>(false);
-
-    const [notifications] = useState<Notification[]>([
-        {
-            message:
-                "New registration confirmed for <b>Full Stack Development</b>! 🎉",
-            time: "2 hours ago",
-            color: "#3b82f6",
-            unread: true,
-        },
-        {
-            message:
-                "Payment of <b>₹8,500</b> confirmed — <b>UI/UX Design</b> is now active!",
-            time: "Yesterday, 4:30 PM",
-            color: "#10b981",
-            unread: false,
-        },
-        {
-            message:
-                "New lesson added to <b>React Mastery</b> — 'Server Actions Deep Dive'",
-            time: "Mar 1, 2025",
-            color: "#f59e0b",
-            unread: false,
-        },
-        {
-            message:
-                "Your <b>Python for Data Science</b> certificate is ready to download! 🎓",
-            time: "Mar 2, 2025",
-            color: "#10b981",
-            unread: false,
-        },
-    ]);
+    /* --------------------------------
+       Get Logged In User
+    -------------------------------- */
 
     useEffect(() => {
-        const fetchCourses = async () => {
-            try {
-                const storedUser = localStorage.getItem("user");
+        try {
+            const storedUser = localStorage.getItem("user");
 
-                if (!storedUser) {
-                    setLoading(false);
-                    return;
-                }
-
-                const user = JSON.parse(storedUser);
-
-                if (!user?.id) {
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await fetch(
-                    `${getApiUrl()}my-courses/${user.id}`
-                );
-
-                const data: ApiResponse = await response.json();
-
-                if (data.status) {
-                    const sortLatest = (arr: Course[] = []) => {
-                        return [...arr].sort((a, b) => {
-                            const dateA = new Date(
-                                a.enrollment?.enrolled_at || 0
-                            ).getTime();
-
-                            const dateB = new Date(
-                                b.enrollment?.enrolled_at || 0
-                            ).getTime();
-
-                            return dateB - dateA;
-                        });
-                    };
-
-                    setCourses({
-                        all: sortLatest(data.data?.all || []),
-                        ongoing: sortLatest(
-                            data.data?.ongoing || []
-                        ),
-                        completed: sortLatest(
-                            data.data?.completed || []
-                        ),
-                        inactive: sortLatest(
-                            data.data?.inactive || []
-                        ),
-                    });
-                }
-            } catch (error) {
-                console.error(
-                    "Error fetching courses:",
-                    error
-                );
-            } finally {
-                setLoading(false);
+            if (!storedUser) {
+                return;
             }
-        };
 
-        fetchCourses();
+            const parsedUser: User = JSON.parse(storedUser);
+
+            setUser(parsedUser);
+            setUserId(parsedUser.id || parsedUser.auth_id || null);
+        } catch (error) {
+            console.error("Error reading user:", error);
+        }
     }, []);
 
-    const filteredCourses = useMemo(() => {
-        let list: Course[] = [];
+    /* --------------------------------
+       Initial Fetch
+    -------------------------------- */
 
-        if (filter === "all") {
-            list = courses.all;
+    useEffect(() => {
+        fetchWebinars();
+
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    /* --------------------------------
+       User-dependent Fetch
+    -------------------------------- */
+
+    useEffect(() => {
+        if (!userId) {
+            return;
         }
 
-        if (filter === "in-progress") {
-            list = courses.ongoing;
+        fetchMyWebinars();
+        fetchCounts();
+    }, [userId]);
+
+    /* --------------------------------
+       Fetch Counts
+    -------------------------------- */
+
+    const fetchCounts = async () => {
+        if (!userId) return;
+
+        try {
+            const resRecorded = await axios.get(
+                `${BASE_API_URL}my-courses/${userId}`,
+            );
+
+            if (resRecorded.data.status) {
+                setRecordedCount(
+                    resRecorded.data.data?.all?.length || 0,
+                );
+            }
+
+            const resLive = await axios.get(
+                `${BASE_API_URL}live-course-history/${userId}`,
+            );
+
+            if (resLive.data.status) {
+                setLiveCount(
+                    resLive.data.data?.length || 0,
+                );
+            }
+        } catch (error) {
+            console.error("Error fetching counts:", error);
+        }
+    };
+
+    /* --------------------------------
+       Fetch Webinars
+    -------------------------------- */
+
+    const fetchWebinars = async () => {
+        try {
+            const response = await axios.get(
+                `${BASE_API_URL}webinars`,
+            );
+
+            if (response.data.status) {
+                setWebinars(response.data.data || []);
+            }
+        } catch (error) {
+            console.error("Error fetching webinars:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    /* --------------------------------
+       Fetch Registered Webinars
+    -------------------------------- */
+
+    const fetchMyWebinars = async () => {
+        if (!userId) return;
+
+        try {
+            const response = await axios.get(
+                `${BASE_API_URL}my-webinars/${userId}`,
+            );
+
+            if (response.data.status) {
+                setRegisteredWebinars(
+                    (response.data.data || []).map(
+                        (webinar: Webinar) => webinar.id,
+                    ),
+                );
+            }
+        } catch (error) {
+            console.error(
+                "Error fetching my webinars:",
+                error,
+            );
+        }
+    };
+
+    /* --------------------------------
+       Register Webinar
+    -------------------------------- */
+
+    const handleRegister = async (webinar: Webinar) => {
+        if (!userId || !user) {
+            toast.error("Please login to register");
+            return;
         }
 
-        if (filter === "completed") {
-            list = courses.completed;
-        }
+        const loadingToast = toast.loading("Registering...");
 
-        if (filter === "not-started") {
-            list = courses.inactive;
-        }
+        try {
+            const response = await axios.post(
+                `${BASE_API_URL}webinar-register`,
+                {
+                    webinar_id: webinar.id,
+                    auth_id: userId,
+                    name: user.name || "",
+                    email: user.email || "",
+                    phone:
+                        user.phonenumber ||
+                        user.phone ||
+                        "",
+                },
+            );
 
-        if (search.trim() !== "") {
-            list = list.filter((course) =>
-                course.title
-                    .toLowerCase()
-                    .includes(search.toLowerCase())
+            if (response.data.status) {
+                toast.success(
+                    "Successfully registered!",
+                    {
+                        id: loadingToast,
+                    },
+                );
+
+                setRegisteredWebinars((prev) => [
+                    ...prev,
+                    webinar.id,
+                ]);
+            } else {
+                toast.error(
+                    response.data.message ||
+                    "Registration failed",
+                    {
+                        id: loadingToast,
+                    },
+                );
+            }
+        } catch (error) {
+            console.error(
+                "Webinar registration error:",
+                error,
+            );
+
+            toast.error("Something went wrong", {
+                id: loadingToast,
+            });
+        }
+    };
+
+    /* --------------------------------
+       Format Date
+    -------------------------------- */
+
+    const formatDate = (date: string) => {
+        return new Date(date).toLocaleDateString(
+            "en-US",
+            {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+            },
+        );
+    };
+
+    /* --------------------------------
+       Format Time
+    -------------------------------- */
+
+    const formatTime = (
+        time?: string | null,
+    ) => {
+        if (!time) return "";
+
+        const [h, m] = time.split(":");
+
+        const date = new Date();
+
+        date.setHours(
+            Number(h),
+            Number(m),
+            0,
+            0,
+        );
+
+        return date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+
+    /* --------------------------------
+       Join Webinar
+    -------------------------------- */
+
+    const handleJoin = (webinar: Webinar) => {
+        const link =
+            webinar.meeting_link ||
+            webinar.zoom_link ||
+            webinar.join_link;
+
+        if (link) {
+            window.open(
+                link,
+                "_blank",
+                "noopener,noreferrer",
+            );
+        } else {
+            toast.error(
+                "Meeting link is not available yet.",
+            );
+        }
+    };
+
+    /* --------------------------------
+       View Details
+    -------------------------------- */
+
+    const handleViewDetails = (
+        webinar: Webinar,
+    ) => {
+        setSelectedWebinar(webinar);
+        setShowDetailsModal(true);
+    };
+
+    /* --------------------------------
+       Get Webinar Status
+    -------------------------------- */
+
+    const getStatus = (
+        webinar: Webinar,
+    ): WebinarStatus => {
+        const now = new Date();
+
+        const startDate = new Date(
+            webinar.date,
+        );
+
+        if (webinar.from_time) {
+            const [startH, startM] =
+                webinar.from_time.split(":");
+
+            startDate.setHours(
+                Number(startH),
+                Number(startM),
+                0,
+                0,
             );
         }
 
-        return list;
-    }, [filter, courses, search]);
+        const endDate = new Date(
+            webinar.date,
+        );
+
+        if (webinar.to_time) {
+            const [endH, endM] =
+                webinar.to_time.split(":");
+
+            endDate.setHours(
+                Number(endH),
+                Number(endM),
+                0,
+                0,
+            );
+        } else {
+            endDate.setHours(
+                startDate.getHours() + 2,
+                startDate.getMinutes(),
+                0,
+                0,
+            );
+        }
+
+        if (
+            now >= startDate &&
+            now <= endDate
+        ) {
+            return "Live Now";
+        }
+
+        if (now > endDate) {
+            return "Completed";
+        }
+
+        return "Upcoming";
+    };
+
+    /* --------------------------------
+       Check Joinable
+    -------------------------------- */
+
+    const isJoinable = (
+        webinar: Webinar,
+    ) => {
+        const startDate = new Date(
+            webinar.date,
+        );
+
+        if (webinar.from_time) {
+            const [startH, startM] =
+                webinar.from_time.split(":");
+
+            startDate.setHours(
+                Number(startH),
+                Number(startM),
+                0,
+                0,
+            );
+        }
+
+        const earlyJoinTime = new Date(
+            startDate.getTime() -
+            5 * 60 * 1000,
+        );
+
+        return currentTime >= earlyJoinTime;
+    };
+
+    /* --------------------------------
+       Filter Webinars
+    -------------------------------- */
+
+    const filteredWebinars =
+        webinars.filter((webinar) => {
+            const today = new Date();
+
+            today.setHours(
+                0,
+                0,
+                0,
+                0,
+            );
+
+            const webinarDate =
+                new Date(webinar.date);
+
+            webinarDate.setHours(
+                0,
+                0,
+                0,
+                0,
+            );
+
+            if (webinarDate >= today) {
+                return true;
+            }
+
+            return registeredWebinars.includes(
+                webinar.id,
+            );
+        });
+
+    const upcomingCount =
+        filteredWebinars.filter(
+            (webinar) => {
+                const today = new Date();
+
+                today.setHours(
+                    0,
+                    0,
+                    0,
+                    0,
+                );
+
+                const webinarDate =
+                    new Date(webinar.date);
+
+                webinarDate.setHours(
+                    0,
+                    0,
+                    0,
+                    0,
+                );
+
+                return webinarDate >= today;
+            },
+        ).length;
 
     return (
         <div className="dashboard_layout">
-            {/* Sidebar */}
             <Sidebar
-                recordedCoursesCount={courses.all.length}
-                liveCoursesCount={0}
+                recordedCoursesCount={
+                    recordedCount
+                }
+                liveCoursesCount={
+                    liveCount
+                }
                 activePage="webinar"
-                isOpen={isSidebarOpen}
-                onClose={() => setIsSidebarOpen(false)}
+                isOpen={
+                    isSidebarOpen
+                }
+                onClose={() =>
+                    setIsSidebarOpen(false)
+                }
             />
 
-            {/* Mobile Overlay */}
             <div
-                className={`sidebar_overlay ${
-                    isSidebarOpen ? "show" : ""
-                }`}
-                onClick={() => setIsSidebarOpen(false)}
-            />
-
-            {/* Notifications */}
-            <NotificationsModal
-                isOpen={isNotifOpen}
-                onClose={() => setIsNotifOpen(false)}
-                notifications={notifications}
+                className={`sidebar_overlay ${isSidebarOpen
+                        ? "show"
+                        : ""
+                    }`}
+                onClick={() =>
+                    setIsSidebarOpen(false)
+                }
             />
 
             <div className="dashboard_main_content">
-                {/* Header */}
-                <div className="dashboard_top_header">
-                    <div className="d-flex align-items-center gap-3">
-                        <button
-                            type="button"
-                            className="btn_mobile_menu d-lg-none"
-                            onClick={() =>
-                                setIsSidebarOpen(true)
-                            }
-                        >
-                            <i className="bi bi-list"></i>
-                        </button>
+                <div className="webinar_dashboard_container">
 
-                        <div className="profile_breadcrumb mb-0">
-                            <h2>Recorded Courses</h2>
-                        </div>
-                    </div>
+                    {/* Top Header */}
+                    <div className="webinar_top_title_row">
+                        <h1>
+                            Webinar & Seminar
+                        </h1>
 
-                    <div
-                        className="notification_bell_top"
-                        onClick={() =>
-                            setIsNotifOpen(true)
-                        }
-                    >
-                        <i className="bi bi-bell"></i>
+                        <div className="notification_btn">
+                            <i className="bi bi-bell"></i>
 
-                        {notifications.some(
-                            (notification) =>
-                                notification.unread
-                        ) && (
-                            <span className="notif_ping"></span>
-                        )}
-                    </div>
-                </div>
-
-                {/* Courses */}
-                <section className="live_courses_sec my_course_parent">
-                    <div className="container-fluid px-0 px-lg-3">
-                        <h3 className="section_base_heading text-black mb-4">
-                            My{" "}
-                            <span className="text-c2">
-                                Courses
-                            </span>
-                        </h3>
-
-                        {/* Filters */}
-                        <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
-                            <div className="d-flex gap-2 flex-wrap">
-                                <button
-                                    type="button"
-                                    className={
-                                        filter === "all"
-                                            ? "filter_active_butt"
-                                            : "filter_butt"
-                                    }
-                                    onClick={() =>
-                                        setFilter("all")
-                                    }
-                                >
-                                    All Courses
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className={
-                                        filter ===
-                                        "in-progress"
-                                            ? "filter_active_butt"
-                                            : "filter_butt"
-                                    }
-                                    onClick={() =>
-                                        setFilter(
-                                            "in-progress"
-                                        )
-                                    }
-                                >
-                                    In Progress
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className={
-                                        filter ===
-                                        "completed"
-                                            ? "filter_active_butt"
-                                            : "filter_butt"
-                                    }
-                                    onClick={() =>
-                                        setFilter("completed")
-                                    }
-                                >
-                                    Completed
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className={
-                                        filter ===
-                                        "not-started"
-                                            ? "filter_active_butt"
-                                            : "filter_butt"
-                                    }
-                                    onClick={() =>
-                                        setFilter(
-                                            "not-started"
-                                        )
-                                    }
-                                >
-                                    Not Started
-                                </button>
-                            </div>
-
-                            {/* Search */}
-                            <input
-                                type="text"
-                                value={search}
-                                placeholder="Search course..."
-                                className="form-control form-control-sm"
-                                style={{ width: "220px" }}
-                                onChange={(e) =>
-                                    setSearch(e.target.value)
-                                }
+                            <div
+                                className="dot"
+                                style={{
+                                    position:
+                                        "absolute",
+                                    top: "10px",
+                                    right: "10px",
+                                    width: "6px",
+                                    height: "6px",
+                                    background:
+                                        "#e74c3c",
+                                    borderRadius:
+                                        "50%",
+                                }}
                             />
                         </div>
+                    </div>
 
-                        {/* Loading */}
-                        {loading && (
+                    {/* Hero */}
+                    <div className="webinar_hero_card">
+                        <div className="hero_content_left">
+                            <h2>
+                                <i className="bi bi-broadcast"></i>{" "}
+                                Webinar & Seminar
+                            </h2>
+
+                            <p>
+                                Industry talks,
+                                guest lectures &
+                                career sessions
+                            </p>
+                        </div>
+
+                        <div className="upcoming_badge">
+                            {upcomingCount} upcoming
+                        </div>
+                    </div>
+
+                    {/* Webinar List */}
+                    <div className="webinar_list">
+                        {loading ? (
                             <div className="text-center py-5">
-                                <h5>Loading Courses...</h5>
+                                <div className="spinner-border text-primary"></div>
                             </div>
-                        )}
+                        ) : filteredWebinars.length ===
+                            0 ? (
+                            <div className="text-center py-5 text-muted">
+                                <i className="bi bi-calendar-x fs-1 d-block mb-3"></i>
 
-                        {/* Empty State */}
-                        {!loading &&
-                            filteredCourses.length === 0 && (
-                                <div className="prof_empty_card mb-5">
-                                    <div className="empty_illustration_wrap">
-                                        <i className="bi bi-collection-play"></i>
-                                    </div>
-
-                                    <h3>
-                                        No courses found
-                                    </h3>
-
-                                    <p>
-                                        You haven't enrolled in
-                                        any recorded courses yet,
-                                        or no courses match your
-                                        current filter.
-                                    </p>
-
-                                    <Link
-                                        href="/courses"
-                                        className="browse_courses_btn"
-                                    >
-                                        Browse Courses{" "}
-                                        <i className="bi bi-arrow-right-short ms-2"></i>
-                                    </Link>
-                                </div>
-                            )}
-
-                        {/* Courses Grid */}
-                        {!loading && (
-                            <div className="row g-4">
-                                {filteredCourses.map(
-                                    (course, index) => {
-                                        const status =
-                                            course.enrollment
-                                                ?.status;
-
-                                        const isInactive =
-                                            status ===
-                                            "inactive";
-
-                                        const completedQuizzes =
-                                            parseInt(
-                                                String(
-                                                    course
-                                                        .enrollment
-                                                        ?.completed_quizzes ||
-                                                        0
-                                                ),
-                                                10
-                                            );
-
-                                        const totalQuizzes =
-                                            parseInt(
-                                                String(
-                                                    course
-                                                        .enrollment
-                                                        ?.total_quizzes ||
-                                                        0
-                                                ),
-                                                10
-                                            );
-
-                                        const progress =
-                                            totalQuizzes > 0
-                                                ? Math.round(
-                                                      (completedQuizzes /
-                                                          totalQuizzes) *
-                                                          100
-                                                  )
-                                                : status ===
-                                                    "completed"
-                                                  ? 100
-                                                  : status ===
-                                                      "ongoing"
-                                                    ? 40
-                                                    : 0;
-
-                                        const imageBaseUrl =
-                                            getDynamicImageUrl();
-
-                                        const img =
-                                            course.thumbnail
-                                                ? `${imageBaseUrl}uploads/courses/${course.thumbnail}`
-                                                : `${imageBaseUrl}uploads/courses/default-course.jpg`;
-
-                                        return (
-                                            <div
-                                                key={
-                                                    course.id
-                                                }
-                                                className="col-lg-4 col-md-4 col-sm-6"
-                                            >
-                                                <div
-                                                    className={`card_parent h-100 d-flex flex-column position-relative ${
-                                                        index %
-                                                            2 ===
-                                                        0
-                                                            ? "one"
-                                                            : "two"
-                                                    } ${
-                                                        isInactive
-                                                            ? "locked_card"
-                                                            : ""
-                                                    }`}
-                                                >
-                                                    {/* Locked Overlay */}
-                                                    {isInactive && (
-                                                        <Link
-                                                            href="/contact-us"
-                                                            className="locked_overlay"
-                                                        >
-                                                            <div className="locked_box d-flex flex-column align-items-center">
-                                                                <div className="lock_icon_circle">
-                                                                    <i className="bi bi-lock-fill"></i>
-                                                                </div>
-
-                                                                <span className="locked_text">
-                                                                    Course
-                                                                    Locked
-                                                                </span>
-
-                                                                <div className="locked_price mt-1">
-                                                                    ₹
-                                                                    {
-                                                                        course.price
-                                                                    }
-                                                                </div>
-
-                                                                <div className="unlock_hint mt-2">
-                                                                    Unlock
-                                                                    Course{" "}
-                                                                    <i className="bi bi-chevron-right"></i>
-                                                                </div>
-                                                            </div>
-                                                        </Link>
-                                                    )}
-
-                                                    {/* Image */}
-                                                    <div className="card_img_parent overflow-hidden">
-                                                        <img
-                                                            src={
-                                                                img
-                                                            }
-                                                            className="card_img w-100"
-                                                            alt={
-                                                                course.title
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    {/* Content */}
-                                                    <div className="pt-3 d-flex flex-column flex-grow-1">
-                                                        <h5 className="fw-bold">
-                                                            {
-                                                                course.title
-                                                            }
-                                                        </h5>
-
-                                                        <p className="enroll_on_date mb-2">
-                                                            Enrolled
-                                                            on{" "}
-                                                            {
-                                                                course
-                                                                    .enrollment
-                                                                    ?.enrolled_at
-                                                            }
-                                                        </p>
-
-                                                        <div className="mt-auto">
-                                                            <div className="d-flex justify-content-between small">
-                                                                <span>
-                                                                    {totalQuizzes >
-                                                                    0
-                                                                        ? "Quizzes Done"
-                                                                        : "Progress"}
-                                                                </span>
-
-                                                                <span className="fw-bold">
-                                                                    {totalQuizzes >
-                                                                    0
-                                                                        ? `${completedQuizzes}/${totalQuizzes}`
-                                                                        : `${progress}%`}
-                                                                </span>
-                                                            </div>
-
-                                                            <div
-                                                                className="progress mt-1"
-                                                                style={{
-                                                                    height:
-                                                                        "6px",
-                                                                }}
-                                                            >
-                                                                <div
-                                                                    className="progress-bar bg-success"
-                                                                    style={{
-                                                                        width: `${progress}%`,
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        {/* Button */}
-                                                        {isInactive ? (
-                                                            <Link
-                                                                href="/contact-us"
-                                                            >
-                                                                <div className="paid_butt mt-3">
-                                                                    Unlock
-                                                                    Course
-                                                                </div>
-                                                            </Link>
-                                                        ) : (
-                                                            <Link
-                                                                href={`/learn/${course.slug}`}
-                                                            >
-                                                                <div
-                                                                    className={`mt-3 paid_butt ${
-                                                                        progress ===
-                                                                        100
-                                                                            ? "certificate_butt"
-                                                                            : progress ===
-                                                                                0
-                                                                              ? "start_course_butt"
-                                                                              : "continue_course_butt"
-                                                                    }`}
-                                                                >
-                                                                    {progress ===
-                                                                    100 ? (
-                                                                        <>
-                                                                            <i className="bi bi-patch-check-fill me-2"></i>
-                                                                            View
-                                                                            Certificate
-                                                                        </>
-                                                                    ) : progress ===
-                                                                      0 ? (
-                                                                        <>
-                                                                            <i className="bi bi-play-fill me-2"></i>
-                                                                            Start
-                                                                            Course
-                                                                        </>
-                                                                    ) : (
-                                                                        <>
-                                                                            <i className="bi bi-play-circle-fill me-2"></i>
-                                                                            Continue
-                                                                            Watching
-                                                                        </>
-                                                                    )}
-                                                                </div>
-                                                            </Link>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <p>
+                                    No webinars available at the moment.
+                                </p>
+                            </div>
+                        ) : (
+                            filteredWebinars.map(
+                                (webinar) => {
+                                    const status =
+                                        getStatus(
+                                            webinar,
                                         );
-                                    }
-                                )}
-                            </div>
+
+                                    return (
+                                        <div
+                                            className={`webinar_item_row ${status ===
+                                                    "Live Now"
+                                                    ? "live_now"
+                                                    : ""
+                                                }`}
+                                            key={
+                                                webinar.id
+                                            }
+                                        >
+                                            {/* Type */}
+                                            <div className="item_badge_type">
+                                                <i className="bi bi-globe"></i>{" "}
+                                                Webinar
+                                            </div>
+
+                                            {/* Status */}
+                                            {status ===
+                                                "Live Now" && (
+                                                    <span className="status_label_fixed status_live">
+                                                        Live Now
+                                                    </span>
+                                                )}
+
+                                            {status ===
+                                                "Completed" && (
+                                                    <span className="status_label_fixed status_completed">
+                                                        Completed
+                                                    </span>
+                                                )}
+
+                                            {/* Title */}
+                                            <h3>
+                                                {
+                                                    webinar.title
+                                                }
+                                            </h3>
+
+                                            {/* Details */}
+                                            <div className="webinar_details_info">
+
+                                                <div className="detail_line">
+                                                    <i className="bi bi-calendar3"></i>
+
+                                                    <span>
+                                                        {formatDate(
+                                                            webinar.date,
+                                                        )}{" "}
+                                                        ·{" "}
+                                                        {formatTime(
+                                                            webinar.from_time,
+                                                        )}{" "}
+                                                        · Duration:
+                                                        2 hrs
+                                                    </span>
+                                                </div>
+
+                                                <div className="detail_line">
+                                                    <i className="bi bi-mic"></i>
+
+                                                    <span>
+                                                        Guest:{" "}
+                                                        {webinar.instructor_name ||
+                                                            "Industry Expert"}
+                                                    </span>
+                                                </div>
+
+                                                <div className="detail_line">
+                                                    <i className="bi bi-people"></i>
+
+                                                    <span>
+                                                        {status ===
+                                                            "Completed"
+                                                            ? "210 attended"
+                                                            : registeredWebinars.includes(
+                                                                webinar.id,
+                                                            )
+                                                                ? "Registered"
+                                                                : "84 registered so far"}
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            {/* Actions */}
+                                            <div className="webinar_actions_row">
+
+                                                {status ===
+                                                    "Live Now" ? (
+                                                    <>
+                                                        <button
+                                                            className="btn_wbr_primary"
+                                                            onClick={() =>
+                                                                handleJoin(
+                                                                    webinar,
+                                                                )
+                                                            }
+                                                        >
+                                                            Join Webinar →
+                                                        </button>
+
+                                                        <button
+                                                            className="btn_wbr_outline"
+                                                            onClick={() =>
+                                                                handleViewDetails(
+                                                                    webinar,
+                                                                )
+                                                            }
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </>
+                                                ) : status ===
+                                                    "Completed" ? (
+                                                    <>
+                                                        <button
+                                                            className="btn_wbr_outline"
+                                                            onClick={() =>
+                                                                handleJoin(
+                                                                    webinar,
+                                                                )
+                                                            }
+                                                        >
+                                                            Watch Recording
+                                                        </button>
+
+                                                        <button
+                                                            className="btn_wbr_dark"
+                                                            onClick={() =>
+                                                                handleViewDetails(
+                                                                    webinar,
+                                                                )
+                                                            }
+                                                        >
+                                                            Notes
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {registeredWebinars.includes(
+                                                            webinar.id,
+                                                        ) ? (
+                                                            <button
+                                                                className={
+                                                                    isJoinable(
+                                                                        webinar,
+                                                                    )
+                                                                        ? "btn_wbr_primary"
+                                                                        : "btn_wbr_grey"
+                                                                }
+                                                                disabled={
+                                                                    !isJoinable(
+                                                                        webinar,
+                                                                    )
+                                                                }
+                                                                onClick={() =>
+                                                                    handleJoin(
+                                                                        webinar,
+                                                                    )
+                                                                }
+                                                            >
+                                                                Join Webinar
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="btn_wbr_dark"
+                                                                onClick={() =>
+                                                                    handleRegister(
+                                                                        webinar,
+                                                                    )
+                                                                }
+                                                            >
+                                                                Register
+                                                            </button>
+                                                        )}
+
+                                                        <button
+                                                            className="btn_wbr_outline"
+                                                            onClick={() =>
+                                                                handleViewDetails(
+                                                                    webinar,
+                                                                )
+                                                            }
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </>
+                                                )}
+
+                                            </div>
+                                        </div>
+                                    );
+                                },
+                            )
                         )}
                     </div>
-                </section>
+
+                    {/* Details Modal */}
+                    {showDetailsModal &&
+                        selectedWebinar && (
+                            <div
+                                className="wbr_modal_overlay"
+                                onClick={() =>
+                                    setShowDetailsModal(
+                                        false,
+                                    )
+                                }
+                            >
+                                <div
+                                    className="wbr_details_modal animate__animated animate__fadeInUp"
+                                    onClick={(event) =>
+                                        event.stopPropagation()
+                                    }
+                                >
+                                    {/* Modal Header */}
+                                    <div className="modal_header_custom">
+                                        <h3>
+                                            {
+                                                selectedWebinar.title
+                                            }
+                                        </h3>
+
+                                        <button
+                                            className="btn_close_wbr"
+                                            onClick={() =>
+                                                setShowDetailsModal(
+                                                    false,
+                                                )
+                                            }
+                                        >
+                                            <i className="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+
+                                    {/* Modal Body */}
+                                    <div className="modal_body_custom">
+
+                                        <div className="wbr_detail_meta_grid">
+
+                                            <div className="meta_block">
+                                                <i className="bi bi-calendar3"></i>
+
+                                                <div>
+                                                    <label>
+                                                        Date
+                                                    </label>
+
+                                                    <span>
+                                                        {formatDate(
+                                                            selectedWebinar.date,
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="meta_block">
+                                                <i className="bi bi-clock"></i>
+
+                                                <div>
+                                                    <label>
+                                                        Time
+                                                    </label>
+
+                                                    <span>
+                                                        {formatTime(
+                                                            selectedWebinar.from_time,
+                                                        )}{" "}
+                                                        -{" "}
+                                                        {formatTime(
+                                                            selectedWebinar.to_time,
+                                                        )}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="meta_block">
+                                                <i className="bi bi-mic"></i>
+
+                                                <div>
+                                                    <label>
+                                                        Speaker
+                                                    </label>
+
+                                                    <span>
+                                                        {selectedWebinar.instructor_name ||
+                                                            "Industry Expert"}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="meta_block">
+                                                <i className="bi bi-tag"></i>
+
+                                                <div>
+                                                    <label>
+                                                        Category
+                                                    </label>
+
+                                                    <span>
+                                                        {selectedWebinar.category ||
+                                                            "Webinar"}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="wbr_description_sec mt-4">
+                                            <h4>
+                                                About this Session
+                                            </h4>
+
+                                            <p>
+                                                {selectedWebinar.description ||
+                                                    "In this session, you will gain practical insights into industry trends, tools, and techniques. Perfect for beginners and professionals looking to stay ahead in their careers."}
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    {/* Modal Footer */}
+                                    <div className="modal_footer_custom">
+                                        {(() => {
+                                            const status =
+                                                getStatus(
+                                                    selectedWebinar,
+                                                );
+
+                                            if (
+                                                status ===
+                                                "Live Now"
+                                            ) {
+                                                return (
+                                                    <button
+                                                        className="btn_wbr_primary w-100"
+                                                        style={{
+                                                            border:
+                                                                "none",
+                                                            padding:
+                                                                "12px",
+                                                            borderRadius:
+                                                                "8px",
+                                                        }}
+                                                        onClick={() =>
+                                                            handleJoin(
+                                                                selectedWebinar,
+                                                            )
+                                                        }
+                                                    >
+                                                        Join Now
+                                                    </button>
+                                                );
+                                            }
+
+                                            if (
+                                                status ===
+                                                "Completed"
+                                            ) {
+                                                return (
+                                                    <button
+                                                        className="btn_wbr_outline w-100"
+                                                        style={{
+                                                            border:
+                                                                "1px solid #dee2e6",
+                                                            padding:
+                                                                "12px",
+                                                            borderRadius:
+                                                                "8px",
+                                                        }}
+                                                        onClick={() =>
+                                                            handleJoin(
+                                                                selectedWebinar,
+                                                            )
+                                                        }
+                                                    >
+                                                        Watch Recording
+                                                    </button>
+                                                );
+                                            }
+
+                                            if (
+                                                registeredWebinars.includes(
+                                                    selectedWebinar.id,
+                                                )
+                                            ) {
+                                                const joinable =
+                                                    isJoinable(
+                                                        selectedWebinar,
+                                                    );
+
+                                                return (
+                                                    <button
+                                                        className={
+                                                            joinable
+                                                                ? "btn_wbr_primary w-100"
+                                                                : "btn_wbr_grey w-100"
+                                                        }
+                                                        style={{
+                                                            border:
+                                                                "none",
+                                                            padding:
+                                                                "12px",
+                                                            borderRadius:
+                                                                "8px",
+                                                            ...(joinable
+                                                                ? {}
+                                                                : {
+                                                                    background:
+                                                                        "#e9ecef",
+                                                                    color:
+                                                                        "#6c757d",
+                                                                }),
+                                                        }}
+                                                        disabled={
+                                                            !joinable
+                                                        }
+                                                        onClick={() =>
+                                                            handleJoin(
+                                                                selectedWebinar,
+                                                            )
+                                                        }
+                                                    >
+                                                        Join Webinar
+                                                    </button>
+                                                );
+                                            }
+
+                                            return (
+                                                <button
+                                                    className="btn_wbr_dark w-100"
+                                                    style={{
+                                                        border:
+                                                            "none",
+                                                        padding:
+                                                            "12px",
+                                                        borderRadius:
+                                                            "8px",
+                                                    }}
+                                                    onClick={() => {
+                                                        handleRegister(
+                                                            selectedWebinar,
+                                                        );
+
+                                                        setShowDetailsModal(
+                                                            false,
+                                                        );
+                                                    }}
+                                                >
+                                                    Register for Session
+                                                </button>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                </div>
             </div>
         </div>
     );
 };
 
-export default Placement;
+export default WebinarDashboard;

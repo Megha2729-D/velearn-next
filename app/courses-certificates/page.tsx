@@ -2,11 +2,21 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
 import "./style.css";
 
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+
+interface User {
+    id: string | number;
+    name?: string;
+    email?: string;
+    phonenumber?: string;
+    phone?: string;
+    [key: string]: any;
+}
 
 interface Course {
     id?: number | string;
@@ -21,10 +31,13 @@ interface Course {
 const CoursesCertificates = () => {
     const [loading, setLoading] = useState(true);
     const [completedCourses, setCompletedCourses] = useState<Course[]>([]);
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const [downloading, setDownloading] = useState(false);
+
     const certificateRef = useRef<HTMLDivElement | null>(null);
+    const router = useRouter();
+
     const getBaseApiUrl = () => {
         if (typeof window === "undefined") {
             return "https://crm.velearn.in/api/";
@@ -39,11 +52,23 @@ const CoursesCertificates = () => {
             : `http://${window.location.hostname}:8000/api/`;
     };
 
+    const logoutUser = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+
+        setUser(null);
+        setCompletedCourses([]);
+
+        router.push("/login");
+    };
+
     const fetchCourses = async (userId: string | number) => {
         const BASE_API_URL = getBaseApiUrl();
 
         try {
+            // ==============================
             // Fetch recorded courses
+            // ==============================
             const recordedRes = await axios.get(
                 `${BASE_API_URL}my-courses/${userId}`
             );
@@ -55,7 +80,9 @@ const CoursesCertificates = () => {
                     recordedRes.data.data?.completed || [];
             }
 
+            // ==============================
             // Fetch live courses
+            // ==============================
             const token = localStorage.getItem("token");
 
             const headers = token
@@ -85,7 +112,9 @@ const CoursesCertificates = () => {
                 );
             }
 
-            // Combine recorded and live courses
+            // ==============================
+            // Combine courses
+            // ==============================
             const combined: Course[] = [
                 ...recordedCompleted.map(
                     (course): Course => ({
@@ -102,7 +131,9 @@ const CoursesCertificates = () => {
                 ),
             ];
 
-            // Remove duplicate courses by title
+            // ==============================
+            // Remove duplicate courses
+            // ==============================
             const unique: Course[] = [];
             const seen = new Set<string | number>();
 
@@ -122,27 +153,95 @@ const CoursesCertificates = () => {
     };
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
+        const verifyUserAndFetchCourses = async () => {
+            const storedUser = localStorage.getItem("user");
+            const token = localStorage.getItem("token");
 
-        if (storedUser) {
-            try {
-                const parsedUser = JSON.parse(storedUser);
-
-                setUser(parsedUser);
-
-                if (parsedUser?.id) {
-                    fetchCourses(parsedUser.id);
-                } else {
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.error("Error parsing stored user:", error);
+            // ==============================
+            // No stored login
+            // ==============================
+            if (!storedUser || !token) {
+                setUser(null);
                 setLoading(false);
+                router.push("/login");
+                return;
             }
-        } else {
-            setLoading(false);
-        }
-    }, []);
+
+            try {
+                const parsedUser: User = JSON.parse(storedUser);
+
+                if (!parsedUser?.id) {
+                    logoutUser();
+                    return;
+                }
+
+                const BASE_API_URL = getBaseApiUrl();
+
+                // ==============================
+                // Verify user still exists
+                // ==============================
+                const response = await axios.get(
+                    `${BASE_API_URL}user/${parsedUser.id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: "application/json",
+                        },
+                    }
+                );
+
+                const result = response.data;
+
+                // ==============================
+                // User does not exist
+                // ==============================
+                if (!result?.status || !result?.data) {
+                    console.log("User not found in database");
+
+                    logoutUser();
+                    return;
+                }
+
+                // ==============================
+                // User exists
+                // ==============================
+                const verifiedUser: User = result.data;
+
+                setUser(verifiedUser);
+
+                // Update localStorage
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(verifiedUser)
+                );
+
+                // ==============================
+                // Fetch user's courses
+                // ==============================
+                await fetchCourses(verifiedUser.id);
+
+            } catch (error: any) {
+                console.error(
+                    "User verification failed:",
+                    error
+                );
+
+                // 401 / 404 / any API error
+                if (
+                    error?.response?.status === 401 ||
+                    error?.response?.status === 404
+                ) {
+                    console.log(
+                        "User deleted or authentication expired"
+                    );
+                }
+
+                logoutUser();
+            }
+        };
+
+        verifyUserAndFetchCourses();
+    }, [router]);
 
     useEffect(() => {
         if (selectedCourse && !downloading) {

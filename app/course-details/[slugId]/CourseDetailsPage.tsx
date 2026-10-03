@@ -9,6 +9,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
+
+declare global {
+    interface Window {
+        Razorpay?: any;
+    }
+}
 interface CourseDetailsPageProps {
     slugId: string;
 }
@@ -176,86 +182,45 @@ export default function CourseDetailsPage({
         setShowConfirmModal(true);
     };
 
-    // const handleCourseAction = () => {
-    //     const storedUser = localStorage.getItem("user");
+    const loadRazorpayScript = (): Promise<boolean> => {
+        return new Promise((resolve) => {
+            if (typeof window !== "undefined" && window.Razorpay) {
+                resolve(true);
+                return;
+            }
 
-    //     if (!storedUser) {
-    //         router.push("/login");
-    //         return;
-    //     }
+            const existingScript = document.querySelector(
+                'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+            );
 
-    //     try {
-    //         const parsedUser = JSON.parse(storedUser);
+            if (existingScript) {
+                existingScript.addEventListener("load", () => resolve(true), {
+                    once: true,
+                });
+                existingScript.addEventListener("error", () => resolve(false), {
+                    once: true,
+                });
+                return;
+            }
 
-    //         setUser(parsedUser);
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.async = true;
 
-    //         // Populate form with logged-in user
-    //         setName(parsedUser.name || "");
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
 
-    //         setEmail(parsedUser.email || "");
+            document.body.appendChild(script);
+        });
+    };
 
-    //         setPhone(
-    //             (
-    //                 parsedUser.phonenumber ||
-    //                 parsedUser.phone ||
-    //                 ""
-    //             )
-    //                 .replace(/^\+?91/, "")
-    //                 .trim()
-    //         );
-
-    //         if (isEnrolled) {
-    //             router.push("/live-course-history");
-    //             return;
-    //         }
-
-    //         setErrors({});
-    //         setShowEnrollFormModal(true);
-    //     } catch (error) {
-    //         console.error(
-    //             "User parse error:",
-    //             error
-    //         );
-
-    //         router.push("/login");
-    //     }
-    // };
-
-    const confirmEnroll = async () => {
+    const completeFreeEnrollment = async (
+        loggedUser: User,
+        courseId: number,
+        message?: string
+    ) => {
         try {
-            const storedUser = localStorage.getItem("user");
-
-            if (!storedUser) {
-                router.push("/login");
-                return;
-            }
-
-            const loggedUser = JSON.parse(storedUser);
             const token = localStorage.getItem("token");
-
-            // IMPORTANT:
-            // course.id comes from your dynamic recorded course API
-            if (!course?.id) {
-                toast.error("Course information not available");
-                console.error("Course ID missing:", course);
-                return;
-            }
-
-            const payload = {
-                name: formData.name.trim(),
-                phone: formData.phone.trim(),
-                email: formData.email.trim(),
-                lead_source: "Website",
-                course_id: Number(course.id),
-                auth_id: Number(loggedUser.id),
-            };
-
-            console.log("=================================");
-            console.log("RECORDED COURSE ENROLLMENT");
-            console.log("Sending enrollment payload:", payload);
-            console.log("Course:", course);
-            console.log("User:", loggedUser);
-            console.log("=================================");
 
             const response = await fetch(
                 `${BASE_API_URL}enroll-now`,
@@ -264,28 +229,24 @@ export default function CourseDetailsPage({
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
-
                         ...(token
                             ? {
                                 Authorization: `Bearer ${token}`,
                             }
                             : {}),
                     },
-                    body: JSON.stringify(payload),
+                    body: JSON.stringify({
+                        name: name.trim() || formData.name.trim(),
+                        phone: phone.trim() || formData.phone.trim(),
+                        email: email.trim() || formData.email.trim(),
+                        lead_source: "Website",
+                        course_id: Number(courseId),
+                        auth_id: Number(loggedUser.id),
+                    }),
                 }
             );
 
             const responseText = await response.text();
-
-            console.log(
-                "Enrollment API status:",
-                response.status
-            );
-
-            console.log(
-                "Enrollment API response:",
-                responseText
-            );
 
             let data: any = {};
 
@@ -293,18 +254,14 @@ export default function CourseDetailsPage({
                 data = JSON.parse(responseText);
             } catch {
                 console.error(
-                    "Enrollment API returned invalid JSON:",
+                    "Free enrollment API returned invalid JSON:",
                     responseText
                 );
             }
 
-            // ============================
-            // API ERROR
-            // ============================
-
             if (!response.ok) {
                 console.error(
-                    "Enrollment API error:",
+                    "Free enrollment API error:",
                     response.status,
                     data
                 );
@@ -317,74 +274,496 @@ export default function CourseDetailsPage({
                 return;
             }
 
-            // ============================
-            // SUCCESS
-            // ============================
-
-            if (data?.status === true) {
-                toast.success(
-                    data?.message ||
-                    "Enrollment successful!"
-                );
-
-                // Close confirmation modal
-                setShowConfirmModal(false);
-
-                // Close enrollment form
-                setShowEnrollFormModal(false);
-
-                // IMPORTANT:
-                // Don't only rely on local state.
-                // Re-check enrollment from API.
-                await checkEnrollment(
-                    Number(loggedUser.id),
-                    Number(course.id)
-                );
-
-                // Show success modal
-                setShowEnrollSuccessModal(true);
-
-                return;
-            }
-
-            // ============================
-            // ALREADY ENROLLED
-            // ============================
-
             if (
                 typeof data?.message === "string" &&
-                data.message
-                    .toLowerCase()
-                    .includes("already")
+                data.message.toLowerCase().includes("already")
             ) {
-                toast.success(data.message);
-
                 setShowConfirmModal(false);
                 setShowEnrollFormModal(false);
-
                 setIsEnrolled(true);
 
+                toast.success(data.message);
                 setShowEnrollSuccessModal(true);
-
                 return;
             }
 
-            // ============================
-            // STATUS FALSE
-            // ============================
+            if (!data?.status) {
+                toast.error(
+                    data?.message ||
+                    "Enrollment failed"
+                );
+                return;
+            }
 
-            toast.error(
-                data?.message ||
-                "Enrollment failed"
+            setShowConfirmModal(false);
+            setShowEnrollFormModal(false);
+
+            await checkEnrollment(
+                Number(loggedUser.id),
+                Number(courseId)
             );
+
+            toast.success(
+                message ||
+                data?.message ||
+                "Enrollment successful!"
+            );
+
+            setShowEnrollSuccessModal(true);
         } catch (error) {
             console.error(
-                "Recorded course enrollment error:",
+                "Free enrollment error:",
                 error
             );
 
             toast.error(
-                "Something went wrong while enrolling"
+                "Something went wrong while processing enrollment"
+            );
+        }
+    };
+
+    /**
+     * Open Razorpay after the backend returns payment_required=true.
+     *
+     * Existing backend flow:
+     *   enroll-now -> payment_required -> Razorpay -> verify-course-payment
+     *
+     * IMPORTANT:
+     * For paid/combo courses we do NOT set isEnrolled when enroll-now
+     * responds. Enrollment is considered successful only after Razorpay
+     * payment is successfully verified.
+     */
+    const openRazorpayPayment = async (
+        data: any,
+        loggedUser: User,
+        courseId: number
+    ) => {
+        const loaded = await loadRazorpayScript();
+
+        if (!loaded || !window.Razorpay) {
+            toast.error("Razorpay failed to load. Please try again.");
+            return;
+        }
+
+        const razorpay = data?.razorpay || data?.data?.razorpay;
+        const responseData = data?.data || {};
+
+        if (
+            !razorpay?.key ||
+            !razorpay?.order_id ||
+            !razorpay?.amount
+        ) {
+            console.error("Invalid Razorpay response:", data);
+            toast.error("Unable to start payment. Please try again.");
+            return;
+        }
+
+        const paymentOptions = {
+            key: razorpay.key,
+            amount: razorpay.amount,
+            currency: razorpay.currency || "INR",
+            name: "Velearn",
+            description: course?.title || "Course Enrollment",
+            order_id: razorpay.order_id,
+
+            handler: async (paymentResponse: any) => {
+                await verifyPaidPayment(
+                    paymentResponse,
+                    data,
+                    loggedUser,
+                    Number(courseId)
+                );
+            },
+
+            modal: {
+                ondismiss: () => {
+                    // Payment was cancelled. Do not mark the course enrolled.
+                    setIsEnrolled(false);
+
+                    toast("Payment cancelled. You are not enrolled yet.", {
+                        icon: "ℹ️",
+                    });
+                },
+            },
+
+            prefill: {
+                name: name.trim() || loggedUser?.name || "",
+                email: email.trim() || loggedUser?.email || "",
+                contact:
+                    phone.trim() ||
+                    (loggedUser?.phonenumber ||
+                        loggedUser?.phone ||
+                        "")
+                        .replace(/^\+?91/, "")
+                        .trim(),
+            },
+
+            theme: {
+                color: "#22346b",
+            },
+        };
+
+        const paymentObject = new window.Razorpay(paymentOptions);
+
+        paymentObject.on("payment.failed", (response: any) => {
+            console.error("Razorpay payment failed:", response);
+
+            setIsEnrolled(false);
+
+            toast.error(
+                response?.error?.description ||
+                "Payment failed. You are not enrolled yet."
+            );
+        });
+
+        paymentObject.open();
+    };
+
+    /**
+     * Paid / Combo flow:
+     *
+     * Confirm Enrollment
+     *        ↓
+     * /enroll-now
+     *        ↓
+     * payment_required=true
+     *        ↓
+     * Razorpay
+     *        ↓
+     * successful payment
+     *        ↓
+     * /verify-course-payment
+     *        ↓
+     * enrollment = true
+     *
+     * This uses the existing backend endpoint. No new
+     * create-course-payment route is required.
+     */
+    const startPaidCoursePayment = async (
+        loggedUser: User,
+        courseId: number,
+        payload: {
+            name: string;
+            phone: string;
+            email: string;
+        }
+    ) => {
+        try {
+            const token = localStorage.getItem("token");
+
+            const response = await fetch(
+                `${BASE_API_URL}enroll-now`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        ...(token
+                            ? {
+                                Authorization: `Bearer ${token}`,
+                            }
+                            : {}),
+                    },
+                    body: JSON.stringify({
+                        ...payload,
+                        lead_source: "Website",
+                        course_id: Number(courseId),
+                        auth_id: Number(loggedUser.id),
+                    }),
+                }
+            );
+
+            const responseText = await response.text();
+
+            let data: any = {};
+
+            try {
+                data = JSON.parse(responseText);
+            } catch {
+                console.error(
+                    "Enrollment API returned invalid JSON:",
+                    responseText
+                );
+            }
+
+            console.log("Paid/combo enroll-now response:", data);
+
+            if (!response.ok) {
+                toast.error(
+                    data?.message ||
+                    "Unable to start enrollment. Please try again."
+                );
+                return;
+            }
+
+            /*
+             * Paid/combo must return payment_required=true.
+             *
+             * Do NOT set isEnrolled=true here.
+             */
+            if (data?.payment_required === true) {
+                setShowConfirmModal(false);
+                setShowEnrollFormModal(false);
+
+                await openRazorpayPayment(
+                    data,
+                    loggedUser,
+                    Number(courseId)
+                );
+
+                return;
+            }
+
+            /*
+             * If the backend says status=true without payment_required,
+             * do not treat that as successful paid enrollment.
+             */
+            if (data?.status === true) {
+                console.error(
+                    "Paid/combo enroll-now returned status=true without payment_required:",
+                    data
+                );
+
+                toast.error(
+                    "Payment is required before enrollment can be completed."
+                );
+
+                return;
+            }
+
+            if (
+                typeof data?.message === "string" &&
+                data.message.toLowerCase().includes("already")
+            ) {
+                setShowConfirmModal(false);
+                setShowEnrollFormModal(false);
+                setIsEnrolled(true);
+
+                toast.success(data.message);
+                setShowEnrollSuccessModal(true);
+                return;
+            }
+
+            toast.error(
+                data?.message ||
+                "Unable to start payment. Please try again."
+            );
+        } catch (error) {
+            console.error(
+                "Start paid/combo enrollment error:",
+                error
+            );
+
+            toast.error(
+                "Something went wrong while starting payment."
+            );
+        }
+    };
+
+    /**
+     * Verify Razorpay payment.
+     *
+     * The course is marked enrolled ONLY after the backend confirms
+     * successful payment verification.
+     */
+    const verifyPaidPayment = async (
+        paymentResponse: any,
+        paymentData: any,
+        loggedUser: User,
+        courseId: number
+    ) => {
+        try {
+            const token = localStorage.getItem("token");
+            const responseData = paymentData?.data || {};
+
+            const verifyResponse = await fetch(
+                `${BASE_API_URL}verify-course-payment`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        ...(token
+                            ? {
+                                Authorization: `Bearer ${token}`,
+                            }
+                            : {}),
+                    },
+                    body: JSON.stringify({
+                        razorpay_payment_id:
+                            paymentResponse?.razorpay_payment_id,
+
+                        razorpay_order_id:
+                            paymentResponse?.razorpay_order_id,
+
+                        razorpay_signature:
+                            paymentResponse?.razorpay_signature,
+
+                        enrollment_id:
+                            responseData?.enrollment_id ??
+                            paymentData?.enrollment_id,
+
+                        admission_id:
+                            responseData?.admission_id ??
+                            paymentData?.admission_id,
+                    }),
+                }
+            );
+
+            const verifyText = await verifyResponse.text();
+
+            let verifyData: any = {};
+
+            try {
+                verifyData = JSON.parse(verifyText);
+            } catch {
+                console.error(
+                    "Payment verification returned invalid JSON:",
+                    verifyText
+                );
+            }
+
+            console.log(
+                "Payment verification response:",
+                verifyData
+            );
+
+            if (!verifyResponse.ok || !verifyData?.status) {
+                setIsEnrolled(false);
+
+                toast.error(
+                    verifyData?.message ||
+                    "Payment verification failed. You are not enrolled yet."
+                );
+
+                return;
+            }
+
+            /*
+             * Payment verification succeeded.
+             * Only NOW mark the course as enrolled.
+             */
+            setShowConfirmModal(false);
+            setShowEnrollFormModal(false);
+
+            setIsEnrolled(true);
+
+            await checkEnrollment(
+                Number(loggedUser.id),
+                Number(courseId)
+            );
+
+            toast.success(
+                verifyData?.message ||
+                "Payment successful. Enrollment completed!"
+            );
+
+            setShowEnrollSuccessModal(true);
+        } catch (error) {
+            console.error(
+                "Payment verification error:",
+                error
+            );
+
+            setIsEnrolled(false);
+
+            toast.error(
+                "Payment verification failed. Please contact support if the amount was deducted."
+            );
+        }
+    };
+
+    /**
+     * Confirm Enrollment button.
+     *
+     * FREE:
+     *   Yes, Enroll Now -> enroll-now -> enrolled
+     *
+     * PAID / COMBO:
+     *   Yes, Enroll Now -> enroll-now -> Razorpay
+     *   -> successful payment -> verify-course-payment -> enrolled
+     */
+    const confirmEnroll = async () => {
+        try {
+            const storedUser = localStorage.getItem("user");
+
+            if (!storedUser) {
+                router.push("/login");
+                return;
+            }
+
+            if (!course?.id) {
+                toast.error("Course information not available");
+                console.error("Course ID missing:", course);
+                return;
+            }
+
+            const loggedUser: User = JSON.parse(storedUser);
+
+            const courseType = String(
+                course?.course_type || ""
+            ).toLowerCase().trim();
+
+            const isFreeCourse = courseType === "free";
+            const isPaidCourse = !isFreeCourse;
+
+            const payload = {
+                name: name.trim() || formData.name.trim(),
+                phone: phone.trim() || formData.phone.trim(),
+                email: email.trim() || formData.email.trim(),
+            };
+
+            if (!payload.name || !payload.phone || !payload.email) {
+                toast.error("Please complete your enrollment details.");
+
+                setShowConfirmModal(false);
+                setShowEnrollFormModal(true);
+
+                return;
+            }
+
+            console.log("=================================");
+            console.log("COURSE ENROLLMENT");
+            console.log("Course type:", courseType);
+            console.log("Is free:", isFreeCourse);
+            console.log("Is paid/combo:", isPaidCourse);
+            console.log("Course ID:", Number(course.id));
+            console.log("User ID:", Number(loggedUser.id));
+            console.log("=================================");
+
+            /*
+             * FREE COURSE
+             *
+             * Confirmation -> enroll-now -> success
+             */
+            if (isFreeCourse) {
+                await completeFreeEnrollment(
+                    loggedUser,
+                    Number(course.id)
+                );
+
+                return;
+            }
+
+            /*
+             * PAID / COMBO COURSE
+             *
+             * Confirmation -> enroll-now -> Razorpay
+             * -> payment success -> verify -> enrolled
+             */
+            await startPaidCoursePayment(
+                loggedUser,
+                Number(course.id),
+                payload
+            );
+        } catch (error) {
+            console.error(
+                "Course enrollment error:",
+                error
+            );
+
+            toast.error(
+                "Something went wrong while processing enrollment"
             );
         }
     };
@@ -402,16 +781,23 @@ export default function CourseDetailsPage({
 
                     setUser(currentUser);
 
+                    const userPhone =
+                        (currentUser?.phonenumber ||
+                            currentUser?.phone ||
+                            "")
+                            .replace(/^\+?91/, "")
+                            .trim();
+
                     setFormData({
                         name: currentUser?.name || "",
                         email: currentUser?.email || "",
-                        phone:
-                            (currentUser?.phonenumber ||
-                                currentUser?.phone ||
-                                "")
-                                .replace(/^\+?91/, "")
-                                .trim(),
+                        phone: userPhone,
                     });
+
+                    // The enrollment modal uses these states.
+                    setName(currentUser?.name || "");
+                    setEmail(currentUser?.email || "");
+                    setPhone(userPhone);
                 }
 
                 // Get all recorded courses to find courseId & courseType

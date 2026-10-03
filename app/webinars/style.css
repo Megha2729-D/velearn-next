@@ -13,7 +13,7 @@
 }
 
 .webinar_top_title_row h1 {
-    font-family: 'Playfair Display', serif;
+      font-family: var(--heading-font);
     /* Or a similar serif font */
     font-size: 28px;
     font-weight: 700;
@@ -216,6 +216,14 @@
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
+}
+
+.btn_wbr_grey:disabled {
+    background: #e9ecef;
+    color: #6c757d;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+    opacity: 0.8;
 }
 
 /* Modal and Details View Styles */
@@ -581,7 +589,7 @@
 }
 
 .profile_breadcrumb h2 {
-    font-family: 'Playfair Display', serif !important;
+      font-family: var(--heading-font) !important;
     font-size: 20px;
     color: #0f172a;
     font-weight: 800;

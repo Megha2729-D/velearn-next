@@ -9,24 +9,19 @@ import NotificationsModal from "@/components/layout/NotificationsModal";
 
 import "./style.css";
 
-// ======================================================
-// API
-// ======================================================
+const BASE_API_URL = "https://crm.velearn.in/api/";
+const BASE_UPLOAD_URL = "https://crm.velearn.in/uploads/assignments/";
 
-const BASE_API_URL =
-    "https://crm.velearn.in/api/";
-
-const BASE_UPLOAD_URL =
-    "https://crm.velearn.in/public/uploads/assignments/";
-
-// ======================================================
-// TYPES
-// ======================================================
-
-interface User {
-    id?: number | string;
-    auth_id?: number | string;
-    name?: string;
+interface Submission {
+    status?: string;
+    score?: number | null;
+    grade?: string | null;
+    attempts?: number;
+    file_path?: string | null;
+    feedback?: string | null;
+    reupload_approved?: number | boolean;
+    scoreBreakdowns?: ScoreBreakdown[];
+    attempts_history?: AttemptHistory[];
 }
 
 interface ScoreBreakdown {
@@ -40,19 +35,8 @@ interface AttemptHistory {
     score: number;
     grade: string;
     feedback?: string;
-    breakdowns?: ScoreBreakdown[];
-}
-
-interface Submission {
-    status?: string;
-    score?: number | null;
-    grade?: string;
-    feedback?: string;
     file_path?: string;
-    attempts?: number;
-    reupload_approved?: number;
-    scoreBreakdowns?: ScoreBreakdown[];
-    attempts_history?: AttemptHistory[];
+    breakdowns?: ScoreBreakdown[];
 }
 
 interface Assignment {
@@ -61,11 +45,12 @@ interface Assignment {
     module?: string;
     due_date?: string | null;
     reveal_date?: string | null;
+    description?: string | null;
+    document?: string | null;
     submission?: Submission | null;
 }
 
-interface MappedAssignment
-    extends Assignment {
+interface MappedAssignment extends Assignment {
     status: string;
     scoreText: string;
     detailText: string;
@@ -76,41 +61,25 @@ interface MappedAssignment
     revealDateFormatted: string;
 }
 
-// ======================================================
-// HELPERS
-// ======================================================
+interface StoredUser {
+    id?: number | string;
+    auth_id?: number | string;
+}
 
-const getFileExtension = (
-    filename?: string
-) => {
+const getFileExtension = (filename?: string | null) => {
     return filename
-        ? filename
-            .split(".")
-            .pop()
-            ?.toLowerCase() || ""
+        ? filename.split(".").pop()?.toLowerCase() || ""
         : "";
 };
 
-const isImageFile = (
-    filename?: string
-) => {
-    const ext =
-        getFileExtension(filename);
+const isImageFile = (filename?: string | null) => {
+    const ext = getFileExtension(filename);
 
-    return [
-        "png",
-        "jpg",
-        "jpeg",
-        "gif",
-        "webp",
-    ].includes(ext);
+    return ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);
 };
 
-const getFileIconClass = (
-    filename?: string
-) => {
-    const ext =
-        getFileExtension(filename);
+const getFileIconClass = (filename?: string | null) => {
+    const ext = getFileExtension(filename);
 
     switch (ext) {
         case "pdf":
@@ -132,94 +101,41 @@ const getFileIconClass = (
     }
 };
 
-const getDisplayFileName = (
-    filename?: string
-) => {
-    if (!filename) return "";
-
-    return (
-        filename
-            .split("_")
-            .slice(1)
-            .join("_") ||
-        filename
-    );
-};
-
-// ======================================================
-// COMPONENT
-// ======================================================
-
 const Assignments = () => {
-    const [isSidebarOpen, setIsSidebarOpen] =
-        useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isNotifOpen, setIsNotifOpen] = useState(false);
 
-    const [isNotifOpen, setIsNotifOpen] =
-        useState(false);
+    const [activeTab, setActiveTab] = useState("all");
 
-    const [activeTab, setActiveTab] =
-        useState("all");
+    const [assignments, setAssignments] = useState<Assignment[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const [assignments, setAssignments] =
-        useState<Assignment[]>([]);
+    const [expandedBriefId, setExpandedBriefId] = useState<
+        number | string | null
+    >(null);
 
-    const [loading, setLoading] =
-        useState(true);
-
-    const [expandedBriefId, setExpandedBriefId] =
-        useState<number | string | null>(null);
-
-    const [userId, setUserId] =
-        useState<number | string | null>(null);
-
-    const [token, setToken] =
-        useState<string | null>(null);
-
-    // ==================================================
-    // GET USER FROM LOCAL STORAGE
-    // ==================================================
+    const [userId, setUserId] = useState<number | string | null>(null);
+    const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
-        if (typeof window === "undefined")
-            return;
+        const storedToken = localStorage.getItem("token");
+        const storedUserString = localStorage.getItem("user");
 
-        try {
-            const storedUserString =
-                localStorage.getItem("user");
+        setToken(storedToken);
 
-            const storedToken =
-                localStorage.getItem("token");
+        if (storedUserString) {
+            try {
+                const storedUser: StoredUser = JSON.parse(storedUserString);
 
-            setToken(storedToken);
+                const id = storedUser?.id || storedUser?.auth_id;
 
-            if (!storedUserString) {
-                setLoading(false);
-                return;
+                setUserId(id || null);
+            } catch (error) {
+                console.error("Invalid user data:", error);
+                setUserId(null);
             }
-
-            const storedUser: User =
-                JSON.parse(
-                    storedUserString
-                );
-
-            const id =
-                storedUser?.id ||
-                storedUser?.auth_id;
-
-            setUserId(id || null);
-        } catch (error) {
-            console.error(
-                "Error reading user:",
-                error
-            );
-
-            setLoading(false);
         }
     }, []);
-
-    // ==================================================
-    // FETCH ASSIGNMENTS
-    // ==================================================
 
     const fetchAssignments = async () => {
         if (!userId) return;
@@ -227,189 +143,131 @@ const Assignments = () => {
         try {
             setLoading(true);
 
-            const res =
-                await axios.get(
-                    `${BASE_API_URL}my-assignments/${userId}`,
-                    {
-                        headers: token
-                            ? {
-                                Authorization: `Bearer ${token}`,
-                            }
-                            : {},
-                    }
-                );
+            const res = await axios.get(
+                `${BASE_API_URL}my-assignments/${userId}`,
+                {
+                    headers: token
+                        ? {
+                            Authorization: `Bearer ${token}`,
+                        }
+                        : {},
+                },
+            );
 
-            if (
-                res.data?.status ===
-                "success"
-            ) {
-                setAssignments(
-                    res.data.data || []
-                );
+            if (res.data?.status === "success") {
+                setAssignments(res.data.data || []);
+            } else {
+                setAssignments([]);
             }
         } catch (error: any) {
-            console.error(
-                "Error fetching assignments:",
-                error
-            );
+            console.error("Error fetching assignments:", error);
 
             const errorMsg =
-                error?.response?.data
-                    ?.message ||
-                error?.message ||
+                error.response?.data?.message ||
+                error.message ||
                 "Unknown error";
 
-            toast.error(
-                `Failed to load assignments: ${errorMsg}`
-            );
+            toast.error(`Failed to load assignments: ${errorMsg}`);
         } finally {
             setLoading(false);
         }
     };
 
-    // ==================================================
-    // FETCH WHEN USER ID IS AVAILABLE
-    // ==================================================
-
     useEffect(() => {
         if (userId) {
             fetchAssignments();
-        } else if (
-            typeof window !== "undefined"
-        ) {
-            const user =
-                localStorage.getItem(
-                    "user"
-                );
+        } else if (userId === null) {
+            const storedUser = localStorage.getItem("user");
 
-            if (!user) {
+            if (!storedUser) {
                 setLoading(false);
             }
         }
-    }, [userId]);
-
-    // ==================================================
-    // HANDLE FILE UPLOAD
-    // ==================================================
+    }, [userId, token]);
 
     const handleUpload = async (
         id: number | string,
-        file?: File
+        file?: File,
     ) => {
         if (!file || !userId) return;
 
-        const formData =
-            new FormData();
+        const formData = new FormData();
 
-        formData.append(
-            "file",
-            file
-        );
+        formData.append("file", file);
 
-        const uploadPromise =
-            axios.post(
-                `${BASE_API_URL}assignments/${userId}/${id}/submit`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type":
-                            "multipart/form-data",
-
-                        ...(token
-                            ? {
-                                Authorization: `Bearer ${token}`,
-                            }
-                            : {}),
-                    },
-                }
-            );
-
-        toast.promise(
-            uploadPromise,
+        const uploadPromise = axios.post(
+            `${BASE_API_URL}assignments/${userId}/${id}/submit`,
+            formData,
             {
-                loading:
-                    "Uploading assignment...",
-
-                success: (res) => {
-                    fetchAssignments();
-
-                    return (
-                        res.data?.message ||
-                        "Assignment submitted successfully!"
-                    );
+                headers: {
+                    ...(token
+                        ? {
+                            Authorization: `Bearer ${token}`,
+                        }
+                        : {}),
                 },
-
-                error: (err) => {
-                    return (
-                        err?.response?.data
-                            ?.message ||
-                        "Upload failed."
-                    );
-                },
-            }
+            },
         );
+
+        toast.promise(uploadPromise, {
+            loading: "Uploading assignment...",
+
+            success: (res) => {
+                fetchAssignments();
+
+                return (
+                    res.data.message ||
+                    "Assignment submitted successfully!"
+                );
+            },
+
+            error: (err) => {
+                return (
+                    err.response?.data?.message ||
+                    "Upload failed."
+                );
+            },
+        });
     };
 
-    // ==================================================
-    // MAP API DATA
-    // ==================================================
-
-    const mappedAssignments: MappedAssignment[] =
-        assignments.map((item) => {
-            const sub =
-                item.submission;
+    const mappedAssignments: MappedAssignment[] = assignments.map(
+        (item) => {
+            const sub = item.submission;
 
             let status = "pending";
-
-            let scoreText =
-                "Pending";
-
+            let scoreText = "Pending";
             let detailText = "";
 
-            const isSubmitted =
-                !!sub;
+            const isSubmitted = !!sub;
 
             const isOverdue =
                 !sub &&
                 !!item.due_date &&
-                new Date(
-                    item.due_date
-                ) < new Date();
+                new Date(item.due_date) < new Date();
 
             if (sub) {
-                status =
-                    sub.status ||
-                    "submitted";
+                status = sub.status || "submitted";
 
-                if (
-                    status === "late"
-                ) {
-                    scoreText =
-                        "Late";
+                if (status === "late") {
+                    scoreText = "Late";
                 }
 
                 if (
-                    status ===
-                    "evaluated" ||
+                    status === "evaluated" ||
                     status === "graded"
                 ) {
                     scoreText =
-                        sub.score !==
-                            null &&
-                            sub.score !==
-                            undefined
+                        sub.score !== null &&
+                            sub.score !== undefined
                             ? `${sub.score}%`
                             : "Graded";
 
-                    detailText =
-                        sub.grade
-                            ? `Grade: ${sub.grade}`
-                            : sub.score !==
-                                null &&
-                                sub.score !==
-                                undefined
-                                ? `Scored ${sub.score}`
-                                : "Evaluated";
+                    detailText = sub.grade
+                        ? `Grade: ${sub.grade}`
+                        : sub.score !== null &&
+                            sub.score !== undefined
+                            ? `Scored ${sub.score}`
+                            : "Evaluated";
                 }
             }
 
@@ -417,958 +275,848 @@ const Assignments = () => {
                 ...item,
 
                 status,
-
                 scoreText,
-
                 detailText,
 
                 isSubmitted,
-
                 isOverdue,
 
-                icon:
-                    "bi-layout-text-window-reverse",
+                icon: "bi-layout-text-window-reverse",
 
                 deadline: item.due_date
                     ? new Date(
-                        item.due_date
-                    ).toLocaleDateString(
-                        "en-US",
-                        {
-                            month: "short",
-                            day: "2-digit",
-                            year: "numeric",
-                        }
-                    )
+                        item.due_date,
+                    ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                    })
                     : "No deadline",
 
-                revealDateFormatted:
-                    item.reveal_date
-                        ? new Date(
-                            item.reveal_date
-                        ).toLocaleDateString(
-                            "en-US",
-                            {
-                                month: "short",
-                                day: "2-digit",
-                                year: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                            }
-                        )
-                        : "Immediate",
+                revealDateFormatted: item.reveal_date
+                    ? new Date(
+                        item.reveal_date,
+                    ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    })
+                    : "Immediate",
             };
-        });
-
-    // ==================================================
-    // FILTER ASSIGNMENTS
-    // ==================================================
+        },
+    );
 
     const filteredAssignments =
         activeTab === "all"
             ? mappedAssignments
-            : mappedAssignments.filter(
-                (item) => {
-                    if (
-                        activeTab ===
-                        "pending"
-                    ) {
-                        return (
-                            item.status ===
-                            "pending" ||
-                            item.status ===
-                            "late" ||
-                            ((item.status ===
-                                "graded" ||
-                                item.status ===
-                                "evaluated") &&
-                                item.submission
-                                    ?.reupload_approved ===
-                                1)
-                        );
-                    }
-
-                    if (
-                        activeTab ===
-                        "completed"
-                    ) {
-                        return (
-                            (item.status ===
-                                "submitted" ||
-                                item.status ===
-                                "graded" ||
-                                item.status ===
-                                "evaluated") &&
-                            item.submission
-                                ?.reupload_approved !==
-                            1
-                        );
-                    }
-
+            : mappedAssignments.filter((item) => {
+                if (activeTab === "pending") {
                     return (
-                        item.status ===
-                        activeTab
+                        item.status === "pending" ||
+                        item.status === "late" ||
+                        ((item.status === "graded" ||
+                            item.status === "evaluated") &&
+                            (item.submission
+                                ?.reupload_approved === 1 ||
+                                item.submission
+                                    ?.reupload_approved === true))
                     );
                 }
-            );
 
-    // ==================================================
-    // STATISTICS
-    // ==================================================
+                if (activeTab === "completed") {
+                    return (
+                        (item.status === "submitted" ||
+                            item.status === "graded" ||
+                            item.status === "evaluated") &&
+                        item.submission
+                            ?.reupload_approved !== 1 &&
+                        item.submission
+                            ?.reupload_approved !== true
+                    );
+                }
 
-    const totalTasks =
-        mappedAssignments.length;
+                return item.status === activeTab;
+            });
 
-    const completedTasks =
-        mappedAssignments.filter(
-            (item) =>
-                (item.status ===
-                    "submitted" ||
-                    item.status ===
-                    "graded" ||
-                    item.status ===
-                    "evaluated") &&
-                item.submission
-                    ?.reupload_approved !==
-                1
-        ).length;
+    const totalTasks = mappedAssignments.length;
 
-    const pendingTasks =
-        mappedAssignments.filter(
-            (item) =>
-                item.status ===
-                "pending" ||
-                item.status === "late" ||
-                ((item.status ===
-                    "graded" ||
-                    item.status ===
-                    "evaluated") &&
-                    item.submission
-                        ?.reupload_approved ===
-                    1)
-        ).length;
+    const completedTasks = mappedAssignments.filter(
+        (item) =>
+            (item.status === "submitted" ||
+                item.status === "graded" ||
+                item.status === "evaluated") &&
+            item.submission?.reupload_approved !== 1 &&
+            item.submission?.reupload_approved !== true,
+    ).length;
 
-    const gradedAssignments =
-        mappedAssignments.filter(
-            (item) =>
-                item.submission &&
-                item.submission.score !==
-                null &&
-                item.submission.score !==
-                undefined
-        );
+    const pendingTasks = mappedAssignments.filter(
+        (item) =>
+            item.status === "pending" ||
+            item.status === "late" ||
+            ((item.status === "graded" ||
+                item.status === "evaluated") &&
+                (item.submission?.reupload_approved === 1 ||
+                    item.submission?.reupload_approved === true)),
+    ).length;
+
+    const gradedAssignments = mappedAssignments.filter(
+        (item) =>
+            item.submission &&
+            item.submission.score !== null &&
+            item.submission.score !== undefined,
+    );
 
     const avgScore =
-        gradedAssignments.length >
-            0
+        gradedAssignments.length > 0
             ? `${Math.round(
                 gradedAssignments.reduce(
-                    (
-                        acc,
-                        curr
-                    ) =>
-                        acc +
-                        (curr
-                            .submission
-                            ?.score ||
-                            0),
-                    0
-                ) /
-                gradedAssignments.length
+                    (acc, curr) =>
+                        acc + (curr.submission?.score || 0),
+                    0,
+                ) / gradedAssignments.length,
             )}%`
             : "0%";
 
-    // ==================================================
-    // TOGGLE BRIEF
-    // ==================================================
-
-    const toggleBrief = (
-        id: number | string
-    ) => {
-        setExpandedBriefId(
-            expandedBriefId === id
-                ? null
-                : id
-        );
-    };
-
-    // ==================================================
-    // RENDER
-    // ==================================================
-
     return (
         <div className="dashboard_layout">
-
-            {/* ======================================
-                SIDEBAR
-            ====================================== */}
-
             <Sidebar
                 activePage="assignments"
                 isOpen={isSidebarOpen}
-                onClose={() =>
-                    setIsSidebarOpen(
-                        false
-                    )
-                }
+                onClose={() => setIsSidebarOpen(false)}
             />
 
-            {/* ======================================
-                SIDEBAR OVERLAY
-            ====================================== */}
-
             <div
-                className={`sidebar_overlay ${isSidebarOpen
-                    ? "show"
-                    : ""
+                className={`sidebar_overlay ${isSidebarOpen ? "show" : ""
                     }`}
-                onClick={() =>
-                    setIsSidebarOpen(
-                        false
-                    )
-                }
+                onClick={() => setIsSidebarOpen(false)}
             ></div>
-
-            {/* ======================================
-                NOTIFICATIONS
-            ====================================== */}
 
             <NotificationsModal
                 isOpen={isNotifOpen}
-                onClose={() =>
-                    setIsNotifOpen(
-                        false
-                    )
-                }
+                onClose={() => setIsNotifOpen(false)}
                 notifications={[]}
             />
 
-            {/* ======================================
-                MAIN CONTENT
-            ====================================== */}
-
             <div className="dashboard_main_content">
-
-                {/* HEADER */}
-
                 <header className="dashboard_top_header">
-
                     <div className="profile_breadcrumb">
-
                         <h2>
                             Live Courses{" "}
-                            <span>
-                                / Assignments
-                            </span>
+                            <span>/ Assignments</span>
                         </h2>
-
                     </div>
 
                     <div
                         className="notification_bell_top"
-                        onClick={() =>
-                            setIsNotifOpen(
-                                true
-                            )
-                        }
+                        onClick={() => setIsNotifOpen(true)}
                     >
                         <i className="bi bi-bell"></i>
                     </div>
-
                 </header>
 
-                {/* ==================================
-                    ASSIGNMENTS CONTAINER
-                ================================== */}
-
                 <div className="assignments_container">
-
-                    {/* ==================================
-                        HERO STATS
-                    ================================== */}
-
+                    {/* Hero Stats */}
                     <div className="assignments_hero_stats">
-
                         <div className="stat_item">
-
                             <div className="stat_val">
-                                {loading
-                                    ? "-"
-                                    : totalTasks}
+                                {loading ? "-" : totalTasks}
                             </div>
 
                             <div className="stat_lab">
                                 Total Tasks
                             </div>
-
                         </div>
 
                         <div className="stat_divider"></div>
 
                         <div className="stat_item">
-
                             <div className="stat_val">
-                                {loading
-                                    ? "-"
-                                    : completedTasks}
+                                {loading ? "-" : completedTasks}
                             </div>
 
                             <div className="stat_lab">
                                 Completed
                             </div>
-
                         </div>
 
                         <div className="stat_divider"></div>
 
                         <div className="stat_item">
-
                             <div className="stat_val">
-                                {loading
-                                    ? "-"
-                                    : avgScore}
+                                {loading ? "-" : avgScore}
                             </div>
 
                             <div className="stat_lab">
                                 Avg Score
                             </div>
-
                         </div>
-
                     </div>
 
-                    {/* ==================================
-                        TABS
-                    ================================== */}
-
+                    {/* Tabs */}
                     <div className="assignments_tabs">
-
                         <button
-                            type="button"
-                            className={`tab_btn text-center justify-content-center ${activeTab ===
-                                "all"
-                                ? "active"
-                                : ""
+                            className={`tab_btn text-center justify-content-center ${activeTab === "all"
+                                    ? "active"
+                                    : ""
                                 }`}
-                            onClick={() =>
-                                setActiveTab(
-                                    "all"
-                                )
-                            }
+                            onClick={() => setActiveTab("all")}
                         >
                             All ({totalTasks})
                         </button>
 
                         <button
-                            type="button"
-                            className={`tab_btn text-center justify-content-center ${activeTab ===
-                                "pending"
-                                ? "active"
-                                : ""
+                            className={`tab_btn text-center justify-content-center ${activeTab === "pending"
+                                    ? "active"
+                                    : ""
                                 }`}
                             onClick={() =>
-                                setActiveTab(
-                                    "pending"
-                                )
+                                setActiveTab("pending")
                             }
                         >
-                            Pending (
-                            {
-                                pendingTasks
-                            }
-                            )
+                            Pending ({pendingTasks})
                         </button>
 
                         <button
-                            type="button"
-                            className={`tab_btn text-center justify-content-center ${activeTab ===
-                                "completed"
-                                ? "active"
-                                : ""
+                            className={`tab_btn text-center justify-content-center ${activeTab === "completed"
+                                    ? "active"
+                                    : ""
                                 }`}
                             onClick={() =>
-                                setActiveTab(
-                                    "completed"
-                                )
+                                setActiveTab("completed")
                             }
                         >
-                            Completed (
-                            {
-                                completedTasks
-                            }
-                            )
+                            Completed ({completedTasks})
                         </button>
-
                     </div>
 
-                    {/* ==================================
-                        ASSIGNMENT LIST
-                    ================================== */}
-
+                    {/* Assignment List */}
                     <div className="assignment_list">
-
-                        {filteredAssignments.length >
-                            0 ? (
-                            filteredAssignments.map(
-                                (item) => (
-
-                                    <div
-                                        key={
-                                            item.id
-                                        }
-                                        className={`assignment_card ${item.status} ${item.isSubmitted
+                        {filteredAssignments.length > 0 ? (
+                            filteredAssignments.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className={`assignment_card ${item.status
+                                        } ${item.isSubmitted
                                             ? "submitted_card"
                                             : ""
-                                            }`}
-                                    >
+                                        }`}
+                                >
+                                    <div className="as_header">
+                                        <div className="as_info">
+                                            <h3 className="as_title">
+                                                {item.title}
+                                            </h3>
 
-                                        {/* ==================================
-                                            ASSIGNMENT HEADER
-                                        ================================== */}
+                                            <div className="as_meta">
+                                                <span>
+                                                    <i
+                                                        className={`bi ${item.icon}`}
+                                                    ></i>{" "}
+                                                    {item.module}
+                                                </span>
 
-                                        <div className="as_header">
+                                                <span>
+                                                    <i className="bi bi-calendar3"></i>{" "}
+                                                    Deadline:{" "}
+                                                    {item.deadline}
+                                                </span>
 
-                                            <div className="as_info">
-
-                                                <h3 className="as_title">
+                                                <span>
+                                                    <i className="bi bi-eye"></i>{" "}
+                                                    Revealed:{" "}
                                                     {
-                                                        item.title
+                                                        item.revealDateFormatted
                                                     }
-                                                </h3>
+                                                </span>
+                                            </div>
 
-                                                {/* META */}
-
-                                                <div className="as_meta">
-
-                                                    <span>
-                                                        <i
-                                                            className={`bi ${item.icon}`}
-                                                        ></i>{" "}
-                                                        {
-                                                            item.module
-                                                        }
-                                                    </span>
-
-                                                    <span>
-                                                        <i className="bi bi-calendar3"></i>{" "}
-                                                        Deadline:{" "}
-                                                        {
-                                                            item.deadline
-                                                        }
-                                                    </span>
-
-                                                    <span>
-                                                        <i className="bi bi-eye"></i>{" "}
-                                                        Revealed:{" "}
-                                                        {
-                                                            item.revealDateFormatted
-                                                        }
-                                                    </span>
-
-                                                </div>
-
-                                                {/* ==================================
-                                                    BADGES
-                                                ================================== */}
-
-                                                <div className="badge_group">
-
-                                                    {/* GRADED FEEDBACK */}
-
-                                                    {(item.status ===
-                                                        "graded" ||
-                                                        item.status ===
-                                                        "evaluated") &&
-                                                        item.detailText && (
-                                                            <span className="graded_badge">
-
-                                                                <i className="bi bi-patch-check-fill"></i>{" "}
-
-                                                                {
-                                                                    item.detailText
-                                                                }
-
-                                                            </span>
-                                                        )}
-
-                                                    {/* REUPLOAD */}
-
-                                                    {(item.status ===
-                                                        "graded" ||
-                                                        item.status ===
-                                                        "evaluated") &&
-                                                        item
-                                                            .submission
-                                                            ?.reupload_approved ===
-                                                        1 && (
-                                                            <span
-                                                                className="submission_status_badge pending-reupload"
-                                                                style={{
-                                                                    backgroundColor:
-                                                                        "#fff7ed",
-                                                                    color:
-                                                                        "#c2410c",
-                                                                    border:
-                                                                        "1px solid #fed7aa",
-                                                                }}
-                                                            >
-
-                                                                <i className="bi bi-hourglass-split"></i>{" "}
-
-                                                                Reupload
-                                                                Pending
-
-                                                            </span>
-                                                        )}
-
-                                                    {/* SUBMITTED */}
-
-                                                    {item.isSubmitted ? (
-                                                        <span
-                                                            className={`submission_status_badge submitted ${item.status}`}
-                                                        >
-
-                                                            <i className="bi bi-check-circle-fill"></i>{" "}
-
-                                                            {item.status ===
-                                                                "late"
-                                                                ? "Submitted Late"
-                                                                : "Submitted"}
-
-                                                            {item
-                                                                .submission
-                                                                ?.attempts
-                                                                ? ` (Attempt ${item.submission.attempts}/3)`
-                                                                : ""}
-
-                                                        </span>
-                                                    ) : item.isOverdue ? (
-                                                        <span className="submission_status_badge overdue">
-
-                                                            <i className="bi bi-exclamation-circle-fill"></i>{" "}
-
-                                                            Overdue
-
-                                                        </span>
-                                                    ) : (
-                                                        <span className="submission_status_badge pending">
-
-                                                            <i className="bi bi-clock-history"></i>{" "}
-
-                                                            Pending
-                                                            Submission
-
+                                            <div className="badge_group">
+                                                {/* Graded Feedback */}
+                                                {(item.status ===
+                                                    "graded" ||
+                                                    item.status ===
+                                                    "evaluated") &&
+                                                    item.detailText && (
+                                                        <span className="graded_badge">
+                                                            <i className="bi bi-patch-check-fill"></i>{" "}
+                                                            {
+                                                                item.detailText
+                                                            }
                                                         </span>
                                                     )}
 
-                                                </div>
+                                                {/* Reupload Status */}
+                                                {(item.status ===
+                                                    "graded" ||
+                                                    item.status ===
+                                                    "evaluated") &&
+                                                    (item.submission
+                                                        ?.reupload_approved ===
+                                                        1 ||
+                                                        item.submission
+                                                            ?.reupload_approved ===
+                                                        true) && (
+                                                        <span
+                                                            className="submission_status_badge pending-reupload"
+                                                            style={{
+                                                                backgroundColor:
+                                                                    "#fff7ed",
+                                                                color: "#c2410c",
+                                                                border: "1px solid #fed7aa",
+                                                            }}
+                                                        >
+                                                            <i className="bi bi-hourglass-split"></i>{" "}
+                                                            Reupload
+                                                            Pending
+                                                        </span>
+                                                    )}
 
-                                                {/* ==================================
-                                                    SUBMITTED FILE
-                                                ================================== */}
+                                                {/* Submission Status */}
+                                                {item.isSubmitted ? (
+                                                    <span
+                                                        className={`submission_status_badge submitted ${item.status}`}
+                                                    >
+                                                        <i className="bi bi-check-circle-fill"></i>{" "}
+                                                        {item.status ===
+                                                            "late"
+                                                            ? "Submitted Late"
+                                                            : "Submitted"}{" "}
+                                                        {item
+                                                            .submission
+                                                            ?.attempts
+                                                            ? `(Attempt ${item
+                                                                .submission
+                                                                .attempts
+                                                            }/3)`
+                                                            : ""}
+                                                    </span>
+                                                ) : item.isOverdue ? (
+                                                    <span className="submission_status_badge overdue">
+                                                        <i className="bi bi-exclamation-circle-fill"></i>{" "}
+                                                        Overdue
+                                                    </span>
+                                                ) : (
+                                                    <span className="submission_status_badge pending">
+                                                        <i className="bi bi-clock-history"></i>{" "}
+                                                        Pending
+                                                        Submission
+                                                    </span>
+                                                )}
+                                            </div>
 
-                                                {item.isSubmitted &&
-                                                    item
-                                                        .submission
-                                                        ?.file_path && (
+                                            {/* Submitted File */}
+                                            {item.isSubmitted &&
+                                                item.submission &&
+                                                item.submission
+                                                    .file_path && (
+                                                    <div className="submitted_file_container">
+                                                        {isImageFile(
+                                                            item
+                                                                .submission
+                                                                .file_path,
+                                                        ) ? (
+                                                            <div className="assignment_image_preview_box">
+                                                                <div className="preview_image_wrapper">
+                                                                    <img
+                                                                        src={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
+                                                                        alt="Submitted assignment preview"
+                                                                        className="assignment_preview_img"
+                                                                    />
 
-                                                        <div className="submitted_file_container">
+                                                                    <div className="preview_overlay">
+                                                                        <a
+                                                                            href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="preview_action_btn"
+                                                                            title="View Full Screen"
+                                                                        >
+                                                                            <i className="bi bi-eye-fill"></i>
+                                                                        </a>
 
-                                                            {/* IMAGE */}
-
-                                                            {isImageFile(
-                                                                item
-                                                                    .submission
-                                                                    .file_path
-                                                            ) ? (
-
-                                                                <div className="assignment_image_preview_box">
-
-                                                                    <div className="preview_image_wrapper">
-
-                                                                        <img
-                                                                            src={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
-                                                                            alt="Submitted assignment preview"
-                                                                            className="assignment_preview_img"
-                                                                        />
-
-                                                                        <div className="preview_overlay">
-
-                                                                            <a
-                                                                                href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer"
-                                                                                className="preview_action_btn"
-                                                                                title="View Full Screen"
-                                                                            >
-                                                                                <i className="bi bi-eye-fill"></i>
-                                                                            </a>
-
-                                                                            <a
-                                                                                href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
-                                                                                download={
-                                                                                    item
-                                                                                        .submission
-                                                                                        .file_path
-                                                                                }
-                                                                                className="preview_action_btn"
-                                                                                title="Download Image"
-                                                                            >
-                                                                                <i className="bi bi-download"></i>
-                                                                            </a>
-
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div className="preview_file_details">
-
-                                                                        <span className="file_name_text">
-                                                                            {getDisplayFileName(
+                                                                        <a
+                                                                            href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
+                                                                            download={
                                                                                 item
                                                                                     .submission
                                                                                     .file_path
-                                                                            )}
-                                                                        </span>
-
-                                                                        <span className="file_type_badge">
-                                                                            IMAGE
-                                                                        </span>
-
+                                                                            }
+                                                                            className="preview_action_btn"
+                                                                            title="Download Image"
+                                                                        >
+                                                                            <i className="bi bi-download"></i>
+                                                                        </a>
                                                                     </div>
-
                                                                 </div>
 
-                                                            ) : (
-
-                                                                /* NON IMAGE FILE */
-
-                                                                <div className="submitted_file_info">
-
-                                                                    <i
-                                                                        className={`bi ${getFileIconClass(
+                                                                <div className="preview_file_details">
+                                                                    <span className="file_name_text">
+                                                                        {item.submission.file_path
+                                                                            .split(
+                                                                                "_",
+                                                                            )
+                                                                            .slice(
+                                                                                1,
+                                                                            )
+                                                                            .join(
+                                                                                "_",
+                                                                            ) ||
                                                                             item
                                                                                 .submission
-                                                                                .file_path
-                                                                        )}`}
-                                                                    ></i>
-
-                                                                    <span className="file_label">
-                                                                        Uploaded
-                                                                        File:{" "}
+                                                                                .file_path}
                                                                     </span>
 
-                                                                    <span className="file_name_text me-2">
-
-                                                                        {getDisplayFileName(
-                                                                            item
-                                                                                .submission
-                                                                                .file_path
-                                                                        )}
-
+                                                                    <span className="file_type_badge">
+                                                                        IMAGE
                                                                     </span>
-
-                                                                    <a
-                                                                        href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="submitted_file_link"
-                                                                    >
-                                                                        View
-                                                                        File{" "}
-                                                                        <i className="bi bi-box-arrow-up-right"></i>
-                                                                    </a>
-
-                                                                    <span className="mx-1 text-muted">
-                                                                        |
-                                                                    </span>
-
-                                                                    <a
-                                                                        href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
-                                                                        download={
-                                                                            item
-                                                                                .submission
-                                                                                .file_path
-                                                                        }
-                                                                        className="submitted_file_link"
-                                                                    >
-                                                                        Download{" "}
-                                                                        <i className="bi bi-download"></i>
-                                                                    </a>
-
                                                                 </div>
-                                                            )}
-
-                                                        </div>
-                                                    )}
-
-                                                {/* ==================================
-                                                    ACTIONS
-                                                ================================== */}
-
-                                                <div className="as_actions">
-
-                                                    {/* UPLOAD */}
-
-                                                    {(!item.isSubmitted ||
-                                                        item
-                                                            .submission
-                                                            ?.reupload_approved ===
-                                                        1) &&
-                                                        (item
-                                                            .submission
-                                                            ?.attempts &&
-                                                            item
-                                                                .submission
-                                                                .attempts >=
-                                                            3 ? (
-
-                                                            <span
-                                                                className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
-                                                                style={{
-                                                                    fontSize:
-                                                                        "12px",
-                                                                }}
-                                                            >
-                                                                <i className="bi bi-exclamation-triangle-fill"></i>
-
-                                                                Attempt
-                                                                Limit
-                                                                Reached
-                                                                (3/3)
-                                                            </span>
-
+                                                            </div>
                                                         ) : (
+                                                            <div className="submitted_file_info">
+                                                                <i
+                                                                    className={`bi ${getFileIconClass(
+                                                                        item
+                                                                            .submission
+                                                                            .file_path,
+                                                                    )}`}
+                                                                ></i>
 
-                                                            <label
-                                                                className={`btn_upload ${item.status ===
+                                                                <span className="file_label">
+                                                                    Uploaded
+                                                                    File:{" "}
+                                                                </span>
+
+                                                                <span className="file_name_text me-2">
+                                                                    {item.submission.file_path
+                                                                        .split(
+                                                                            "_",
+                                                                        )
+                                                                        .slice(
+                                                                            1,
+                                                                        )
+                                                                        .join(
+                                                                            "_",
+                                                                        ) ||
+                                                                        item
+                                                                            .submission
+                                                                            .file_path}
+                                                                </span>
+
+                                                                <a
+                                                                    href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="submitted_file_link"
+                                                                >
+                                                                    View File{" "}
+                                                                    <i className="bi bi-box-arrow-up-right"></i>
+                                                                </a>
+
+                                                                <span className="mx-1 text-muted">
+                                                                    |
+                                                                </span>
+
+                                                                <a
+                                                                    href={`${BASE_UPLOAD_URL}${item.submission.file_path}`}
+                                                                    download={
+                                                                        item
+                                                                            .submission
+                                                                            .file_path
+                                                                    }
+                                                                    className="submitted_file_link"
+                                                                >
+                                                                    Download{" "}
+                                                                    <i className="bi bi-download"></i>
+                                                                </a>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                            {/* Actions */}
+                                            <div className="as_actions">
+                                                {(!item.isSubmitted ||
+                                                    item.submission
+                                                        ?.reupload_approved ===
+                                                    1 ||
+                                                    item.submission
+                                                        ?.reupload_approved ===
+                                                    true) &&
+                                                    (item.submission &&
+                                                        (item.submission
+                                                            .attempts || 0) >=
+                                                        3 ? (
+                                                        <span
+                                                            className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
+                                                            style={{
+                                                                fontSize:
+                                                                    "12px",
+                                                            }}
+                                                        >
+                                                            <i className="bi bi-exclamation-triangle-fill"></i>{" "}
+                                                            Attempt Limit
+                                                            Reached
+                                                            (3/3)
+                                                        </span>
+                                                    ) : (
+                                                        <label
+                                                            className={`btn_upload ${item.status ===
                                                                     "late"
                                                                     ? "late"
                                                                     : "pending"
-                                                                    }`}
-                                                                style={{
-                                                                    cursor:
-                                                                        "pointer",
-                                                                    margin: 0,
-                                                                }}
-                                                            >
-
-                                                                <i
-                                                                    className={`bi ${item.status ===
+                                                                }`}
+                                                            style={{
+                                                                cursor: "pointer",
+                                                                margin: 0,
+                                                            }}
+                                                        >
+                                                            <i
+                                                                className={`bi ${item.status ===
                                                                         "late"
                                                                         ? "bi-exclamation-triangle"
                                                                         : "bi-cloud-arrow-up"
-                                                                        }`}
-                                                                ></i>
+                                                                    }`}
+                                                            ></i>{" "}
+                                                            {item.isSubmitted
+                                                                ? item.status ===
+                                                                    "late"
+                                                                    ? `Resubmit Late (Attempt ${(item
+                                                                        .submission
+                                                                        ?.attempts ||
+                                                                        0) +
+                                                                    1
+                                                                    }/3)`
+                                                                    : `Resubmit (Attempt ${(item
+                                                                        .submission
+                                                                        ?.attempts ||
+                                                                        0) +
+                                                                    1
+                                                                    }/3)`
+                                                                : item.status ===
+                                                                    "late"
+                                                                    ? "Late Upload"
+                                                                    : "Upload Submission"}
 
-                                                                {item.isSubmitted
-                                                                    ? item.status ===
-                                                                        "late"
-                                                                        ? `Resubmit Late (Attempt ${(item
-                                                                            .submission
-                                                                            ?.attempts ||
-                                                                            0) +
-                                                                        1
-                                                                        }/3)`
-                                                                        : `Resubmit (Attempt ${(item
-                                                                            .submission
-                                                                            ?.attempts ||
-                                                                            0) +
-                                                                        1
-                                                                        }/3)`
-                                                                    : item.status ===
-                                                                        "late"
-                                                                        ? "Late Upload"
-                                                                        : "Upload Submission"}
-
-                                                                <input
-                                                                    type="file"
-                                                                    accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
-                                                                    style={{
-                                                                        display:
-                                                                            "none",
-                                                                    }}
-                                                                    onChange={(
+                                                            <input
+                                                                type="file"
+                                                                accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
+                                                                style={{
+                                                                    display:
+                                                                        "none",
+                                                                }}
+                                                                onChange={(
+                                                                    e,
+                                                                ) => {
+                                                                    const file =
                                                                         e
-                                                                    ) => {
-                                                                        const file =
-                                                                            e
-                                                                                .target
-                                                                                .files?.[0];
+                                                                            .target
+                                                                            .files?.[0];
 
-                                                                        if (
-                                                                            file
-                                                                        ) {
-                                                                            handleUpload(
-                                                                                item.id,
-                                                                                file
-                                                                            );
-                                                                        }
+                                                                    if (
+                                                                        file
+                                                                    ) {
+                                                                        handleUpload(
+                                                                            item.id,
+                                                                            file,
+                                                                        );
+                                                                    }
 
-                                                                        e.target.value =
-                                                                            "";
-                                                                    }}
-                                                                />
+                                                                    e.target.value =
+                                                                        "";
+                                                                }}
+                                                            />
+                                                        </label>
+                                                    ))}
 
-                                                            </label>
-                                                        ))}
-
-                                                    {/* VIEW BRIEF */}
-
-                                                    <button
-                                                        type="button"
-                                                        className={`btn_brief ${expandedBriefId ===
+                                                <button
+                                                    className={`btn_brief ${expandedBriefId ===
                                                             item.id
                                                             ? "active"
                                                             : ""
-                                                            }`}
-                                                        onClick={() =>
-                                                            toggleBrief(
+                                                        }`}
+                                                    onClick={() =>
+                                                        setExpandedBriefId(
+                                                            expandedBriefId ===
                                                                 item.id
-                                                            )
-                                                        }
-                                                    >
-                                                        {expandedBriefId ===
-                                                            item.id
-                                                            ? "Hide Brief"
-                                                            : "View Brief"}
-                                                    </button>
-
-                                                </div>
-
+                                                                ? null
+                                                                : item.id,
+                                                        )
+                                                    }
+                                                >
+                                                    {expandedBriefId ===
+                                                        item.id
+                                                        ? "Hide Brief"
+                                                        : "View Brief"}
+                                                </button>
                                             </div>
-
-                                            {/* STATUS */}
-
-                                            <div
-                                                className={`as_status_badge ${item.status}`}
-                                            >
-                                                {
-                                                    item.scoreText
-                                                }
-                                            </div>
-
                                         </div>
 
-                                        {/* ==================================
-                                            EXPANDED BRIEF
-                                        ================================== */}
+                                        <div
+                                            className={`as_status_badge ${item.status}`}
+                                        >
+                                            {item.scoreText}
+                                        </div>
+                                    </div>
 
-                                        {expandedBriefId ===
-                                            item.id && (
+                                    {/* Expanded Brief */}
+                                    {expandedBriefId === item.id && (
+                                        <div className="assignment_brief_box">
+                                            {/* Assignment Details */}
+                                            <div className="mb-4">
+                                                <div
+                                                    className="brief_header"
+                                                    style={{
+                                                        color: "#4f46e5",
+                                                    }}
+                                                >
+                                                    <i className="bi bi-info-circle-fill"></i>{" "}
+                                                    Assignment Details
+                                                </div>
 
-                                                <div className="assignment_brief_box">
+                                                <div className="brief_body mt-3">
+                                                    <div className="bg-white p-3 rounded shadow-sm border mb-3">
+                                                        {item.description ? (
+                                                            <div
+                                                                className="text-dark"
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: item.description,
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <div className="text-muted fst-italic">
+                                                                No description
+                                                                provided.
+                                                            </div>
+                                                        )}
 
-                                                    {/* ==================================
-                                                    EVALUATION
-                                                ================================== */}
+                                                        {item.document && (
+                                                            <div className="mt-3 pt-3 border-top">
+                                                                <a
+                                                                    href={`${BASE_UPLOAD_URL}${item.document}`}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-2"
+                                                                >
+                                                                    <i className="bi bi-file-earmark-pdf-fill"></i>{" "}
+                                                                    View
+                                                                    Assignment
+                                                                    Attachment
+                                                                </a>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                    {item.submission &&
-                                                        (item
-                                                            .submission
-                                                            .score !==
-                                                            null ||
-                                                            (item
+                                            {/* Evaluation */}
+                                            {item.submission &&
+                                                (item.submission.score !==
+                                                    null ||
+                                                    (item.submission
+                                                        .attempts_history &&
+                                                        item.submission
+                                                            .attempts_history
+                                                            .length > 0)) && (
+                                                    <div>
+                                                        <div
+                                                            className="brief_header"
+                                                            style={{
+                                                                color: "#4f46e5",
+                                                            }}
+                                                        >
+                                                            <i className="bi bi-clipboard2-check-fill"></i>{" "}
+                                                            Evaluation
+                                                            Feedback &
+                                                            History
+                                                        </div>
+
+                                                        <div className="brief_body mt-3">
+                                                            {/* Latest Evaluation */}
+                                                            {item
+                                                                .submission
+                                                                .score !==
+                                                                null &&
+                                                                item
+                                                                    .submission
+                                                                    .score !==
+                                                                undefined && (
+                                                                    <div className="bg-white p-3 rounded shadow-sm border mb-4">
+                                                                        <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
+                                                                            <i className="bi bi-star-fill text-warning"></i>{" "}
+                                                                            Latest
+                                                                            Evaluation
+                                                                            (
+                                                                            Attempt{" "}
+                                                                            {
+                                                                                item
+                                                                                    .submission
+                                                                                    .attempts
+                                                                            }
+                                                                            /3)
+                                                                        </h6>
+
+                                                                        {item
+                                                                            .submission
+                                                                            .scoreBreakdowns &&
+                                                                            item
+                                                                                .submission
+                                                                                .scoreBreakdowns
+                                                                                .length >
+                                                                            0 && (
+                                                                                <div className="mb-3">
+                                                                                    <div className="fw-bold text-muted small mb-2 uppercase-tracking">
+                                                                                        Score
+                                                                                        Breakdown
+                                                                                    </div>
+
+                                                                                    <div className="d-flex flex-wrap gap-2">
+                                                                                        {item.submission.scoreBreakdowns.map(
+                                                                                            (
+                                                                                                bd,
+                                                                                                i,
+                                                                                            ) => (
+                                                                                                <div
+                                                                                                    key={
+                                                                                                        i
+                                                                                                    }
+                                                                                                    className="bg-light px-3 py-1 rounded border small"
+                                                                                                >
+                                                                                                    <span className="text-muted">
+                                                                                                        {
+                                                                                                            bd.criterion
+                                                                                                        }
+                                                                                                        :{" "}
+                                                                                                    </span>
+
+                                                                                                    <strong className="text-dark">
+                                                                                                        {
+                                                                                                            bd.obtained_score
+                                                                                                        }
+                                                                                                        /
+                                                                                                        {
+                                                                                                            bd.max_score
+                                                                                                        }
+                                                                                                    </strong>
+                                                                                                </div>
+                                                                                            ),
+                                                                                        )}
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+
+                                                                        {item
+                                                                            .submission
+                                                                            .feedback && (
+                                                                                <div className="mt-2">
+                                                                                    <div className="fw-bold text-muted small mb-1 uppercase-tracking">
+                                                                                        Staff
+                                                                                        Feedback
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        className="p-3 bg-light rounded"
+                                                                                        style={{
+                                                                                            fontSize:
+                                                                                                "0.9rem",
+                                                                                            lineHeight:
+                                                                                                "1.5",
+                                                                                        }}
+                                                                                    >
+                                                                                        {
+                                                                                            item
+                                                                                                .submission
+                                                                                                .feedback
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            )}
+                                                                    </div>
+                                                                )}
+
+                                                            {/* Previous Attempts */}
+                                                            {item
                                                                 .submission
                                                                 .attempts_history &&
                                                                 item
                                                                     .submission
                                                                     .attempts_history
                                                                     .length >
-                                                                0)) && (
+                                                                0 && (
+                                                                    <div className="mt-4">
+                                                                        <h6 className="fw-bold text-muted small uppercase-tracking mb-3">
+                                                                            <i className="bi bi-clock-history"></i>{" "}
+                                                                            Previous
+                                                                            Attempts
+                                                                        </h6>
 
-                                                            <div>
+                                                                        <div className="d-flex flex-column gap-3">
+                                                                            {item.submission.attempts_history.map(
+                                                                                (
+                                                                                    hist,
+                                                                                    i,
+                                                                                ) => (
+                                                                                    <div
+                                                                                        key={
+                                                                                            i
+                                                                                        }
+                                                                                        className="bg-white p-3 rounded border"
+                                                                                        style={{
+                                                                                            opacity: 0.8,
+                                                                                        }}
+                                                                                    >
+                                                                                        <div className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
+                                                                                            <span className="fw-bold text-dark">
+                                                                                                Attempt{" "}
+                                                                                                {
+                                                                                                    hist.attempt
+                                                                                                }
+                                                                                            </span>
 
-                                                                <div
-                                                                    className="brief_header"
-                                                                    style={{
-                                                                        color:
-                                                                            "#4f46e5",
-                                                                    }}
-                                                                >
-                                                                    <i className="bi bi-clipboard2-check-fill"></i>{" "}
+                                                                                            <div className="d-flex gap-2">
+                                                                                                <span className="badge bg-light text-dark border">
+                                                                                                    Score:{" "}
+                                                                                                    {
+                                                                                                        hist.score
+                                                                                                    }
+                                                                                                    %
+                                                                                                </span>
 
-                                                                    Evaluation
-                                                                    Feedback
-                                                                    &
-                                                                    History
-                                                                </div>
-
-                                                                <div className="brief_body mt-3">
-
-                                                                    {/* CURRENT EVALUATION */}
-
-                                                                    {item
-                                                                        .submission
-                                                                        .score !==
-                                                                        null &&
-                                                                        item
-                                                                            .submission
-                                                                            .score !==
-                                                                        undefined && (
-
-                                                                            <div className="bg-white p-3 rounded shadow-sm border mb-4">
-
-                                                                                <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
-
-                                                                                    <i className="bi bi-star-fill text-warning"></i>
-
-                                                                                    Latest
-                                                                                    Evaluation
-                                                                                    (
-                                                                                    Attempt{" "}
-                                                                                    {
-                                                                                        item
-                                                                                            .submission
-                                                                                            .attempts
-                                                                                    }
-                                                                                    /3
-                                                                                    )
-
-                                                                                </h6>
-
-                                                                                {/* SCORE BREAKDOWN */}
-
-                                                                                {item
-                                                                                    .submission
-                                                                                    .scoreBreakdowns &&
-                                                                                    item
-                                                                                        .submission
-                                                                                        .scoreBreakdowns
-                                                                                        .length >
-                                                                                    0 && (
-
-                                                                                        <div className="mb-3">
-
-                                                                                            <div className="fw-bold text-muted small mb-2 uppercase-tracking">
-                                                                                                Score
-                                                                                                Breakdown
+                                                                                                <span className="badge bg-light text-dark border">
+                                                                                                    Grade:{" "}
+                                                                                                    {
+                                                                                                        hist.grade
+                                                                                                    }
+                                                                                                </span>
                                                                                             </div>
+                                                                                        </div>
 
-                                                                                            <div className="d-flex flex-wrap gap-2">
-
-                                                                                                {item
-                                                                                                    .submission
-                                                                                                    .scoreBreakdowns.map(
+                                                                                        {hist.breakdowns &&
+                                                                                            hist
+                                                                                                .breakdowns
+                                                                                                .length >
+                                                                                            0 && (
+                                                                                                <div className="d-flex flex-wrap gap-2 mb-2">
+                                                                                                    {hist.breakdowns.map(
                                                                                                         (
                                                                                                             bd,
-                                                                                                            i
+                                                                                                            j,
                                                                                                         ) => (
-
                                                                                                             <div
                                                                                                                 key={
-                                                                                                                    i
+                                                                                                                    j
                                                                                                                 }
-                                                                                                                className="bg-light px-3 py-1 rounded border small"
+                                                                                                                className="bg-light px-2 py-1 rounded small text-muted"
+                                                                                                                style={{
+                                                                                                                    fontSize:
+                                                                                                                        "0.8rem",
+                                                                                                                }}
                                                                                                             >
-
-                                                                                                                <span className="text-muted">
-                                                                                                                    {
-                                                                                                                        bd.criterion
-                                                                                                                    }
-                                                                                                                    :{" "}
-                                                                                                                </span>
-
+                                                                                                                {
+                                                                                                                    bd.criterion
+                                                                                                                }
+                                                                                                                :{" "}
                                                                                                                 <strong className="text-dark">
                                                                                                                     {
                                                                                                                         bd.obtained_score
@@ -1378,232 +1126,59 @@ const Assignments = () => {
                                                                                                                         bd.max_score
                                                                                                                     }
                                                                                                                 </strong>
-
                                                                                                             </div>
-
-                                                                                                        )
+                                                                                                        ),
                                                                                                     )}
-
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    )}
-
-                                                                                {/* FEEDBACK */}
-
-                                                                                {item
-                                                                                    .submission
-                                                                                    .feedback && (
-
-                                                                                        <div className="mt-2">
-
-                                                                                            <div className="fw-bold text-muted small mb-1 uppercase-tracking">
-                                                                                                Staff
-                                                                                                Feedback
-                                                                                            </div>
-
-                                                                                            <div
-                                                                                                className="p-3 bg-light rounded"
-                                                                                                style={{
-                                                                                                    fontSize:
-                                                                                                        "0.9rem",
-                                                                                                    lineHeight:
-                                                                                                        "1.5",
-                                                                                                }}
-                                                                                            >
-                                                                                                {
-                                                                                                    item
-                                                                                                        .submission
-                                                                                                        .feedback
-                                                                                                }
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    )}
-
-                                                                            </div>
-                                                                        )}
-
-                                                                    {/* ==================================
-                                                                    PREVIOUS ATTEMPTS
-                                                                ================================== */}
-
-                                                                    {item
-                                                                        .submission
-                                                                        .attempts_history &&
-                                                                        item
-                                                                            .submission
-                                                                            .attempts_history
-                                                                            .length >
-                                                                        0 && (
-
-                                                                            <div className="mt-4">
-
-                                                                                <h6 className="fw-bold text-muted small uppercase-tracking mb-3">
-
-                                                                                    <i className="bi bi-clock-history"></i>{" "}
-                                                                                    Previous
-                                                                                    Attempts
-
-                                                                                </h6>
-
-                                                                                <div className="d-flex flex-column gap-3">
-
-                                                                                    {item
-                                                                                        .submission
-                                                                                        .attempts_history.map(
-                                                                                            (
-                                                                                                hist,
-                                                                                                i
-                                                                                            ) => (
-
-                                                                                                <div
-                                                                                                    key={
-                                                                                                        i
-                                                                                                    }
-                                                                                                    className="bg-white p-3 rounded border"
-                                                                                                    style={{
-                                                                                                        opacity:
-                                                                                                            0.8,
-                                                                                                    }}
-                                                                                                >
-
-                                                                                                    <div className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
-
-                                                                                                        <span className="fw-bold text-dark">
-                                                                                                            Attempt{" "}
-                                                                                                            {
-                                                                                                                hist.attempt
-                                                                                                            }
-                                                                                                        </span>
-
-                                                                                                        <div className="d-flex gap-2">
-
-                                                                                                            <span className="badge bg-light text-dark border">
-                                                                                                                Score:{" "}
-                                                                                                                {
-                                                                                                                    hist.score
-                                                                                                                }
-                                                                                                                %
-                                                                                                            </span>
-
-                                                                                                            <span className="badge bg-light text-dark border">
-                                                                                                                Grade:{" "}
-                                                                                                                {
-                                                                                                                    hist.grade
-                                                                                                                }
-                                                                                                            </span>
-
-                                                                                                        </div>
-
-                                                                                                    </div>
-
-                                                                                                    {/* BREAKDOWNS */}
-
-                                                                                                    {hist.breakdowns &&
-                                                                                                        hist
-                                                                                                            .breakdowns
-                                                                                                            .length >
-                                                                                                        0 && (
-
-                                                                                                            <div className="d-flex flex-wrap gap-2 mb-2">
-
-                                                                                                                {hist.breakdowns.map(
-                                                                                                                    (
-                                                                                                                        bd,
-                                                                                                                        j
-                                                                                                                    ) => (
-
-                                                                                                                        <div
-                                                                                                                            key={
-                                                                                                                                j
-                                                                                                                            }
-                                                                                                                            className="bg-light px-2 py-1 rounded small text-muted"
-                                                                                                                            style={{
-                                                                                                                                fontSize:
-                                                                                                                                    "0.8rem",
-                                                                                                                            }}
-                                                                                                                        >
-                                                                                                                            {
-                                                                                                                                bd.criterion
-                                                                                                                            }
-
-                                                                                                                            :{" "}
-
-                                                                                                                            <strong className="text-dark">
-                                                                                                                                {
-                                                                                                                                    bd.obtained_score
-                                                                                                                                }
-                                                                                                                                /
-                                                                                                                                {
-                                                                                                                                    bd.max_score
-                                                                                                                                }
-                                                                                                                            </strong>
-
-                                                                                                                        </div>
-
-                                                                                                                    )
-                                                                                                                )}
-
-                                                                                                            </div>
-                                                                                                        )}
-
-                                                                                                    <div className="small text-muted mt-2">
-
-                                                                                                        <strong>
-                                                                                                            Feedback:
-                                                                                                        </strong>{" "}
-
-                                                                                                        {
-                                                                                                            hist.feedback ||
-                                                                                                            "None"
-                                                                                                        }
-
-                                                                                                    </div>
-
                                                                                                 </div>
+                                                                                            )}
 
-                                                                                            )
-                                                                                        )}
+                                                                                        <div className="small text-muted mt-2 d-flex justify-content-between align-items-center">
+                                                                                            <div>
+                                                                                                <strong>
+                                                                                                    Feedback:
+                                                                                                </strong>{" "}
+                                                                                                {hist.feedback ||
+                                                                                                    "None"}
+                                                                                            </div>
 
-                                                                                </div>
-
-                                                                            </div>
-                                                                        )}
-
-                                                                </div>
-
-                                                            </div>
-                                                        )}
-
-                                                </div>
-                                            )}
-
-                                    </div>
-                                )
-                            )
+                                                                                            {hist.file_path && (
+                                                                                                <a
+                                                                                                    href={`${BASE_UPLOAD_URL}${hist.file_path}`}
+                                                                                                    target="_blank"
+                                                                                                    rel="noopener noreferrer"
+                                                                                                    className="btn btn-sm btn-link text-decoration-none p-0 fw-bold d-flex align-items-center gap-1"
+                                                                                                >
+                                                                                                    <i className="bi bi-file-earmark-text"></i>{" "}
+                                                                                                    View
+                                                                                                    File
+                                                                                                </a>
+                                                                                            )}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                ),
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                        </div>
+                                    )}
+                                </div>
+                            ))
                         ) : (
-
-                            /* EMPTY STATE */
-
                             <div className="text-center py-5">
-
                                 <i className="bi bi-clipboard-x display-1 text-muted opacity-25"></i>
 
                                 <p className="mt-3 text-muted">
-                                    No assignments
-                                    found for this
+                                    No assignments found for this
                                     category.
                                 </p>
-
                             </div>
-
                         )}
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     );

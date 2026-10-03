@@ -7,12 +7,22 @@ export default function RouteRefresh() {
     const pathname = usePathname();
 
     useEffect(() => {
-        // Tell the preloader that the current route has loaded
+        // Current page is ready
         sessionStorage.removeItem("route-changing");
     }, [pathname]);
 
     useEffect(() => {
         const handleClick = (event: MouseEvent) => {
+            if (
+                event.button !== 0 ||
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+            ) {
+                return;
+            }
+
             const target = event.target as HTMLElement;
             const link = target.closest("a");
 
@@ -20,28 +30,43 @@ export default function RouteRefresh() {
 
             const href = link.getAttribute("href");
 
-            // Ignore external links, anchors, downloads, etc.
+            if (!href) return;
+
+            // Ignore external links
             if (
-                !href ||
-                href.startsWith("http") ||
-                href.startsWith("#") ||
-                href.startsWith("mailto:") ||
-                href.startsWith("tel:") ||
-                link.hasAttribute("download")
+                href.startsWith("http://") ||
+                href.startsWith("https://") ||
+                href.startsWith("//")
             ) {
                 return;
             }
 
-            // Same page
-            if (href === pathname) return;
+            // Ignore special links
+            if (
+                href.startsWith("#") ||
+                href.startsWith("mailto:") ||
+                href.startsWith("tel:")
+            ) {
+                return;
+            }
 
-            // Tell preloader to show
+            if (link.hasAttribute("download")) {
+                return;
+            }
+
+            if (link.target === "_blank") {
+                return;
+            }
+
+            if (href === pathname) {
+                return;
+            }
+
+            // Tell the next page to show the preloader
             sessionStorage.setItem("route-changing", "true");
 
-            // Wait briefly so preloader becomes visible
-            setTimeout(() => {
-                window.location.href = href;
-            }, 100);
+            // Full browser redirect / page reload
+            window.location.href = href;
         };
 
         document.addEventListener("click", handleClick);

@@ -14,6 +14,8 @@ import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import PagePreloader from "@/components/PagePreloader";
 import ScrollToTop from "@/components/ScrollToTop";
 
+import SessionGuard from "@/components/SessionGuard";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -50,6 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <SessionGuard />
         <RouteRefresh />
 
         <ScrollToTop />

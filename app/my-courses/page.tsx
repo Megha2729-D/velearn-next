@@ -57,7 +57,9 @@ const isProduction =
     typeof window !== "undefined" &&
     (window.location.hostname === "velearn.in" ||
         window.location.hostname === "www.velearn.in");
-
+const BASE_API_URL = "https://crm.velearn.in/api/";
+const BASE_DYNAMIC_IMAGE_URL =
+    "https://crm.velearn.in/public/uploads/";
 const getApiUrl = () => {
     if (typeof window === "undefined") {
         return "https://crm.velearn.in/api/";
@@ -455,10 +457,10 @@ const Placement = () => {
                                         const imageBaseUrl =
                                             getDynamicImageUrl();
 
-                                        const img =
-                                            course.thumbnail
-                                                ? `${imageBaseUrl}uploads/courses/${course.thumbnail}`
-                                                : `${imageBaseUrl}uploads/courses/default-course.jpg`;
+                                        // const img =
+                                        //     course.thumbnail
+                                        //         ? `${imageBaseUrl}uploads/courses/${course.thumbnail}`
+                                        //         : `${imageBaseUrl}uploads/courses/default-course.jpg`;
 
                                         return (
                                             <div
@@ -513,9 +515,7 @@ const Placement = () => {
                                                     {/* Image */}
                                                     <div className="card_img_parent overflow-hidden">
                                                         <img
-                                                            src={
-                                                                img
-                                                            }
+                                                            src={`${BASE_DYNAMIC_IMAGE_URL}courses/${course.thumbnail}`}
                                                             className="card_img w-100"
                                                             alt={
                                                                 course.title

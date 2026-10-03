@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
+import axios from "axios";
+import toast from "react-hot-toast";
 import Sidebar from "@/components/layout/Sidebar";
 import NotificationsModal from "@/components/layout/NotificationsModal";
 
@@ -53,13 +54,15 @@ type Notification = {
 
 const liveCourses = [
     {
+        id: 1,
         title: "Full Stack Development",
         img: "/images/live-course/full-stack-development.jpg",
         desc: "A live, mentor-led Full Stack Development program designed to take you from fundamentals to production-ready applications — with real projects, real tools, and real career support.",
-        duration: "3 Months",
+        duration: "6 Months",
         link: "/live-course/full-stack-development",
     },
     {
+        id: 2,
         title: "UI/UX Design",
         img: "/images/live-course/ui-ux.webp",
         desc: "Learn UI/UX design through live classes, hands-on projects, and expert mentorship. Master user research, UX strategy, and modern UI design to become job-ready with a strong portfolio.",
@@ -67,6 +70,7 @@ const liveCourses = [
         link: "/live-course/ui-ux-design",
     },
     {
+        id: 3,
         title: "Digital Marketing",
         img: "/images/live-course/digital-marketing.webp",
         desc: "This live Digital Marketing training program is designed to build job-ready skills through hands-on campaign execution, real-time tools, and expert mentorship— preparing you for high-growth roles in today’s digital economy.",
@@ -74,6 +78,7 @@ const liveCourses = [
         link: "/live-course/digital-marketing",
     },
     {
+        id: 4,
         title: "Data Science & AI",
         img: "/images/live-course/data-science.webp",
         desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects, real datasets, and continuous mentor guidance—preparing you for high-impact roles in today’s data-driven world.",
@@ -81,6 +86,7 @@ const liveCourses = [
         link: "/live-course/data-science-and-machine-learning",
     },
     {
+        id: 5,
         title: "Data Analytics",
         img: "/images/live-course/data-analytics.webp",
         desc: "This live Data Analytics program helps you build practical skills in data analysis, visualization, SQL, Excel, Python, and real-world datasets through hands-on projects and expert mentor guidance—preparing you for job-ready roles in today’s data-driven industry.",
@@ -194,6 +200,35 @@ export default function ExploreCourses() {
                 .includes(keyword)
         );
     });
+
+    const fetchSyllabus = async (courseId: number) => {
+        try {
+            const response = await axios.get(
+                `${BASE_API_URL}course-detail/${courseId}`
+            );
+
+            if (!response.data?.status || !response.data?.data) {
+                toast.error("Course details not found.");
+                return;
+            }
+
+            const course = response.data.data;
+
+            if (!course.syllabus_pdf) {
+                toast.error("Syllabus is not available for this course.");
+                return;
+            }
+
+            const pdfUrl = course.syllabus_pdf.startsWith("http")
+                ? course.syllabus_pdf
+                : `${BASE_DYNAMIC_IMAGE_URL}courses/${course.syllabus_pdf}`;
+
+            window.open(pdfUrl, "_blank");
+        } catch (error) {
+            console.error("Syllabus fetch error:", error);
+            toast.error("Unable to fetch syllabus.");
+        }
+    };
 
     return (
         <div className="dashboard_layout">
@@ -329,11 +364,10 @@ export default function ExploreCourses() {
                                                 <div className="col-12 d-flex justify-content-between">
 
                                                     <div className="syllabus_butt">
-                                                        <button>
+                                                        <button onClick={() => fetchSyllabus(course.id)}>
                                                             Syllabus
                                                         </button>
                                                     </div>
-
                                                     <div className="view_more_butt">
 
                                                         <Link href={course.link}>

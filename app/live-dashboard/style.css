@@ -453,7 +453,7 @@
 }
 
 .profile_breadcrumb h2 {
-    font-family: 'Playfair Display', serif !important;
+      font-family: var(--heading-font) !important;
     font-size: 20px;
     color: #0f172a;
     font-weight: 800;

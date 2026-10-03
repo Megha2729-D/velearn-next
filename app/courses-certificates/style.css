@@ -255,7 +255,7 @@
 }
 
 .cert_main_title {
-    font-family: 'Playfair Display', serif;
+      font-family: var(--heading-font);
     font-size: 2.8rem;
     font-weight: 900;
     color: #22346b;
@@ -292,7 +292,7 @@
 }
 
 .cert_user_name {
-    font-family: 'Playfair Display', serif;
+      font-family: var(--heading-font);
     font-size: 2.5rem;
     font-weight: 700;
     color: #1a1a1a;
