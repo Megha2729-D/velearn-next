@@ -91,7 +91,7 @@ export default function CourseDetailsPage({
 
     const goToLearnPage = () => {
         if (course?.id) {
-            router.push(`/learn/${course.id}`);
+            router.push(`/learn/${course.slug}`);
         } else {
             router.push("/my-courses");
         }
@@ -2922,14 +2922,15 @@ export default function CourseDetailsPage({
 
                                     {/* Enroll / Start Learning */}
                                     <button
+                                        type="button"
+                                        onClick={handleCourseAction}
                                         className="rc-cta-1"
-                                    // onClick={handleCourseAction}
                                     >
-                                        {isEnrolled
-                                            ? "Start Course"
-                                            : user
-                                                ? "Enroll Now"
-                                                : "Login to Enroll"}
+                                        {!user
+                                            ? "Login to Enroll"
+                                            : isEnrolled
+                                                ? "Start Course"
+                                                : "Enroll Now"}
                                     </button>
                                     {/* <button className="rc-cta-1">
                                         {course?.course_type === "free"

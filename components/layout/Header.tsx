@@ -736,6 +736,17 @@ export default function Header() {
             : `/course-details/${item.slug}`;
     };
 
+    const getCourseHref = (course: Course) => {
+        const isEnrolled = enrolledCourses.some(
+            (enrolledCourse) =>
+                Number(enrolledCourse.id) === Number(course.id)
+        );
+
+        return isEnrolled
+            ? `/learn/${course.slug}`
+            : `/course-details/${course.slug}`;
+    };
+
     /* =========================================================
     RENDER
     ========================================================= */
@@ -854,7 +865,7 @@ export default function Header() {
                                                                 }
                                                             >
                                                                 <Link
-                                                                    href={`/course-details/${course.slug}`}
+                                                                    href={getCourseHref(course)}
                                                                     onClick={
                                                                         handleItemClick
                                                                     }
@@ -918,7 +929,7 @@ export default function Header() {
                                                                 }
                                                             >
                                                                 <Link
-                                                                    href={`/course-details/${course.slug}`}
+                                                                    href={getCourseHref(course)}
                                                                     onClick={
                                                                         handleItemClick
                                                                     }
@@ -982,7 +993,7 @@ export default function Header() {
                                                                 }
                                                             >
                                                                 <Link
-                                                                    href={`/course-details/${course.slug}`}
+                                                                    href={getCourseHref(course)}
                                                                     onClick={
                                                                         handleItemClick
                                                                     }
@@ -1917,6 +1928,7 @@ export default function Header() {
                                     onClose={
                                         closeAllMobile
                                     }
+                                    getCourseHref={getCourseHref}
                                 />
                             )}
 
@@ -1941,6 +1953,7 @@ export default function Header() {
                                     onClose={
                                         closeAllMobile
                                     }
+                                    getCourseHref={getCourseHref}
                                 />
                             )}
 
@@ -1965,6 +1978,7 @@ export default function Header() {
                                     onClose={
                                         closeAllMobile
                                     }
+                                    getCourseHref={getCourseHref}
                                 />
                             )}
 
@@ -2401,6 +2415,7 @@ function MobileCourseMenu({
     viewAllText,
     onBack,
     onClose,
+    getCourseHref,
 }: {
     title: string;
     courses: Course[];
@@ -2408,6 +2423,7 @@ function MobileCourseMenu({
     viewAllText: string;
     onBack: () => void;
     onClose: () => void;
+    getCourseHref: (course: Course) => string;
 }) {
     return (
         <div className="mobile-inner-page">
@@ -2428,7 +2444,7 @@ function MobileCourseMenu({
                                 key={
                                     course.id
                                 }
-                                href={`/course-details/${course.slug}`}
+                                href={getCourseHref(course)}
                                 text={
                                     course.title
                                 }

@@ -201,7 +201,7 @@ export default function Footer() {
                                                             Referrals
                                                         </Link>
                                                     </li>
-                                                    {/* <li><Link href="">Become An Affilliate</Link></li> */}
+                                                    {/* <li><Link href="#">Become An Affilliate</Link></li> */}
                                                 </ul>
                                             </div>
                                         </div>
@@ -447,7 +447,7 @@ export default function Footer() {
                                                     Rewards & Referrals
                                                 </Link>
                                             </li>
-                                            {/* <li><Link href="">Become An Affilliate</Link></li> */}
+                                            {/* <li><Link href="#">Become An Affilliate</Link></li> */}
                                         </ul>
                                     </div>
                                 </div>
@@ -567,7 +567,7 @@ export default function Footer() {
                                     <div className="col-12 mb-3 mt-4">
                                         <div className="d-flex gap-3">
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://facebook.com/velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -578,10 +578,10 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://twitter.com/velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -592,10 +592,10 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://instagram.com/velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -606,14 +606,14 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-12 mb-3">
                                         <div className="d-flex gap-3">
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://linkedin.com/company/velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -624,10 +624,10 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://youtube.com/@velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -638,10 +638,10 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="footer_icons">
-                                                <a
+                                                <Link
                                                     href="https://t.me/velearn"
                                                     target="_blank"
                                                     rel="noreferrer"
@@ -652,15 +652,15 @@ export default function Footer() {
                                                         height={100}
                                                         width={100}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-3 col-6 d-flex flex-column align-items-center app_img">
                                     <div className="one mt-3">
-                                        <a
-                                            href=""
+                                        <Link
+                                            href="#"
                                             target="_blank"
                                             rel="noreferrer"
                                         >
@@ -670,11 +670,11 @@ export default function Footer() {
                                                 height={100}
                                                 width={100}
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="one">
-                                        <a
-                                            href=""
+                                        <Link
+                                            href="#"
                                             target="_blank"
                                             rel="noreferrer"
                                         >
@@ -684,10 +684,10 @@ export default function Footer() {
                                                 height={100}
                                                 width={100}
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="one">
-                                        <a
+                                        <Link
                                             href="/refer-and-earn"
                                             target="_blank"
                                             rel="noreferrer"
@@ -696,18 +696,18 @@ export default function Footer() {
                                                 {" "}
                                                 Refer & Earn
                                             </p>
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className="two">
-                                        <a
-                                            href=""
+                                        <Link
+                                            href="#"
                                             target="_blank"
                                             rel="noreferrer"
                                         >
                                             <p className="mb-0">
                                                 Became an affilate
                                             </p>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

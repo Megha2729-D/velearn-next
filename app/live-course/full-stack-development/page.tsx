@@ -43,7 +43,7 @@ export default function FullStackDevelopment() {
     const [errors, setErrors] = useState<any>({});
 
     const [isEnrolled, setIsEnrolled] = useState(false);
-
+    const [releaseDate, setReleaseDate] = useState<string | null>(null);
     const [showEnrollSuccessModal, setShowEnrollSuccessModal] =
         useState(false);
 
@@ -57,6 +57,45 @@ export default function FullStackDevelopment() {
 
     const tabsWrapperRef = useRef<HTMLDivElement | null>(null);
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+    useEffect(() => {
+        const fetchCourseDetails = async () => {
+            try {
+                const response = await fetch(
+                    `${BASE_API_URL}course-detail/${courseId}`
+                );
+
+                const data = await response.json();
+
+                if (data?.status && data?.data?.release_date) {
+                    setReleaseDate(data.data.release_date);
+                }
+            } catch (error) {
+                console.error(
+                    "Course detail API error:",
+                    error
+                );
+            }
+        };
+
+        fetchCourseDetails();
+    }, [courseId]);
+
+    const formatReleaseDate = (date: string) => {
+        const [year, month, day] = date.split("-").map(Number);
+
+        const formattedDate = new Date(
+            year,
+            month - 1,
+            day
+        );
+
+        return formattedDate.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -1240,10 +1279,10 @@ export default function FullStackDevelopment() {
                                                 Live courses{" "}
                                             </Link>
                                             <span className="px-2">/</span>
-                                            <Link href={"/course-details"}>
+                                            <span>
                                                 {" "}
                                                 Data Science in English
-                                            </Link>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1312,7 +1351,9 @@ export default function FullStackDevelopment() {
                             </div>
                             <div className="col-12">
                                 <p className="fw-bold text-center batch_info">
-                                    Next batch starts 15 June 2026 Only 5 seats remaining
+                                    {releaseDate
+                                        ? `Next batch starts ${formatReleaseDate(releaseDate)} Only 5 seats remaining`
+                                        : "Next batch details loading..."}
                                 </p>
                             </div>
                         </div>

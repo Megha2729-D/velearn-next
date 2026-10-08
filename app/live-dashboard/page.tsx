@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import {
+    CircularProgressbar,
+    buildStyles,
+} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 import Sidebar from "@/components/layout/Sidebar";
@@ -12,114 +15,120 @@ import "./style.css";
 
 const BASE_API_URL = "https://crm.velearn.in/api/";
 
-interface User {
+type User = {
     id: number | string;
     name: string;
     course_title?: string;
     batch_string?: string;
-}
+};
 
-interface Progress {
+type ProgressData = {
     course_progress: number;
     completed_modules: number;
     total_modules: number;
-}
+};
 
-interface Assignments {
+type AssignmentsData = {
     total: number;
     submitted: number;
     avg_score: number;
-}
+};
 
-interface MiniProject {
+type AttendanceItem = {
+    day: number;
+    status: string;
+};
+
+type AttendanceSummary = {
+    present: number;
+    absent: number;
+    no_class: number;
+    percentage: number;
+};
+
+type MiniProject = {
     id: number | string;
     name: string;
-    module: string;
-    submitted_date?: string | null;
-    score: number;
+    module?: string;
+    submitted_date?: string;
     status: string;
+    score: number;
     progress: number;
-}
+};
 
-interface Milestone {
+type Milestone = {
     title: string;
     date: string;
     status: string;
     score: number;
     desc: string;
-}
+};
 
-interface MainProject {
+type MainProject = {
     id: number | string;
     title: string;
     review: string;
     milestones: Milestone[];
-}
+};
 
-interface AttendanceItem {
-    day: number | string;
-    status: string;
-}
-
-interface AttendanceSummary {
-    present: number;
-    absent: number;
-    no_class: number;
-    percentage: number;
-}
-
-interface DashboardData {
+type DashboardData = {
     user: User;
-    progress: Progress;
-    assignments: Assignments;
+    progress: ProgressData;
+    assignments: AssignmentsData;
     mini_projects: MiniProject[];
     main_projects: MainProject[];
     attendance: AttendanceItem[];
     attendance_summary: AttendanceSummary;
-}
-
-interface DashboardResponse {
-    status: boolean;
-    data: DashboardData;
-}
+};
 
 const LiveDashboard = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [isNotifOpen, setIsNotifOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] =
+        useState(false);
+
+    const [isNotifOpen, setIsNotifOpen] =
+        useState(false);
 
     const [dashboardData, setDashboardData] =
         useState<DashboardData | null>(null);
 
     const [loading, setLoading] = useState(true);
 
+    /*
+     * ------------------------------------------------------
+     * FETCH DASHBOARD DATA
+     * ------------------------------------------------------
+     */
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const userString = localStorage.getItem("user");
+                const userString =
+                    localStorage.getItem("user");
 
                 if (!userString) {
                     setLoading(false);
                     return;
                 }
 
-                const userLocal = JSON.parse(userString);
+                const userLocal: User =
+                    JSON.parse(userString);
 
                 if (!userLocal?.id) {
                     setLoading(false);
                     return;
                 }
 
-                const res = await axios.get<DashboardResponse>(
-                    `${BASE_API_URL}live-dashboard/${userLocal.id}`,
+                const res = await axios.get(
+                    `${BASE_API_URL}live-dashboard/${userLocal.id}`
                 );
 
-                if (res.data.status) {
+                if (res.data?.status) {
                     setDashboardData(res.data.data);
                 }
             } catch (error) {
                 console.error(
                     "Error fetching live dashboard data",
-                    error,
+                    error
                 );
             } finally {
                 setLoading(false);
@@ -129,18 +138,28 @@ const LiveDashboard = () => {
         fetchDashboardData();
     }, []);
 
+    /*
+     * ------------------------------------------------------
+     * LOADING
+     * ------------------------------------------------------
+     */
+
     if (loading) {
         return (
             <div className="dashboard_layout">
                 <Sidebar
                     activePage="live-dash"
                     isOpen={isSidebarOpen}
-                    onClose={() => setIsSidebarOpen(false)}
+                    onClose={() =>
+                        setIsSidebarOpen(false)
+                    }
                 />
 
                 <div
                     className="dashboard_main_content d-flex justify-content-center align-items-center"
-                    style={{ minHeight: "100vh" }}
+                    style={{
+                        minHeight: "100vh",
+                    }}
                 >
                     <div
                         className="spinner-border text-primary"
@@ -155,23 +174,52 @@ const LiveDashboard = () => {
         );
     }
 
+    /*
+     * ------------------------------------------------------
+     * NO DATA
+     * ------------------------------------------------------
+     */
+
     if (!dashboardData) {
         return (
             <div className="dashboard_layout">
                 <Sidebar
                     activePage="live-dash"
                     isOpen={isSidebarOpen}
-                    onClose={() => setIsSidebarOpen(false)}
+                    onClose={() =>
+                        setIsSidebarOpen(false)
+                    }
                 />
 
-                <div className="dashboard_main_content">
-                    <div className="text-center py-5 text-muted">
-                        No dashboard data found.
+                <div
+                    className="sidebar_overlay"
+                    onClick={() =>
+                        setIsSidebarOpen(false)
+                    }
+                />
+
+                <div className="dashboard_main_content d-flex justify-content-center align-items-center">
+                    <div className="text-center">
+                        <i className="bi bi-exclamation-circle display-4 text-muted"></i>
+
+                        <h5 className="mt-3">
+                            Unable to load dashboard
+                        </h5>
+
+                        <p className="text-muted">
+                            Please try again later.
+                        </p>
                     </div>
                 </div>
             </div>
         );
     }
+
+    /*
+     * ------------------------------------------------------
+     * DATA
+     * ------------------------------------------------------
+     */
 
     const {
         user,
@@ -186,68 +234,92 @@ const LiveDashboard = () => {
     const assignmentPercentage =
         assignments.total > 0
             ? Math.round(
-                (assignments.submitted / assignments.total) * 100,
+                (assignments.submitted /
+                    assignments.total) *
+                100
             )
             : 0;
 
-    const remainingModules =
-        progress.total_modules - progress.completed_modules;
-
-    const pendingAssignments =
-        assignments.total - assignments.submitted;
-
-    const currentMonth = new Date().toLocaleString("default", {
-        month: "long",
-        year: "numeric",
-    });
+    /*
+     * ------------------------------------------------------
+     * RENDER
+     * ------------------------------------------------------
+     */
 
     return (
         <div className="dashboard_layout">
+            {/* SIDEBAR */}
+
             <Sidebar
                 activePage="live-dash"
                 isOpen={isSidebarOpen}
-                onClose={() => setIsSidebarOpen(false)}
+                onClose={() =>
+                    setIsSidebarOpen(false)
+                }
             />
+
+            {/* MOBILE SIDEBAR OVERLAY */}
 
             <div
                 className={`sidebar_overlay ${isSidebarOpen ? "show" : ""
                     }`}
-                onClick={() => setIsSidebarOpen(false)}
-            />
+                onClick={() =>
+                    setIsSidebarOpen(false)
+                }
+            ></div>
+
+            {/* NOTIFICATIONS */}
 
             <NotificationsModal
                 isOpen={isNotifOpen}
-                onClose={() => setIsNotifOpen(false)}
+                onClose={() =>
+                    setIsNotifOpen(false)
+                }
                 notifications={[]}
             />
 
+            {/* MAIN CONTENT */}
+
             <div className="dashboard_main_content">
+                {/* HEADER */}
+
                 <header className="dashboard_top_header">
                     <div className="profile_breadcrumb">
                         <h2>
-                            Live Courses <span>/ Dashboard</span>
+                            Live Courses{" "}
+                            <span>/ Dashboard</span>
                         </h2>
                     </div>
 
                     <div
                         className="notification_bell_top"
-                        onClick={() => setIsNotifOpen(true)}
+                        onClick={() =>
+                            setIsNotifOpen(true)
+                        }
                     >
                         <i className="bi bi-bell"></i>
                     </div>
                 </header>
 
+                {/* DASHBOARD */}
+
                 <div className="live_dashboard_container">
-                    {/* Welcome Banner */}
+                    {/* ---------------------------------------- */}
+                    {/* WELCOME BANNER */}
+                    {/* ---------------------------------------- */}
+
                     <div className="welcome_stats_banner">
                         <div className="welcome_text">
                             <h1>
                                 Good morning,{" "}
-                                {user?.name?.split(" ")[0] || "Student"}! 👋
+                                {user?.name
+                                    ? user.name.split(" ")[0]
+                                    : "Student"}{" "}
+                                ! 👋
                             </h1>
 
                             <p>
-                                {user?.course_title || "Live Course"}
+                                {user?.course_title}
 
                                 {user?.batch_string &&
                                     ` • ${user.batch_string}`}
@@ -255,9 +327,13 @@ const LiveDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Progress Overview */}
+                    {/* ---------------------------------------- */}
+                    {/* PROGRESS OVERVIEW */}
+                    {/* ---------------------------------------- */}
+
                     <div className="progress_grid_row row mt-4">
-                        {/* Course Progress */}
+                        {/* COURSE PROGRESS */}
+
                         <div className="col-lg-6">
                             <div className="stat_card_new">
                                 <div className="d-flex align-items-center gap-4">
@@ -281,7 +357,9 @@ const LiveDashboard = () => {
                                     </div>
 
                                     <div className="stat_info">
-                                        <h4>Course Progress</h4>
+                                        <h4>
+                                            Course Progress
+                                        </h4>
 
                                         <p>
                                             {
@@ -302,7 +380,11 @@ const LiveDashboard = () => {
 
                                             <span className="text-muted">
                                                 • Remaining:{" "}
-                                                {remainingModules}
+                                                {Math.max(
+                                                    0,
+                                                    progress.total_modules -
+                                                    progress.completed_modules
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -310,7 +392,8 @@ const LiveDashboard = () => {
                             </div>
                         </div>
 
-                        {/* Assignments */}
+                        {/* ASSIGNMENTS */}
+
                         <div className="col-lg-6">
                             <div className="stat_card_new">
                                 <div className="d-flex align-items-center gap-4">
@@ -337,8 +420,8 @@ const LiveDashboard = () => {
                                         <h4>Assignments</h4>
 
                                         <p>
-                                            {assignments.submitted} of{" "}
-                                            {assignments.total}{" "}
+                                            {assignments.submitted}{" "}
+                                            of {assignments.total}{" "}
                                             submitted • Avg{" "}
                                             {assignments.avg_score}%
                                         </p>
@@ -353,7 +436,11 @@ const LiveDashboard = () => {
 
                                             <span className="text-danger">
                                                 • Pending:{" "}
-                                                {pendingAssignments}
+                                                {Math.max(
+                                                    0,
+                                                    assignments.total -
+                                                    assignments.submitted
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -362,15 +449,27 @@ const LiveDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Attendance & Mini Projects */}
+                    {/* ---------------------------------------- */}
+                    {/* ATTENDANCE + MINI PROJECTS */}
+                    {/* ---------------------------------------- */}
+
                     <div className="row mt-4">
-                        {/* Attendance */}
+                        {/* ATTENDANCE */}
+
                         <div className="col-lg-6">
                             <div className="attendance_card">
                                 <div className="d-flex justify-content-between align-items-center mb-4">
                                     <h3 className="section_title_sm">
                                         <i className="bi bi-calendar-check me-2"></i>
-                                        Attendance — {currentMonth}
+
+                                        Attendance —{" "}
+                                        {new Date().toLocaleString(
+                                            "default",
+                                            {
+                                                month: "long",
+                                                year: "numeric",
+                                            }
+                                        )}
                                     </h3>
 
                                     <div className="calendar_legend d-flex gap-3">
@@ -409,9 +508,9 @@ const LiveDashboard = () => {
                                         </div>
                                     ))}
 
-                                    {attendance?.map((item, index) => (
+                                    {attendance?.map((item) => (
                                         <div
-                                            key={`${item.day}-${index}`}
+                                            key={item.day}
                                             className={`calendar_day ${item.status}`}
                                         >
                                             {item.day}
@@ -448,8 +547,7 @@ const LiveDashboard = () => {
                                         <span className="text-primary">
                                             {
                                                 attendance_summary.percentage
-                                            }
-                                            %
+                                            }%
                                         </span>{" "}
                                         <span className="text-muted">
                                             (Min: 75%)
@@ -459,7 +557,8 @@ const LiveDashboard = () => {
                             </div>
                         </div>
 
-                        {/* Mini Projects */}
+                        {/* MINI PROJECTS */}
+
                         <div className="col-lg-6">
                             <div className="mini_projects_card">
                                 <h3 className="section_title_sm mb-4">
@@ -468,90 +567,111 @@ const LiveDashboard = () => {
                                 </h3>
 
                                 <div className="project_list">
-                                    {mini_projects?.length > 0 ? (
+                                    {mini_projects &&
+                                        mini_projects.length > 0 ? (
                                         mini_projects.map(
-                                            (proj, index) => (
-                                                <div
-                                                    key={proj.id}
-                                                    className={`project_item ${index > 0
+                                            (proj, index) => {
+                                                const isCompleted =
+                                                    proj.status ===
+                                                    "Completed";
+
+                                                const isPending =
+                                                    proj.status ===
+                                                    "Pending";
+
+                                                const isChangesNeeded =
+                                                    !isCompleted &&
+                                                    !isPending;
+
+                                                return (
+                                                    <div
+                                                        key={proj.id}
+                                                        className={`project_item ${index > 0
                                                             ? "mt-4"
                                                             : ""
-                                                        }`}
-                                                >
-                                                    <div className="d-flex justify-content-between mb-2">
-                                                        <div className="p_info">
-                                                            <div className="p_name">
-                                                                {
-                                                                    proj.name
-                                                                }
-                                                            </div>
-
-                                                            <div className="p_meta">
-                                                                Module:{" "}
-                                                                {
-                                                                    proj.module
-                                                                }{" "}
-                                                                {proj.submitted_date
-                                                                    ? `• Submitted ${proj.submitted_date}`
-                                                                    : "• Resubmission Pending"}
-                                                            </div>
-                                                        </div>
-
-                                                        <div
-                                                            className={`p_score ${proj.status ===
-                                                                    "Completed"
-                                                                    ? "text-success"
-                                                                    : "text-danger"
-                                                                }`}
-                                                        >
-                                                            <span className="score_val">
-                                                                {
-                                                                    proj.score
-                                                                }
-                                                                %
-                                                            </span>
-
-                                                            <span className="score_label">
-                                                                SCORE
-                                                            </span>
-
-                                                            <div className="mt-1">
-                                                                {proj.status ===
-                                                                    "Completed" ? (
-                                                                    <>
-                                                                        <i className="bi bi-check-circle-fill"></i>{" "}
-                                                                        Completed
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <i className="bi bi-exclamation-triangle-fill"></i>{" "}
-                                                                        Changes
-                                                                        Needed
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        className="progress"
-                                                        style={{
-                                                            height: 6,
-                                                        }}
+                                                            }`}
                                                     >
+                                                        <div className="d-flex justify-content-between mb-2">
+                                                            <div className="p_info">
+                                                                <div className="p_name">
+                                                                    {proj.name}
+                                                                </div>
+
+                                                                <div className="p_meta">
+                                                                    Module:{" "}
+                                                                    {proj.module}{" "}
+                                                                    {proj.submitted_date
+                                                                        ? `• Submitted ${proj.submitted_date}`
+                                                                        : isPending
+                                                                            ? "• Not Submitted Yet"
+                                                                            : "• Resubmission Pending"}
+                                                                </div>
+                                                            </div>
+
+                                                            <div
+                                                                className={`p_score ${isCompleted
+                                                                    ? "text-success"
+                                                                    : isPending
+                                                                        ? "text-secondary"
+                                                                        : "text-danger"
+                                                                    }`}
+                                                            >
+                                                                <span className="score_val">
+                                                                    {isPending
+                                                                        ? "--"
+                                                                        : `${proj.score}%`}
+                                                                </span>
+
+                                                                <span className="score_label">
+                                                                    SCORE
+                                                                </span>
+
+                                                                <div className="mt-1">
+                                                                    {isCompleted ? (
+                                                                        <>
+                                                                            <i className="bi bi-check-circle-fill"></i>{" "}
+                                                                            Completed
+                                                                        </>
+                                                                    ) : isPending ? (
+                                                                        <>
+                                                                            <i className="bi bi-clock-fill"></i>{" "}
+                                                                            Pending
+                                                                            Submission
+                                                                        </>
+                                                                    ) : isChangesNeeded ? (
+                                                                        <>
+                                                                            <i className="bi bi-exclamation-triangle-fill"></i>{" "}
+                                                                            Changes
+                                                                            Needed
+                                                                        </>
+                                                                    ) : null}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                         <div
-                                                            className={`progress-bar ${proj.status ===
-                                                                    "Completed"
-                                                                    ? "bg-success"
-                                                                    : "bg-danger"
-                                                                }`}
+                                                            className="progress"
                                                             style={{
-                                                                width: `${proj.progress}%`,
+                                                                height: 6,
                                                             }}
-                                                        ></div>
+                                                        >
+                                                            <div
+                                                                className={`progress-bar ${isCompleted
+                                                                    ? "bg-success"
+                                                                    : isPending
+                                                                        ? "bg-secondary"
+                                                                        : "bg-danger"
+                                                                    }`}
+                                                                style={{
+                                                                    width: isPending
+                                                                        ? "0%"
+                                                                        : `${proj.progress}%`,
+                                                                }}
+                                                            ></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            ),
+                                                );
+                                            }
                                         )
                                     ) : (
                                         <p className="text-muted">
@@ -563,7 +683,10 @@ const LiveDashboard = () => {
                         </div>
                     </div>
 
-                    {/* Main Project */}
+                    {/* ---------------------------------------- */}
+                    {/* MAIN PROJECTS */}
+                    {/* ---------------------------------------- */}
+
                     {main_projects?.map((mp) => (
                         <div
                             key={mp.id}
@@ -572,6 +695,7 @@ const LiveDashboard = () => {
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <h3 className="section_title_sm">
                                     <i className="bi bi-rocket-takeoff me-2"></i>
+
                                     Main Project — {mp.title}
                                 </h3>
 
@@ -580,106 +704,127 @@ const LiveDashboard = () => {
                                 </span>
                             </div>
 
-                            {mp.milestones?.map((m, mIndex) => {
-                                const isCompleted =
-                                    m.status === "Completed";
+                            {/* MILESTONES */}
 
-                                const isPending =
-                                    m.status === "Pending" &&
-                                    m.score === 0 &&
-                                    m.date === "Pending";
+                            {mp.milestones?.map(
+                                (milestone, index) => {
+                                    const isCompleted =
+                                        milestone.status ===
+                                        "Completed";
 
-                                const isInProgress =
-                                    m.status === "Pending" &&
-                                    !isPending;
+                                    const isPending =
+                                        milestone.status ===
+                                        "Pending" &&
+                                        milestone.score === 0 &&
+                                        milestone.date ===
+                                        "Pending";
 
-                                let barClass = "bg-success";
-                                let textClass = "text-success";
-                                let progressVal = m.score;
+                                    const isInProgress =
+                                        milestone.status ===
+                                        "Pending" &&
+                                        !isPending;
 
-                                if (isInProgress) {
-                                    barClass = "bg-warning";
-                                    textClass = "text-warning";
-                                } else if (isPending) {
-                                    barClass = "bg-secondary";
-                                    textClass = "";
-                                    progressVal = 0;
-                                }
+                                    let barClass =
+                                        "bg-success";
 
-                                return (
-                                    <div
-                                        key={`${mp.id}-${mIndex}`}
-                                        className={`milestone_item ${mIndex > 0
+                                    let textClass =
+                                        "text-success";
+
+                                    let progressValue =
+                                        milestone.score;
+
+                                    if (isInProgress) {
+                                        barClass = "bg-warning";
+                                        textClass =
+                                            "text-warning";
+                                    } else if (isPending) {
+                                        barClass =
+                                            "bg-secondary";
+                                        textClass = "";
+                                        progressValue = 0;
+                                    }
+
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={`milestone_item ${index > 0
                                                 ? "mt-4"
                                                 : ""
-                                            } ${isPending
-                                                ? "locked"
-                                                : ""
-                                            }`}
-                                    >
-                                        <div
-                                            className={`d-flex justify-content-between mb-2 ${isPending
-                                                    ? "opacity-50"
+                                                } ${isPending
+                                                    ? "locked"
                                                     : ""
                                                 }`}
                                         >
                                             <div
-                                                className={`m_title ${isInProgress
-                                                        ? "text-primary"
-                                                        : ""
+                                                className={`d-flex justify-content-between mb-2 ${isPending
+                                                    ? "opacity-50"
+                                                    : ""
                                                     }`}
                                             >
-                                                {m.title} • {m.date}{" "}
-                                                {isCompleted &&
-                                                    "• ✓ Completed"}{" "}
-                                                {isInProgress &&
-                                                    "• In Progress"}{" "}
-                                                {isPending && (
-                                                    <>
-                                                        <br />
-                                                        <i className="bi bi-lock-fill"></i>{" "}
-                                                        Locked
-                                                    </>
-                                                )}
+                                                <div
+                                                    className={`m_title ${isInProgress
+                                                        ? "text-primary"
+                                                        : ""
+                                                        }`}
+                                                >
+                                                    {milestone.title} •{" "}
+                                                    {milestone.date}
+
+                                                    {isCompleted &&
+                                                        " • ✓ Completed"}
+
+                                                    {isInProgress &&
+                                                        " • In Progress"}
+
+                                                    {isPending && (
+                                                        <>
+                                                            <br />
+
+                                                            <i className="bi bi-lock-fill"></i>{" "}
+                                                            Locked
+                                                        </>
+                                                    )}
+                                                </div>
+
+                                                <div
+                                                    className={`m_score ${textClass}`}
+                                                >
+                                                    {isPending
+                                                        ? "--"
+                                                        : `${milestone.score}%`}
+                                                </div>
                                             </div>
 
                                             <div
-                                                className={`m_score ${textClass}`}
-                                            >
-                                                {isPending
-                                                    ? "--"
-                                                    : `${m.score}%`}
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            className="progress mb-2"
-                                            style={{
-                                                height: 10,
-                                                opacity: isPending
-                                                    ? 0.3
-                                                    : 1,
-                                            }}
-                                        >
-                                            <div
-                                                className={`progress-bar ${barClass}`}
+                                                className="progress mb-2"
                                                 style={{
-                                                    width: `${progressVal}%`,
+                                                    height: 10,
+                                                    opacity:
+                                                        isPending
+                                                            ? 0.3
+                                                            : 1,
                                                 }}
-                                            ></div>
-                                        </div>
+                                            >
+                                                <div
+                                                    className={`progress-bar ${barClass}`}
+                                                    style={{
+                                                        width: `${progressValue}%`,
+                                                    }}
+                                                ></div>
+                                            </div>
 
-                                        <p
-                                            className={`m_desc ${isPending
+                                            <p
+                                                className={`m_desc ${isPending
                                                     ? "opacity-50"
                                                     : ""
-                                                }`}
-                                        >
-                                            {m.desc}
-                                        </p>
-                                    </div>
-                                );
-                            })}
+                                                    }`}
+                                            >
+                                                {milestone.desc}
+                                            </p>
+                                        </div>
+                                    );
+                                }
+                            )}
                         </div>
                     ))}
                 </div>

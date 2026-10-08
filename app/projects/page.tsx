@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 
 import Sidebar from "@/components/layout/Sidebar";
@@ -15,24 +15,24 @@ const BASE_UPLOAD_URL_MAIN =
 const BASE_UPLOAD_URL_MINI =
   "https://crm.velearn.in/public/uploads/mini_projects/";
 
-type ProjectTab = "mini" | "main";
+type TabType = "mini" | "main";
 
-interface SubmissionHistory {
-  attempt?: number;
+type ScoreBreakdown = {
+  criterion?: string;
+  obtained_score?: number | string;
+  max_score?: number | string;
+};
+
+type AttemptHistory = {
+  attempt?: number | string;
   score?: number | string | null;
   grade?: string | null;
   feedback?: string | null;
   file_path?: string | null;
   breakdowns?: ScoreBreakdown[];
-}
+};
 
-interface ScoreBreakdown {
-  criterion?: string;
-  obtained_score?: number | string;
-  max_score?: number | string;
-}
-
-interface Submission {
+type Submission = {
   status?: string;
   score?: number | string | null;
   grade?: string | null;
@@ -42,29 +42,31 @@ interface Submission {
   reupload_approved?: number | boolean;
   submitted_at?: string;
   scoreBreakdowns?: ScoreBreakdown[];
-  attempts_history?: SubmissionHistory[];
-}
+  attempts_history?: AttemptHistory[];
+};
 
-interface Project {
+type Project = {
   id: number | string;
-  title: string;
+  title?: string;
   module?: string;
   description?: string;
-  due_date?: string;
-  reveal_date?: string;
-
-  review_1_title?: string;
-  review_1_deadline?: string;
-  review_2_title?: string;
-  review_2_deadline?: string;
-  review_3_title?: string;
-  review_3_deadline?: string;
+  due_date?: string | null;
+  reveal_date?: string | null;
 
   submission?: Submission | null;
   submissions?: Record<string, Submission>;
-}
 
-interface ProcessedProject extends Project {
+  review_1_title?: string;
+  review_1_deadline?: string | null;
+
+  review_2_title?: string;
+  review_2_deadline?: string | null;
+
+  review_3_title?: string;
+  review_3_deadline?: string | null;
+};
+
+type ProcessedProject = Project & {
   isSubmitted: boolean;
   status: string;
   scoreText: string;
@@ -72,21 +74,20 @@ interface ProcessedProject extends Project {
   deadline: string;
   revealDateFormatted: string;
   isOverdue: boolean;
-}
-
-const getFileExtension = (filename?: string | null) => {
-  return filename
-    ? filename.split(".").pop()?.toLowerCase() || ""
-    : "";
 };
 
-const isImageFile = (filename?: string | null) => {
+const getFileExtension = (filename?: string | null): string => {
+  if (!filename) return "";
+  return filename.split(".").pop()?.toLowerCase() || "";
+};
+
+const isImageFile = (filename?: string | null): boolean => {
   const ext = getFileExtension(filename);
 
   return ["png", "jpg", "jpeg", "gif", "webp"].includes(ext);
 };
 
-const getFileIconClass = (filename?: string | null) => {
+const getFileIconClass = (filename?: string | null): string => {
   const ext = getFileExtension(filename);
 
   switch (ext) {
@@ -109,31 +110,64 @@ const getFileIconClass = (filename?: string | null) => {
   }
 };
 
+const getErrorMessage = (error: unknown): string => {
+  if (axios.isAxiosError(error)) {
+    return (
+      error.response?.data?.message ||
+      error.message ||
+      "Something went wrong."
+    );
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return "Something went wrong.";
+};
+
 const formatDate = (
-  date?: string,
-  options?: Intl.DateTimeFormatOptions
-) => {
-  if (!date) return "N/A";
+  value?: string | null,
+  includeTime = false
+): string => {
+  if (!value) {
+    return includeTime ? "Immediate" : "No Deadline";
+  }
 
-  const parsedDate = new Date(date);
+  const date = new Date(value);
 
-  if (Number.isNaN(parsedDate.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return "N/A";
   }
 
-  return parsedDate.toLocaleDateString("en-GB", options);
+  if (includeTime) {
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 };
 
 const Projects = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<ProjectTab>("mini");
+  const [activeTab, setActiveTab] = useState<TabType>("mini");
 
   const [mainProjects, setMainProjects] = useState<Project[]>([]);
   const [miniProjects, setMiniProjects] = useState<Project[]>([]);
 
   const [loading, setLoading] = useState(true);
+
   const [expandedBriefId, setExpandedBriefId] = useState<
     number | string | null
   >(null);
@@ -141,24 +175,38 @@ const Projects = () => {
   const [userId, setUserId] = useState<number | string | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
+  /*
+   * ---------------------------------------------------------
+   * GET USER FROM LOCAL STORAGE
+   * ---------------------------------------------------------
+   */
+
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     try {
       const storedToken = localStorage.getItem("token");
+
       const storedUser = JSON.parse(
         localStorage.getItem("user") || "{}"
       );
 
-      setToken(storedToken);
-
-      const currentUserId =
+      const storedUserId =
         storedUser?.id || storedUser?.auth_id || null;
 
-      setUserId(currentUserId);
+      setToken(storedToken);
+      setUserId(storedUserId);
     } catch (error) {
-      console.error("Error reading user data:", error);
+      console.error("Failed to read user from localStorage:", error);
       setLoading(false);
     }
   }, []);
+
+  /*
+   * ---------------------------------------------------------
+   * FETCH PROJECTS
+   * ---------------------------------------------------------
+   */
 
   useEffect(() => {
     if (userId) {
@@ -166,7 +214,7 @@ const Projects = () => {
     } else if (userId === null) {
       const timer = setTimeout(() => {
         setLoading(false);
-      }, 100);
+      }, 300);
 
       return () => clearTimeout(timer);
     }
@@ -180,8 +228,8 @@ const Projects = () => {
 
       const headers = token
         ? {
-            Authorization: `Bearer ${token}`,
-          }
+          Authorization: `Bearer ${token}`,
+        }
         : {};
 
       const [mainRes, miniRes] = await Promise.all([
@@ -198,76 +246,87 @@ const Projects = () => {
 
       if (mainRes.data?.status === "success") {
         setMainProjects(mainRes.data.data || []);
+      } else {
+        setMainProjects([]);
       }
 
       if (miniRes.data?.status === "success") {
         setMiniProjects(miniRes.data.data || []);
+      } else {
+        setMiniProjects([]);
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error fetching projects:", error);
 
-      const errorMsg =
-        error?.response?.data?.message ||
-        error?.message ||
-        "Unknown error";
-
-      toast.error(`Failed to load projects: ${errorMsg}`);
+      toast.error(
+        `Failed to load projects: ${getErrorMessage(error)}`
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  /*
+   * ---------------------------------------------------------
+   * FILE UPLOAD
+   * ---------------------------------------------------------
+   */
+
   const handleUpload = async (
     projectId: number | string,
     file: File | undefined,
-    type: ProjectTab,
+    type: TabType,
     reviewNumber: number | null = null
   ) => {
     if (!file || !userId) return;
 
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("file", file);
+      formData.append("file", file);
 
-    if (reviewNumber) {
-      formData.append(
-        "review_number",
-        String(reviewNumber)
-      );
-    }
+      if (reviewNumber) {
+        formData.append(
+          "review_number",
+          reviewNumber.toString()
+        );
+      }
 
-    const uploadPromise = axios.post(
-      `${BASE_API_URL}${type}-projects/${userId}/${projectId}/submit`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          ...(token
-            ? {
+      const uploadPromise = axios.post(
+        `${BASE_API_URL}${type}-projects/${userId}/${projectId}/submit`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...(token
+              ? {
                 Authorization: `Bearer ${token}`,
               }
-            : {}),
-        },
-      }
-    );
+              : {}),
+          },
+        }
+      );
 
-    toast.promise(uploadPromise, {
-      loading: "Uploading submission...",
-      success: (res: any) =>
-        res.data?.message ||
-        "Submission uploaded successfully!",
-      error: (err: any) =>
-        err?.response?.data?.message ||
-        "Upload failed.",
-    });
+      await toast.promise(uploadPromise, {
+        loading: "Uploading submission...",
+        success: (res) =>
+          res.data?.message ||
+          "Submission uploaded successfully!",
+        error: (err: AxiosError<{ message?: string }>) =>
+          err.response?.data?.message || "Upload failed.",
+      });
 
-    try {
-      await uploadPromise;
       await fetchProjects();
     } catch (error) {
       console.error("Upload error:", error);
     }
   };
+
+  /*
+   * ---------------------------------------------------------
+   * PROCESS PROJECT STATUS
+   * ---------------------------------------------------------
+   */
 
   const processProject = (
     project: Project
@@ -276,9 +335,9 @@ const Projects = () => {
 
     const isSubmitted = isMain
       ? !!(
-          project.submissions &&
-          Object.keys(project.submissions).length > 0
-        )
+        project.submissions &&
+        Object.keys(project.submissions).length > 0
+      )
       : !!project.submission;
 
     let projectStatus = "pending";
@@ -291,12 +350,20 @@ const Projects = () => {
           project.submission.status || "pending";
 
         if (
+          project.submission.reupload_approved === 1 ||
+          project.submission.reupload_approved === true
+        ) {
+          projectStatus = "changes-needed";
+          scoreText = "Changes Needed";
+          detailText =
+            "Please review feedback and resubmit";
+        } else if (
           projectStatus === "graded" ||
           projectStatus === "evaluated"
         ) {
           scoreText =
             project.submission.score !== null &&
-            project.submission.score !== undefined
+              project.submission.score !== undefined
               ? `Score: ${project.submission.score}%`
               : "Evaluated";
 
@@ -322,6 +389,23 @@ const Projects = () => {
           scoreText = "Overdue";
         }
       }
+    } else {
+      if (isSubmitted && project.submissions) {
+        const firstSubmission = Object.values(
+          project.submissions
+        )[0];
+
+        if (
+          firstSubmission &&
+          (firstSubmission.reupload_approved === 1 ||
+            firstSubmission.reupload_approved === true)
+        ) {
+          projectStatus = "changes-needed";
+          scoreText = "Changes Needed";
+          detailText =
+            "Please review feedback and resubmit";
+        }
+      }
     }
 
     return {
@@ -335,592 +419,189 @@ const Projects = () => {
 
       detailText,
 
-      deadline: project.due_date
-        ? formatDate(project.due_date, {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          })
-        : "No Deadline",
+      deadline: formatDate(project.due_date),
 
-      revealDateFormatted: project.reveal_date
-        ? formatDate(project.reveal_date, {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        : "Immediate",
+      revealDateFormatted: formatDate(
+        project.reveal_date,
+        true
+      ),
 
       isOverdue:
         projectStatus === "late" && !isSubmitted,
     };
   };
 
-  const displayedProjects = (
-    activeTab === "main"
-      ? mainProjects
-      : miniProjects
-  ).map(processProject);
+  const displayedProjects = useMemo(() => {
+    const projects =
+      activeTab === "main"
+        ? mainProjects
+        : miniProjects;
 
-  const renderMiniProject = (
+    return projects.map(processProject);
+  }, [
+    activeTab,
+    mainProjects,
+    miniProjects,
+  ]);
+
+  const BASE_UPLOAD_URL =
+    activeTab === "main"
+      ? BASE_UPLOAD_URL_MAIN
+      : BASE_UPLOAD_URL_MINI;
+
+  /*
+   * ---------------------------------------------------------
+   * MINI PROJECT - SUBMITTED FILE
+   * ---------------------------------------------------------
+   */
+
+  const renderMiniSubmittedFile = (
     item: ProcessedProject
   ) => {
-    const submission = item.submission;
+    if (
+      !item.isSubmitted ||
+      !item.submission ||
+      !item.submission.file_path
+    ) {
+      return null;
+    }
 
-    const isReuploadApproved =
-      submission?.reupload_approved === 1 ||
-      submission?.reupload_approved === true;
+    const filePath = item.submission.file_path;
 
-    const attempts = submission?.attempts || 0;
+    const fileUrl =
+      `${BASE_UPLOAD_URL_MINI}${filePath}`;
 
     return (
-      <div
-        key={item.id}
-        className={`assignment_card ${item.status} ${
-          item.isSubmitted
-            ? "submitted_card"
-            : ""
-        }`}
-      >
-        <div className="as_header">
-          <div className="as_info">
-            <h3 className="as_title">
-              {item.title}
-            </h3>
-
-            <div className="as_meta">
-              <span>
-                <i className="bi bi-layers"></i>{" "}
-                {item.module}
-              </span>
-
-              <span>
-                <i className="bi bi-calendar3"></i>{" "}
-                Deadline: {item.deadline}
-              </span>
-
-              <span>
-                <i className="bi bi-eye"></i>{" "}
-                Revealed: {item.revealDateFormatted}
-              </span>
-            </div>
-
-            <div className="badge_group">
-              {(
-                item.status === "graded" ||
-                item.status === "evaluated"
-              ) &&
-                item.detailText && (
-                  <span className="graded_badge">
-                    <i className="bi bi-patch-check-fill"></i>{" "}
-                    {item.detailText}
-                  </span>
-                )}
-
-              {(
-                item.status === "graded" ||
-                item.status === "evaluated"
-              ) &&
-                isReuploadApproved && (
-                  <span
-                    className="submission_status_badge pending-reupload"
-                    style={{
-                      backgroundColor: "#fff7ed",
-                      color: "#c2410c",
-                      border:
-                        "1px solid #fed7aa",
-                    }}
-                  >
-                    <i className="bi bi-hourglass-split"></i>{" "}
-                    Reupload Pending
-                  </span>
-                )}
-
-              {item.isSubmitted ? (
-                <span
-                  className={`submission_status_badge submitted ${item.status}`}
-                >
-                  <i className="bi bi-check-circle-fill"></i>{" "}
-                  {item.status === "late"
-                    ? "Submitted Late"
-                    : "Submitted"}{" "}
-                  {submission?.attempts
-                    ? `(Attempt ${submission.attempts}/3)`
-                    : ""}
-                </span>
-              ) : item.isOverdue ? (
-                <span className="submission_status_badge overdue">
-                  <i className="bi bi-exclamation-circle-fill"></i>{" "}
-                  Overdue
-                </span>
-              ) : (
-                <span className="submission_status_badge pending">
-                  <i className="bi bi-clock-history"></i>{" "}
-                  Pending Submission
-                </span>
-              )}
-            </div>
-
-            <p
-              className="mt-3 mb-1 text-secondary"
+      <div className="submitted_file_container mt-3">
+        {isImageFile(filePath) ? (
+          <div
+            className="assignment_image_preview_box border rounded p-2"
+            style={{
+              width: "fit-content",
+            }}
+          >
+            <div
+              className="position-relative preview_image_wrapper"
               style={{
-                fontSize: "13.5px",
-                lineHeight: "1.6",
-                fontWeight: 500,
+                borderRadius: "6px",
+                overflow: "hidden",
               }}
             >
-              {item.description}
-            </p>
+              <img
+                src={fileUrl}
+                alt="Submission Preview"
+                style={{
+                  height: "100px",
+                  width: "auto",
+                  objectFit: "cover",
+                }}
+              />
 
-            {item.isSubmitted &&
-              submission?.file_path && (
-                <div className="submitted_file_container mt-3">
-                  {isImageFile(
-                    submission.file_path
-                  ) ? (
-                    <div
-                      className="assignment_image_preview_box border rounded p-2"
-                      style={{ width: "fit-content" }}
-                    >
-                      <div
-                        className="position-relative preview_image_wrapper"
-                        style={{
-                          borderRadius: "6px",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <img
-                          src={`${BASE_UPLOAD_URL_MINI}${submission.file_path}`}
-                          alt="Submission Preview"
-                          style={{
-                            height: "100px",
-                            width: "auto",
-                            objectFit: "cover",
-                          }}
-                        />
-
-                        <div
-                          className="preview_overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
-                          style={{
-                            opacity: 0,
-                            transition:
-                              "opacity 0.2s",
-                            cursor: "pointer",
-                          }}
-                          onClick={() =>
-                            window.open(
-                              `${BASE_UPLOAD_URL_MINI}${submission.file_path}`,
-                              "_blank"
-                            )
-                          }
-                        >
-                          <i className="bi bi-eye text-white fs-4"></i>
-                        </div>
-                      </div>
-
-                      <div className="small text-muted mt-2 d-flex justify-content-between align-items-center">
-                        <span
-                          className="text-truncate"
-                          style={{
-                            maxWidth: "150px",
-                          }}
-                        >
-                          {submission.file_path}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <a
-                      href={`${BASE_UPLOAD_URL_MINI}${submission.file_path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn_download_file d-inline-flex align-items-center gap-2 p-2 border rounded text-decoration-none"
-                    >
-                      <div className="file_icon_large">
-                        <i
-                          className={`bi ${getFileIconClass(
-                            submission.file_path
-                          )} fs-3`}
-                        ></i>
-                      </div>
-
-                      <div className="file_details">
-                        <span
-                          className="d-block text-dark fw-bold text-truncate"
-                          style={{
-                            maxWidth: "200px",
-                          }}
-                        >
-                          {submission.file_path}
-                        </span>
-
-                        <span className="d-block text-muted small text-uppercase">
-                          {getFileExtension(
-                            submission.file_path
-                          )}{" "}
-                          File
-                        </span>
-                      </div>
-
-                      <div className="ms-2">
-                        <i className="bi bi-download text-primary"></i>
-                      </div>
-                    </a>
-                  )}
-                </div>
-              )}
-
-            <div className="as_actions mt-4">
-              {(!item.isSubmitted ||
-                isReuploadApproved) &&
-                (submission &&
-                attempts >= 3 ? (
-                  <span
-                    className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
-                    style={{
-                      fontSize: "12px",
-                    }}
-                  >
-                    <i className="bi bi-exclamation-triangle-fill"></i>{" "}
-                    Attempt Limit Reached
-                    (3/3)
-                  </span>
-                ) : (
-                  <label
-                    className={`btn_upload ${
-                      item.status === "late"
-                        ? "late"
-                        : "pending"
-                    }`}
-                    style={{
-                      cursor: "pointer",
-                      margin: 0,
-                    }}
-                  >
-                    <i
-                      className={`bi ${
-                        item.status === "late"
-                          ? "bi-exclamation-triangle"
-                          : "bi-cloud-arrow-up"
-                      } me-1`}
-                    ></i>
-
-                    {item.isSubmitted
-                      ? item.status === "late"
-                        ? `Resubmit Late (Attempt ${
-                            attempts + 1
-                          }/3)`
-                        : `Resubmit (Attempt ${
-                            attempts + 1
-                          }/3)`
-                      : item.status === "late"
-                      ? "Late Upload"
-                      : "Upload Submission"}
-
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
-                      style={{
-                        display: "none",
-                      }}
-                      onChange={(e) =>
-                        handleUpload(
-                          item.id,
-                          e.target.files?.[0],
-                          activeTab
-                        )
-                      }
-                    />
-                  </label>
-                ))}
-
-              <button
-                className={`btn_brief ${
-                  expandedBriefId === item.id
-                    ? "active"
-                    : ""
-                }`}
+              <div
+                className="preview_overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
+                style={{
+                  opacity: 0,
+                  transition: "opacity 0.2s",
+                  cursor: "pointer",
+                }}
                 onClick={() =>
-                  setExpandedBriefId(
-                    expandedBriefId === item.id
-                      ? null
-                      : item.id
+                  window.open(
+                    fileUrl,
+                    "_blank",
+                    "noopener,noreferrer"
                   )
                 }
               >
-                {expandedBriefId === item.id
-                  ? "Hide Feedback"
-                  : "View Details & History"}
-              </button>
+                <i className="bi bi-eye text-white fs-4"></i>
+              </div>
+            </div>
+
+            <div className="small text-muted mt-2 d-flex justify-content-between align-items-center">
+              <span
+                className="text-truncate"
+                style={{
+                  maxWidth: "150px",
+                }}
+              >
+                {filePath}
+              </span>
             </div>
           </div>
-
-          <div
-            className={`as_status_badge ${item.status}`}
+        ) : (
+          <a
+            href={fileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn_download_file d-inline-flex align-items-center gap-2 p-2 border rounded text-decoration-none"
           >
-            {item.scoreText}
-          </div>
-        </div>
+            <div className="file_icon_large">
+              <i
+                className={`bi ${getFileIconClass(
+                  filePath
+                )} fs-3`}
+              ></i>
+            </div>
 
-        {expandedBriefId === item.id && (
-          <MiniProjectHistory
-            submission={submission}
-            baseUploadUrl={BASE_UPLOAD_URL_MINI}
-          />
+            <div className="file_details">
+              <span
+                className="d-block text-dark fw-bold text-truncate"
+                style={{
+                  maxWidth: "200px",
+                }}
+              >
+                {filePath}
+              </span>
+
+              <span className="d-block text-muted small text-uppercase">
+                {getFileExtension(filePath)} File
+              </span>
+            </div>
+
+            <div className="ms-2">
+              <i className="bi bi-download text-primary"></i>
+            </div>
+          </a>
         )}
       </div>
     );
   };
 
-  const renderMainProject = (
+  /*
+   * ---------------------------------------------------------
+   * MINI PROJECT - FEEDBACK HISTORY
+   * ---------------------------------------------------------
+   */
+
+  const renderMiniFeedback = (
     item: ProcessedProject
   ) => {
-    const submissions = item.submissions || {};
-
-    const sub1 = submissions["1"];
-    const sub2 = submissions["2"];
-    const sub3 = submissions["3"];
-
-    const isSub1Evaluated =
-      !!sub1 &&
-      (sub1.status === "evaluated" ||
-        sub1.status === "graded") &&
-      !sub1.reupload_approved;
-
-    const isSub2Evaluated =
-      !!sub2 &&
-      (sub2.status === "evaluated" ||
-        sub2.status === "graded") &&
-      !sub2.reupload_approved;
-
-    const isSub3Evaluated =
-      !!sub3 &&
-      (sub3.status === "evaluated" ||
-        sub3.status === "graded") &&
-      !sub3.reupload_approved;
-
-    let currentReview = 1;
-
-    if (
-      isSub1Evaluated &&
-      (!sub2 || !isSub2Evaluated)
-    ) {
-      currentReview = 2;
-    }
-
-    if (
-      isSub1Evaluated &&
-      isSub2Evaluated &&
-      (!sub3 || !isSub3Evaluated)
-    ) {
-      currentReview = 3;
-    }
-
-    if (
-      isSub1Evaluated &&
-      isSub2Evaluated &&
-      isSub3Evaluated
-    ) {
-      currentReview = 3;
-    }
-
-    let step1State = "locked";
-
-    if (isSub1Evaluated) {
-      step1State = "completed";
-    } else if (currentReview === 1) {
-      step1State = "active";
-    }
-
-    let step2State = "locked";
-
-    if (isSub2Evaluated) {
-      step2State = "completed";
-    } else if (currentReview === 2) {
-      step2State = "active";
-    }
-
-    let step3State = "locked";
-
-    if (isSub3Evaluated) {
-      step3State = "completed";
-    } else if (currentReview === 3) {
-      step3State = "active";
-    }
-
-    return (
-      <MainProjectCard
-        key={item.id}
-        item={item}
-        currentReview={currentReview}
-        step1State={step1State}
-        step2State={step2State}
-        step3State={step3State}
-        sub1={sub1}
-        sub2={sub2}
-        sub3={sub3}
-        handleUpload={handleUpload}
-        baseUploadUrl={BASE_UPLOAD_URL_MAIN}
-      />
-    );
-  };
-
-  return (
-    <div className="dashboard_layout">
-      <Sidebar
-        activePage="projects"
-        isOpen={isSidebarOpen}
-        onClose={() =>
-          setIsSidebarOpen(false)
-        }
-      />
-
-      <div
-        className={`sidebar_overlay ${
-          isSidebarOpen ? "show" : ""
-        }`}
-        onClick={() =>
-          setIsSidebarOpen(false)
-        }
-      ></div>
-
-      <NotificationsModal
-        isOpen={isNotifOpen}
-        onClose={() =>
-          setIsNotifOpen(false)
-        }
-        notifications={[]}
-      />
-
-      <div className="dashboard_main_content">
-        <header className="dashboard_top_header">
-          <div className="profile_breadcrumb">
-            <h2>
-              Live Courses{" "}
-              <span>/ Projects</span>
-            </h2>
-          </div>
-
-          <div
-            className="notification_bell_top"
-            onClick={() =>
-              setIsNotifOpen(true)
-            }
-          >
-            <i className="bi bi-bell"></i>
-          </div>
-        </header>
-
-        <div className="assignments_container">
-          <div
-            className="assignments_tabs"
-            style={{ marginBottom: "20px" }}
-          >
-            <button
-              className={`tab_btn text-center justify-content-center ${
-                activeTab === "mini"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setActiveTab("mini")
-              }
-            >
-              Mini Projects
-            </button>
-
-            <button
-              className={`tab_btn text-center justify-content-center ${
-                activeTab === "main"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setActiveTab("main")
-              }
-            >
-              Main Projects
-            </button>
-          </div>
-
-          <div className="assignment_list">
-            {loading ? (
-              <div className="text-center py-5">
-                <div
-                  className="spinner-border text-primary"
-                  role="status"
-                >
-                  <span className="visually-hidden">
-                    Loading...
-                  </span>
-                </div>
-              </div>
-            ) : displayedProjects.length > 0 ? (
-              displayedProjects.map((item) =>
-                activeTab === "mini"
-                  ? renderMiniProject(item)
-                  : renderMainProject(item)
-              )
-            ) : (
-              <div className="text-center py-5">
-                <i className="bi bi-clipboard-x display-1 text-muted opacity-25"></i>
-
-                <p className="mt-3 text-muted">
-                  No {activeTab} projects found.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .preview_image_wrapper:hover
-          .preview_overlay {
-          opacity: 1 !important;
-        }
-      `}</style>
-    </div>
-  );
-};
-
-/* =========================================================
-   MINI PROJECT HISTORY
-========================================================= */
-
-interface MiniProjectHistoryProps {
-  submission?: Submission | null;
-  baseUploadUrl: string;
-}
-
-const MiniProjectHistory = ({
-  submission,
-  baseUploadUrl,
-}: MiniProjectHistoryProps) => {
-  const hasEvaluation =
-    submission &&
-    (submission.score !== null &&
-      submission.score !== undefined);
-
-  const hasHistory =
-    submission?.attempts_history &&
-    submission.attempts_history.length > 0;
-
-  if (!submission || (!hasEvaluation && !hasHistory)) {
-    return (
-      <div className="assignment_brief_box mt-3 p-3 border-top bg-light rounded-bottom">
+    if (!item.submission) {
+      return (
         <div className="text-muted text-center py-3">
-          No feedback or evaluation history
-          available yet.
+          No feedback or evaluation history available yet.
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  return (
-    <div className="assignment_brief_box mt-3 p-3 border-top bg-light rounded-bottom">
+    const submission = item.submission;
+
+    const hasScore =
+      submission.score !== null &&
+      submission.score !== undefined;
+
+    const hasHistory =
+      !!submission.attempts_history &&
+      submission.attempts_history.length > 0;
+
+    if (!hasScore && !hasHistory) {
+      return (
+        <div className="text-muted text-center py-3">
+          No feedback or evaluation history available yet.
+        </div>
+      );
+    }
+
+    return (
       <div>
         <div className="brief_header fw-bold text-primary">
           <i className="bi bi-clipboard2-check-fill"></i>{" "}
@@ -928,19 +609,20 @@ const MiniProjectHistory = ({
         </div>
 
         <div className="brief_body mt-3">
-          {hasEvaluation && (
+          {hasScore && (
             <div className="bg-white p-3 rounded shadow-sm border mb-4">
               <h6 className="fw-bold mb-3 d-flex align-items-center gap-2">
-                <i className="bi bi-star-fill text-warning"></i>{" "}
-                Latest Evaluation
+                <i className="bi bi-star-fill text-warning"></i>
+
+                Latest Evaluation{" "}
                 {submission.attempts
-                  ? ` (Attempt ${submission.attempts}/3)`
+                  ? `(Attempt ${submission.attempts}/3)`
                   : ""}
               </h6>
 
               {submission.scoreBreakdowns &&
                 submission.scoreBreakdowns.length >
-                  0 && (
+                0 && (
                   <div className="mb-3">
                     <div className="fw-bold text-muted small mb-2 text-uppercase">
                       Score Breakdown
@@ -1001,7 +683,9 @@ const MiniProjectHistory = ({
                     <div
                       key={index}
                       className="bg-white p-3 rounded border"
-                      style={{ opacity: 0.8 }}
+                      style={{
+                        opacity: 0.8,
+                      }}
                     >
                       <div className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
                         <span className="fw-bold text-dark">
@@ -1010,25 +694,23 @@ const MiniProjectHistory = ({
 
                         <div className="d-flex gap-2">
                           <span className="badge bg-light text-dark border">
-                            Score:{" "}
-                            {history.score}%
+                            Score: {history.score}%
                           </span>
 
                           <span className="badge bg-light text-dark border">
-                            Grade:{" "}
-                            {history.grade}
+                            Grade: {history.grade}
                           </span>
                         </div>
                       </div>
 
                       {history.breakdowns &&
                         history.breakdowns.length >
-                          0 && (
+                        0 && (
                           <div className="d-flex flex-wrap gap-2 mb-2">
                             {history.breakdowns.map(
-                              (bd, index) => (
+                              (bd, bdIndex) => (
                                 <div
-                                  key={index}
+                                  key={bdIndex}
                                   className="bg-light px-2 py-1 rounded small text-muted"
                                   style={{
                                     fontSize:
@@ -1041,9 +723,7 @@ const MiniProjectHistory = ({
                                       bd.obtained_score
                                     }
                                     /
-                                    {
-                                      bd.max_score
-                                    }
+                                    {bd.max_score}
                                   </strong>
                                 </div>
                               )
@@ -1062,12 +742,12 @@ const MiniProjectHistory = ({
 
                         {history.file_path && (
                           <a
-                            href={`${baseUploadUrl}${history.file_path}`}
+                            href={`${BASE_UPLOAD_URL_MINI}${history.file_path}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-sm btn-link text-decoration-none p-0 fw-bold d-flex align-items-center gap-1"
                           >
-                            <i className="bi bi-download"></i>{" "}
+                            <i className="bi bi-download"></i>
                             Download
                           </a>
                         )}
@@ -1080,120 +760,17 @@ const MiniProjectHistory = ({
           )}
         </div>
       </div>
-    </div>
-  );
-};
-
-/* =========================================================
-   MAIN PROJECT CARD
-========================================================= */
-
-interface MainProjectCardProps {
-  item: ProcessedProject;
-  currentReview: number;
-
-  step1State: string;
-  step2State: string;
-  step3State: string;
-
-  sub1?: Submission;
-  sub2?: Submission;
-  sub3?: Submission;
-
-  handleUpload: (
-    projectId: number | string,
-    file: File | undefined,
-    type: ProjectTab,
-    reviewNumber?: number | null
-  ) => Promise<void>;
-
-  baseUploadUrl: string;
-}
-
-const MainProjectCard = ({
-  item,
-  currentReview,
-  step1State,
-  step2State,
-  step3State,
-  sub1,
-  sub2,
-  sub3,
-  handleUpload,
-  baseUploadUrl,
-}: MainProjectCardProps) => {
-  const renderUploadBtn = (
-    reviewNumber: number,
-    submission?: Submission
-  ) => {
-    const isSubmitted = !!submission;
-
-    const canReupload =
-      !isSubmitted ||
-      submission?.reupload_approved === 1 ||
-      submission?.reupload_approved === true;
-
-    if (!canReupload && isSubmitted) {
-      return (
-        <div className="d-flex align-items-center gap-3">
-          <span className="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
-            <i className="bi bi-check-circle-fill me-1"></i>{" "}
-            Submitted for Review
-          </span>
-        </div>
-      );
-    }
-
-    if (
-      isSubmitted &&
-      (submission?.attempts || 0) >= 3
-    ) {
-      return (
-        <span
-          className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
-          style={{
-            fontSize: "12px",
-          }}
-        >
-          <i className="bi bi-exclamation-triangle-fill"></i>{" "}
-          Attempt Limit Reached (3/3)
-        </span>
-      );
-    }
-
-    const attemptText = isSubmitted
-      ? `Resubmit Review ${reviewNumber}`
-      : `Submit for Review ${reviewNumber}`;
-
-    return (
-      <label
-        className="btn_submit_review"
-        style={{
-          cursor: "pointer",
-          margin: 0,
-        }}
-      >
-        {attemptText}
-
-        <input
-          type="file"
-          accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
-          style={{ display: "none" }}
-          onChange={(e) =>
-            handleUpload(
-              item.id,
-              e.target.files?.[0],
-              "main",
-              reviewNumber
-            )
-          }
-        />
-      </label>
     );
   };
 
+  /*
+   * ---------------------------------------------------------
+   * MAIN PROJECT - EVALUATION DETAILS
+   * ---------------------------------------------------------
+   */
+
   const renderEvaluationDetails = (
-    submission?: Submission
+    submission?: Submission | null
   ) => {
     if (!submission) return null;
 
@@ -1202,7 +779,7 @@ const MainProjectCard = ({
       submission.status === "graded";
 
     const hasHistory =
-      submission.attempts_history &&
+      !!submission.attempts_history &&
       submission.attempts_history.length > 0;
 
     if (!hasCurrentEval && !hasHistory) {
@@ -1218,7 +795,7 @@ const MainProjectCard = ({
         }}
       >
         <h6 className="fw-bold text-muted small text-uppercase mb-3 border-bottom pb-2">
-          <i className="bi bi-clipboard-check me-1 text-success"></i>{" "}
+          <i className="bi bi-clipboard-check me-1 text-success"></i>
           Evaluation Details
         </h6>
 
@@ -1228,7 +805,9 @@ const MainProjectCard = ({
             <div className="d-flex gap-3 mb-3">
               <div
                 className="bg-white px-4 py-2 rounded border border-success border-opacity-50 shadow-sm text-center"
-                style={{ minWidth: "100px" }}
+                style={{
+                  minWidth: "100px",
+                }}
               >
                 <div
                   className="text-muted fw-bold text-uppercase"
@@ -1247,7 +826,9 @@ const MainProjectCard = ({
 
               <div
                 className="bg-white px-4 py-2 rounded border border-primary border-opacity-50 shadow-sm text-center"
-                style={{ minWidth: "100px" }}
+                style={{
+                  minWidth: "100px",
+                }}
               >
                 <div
                   className="text-muted fw-bold text-uppercase"
@@ -1268,8 +849,7 @@ const MainProjectCard = ({
 
         {hasCurrentEval &&
           submission.scoreBreakdowns &&
-          submission.scoreBreakdowns.length >
-            0 && (
+          submission.scoreBreakdowns.length > 0 && (
             <div className="mb-3">
               <div className="fw-bold text-muted small mb-2 text-uppercase">
                 Score Breakdown
@@ -1329,7 +909,9 @@ const MainProjectCard = ({
                   <div
                     key={index}
                     className="bg-white p-3 rounded border"
-                    style={{ opacity: 0.8 }}
+                    style={{
+                      opacity: 0.8,
+                    }}
                   >
                     <div className="d-flex justify-content-between align-items-center mb-2 border-bottom pb-2">
                       <span className="fw-bold text-dark">
@@ -1348,13 +930,12 @@ const MainProjectCard = ({
                     </div>
 
                     {history.breakdowns &&
-                      history.breakdowns.length >
-                        0 && (
+                      history.breakdowns.length > 0 && (
                         <div className="d-flex flex-wrap gap-2 mb-2">
                           {history.breakdowns.map(
-                            (bd, index) => (
+                            (bd, bdIndex) => (
                               <div
-                                key={index}
+                                key={bdIndex}
                                 className="bg-light px-2 py-1 rounded small text-muted"
                                 style={{
                                   fontSize:
@@ -1388,12 +969,12 @@ const MainProjectCard = ({
 
                       {history.file_path && (
                         <a
-                          href={`${baseUploadUrl}${history.file_path}`}
+                          href={`${BASE_UPLOAD_URL_MAIN}${history.file_path}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="btn btn-sm btn-link text-decoration-none p-0 fw-bold d-flex align-items-center gap-1"
                         >
-                          <i className="bi bi-download"></i>{" "}
+                          <i className="bi bi-download"></i>
                           Download
                         </a>
                       )}
@@ -1408,298 +989,854 @@ const MainProjectCard = ({
     );
   };
 
+  /*
+   * ---------------------------------------------------------
+   * MAIN PROJECT - SUBMITTED FILE
+   * ---------------------------------------------------------
+   */
+
   const renderSubmittedFile = (
-    submission?: Submission
+    submission?: Submission | null
   ) => {
     if (!submission?.file_path) return null;
 
     return (
       <div className="mt-2 mb-3">
         <a
-          href={`${baseUploadUrl}${submission.file_path}`}
+          href={`${BASE_UPLOAD_URL_MAIN}${submission.file_path}`}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1"
         >
-          <i className="bi bi-file-earmark-arrow-down"></i>{" "}
+          <i className="bi bi-file-earmark-arrow-down"></i>
           View Submitted File
         </a>
       </div>
     );
   };
 
-  return (
-    <div className="main_project_card mb-4">
-      <div className="mp_header">
-        <div>
-          <h3 className="mp_title">
-            {item.title}
-          </h3>
+  /*
+   * ---------------------------------------------------------
+   * MAIN PROJECT - UPLOAD BUTTON
+   * ---------------------------------------------------------
+   */
 
-          <p className="mp_subtitle">
-            {item.module} • 3-review cycle
-          </p>
-        </div>
+  const renderUploadBtn = (
+    item: ProcessedProject,
+    reviewNumber: number,
+    submission?: Submission
+  ) => {
+    const isSubmitted = !!submission;
 
-        <div className="mp_status">
-          <span className="status_badge bg_light_blue text_primary">
-            Review {currentReview}/3
+    const canReupload =
+      !isSubmitted ||
+      submission?.reupload_approved === 1 ||
+      submission?.reupload_approved === true;
+
+    if (!canReupload && isSubmitted) {
+      return (
+        <div className="d-flex align-items-center gap-3">
+          <span className="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill">
+            <i className="bi bi-check-circle-fill me-1"></i>
+            Submitted for Review
           </span>
         </div>
-      </div>
+      );
+    }
 
-      <div className="stepper_container">
-        <div className={`step ${step1State}`}>
-          <div className="step_icon">
-            {step1State === "completed" ? (
-              <i className="bi bi-check"></i>
-            ) : (
-              "1"
-            )}
-          </div>
+    if (
+      isSubmitted &&
+      submission?.attempts &&
+      submission.attempts >= 3
+    ) {
+      return (
+        <span
+          className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
+          style={{
+            fontSize: "12px",
+          }}
+        >
+          <i className="bi bi-exclamation-triangle-fill"></i>
+          Attempt Limit Reached (3/3)
+        </span>
+      );
+    }
 
-          <div className="step_label">
-            Review 1
-          </div>
+    const attemptText = isSubmitted
+      ? `Resubmit Review ${reviewNumber}`
+      : `Submit for Review ${reviewNumber}`;
 
-          <div className="step_date">
-            {sub1?.submitted_at
-              ? formatDate(sub1.submitted_at, {
-                  month: "short",
-                  day: "numeric",
-                })
-              : step1State === "active"
-              ? "Active"
-              : ""}
-          </div>
-        </div>
+    return (
+      <label
+        className="btn_submit_review"
+        style={{
+          cursor: "pointer",
+          margin: 0,
+        }}
+      >
+        {attemptText}
 
-        <div
-          className={`step_line ${
-            step1State === "completed"
-              ? "completed_line"
-              : ""
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
+          style={{
+            display: "none",
+          }}
+          onChange={(
+            event: ChangeEvent<HTMLInputElement>
+          ) => {
+            const selectedFile =
+              event.target.files?.[0];
+
+            if (selectedFile) {
+              handleUpload(
+                item.id,
+                selectedFile,
+                "main",
+                reviewNumber
+              );
+            }
+
+            event.target.value = "";
+          }}
+        />
+      </label>
+    );
+  };
+
+  /*
+   * ---------------------------------------------------------
+   * RENDER MINI PROJECT
+   * ---------------------------------------------------------
+   */
+
+  const renderMiniProject = (
+    item: ProcessedProject
+  ) => {
+    return (
+      <div
+        key={item.id}
+        className={`assignment_card ${item.status} ${item.isSubmitted
+          ? "submitted_card"
+          : ""
           }`}
-        ></div>
+      >
+        <div className="as_header">
+          <div className="as_info">
+            <h3 className="as_title">
+              {item.title}
+            </h3>
 
-        <div className={`step ${step2State}`}>
-          <div className="step_icon">
-            {step2State === "completed" ? (
-              <i className="bi bi-check"></i>
-            ) : (
-              "2"
-            )}
-          </div>
-
-          <div className="step_label">
-            Review 2
-          </div>
-
-          <div className="step_date">
-            {sub2?.submitted_at
-              ? formatDate(sub2.submitted_at, {
-                  month: "short",
-                  day: "numeric",
-                })
-              : step2State === "active"
-              ? "Upcoming"
-              : ""}
-          </div>
-        </div>
-
-        <div
-          className={`step_line ${
-            step2State === "completed"
-              ? "completed_line"
-              : ""
-          }`}
-        ></div>
-
-        <div className={`step ${step3State}`}>
-          <div className="step_icon">
-            {step3State === "completed" ? (
-              <i className="bi bi-check"></i>
-            ) : (
-              "3"
-            )}
-          </div>
-
-          <div className="step_label">
-            Review 3
-          </div>
-
-          <div className="step_date">
-            {sub3?.submitted_at
-              ? formatDate(sub3.submitted_at, {
-                  month: "short",
-                  day: "numeric",
-                })
-              : step3State === "active"
-              ? "Upcoming"
-              : ""}
-          </div>
-        </div>
-      </div>
-
-      <div className="reviews_list">
-        {/* REVIEW 1 */}
-
-        {step1State === "completed" ? (
-          <div className="review_card review_completed">
-            <h4 className="rc_title mb-2">
-              {item.review_1_title} —{" "}
-              <span className="text_success_dark">
-                <i className="bi bi-check-circle-fill"></i>{" "}
-                Completed
+            <div className="as_meta">
+              <span>
+                <i className="bi bi-layers"></i>{" "}
+                {item.module}
               </span>
-            </h4>
 
-            <p className="rc_desc">
-              {sub1?.feedback ||
-                "Good job. Proceed to Review 2."}
+              <span>
+                <i className="bi bi-calendar3"></i>{" "}
+                Deadline: {item.deadline}
+              </span>
+
+              <span>
+                <i className="bi bi-eye"></i>{" "}
+                Revealed:{" "}
+                {item.revealDateFormatted}
+              </span>
+            </div>
+
+            <div className="badge_group">
+              {(
+                item.status === "graded" ||
+                item.status === "evaluated"
+              ) &&
+                item.detailText && (
+                  <span className="graded_badge">
+                    <i className="bi bi-patch-check-fill"></i>{" "}
+                    {item.detailText}
+                  </span>
+                )}
+
+              {(item.status === "graded" ||
+                item.status === "evaluated") &&
+                item.submission &&
+                (item.submission
+                  .reupload_approved === 1 ||
+                  item.submission
+                    .reupload_approved ===
+                  true) && (
+                  <span
+                    className="submission_status_badge pending-reupload"
+                    style={{
+                      backgroundColor: "#fff7ed",
+                      color: "#c2410c",
+                      border:
+                        "1px solid #fed7aa",
+                    }}
+                  >
+                    <i className="bi bi-hourglass-split"></i>{" "}
+                    Reupload Pending
+                  </span>
+                )}
+
+              {item.isSubmitted ? (
+                <span
+                  className={`submission_status_badge submitted ${item.status}`}
+                >
+                  <i className="bi bi-check-circle-fill"></i>{" "}
+                  {item.status === "late"
+                    ? "Submitted Late"
+                    : "Submitted"}{" "}
+                  {item.submission?.attempts
+                    ? `(Attempt ${item.submission.attempts}/3)`
+                    : ""}
+                </span>
+              ) : item.isOverdue ? (
+                <span className="submission_status_badge overdue">
+                  <i className="bi bi-exclamation-circle-fill"></i>{" "}
+                  Overdue
+                </span>
+              ) : (
+                <span className="submission_status_badge pending">
+                  <i className="bi bi-clock-history"></i>{" "}
+                  Pending Submission
+                </span>
+              )}
+            </div>
+
+            <p
+              className="mt-3 mb-1 text-secondary"
+              style={{
+                fontSize: "13.5px",
+                lineHeight: "1.6",
+                fontWeight: 500,
+              }}
+            >
+              {item.description}
             </p>
 
-            {renderSubmittedFile(sub1)}
+            {renderMiniSubmittedFile(item)}
 
-            {renderEvaluationDetails(sub1)}
+            <div className="as_actions mt-4">
+              {(!item.isSubmitted ||
+                item.submission
+                  ?.reupload_approved === 1 ||
+                item.submission
+                  ?.reupload_approved ===
+                true) &&
+                (item.submission &&
+                  item.submission.attempts &&
+                  item.submission.attempts >= 3 ? (
+                  <span
+                    className="btn_upload_disabled text-danger fw-bold d-inline-flex align-items-center gap-1 py-1"
+                    style={{
+                      fontSize: "12px",
+                    }}
+                  >
+                    <i className="bi bi-exclamation-triangle-fill"></i>
+                    Attempt Limit Reached (3/3)
+                  </span>
+                ) : (
+                  <label
+                    className={`btn_upload ${item.status === "late"
+                      ? "late"
+                      : "pending"
+                      }`}
+                    style={{
+                      cursor: "pointer",
+                      margin: 0,
+                    }}
+                  >
+                    <i
+                      className={`bi ${item.status === "late"
+                        ? "bi-exclamation-triangle"
+                        : "bi-cloud-arrow-up"
+                        } me-1`}
+                    ></i>
+
+                    {item.isSubmitted
+                      ? item.status === "late"
+                        ? `Resubmit Late (Attempt ${(item.submission
+                          ?.attempts || 0) +
+                        1
+                        }/3)`
+                        : `Resubmit (Attempt ${(item.submission
+                          ?.attempts || 0) +
+                        1
+                        }/3)`
+                      : item.status === "late"
+                        ? "Late Upload"
+                        : "Upload Submission"}
+
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.zip,.rar,.txt,.jpg,.jpeg,.png,.gif,.webp"
+                      style={{
+                        display: "none",
+                      }}
+                      onChange={(
+                        event: ChangeEvent<HTMLInputElement>
+                      ) => {
+                        const selectedFile =
+                          event.target.files?.[0];
+
+                        if (selectedFile) {
+                          handleUpload(
+                            item.id,
+                            selectedFile,
+                            "mini"
+                          );
+                        }
+
+                        event.target.value = "";
+                      }}
+                    />
+                  </label>
+                ))}
+
+              <button
+                className={`btn_brief ${expandedBriefId === item.id
+                  ? "active"
+                  : ""
+                  }`}
+                onClick={() =>
+                  setExpandedBriefId(
+                    expandedBriefId === item.id
+                      ? null
+                      : item.id
+                  )
+                }
+              >
+                {expandedBriefId === item.id
+                  ? "Hide Feedback"
+                  : "View Details & History"}
+              </button>
+            </div>
           </div>
-        ) : step1State === "active" ? (
-          <div className="review_card review_active">
-            <h4 className="rc_title mb-2">
-              {item.review_1_title} — Deadline:{" "}
-              {item.review_1_deadline
-                ? formatDate(
+
+          <div
+            className={`as_status_badge ${item.status}`}
+          >
+            {item.scoreText}
+          </div>
+        </div>
+
+        {expandedBriefId === item.id && (
+          <div className="assignment_brief_box mt-3 p-3 border-top bg-light rounded-bottom">
+            {renderMiniFeedback(item)}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /*
+   * ---------------------------------------------------------
+   * MAIN PROJECT
+   * ---------------------------------------------------------
+   */
+
+  const renderMainProject = (
+    item: ProcessedProject
+  ) => {
+    const submissions = item.submissions || {};
+
+    const sub1 = submissions["1"];
+    const sub2 = submissions["2"];
+    const sub3 = submissions["3"];
+
+    const isSub1Evaluated =
+      !!sub1 &&
+      (sub1.status === "evaluated" ||
+        sub1.status === "graded") &&
+      !sub1.reupload_approved;
+
+    const isSub2Evaluated =
+      !!sub2 &&
+      (sub2.status === "evaluated" ||
+        sub2.status === "graded") &&
+      !sub2.reupload_approved;
+
+    const isSub3Evaluated =
+      !!sub3 &&
+      (sub3.status === "evaluated" ||
+        sub3.status === "graded") &&
+      !sub3.reupload_approved;
+
+    let currentReview = 1;
+
+    if (
+      isSub1Evaluated &&
+      (!sub2 || !isSub2Evaluated)
+    ) {
+      currentReview = 2;
+    }
+
+    if (
+      isSub1Evaluated &&
+      isSub2Evaluated &&
+      (!sub3 || !isSub3Evaluated)
+    ) {
+      currentReview = 3;
+    }
+
+    if (
+      isSub1Evaluated &&
+      isSub2Evaluated &&
+      isSub3Evaluated
+    ) {
+      currentReview = 3;
+    }
+
+    let step1State = "locked";
+    let step2State = "locked";
+    let step3State = "locked";
+
+    if (isSub1Evaluated) {
+      step1State = "completed";
+    } else if (currentReview === 1) {
+      step1State = "active";
+    }
+
+    if (isSub2Evaluated) {
+      step2State = "completed";
+    } else if (currentReview === 2) {
+      step2State = "active";
+    }
+
+    if (isSub3Evaluated) {
+      step3State = "completed";
+    } else if (currentReview === 3) {
+      step3State = "active";
+    }
+
+    return (
+      <div
+        key={item.id}
+        className="main_project_card mb-4"
+      >
+        <div className="mp_header">
+          <div>
+            <h3 className="mp_title">
+              {item.title}
+            </h3>
+
+            <p className="mp_subtitle">
+              {item.module} • 3-review cycle
+            </p>
+          </div>
+
+          <div className="mp_status">
+            <span className="status_badge bg_light_blue text_primary">
+              Review {currentReview}/3
+            </span>
+          </div>
+        </div>
+
+        <div className="stepper_container">
+          <div
+            className={`step ${step1State}`}
+          >
+            <div className="step_icon">
+              {step1State === "completed" ? (
+                <i className="bi bi-check"></i>
+              ) : (
+                "1"
+              )}
+            </div>
+
+            <div className="step_label">
+              Review 1
+            </div>
+
+            <div className="step_date">
+              {sub1?.submitted_at
+                ? new Date(
+                  sub1.submitted_at
+                ).toLocaleDateString("en-GB", {
+                  month: "short",
+                  day: "numeric",
+                })
+                : step1State === "active"
+                  ? "Active"
+                  : ""}
+            </div>
+          </div>
+
+          <div
+            className={`step_line ${step1State === "completed"
+              ? "completed_line"
+              : ""
+              }`}
+          ></div>
+
+          <div
+            className={`step ${step2State}`}
+          >
+            <div className="step_icon">
+              {step2State === "completed" ? (
+                <i className="bi bi-check"></i>
+              ) : (
+                "2"
+              )}
+            </div>
+
+            <div className="step_label">
+              Review 2
+            </div>
+
+            <div className="step_date">
+              {sub2?.submitted_at
+                ? new Date(
+                  sub2.submitted_at
+                ).toLocaleDateString("en-GB", {
+                  month: "short",
+                  day: "numeric",
+                })
+                : step2State === "active"
+                  ? "Upcoming"
+                  : ""}
+            </div>
+          </div>
+
+          <div
+            className={`step_line ${step2State === "completed"
+              ? "completed_line"
+              : ""
+              }`}
+          ></div>
+
+          <div
+            className={`step ${step3State}`}
+          >
+            <div className="step_icon">
+              {step3State === "completed" ? (
+                <i className="bi bi-check"></i>
+              ) : (
+                "3"
+              )}
+            </div>
+
+            <div className="step_label">
+              Review 3
+            </div>
+
+            <div className="step_date">
+              {sub3?.submitted_at
+                ? new Date(
+                  sub3.submitted_at
+                ).toLocaleDateString("en-GB", {
+                  month: "short",
+                  day: "numeric",
+                })
+                : step3State === "active"
+                  ? "Upcoming"
+                  : ""}
+            </div>
+          </div>
+        </div>
+
+        <div className="reviews_list">
+          {/* REVIEW 1 */}
+
+          {step1State === "completed" ? (
+            <div className="review_card review_completed">
+              <h4 className="rc_title mb-2">
+                {item.review_1_title} —{" "}
+                <span className="text_success_dark">
+                  <i className="bi bi-check-circle-fill"></i>{" "}
+                  Completed
+                </span>
+              </h4>
+
+              <p className="rc_desc">
+                {sub1?.feedback ||
+                  "Good job. Proceed to Review 2."}
+              </p>
+
+              {renderSubmittedFile(sub1)}
+
+              {renderEvaluationDetails(sub1)}
+            </div>
+          ) : step1State === "active" ? (
+            <div className="review_card review_active">
+              <h4 className="rc_title mb-2">
+                {item.review_1_title} — Deadline:{" "}
+                {item.review_1_deadline
+                  ? formatDate(
                     item.review_1_deadline
                   )
-                : "N/A"}
-            </h4>
+                  : "N/A"}
+              </h4>
 
-            <p className="rc_desc">
-              Submit your work for Review 1.
-            </p>
+              <p className="rc_desc">
+                Submit your work for Review 1.
+              </p>
 
-            {renderSubmittedFile(sub1)}
+              {renderSubmittedFile(sub1)}
 
-            <div className="rc_actions">
-              {renderUploadBtn(1, sub1)}
+              <div className="rc_actions">
+                {renderUploadBtn(
+                  item,
+                  1,
+                  sub1
+                )}
+              </div>
+
+              {renderEvaluationDetails(sub1)}
             </div>
+          ) : (
+            <div className="review_card review_locked">
+              <h4 className="text_muted m-0">
+                {item.review_1_title} — Locked
+              </h4>
+            </div>
+          )}
 
-            {renderEvaluationDetails(sub1)}
-          </div>
-        ) : (
-          <div className="review_card review_locked">
-            <h4 className="text_muted m-0">
-              {item.review_1_title} — Locked
-            </h4>
-          </div>
-        )}
+          {/* REVIEW 2 */}
 
-        {/* REVIEW 2 */}
+          {step2State === "completed" ? (
+            <div className="review_card review_completed">
+              <h4 className="rc_title mb-2">
+                {item.review_2_title} —{" "}
+                <span className="text_success_dark">
+                  <i className="bi bi-check-circle-fill"></i>{" "}
+                  Completed
+                </span>
+              </h4>
 
-        {step2State === "completed" ? (
-          <div className="review_card review_completed">
-            <h4 className="rc_title mb-2">
-              {item.review_2_title} —{" "}
-              <span className="text_success_dark">
-                <i className="bi bi-check-circle-fill"></i>{" "}
-                Completed
-              </span>
-            </h4>
+              <p className="rc_desc">
+                {sub2?.feedback ||
+                  "Good progress. Proceed to Review 3."}
+              </p>
 
-            <p className="rc_desc">
-              {sub2?.feedback ||
-                "Good progress. Proceed to Review 3."}
-            </p>
+              {renderSubmittedFile(sub2)}
 
-            {renderSubmittedFile(sub2)}
-
-            {renderEvaluationDetails(sub2)}
-          </div>
-        ) : step2State === "active" ? (
-          <div className="review_card review_active">
-            <h4 className="rc_title mb-2">
-              {item.review_2_title} — Deadline:{" "}
-              {item.review_2_deadline
-                ? formatDate(
+              {renderEvaluationDetails(sub2)}
+            </div>
+          ) : step2State === "active" ? (
+            <div className="review_card review_active">
+              <h4 className="rc_title mb-2">
+                {item.review_2_title} — Deadline:{" "}
+                {item.review_2_deadline
+                  ? formatDate(
                     item.review_2_deadline
                   )
-                : "N/A"}
-            </h4>
+                  : "N/A"}
+              </h4>
 
-            <p className="rc_desc">
-              Please address the feedback from
-              Review 1.
-            </p>
+              <p className="rc_desc">
+                Please address the feedback from
+                Review 1.
+              </p>
 
-            {renderSubmittedFile(sub2)}
+              {renderSubmittedFile(sub2)}
 
-            <div className="rc_actions">
-              {renderUploadBtn(2, sub2)}
+              <div className="rc_actions">
+                {renderUploadBtn(
+                  item,
+                  2,
+                  sub2
+                )}
+              </div>
+
+              {renderEvaluationDetails(sub2)}
             </div>
+          ) : (
+            <div className="review_card review_locked">
+              <h4 className="text_muted m-0">
+                {item.review_2_title} — Locked
+              </h4>
+            </div>
+          )}
 
-            {renderEvaluationDetails(sub2)}
-          </div>
-        ) : (
-          <div className="review_card review_locked">
-            <h4 className="text_muted m-0">
-              {item.review_2_title} — Locked
-            </h4>
-          </div>
-        )}
+          {/* REVIEW 3 */}
 
-        {/* REVIEW 3 */}
+          {step3State === "completed" ? (
+            <div className="review_card review_completed">
+              <h4 className="rc_title mb-2">
+                {item.review_3_title} —{" "}
+                <span className="text_success_dark">
+                  <i className="bi bi-check-circle-fill"></i>{" "}
+                  Completed
+                </span>
+              </h4>
 
-        {step3State === "completed" ? (
-          <div className="review_card review_completed">
-            <h4 className="rc_title mb-2">
-              {item.review_3_title} —{" "}
-              <span className="text_success_dark">
-                <i className="bi bi-check-circle-fill"></i>{" "}
-                Completed
-              </span>
-            </h4>
+              <p className="rc_desc">
+                {sub3?.feedback ||
+                  "Final evaluation complete."}
+              </p>
 
-            <p className="rc_desc">
-              {sub3?.feedback ||
-                "Final evaluation complete."}
-            </p>
+              {renderSubmittedFile(sub3)}
 
-            {renderSubmittedFile(sub3)}
-
-            {renderEvaluationDetails(sub3)}
-          </div>
-        ) : step3State === "active" ? (
-          <div className="review_card review_active">
-            <h4 className="rc_title mb-2">
-              {item.review_3_title} — Deadline:{" "}
-              {item.review_3_deadline
-                ? formatDate(
+              {renderEvaluationDetails(sub3)}
+            </div>
+          ) : step3State === "active" ? (
+            <div className="review_card review_active">
+              <h4 className="rc_title mb-2">
+                {item.review_3_title} — Deadline:{" "}
+                {item.review_3_deadline
+                  ? formatDate(
                     item.review_3_deadline
                   )
-                : "N/A"}
-            </h4>
+                  : "N/A"}
+              </h4>
 
-            <p className="rc_desc">
-              Final submission & complete
-              evaluation.
-            </p>
+              <p className="rc_desc">
+                Final submission & complete
+                evaluation.
+              </p>
 
-            {renderSubmittedFile(sub3)}
+              {renderSubmittedFile(sub3)}
 
-            <div className="rc_actions">
-              {renderUploadBtn(3, sub3)}
+              <div className="rc_actions">
+                {renderUploadBtn(
+                  item,
+                  3,
+                  sub3
+                )}
+              </div>
+
+              {renderEvaluationDetails(sub3)}
             </div>
-
-            {renderEvaluationDetails(sub3)}
-          </div>
-        ) : (
-          <div className="review_card review_locked">
-            <h4 className="text_muted m-0">
-              {item.review_3_title} — Locked
-            </h4>
-          </div>
-        )}
+          ) : (
+            <div className="review_card review_locked">
+              <h4 className="text_muted m-0">
+                {item.review_3_title} — Locked
+              </h4>
+            </div>
+          )}
+        </div>
       </div>
+    );
+  };
+
+  /*
+   * ---------------------------------------------------------
+   * MAIN JSX
+   * ---------------------------------------------------------
+   */
+
+  return (
+    <div className="dashboard_layout">
+      <Sidebar
+        activePage="projects"
+        isOpen={isSidebarOpen}
+        onClose={() =>
+          setIsSidebarOpen(false)
+        }
+      />
+
+      <div
+        className={`sidebar_overlay ${isSidebarOpen ? "show" : ""
+          }`}
+        onClick={() =>
+          setIsSidebarOpen(false)
+        }
+      ></div>
+
+      <NotificationsModal
+        isOpen={isNotifOpen}
+        onClose={() =>
+          setIsNotifOpen(false)
+        }
+        notifications={[]}
+      />
+
+      <div className="dashboard_main_content">
+        <header className="dashboard_top_header">
+          <div className="profile_breadcrumb">
+            <h2>
+              Live Courses{" "}
+              <span>/ Projects</span>
+            </h2>
+          </div>
+
+          <div
+            className="notification_bell_top"
+            onClick={() =>
+              setIsNotifOpen(true)
+            }
+          >
+            <i className="bi bi-bell"></i>
+          </div>
+        </header>
+
+        <div className="assignments_container">
+          {/* TABS */}
+
+          <div
+            className="assignments_tabs"
+            style={{
+              marginBottom: "20px",
+            }}
+          >
+            <button
+              type="button"
+              className={`tab_btn text-center justify-content-center ${activeTab === "mini"
+                ? "active"
+                : ""
+                }`}
+              onClick={() =>
+                setActiveTab("mini")
+              }
+            >
+              Mini Projects
+            </button>
+
+            <button
+              type="button"
+              className={`tab_btn text-center justify-content-center ${activeTab === "main"
+                ? "active"
+                : ""
+                }`}
+              onClick={() =>
+                setActiveTab("main")
+              }
+            >
+              Main Projects
+            </button>
+          </div>
+
+          {/* PROJECT LIST */}
+
+          <div className="assignment_list">
+            {loading ? (
+              <div className="text-center py-5">
+                <div
+                  className="spinner-border text-primary"
+                  role="status"
+                >
+                  <span className="visually-hidden">
+                    Loading...
+                  </span>
+                </div>
+              </div>
+            ) : displayedProjects.length > 0 ? (
+              displayedProjects.map((item) =>
+                activeTab === "mini"
+                  ? renderMiniProject(item)
+                  : renderMainProject(item)
+              )
+            ) : (
+              <div className="text-center py-5">
+                <i className="bi bi-clipboard-x display-1 text-muted opacity-25"></i>
+
+                <p className="mt-3 text-muted">
+                  No {activeTab} projects found.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .preview_image_wrapper:hover
+          .preview_overlay {
+          opacity: 1 !important;
+        }
+      `}</style>
     </div>
   );
 };

@@ -42,7 +42,7 @@ export default function UIUX() {
     const [errors, setErrors] = useState<any>({});
 
     const [isEnrolled, setIsEnrolled] = useState(false);
-
+    const [releaseDate, setReleaseDate] = useState<string | null>(null);
     const [showEnrollSuccessModal, setShowEnrollSuccessModal] =
         useState(false);
 
@@ -57,6 +57,45 @@ export default function UIUX() {
     const tabsWrapperRef = useRef<HTMLDivElement | null>(null);
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
     // const user = JSON.parse(localStorage.getItem("user") || "null");
+
+    useEffect(() => {
+        const fetchCourseDetails = async () => {
+            try {
+                const response = await fetch(
+                    `${BASE_API_URL}course-detail/${courseId}`
+                );
+
+                const data = await response.json();
+
+                if (data?.status && data?.data?.release_date) {
+                    setReleaseDate(data.data.release_date);
+                }
+            } catch (error) {
+                console.error(
+                    "Course detail API error:",
+                    error
+                );
+            }
+        };
+
+        fetchCourseDetails();
+    }, [courseId]);
+
+    const formatReleaseDate = (date: string) => {
+        const [year, month, day] = date.split("-").map(Number);
+
+        const formattedDate = new Date(
+            year,
+            month - 1,
+            day
+        );
+
+        return formattedDate.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -1226,8 +1265,13 @@ export default function UIUX() {
                                     </div>
                                 </div>
                             </div>
+
                             <div className="batch_details">
-                                <p className="text-center text-white mb-0">Next batch starts 15 June 2026 Only 5 seats remaining</p>
+                                <p className="text-center text-white mb-0">
+                                    {releaseDate
+                                        ? `Next batch starts ${formatReleaseDate(releaseDate)} Only 5 seats remaining`
+                                        : "Next batch details loading..."}
+                                </p>
                             </div>
                         </div>
                         <div className="col-12 pt-5 uiux__why">

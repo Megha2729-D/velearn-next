@@ -268,10 +268,10 @@ export default function RecordedCoursePage() {
                                         <Link
                                             href={{
                                                 pathname: targetUrl,
-                                                query: {
-                                                    courseId: course.id,
-                                                    courseType: course.course_type,
-                                                },
+                                                // query: {
+                                                //     courseId: course.id,
+                                                //     courseType: course.course_type,
+                                                // },
                                             }}
                                         >
                                             <div
