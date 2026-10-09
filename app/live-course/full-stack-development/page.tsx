@@ -43,6 +43,8 @@ export default function FullStackDevelopment() {
     const [errors, setErrors] = useState<any>({});
 
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const [enrollmentStatus, setEnrollmentStatus] = useState<number | null>(null);
+    const [enrollmentChecked, setEnrollmentChecked] = useState(false);
     const [releaseDate, setReleaseDate] = useState<string | null>(null);
     const [showEnrollSuccessModal, setShowEnrollSuccessModal] =
         useState(false);
@@ -103,6 +105,8 @@ export default function FullStackDevelopment() {
         if (!storedUser) {
             setUser(null);
             setIsEnrolled(false);
+            setEnrollmentStatus(null);
+            setEnrollmentChecked(true);
             return;
         }
 
@@ -133,6 +137,7 @@ export default function FullStackDevelopment() {
             localStorage.removeItem("user");
             setUser(null);
             setIsEnrolled(false);
+            setEnrollmentChecked(true);
         }
     }, []);
 
@@ -141,7 +146,7 @@ export default function FullStackDevelopment() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${BASE_API_URL}my-courses/${userId}`,
+                `${BASE_API_URL}live-course-history/${userId}`,
                 {
                     method: "GET",
                     headers: {
@@ -159,39 +164,69 @@ export default function FullStackDevelopment() {
 
             if (!response.ok) {
                 console.error(
-                    "My courses API error:",
+                    "Live course history API error:",
                     response.status,
                     responseText
                 );
 
                 setIsEnrolled(false);
+                setEnrollmentStatus(null);
                 return;
             }
 
-            const data = JSON.parse(responseText);
+            let data: any = {};
 
-            console.log("My courses:", data);
+            try {
+                data = JSON.parse(responseText);
+            } catch {
+                console.error(
+                    "Invalid live course history JSON response:",
+                    responseText
+                );
+                setIsEnrolled(false);
+                setEnrollmentStatus(null);
+                return;
+            }
 
-            if (data.status && data.data) {
-                const allCourses = Array.isArray(data.data.all)
-                    ? data.data.all
-                    : [];
+            console.log("Live Course History:", data);
 
-                const enrolled = allCourses.some(
+            if (data?.status === true && Array.isArray(data?.data)) {
+                /*
+                 * If this course exists in live-course-history, the student
+                 * has already enrolled.
+                 *
+                 * status === 0 -> enrolled, but not active yet
+                 * status === 1 -> enrolled and active
+                 *
+                 * In both cases, the button should remain "Enrolled"
+                 * and disabled.
+                 */
+                const currentCourse = data.data.find(
                     (course: any) =>
-                        Number(course.id) === Number(courseId)
+                        Number(course?.id) === Number(courseId)
                 );
 
-                console.log("Course ID:", courseId);
-                console.log("Is enrolled:", enrolled);
+                const enrolled = Boolean(currentCourse);
+
+                console.log("Live Course:", currentCourse);
+                console.log("Live Course Enrolled:", enrolled);
 
                 setIsEnrolled(enrolled);
+                setEnrollmentStatus(
+                    currentCourse
+                        ? Number(currentCourse?.status)
+                        : null
+                );
             } else {
                 setIsEnrolled(false);
+                setEnrollmentStatus(null);
             }
         } catch (error) {
-            console.error("Check enrollment error:", error);
+            console.error("Check live course enrollment error:", error);
             setIsEnrolled(false);
+            setEnrollmentStatus(null);
+        } finally {
+            setEnrollmentChecked(true);
         }
     };
 
@@ -418,7 +453,13 @@ export default function FullStackDevelopment() {
             );
 
             if (isEnrolled) {
-                router.push("/live-course-history");
+                // status 1 = active course -> open live course history
+                if (enrollmentStatus === 1) {
+                    router.push("/live-course-history");
+                    return;
+                }
+
+                // status 0 = enrolled but not active yet -> stay on page
                 return;
             }
 
@@ -1144,23 +1185,24 @@ export default function FullStackDevelopment() {
                                             <div className="d-flex justify-content-start gap-2">
                                                 <button
                                                     onClick={handleCourseAction}
+                                                    disabled={isEnrolled}
                                                 >
                                                     {isEnrolled
-                                                        ? "Start Course"
+                                                        ? "Enrolled"
                                                         : user
                                                             ? "Enroll Now"
                                                             : "Login to Enroll"}
                                                 </button>
-                                                <button className="demo_butt"
+                                                <button
                                                     onClick={handleCourseAction}
+                                                    disabled={isEnrolled}
+                                                    className="demo_butt"
                                                 >
-                                                    {
-                                                        !user
-                                                            ? "Login to Book Demo"
-                                                            : isEnrolled
-                                                                ? "Book Demo"
-                                                                : "Enroll Now for Demo"
-                                                    }
+                                                    {!user
+                                                        ? "Login to Book Demo"
+                                                        : isEnrolled
+                                                            ? "Demo Booked"
+                                                            : "Book Demo"}
                                                 </button>
                                             </div>
                                             {/* <button>Enroll Now</button> */}
@@ -1186,89 +1228,85 @@ export default function FullStackDevelopment() {
                                     <div className="col-lg-3 mt-5 mt-lg-0 position-relative">
                                         <form onSubmit={handleEnroll}>
                                             <div className="d-flex flex-column w-100 my-3">
-                                                <label htmlFor="name">
-                                                    Name
-                                                </label>
+                                                <label htmlFor="name">Name</label>
                                                 <input
                                                     type="text"
                                                     name="name"
                                                     value={name}
-                                                    onChange={(e) =>
-                                                        setName(e.target.value)
-                                                    }
-                                                    className={
-                                                        errors
-                                                            .name
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }
+                                                    onChange={(e) => setName(e.target.value)}
+                                                    className={errors.name ? "is-invalid" : ""}
                                                 />
                                             </div>
+
                                             <div className="d-flex flex-column w-100 my-3">
-                                                <label htmlFor="phone">
-                                                    Phone Number
-                                                </label>
+                                                <label htmlFor="phone">Phone Number</label>
                                                 <input
                                                     type="number"
                                                     name="phone"
                                                     value={phone}
-                                                    onChange={(e) =>
-                                                        setPhone(e.target.value)
-                                                    }
-                                                    className={
-                                                        errors
-                                                            .phone
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                    className={errors.phone ? "is-invalid" : ""}
                                                 />
                                             </div>
+
                                             <div className="d-flex flex-column w-100 my-3">
-                                                <label htmlFor="email">
-                                                    Email
-                                                </label>
+                                                <label htmlFor="email">Email</label>
                                                 <input
                                                     type="email"
                                                     name="email"
                                                     value={email}
-                                                    onChange={(e) =>
-                                                        setEmail(e.target.value)
-                                                    }
-                                                    className={
-                                                        errors
-                                                            .email
-                                                            ? "is-invalid"
-                                                            : ""
-                                                    }
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    className={errors.email ? "is-invalid" : ""}
                                                 />
                                             </div>
+
                                             <div className="d-flex justify-content-center mb-3">
-                                                {isEnrolled ? (
+
+                                                {/* NOT LOGGED IN */}
+                                                {!user ? (
                                                     <button
                                                         type="button"
-                                                        onClick={() => router.push("/live-course-history")}
+                                                        onClick={() => router.push("/login")}
                                                         className="w-100"
                                                     >
-                                                        Start Course
+                                                        Login to Enroll
                                                     </button>
+                                                ) : isEnrolled ? (
+
+                                                    /* ENROLLED */
+                                                    enrollmentStatus === 1 ? (
+                                                        /* ACTIVE COURSE */
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                router.push("/live-course-history")
+                                                            }
+                                                            className="w-100"
+                                                        >
+                                                            Start Course
+                                                        </button>
+                                                    ) : (
+                                                        /* ENROLLED BUT NOT ACTIVE */
+                                                        <button
+                                                            type="button"
+                                                            disabled
+                                                            className="w-100"
+                                                        >
+                                                            Enrolled
+                                                        </button>
+                                                    )
+
                                                 ) : (
+
+                                                    /* LOGGED IN + NOT ENROLLED */
                                                     <button
-                                                        type={
-                                                            user
-                                                                ? "submit"
-                                                                : "button"
-                                                        }
-                                                        onClick={() => {
-                                                            if (!user)
-                                                                router.push("/login")
-                                                        }}
+                                                        type="submit"
                                                         className="w-100"
                                                     >
-                                                        {user
-                                                            ? "Enroll Now"
-                                                            : "Login to Enroll"}
+                                                        Enroll Now
                                                     </button>
                                                 )}
+
                                             </div>
                                         </form>
                                         <div className="pagination_parent mt-5 d-lg-none d-flex justify-content-center">
@@ -2261,9 +2299,10 @@ export default function FullStackDevelopment() {
                                         <div className="col-12 d-flex justify-content-center">
                                             <button
                                                 onClick={handleCourseAction}
+                                                disabled={isEnrolled}
                                             >
                                                 {isEnrolled
-                                                    ? "Start Course"
+                                                    ? "Enrolled"
                                                     : "Enroll In Weekday Batch"}
                                             </button>
                                         </div>
@@ -2280,10 +2319,18 @@ export default function FullStackDevelopment() {
                                         <div className="col-12 d-flex justify-content-center">
                                             <button
                                                 onClick={handleCourseAction}
+                                                disabled={
+                                                    isEnrolled &&
+                                                    enrollmentStatus === 0
+                                                }
                                             >
-                                                {isEnrolled
-                                                    ? "Start Course"
-                                                    : "Enroll In Weekend Batch"}
+                                                {!user
+                                                    ? "Login to Enroll"
+                                                    : !isEnrolled
+                                                        ? "Enroll Now"
+                                                        : enrollmentStatus === 0
+                                                            ? "Enrolled"
+                                                            : "Start Course"}
                                             </button>
                                         </div>
                                     </div>
@@ -2379,7 +2426,7 @@ export default function FullStackDevelopment() {
                                                     onClick={handleCourseAction}
                                                 >
                                                     {isEnrolled
-                                                        ? "Start Course"
+                                                        ? "Enrolled"
                                                         : user
                                                             ? "Apply Now"
                                                             : "Login to Enroll"}
@@ -2457,9 +2504,10 @@ export default function FullStackDevelopment() {
                                         <div className="col-12 d-flex justify-content-center gap-3">
                                             <button
                                                 onClick={handleCourseAction}
+                                                disabled={isEnrolled}
                                             >
                                                 {isEnrolled
-                                                    ? "Start Course"
+                                                    ? "Enrolled"
                                                     : user
                                                         ? "Enroll Now"
                                                         : "Login to Enroll"}

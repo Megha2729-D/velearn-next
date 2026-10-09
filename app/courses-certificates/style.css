@@ -5,43 +5,73 @@
 
 .certificate_card {
     background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    transition: transform 0.3s ease;
-    border: 1px solid #eee;
+    text-align: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    height: 100%;
 }
 
 .certificate_card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .cert_card_icon {
-    font-size: 3rem;
-    color: #22346b;
+    font-size: 3.5rem;
+    color: #24b8ec;
+    background: rgba(36, 184, 236, 0.08);
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+
+.cert_card_content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .cert_card_content h5 {
-    margin: 0;
+    margin: 0 0 0.75rem 0;
     color: #1a1a1a;
     font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.5;
 }
 
 .view_cert_btn {
-    background: #22346b;
+    background: linear-gradient(135deg, #22346b 0%, #1a2a56 100%);
     color: white;
     border: none;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: 0.3s;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .view_cert_btn:hover {
-    background: #24b8ec;
+    background: linear-gradient(135deg, #24b8ec 0%, #1a8fb8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(36, 184, 236, 0.3);
+    color: white;
 }
 
 .download_btn {
@@ -194,8 +224,8 @@
     display: flex;
     flex-direction: column;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
-        url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        linear-gradient(#ffffffeb, rgba(255, 255, 255, 0.92)),
+        url('/images/paper-fibers.png');
 }
 
 /* Corner Accents */
@@ -255,7 +285,7 @@
 }
 
 .cert_main_title {
-      font-family: var(--heading-font);
+    font-family: 'Playfair Display', serif;
     font-size: 2.8rem;
     font-weight: 900;
     color: #22346b;
@@ -292,7 +322,7 @@
 }
 
 .cert_user_name {
-      font-family: var(--heading-font);
+    font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
     font-weight: 700;
     color: #1a1a1a;

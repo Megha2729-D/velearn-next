@@ -42,6 +42,7 @@ export default function DigitalMarketing() {
     const [errors, setErrors] = useState<any>({});
 
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const [enrollmentStatus, setEnrollmentStatus] = useState<number | null>(null);
     const [releaseDate, setReleaseDate] = useState<string | null>(null);
 
     const [showEnrollSuccessModal, setShowEnrollSuccessModal] =
@@ -105,6 +106,7 @@ export default function DigitalMarketing() {
         if (!storedUser) {
             setUser(null);
             setIsEnrolled(false);
+            setEnrollmentStatus(null);
             return;
         }
 
@@ -135,6 +137,7 @@ export default function DigitalMarketing() {
             localStorage.removeItem("user");
             setUser(null);
             setIsEnrolled(false);
+            setEnrollmentStatus(null);
         }
     }, []);
 
@@ -143,7 +146,7 @@ export default function DigitalMarketing() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `${BASE_API_URL}my-courses/${userId}`,
+                `${BASE_API_URL}live-course-history/${userId}`,
                 {
                     method: "GET",
                     headers: {
@@ -161,39 +164,66 @@ export default function DigitalMarketing() {
 
             if (!response.ok) {
                 console.error(
-                    "My courses API error:",
+                    "Live course history API error:",
                     response.status,
                     responseText
                 );
 
                 setIsEnrolled(false);
+                setEnrollmentStatus(null);
                 return;
             }
 
-            const data = JSON.parse(responseText);
+            let data: any = {};
 
-            console.log("My courses:", data);
-
-            if (data.status && data.data) {
-                const allCourses = Array.isArray(data.data.all)
-                    ? data.data.all
-                    : [];
-
-                const enrolled = allCourses.some(
-                    (course: any) =>
-                        Number(course.id) === Number(courseId)
+            try {
+                data = JSON.parse(responseText);
+            } catch {
+                console.error(
+                    "Invalid live course history JSON response:",
+                    responseText
                 );
+
+                setIsEnrolled(false);
+                setEnrollmentStatus(null);
+                return;
+            }
+
+            console.log("Live Course History:", data);
+
+            if (data?.status === true && Array.isArray(data?.data)) {
+                const currentCourse = data.data.find(
+                    (course: any) =>
+                        Number(course?.id) === Number(courseId)
+                );
+
+                const enrolled = Boolean(currentCourse);
 
                 console.log("Course ID:", courseId);
                 console.log("Is enrolled:", enrolled);
+                console.log(
+                    "Enrollment status:",
+                    currentCourse?.status
+                );
 
                 setIsEnrolled(enrolled);
+                setEnrollmentStatus(
+                    currentCourse
+                        ? Number(currentCourse.status)
+                        : null
+                );
             } else {
                 setIsEnrolled(false);
+                setEnrollmentStatus(null);
             }
         } catch (error) {
-            console.error("Check enrollment error:", error);
+            console.error(
+                "Check live course enrollment error:",
+                error
+            );
+
             setIsEnrolled(false);
+            setEnrollmentStatus(null);
         }
     };
 
@@ -344,6 +374,7 @@ export default function DigitalMarketing() {
                 );
 
                 setIsEnrolled(true);
+                setEnrollmentStatus(0);
 
                 setShowConfirmModal(false);
                 setShowEnrollFormModal(false);
@@ -364,6 +395,7 @@ export default function DigitalMarketing() {
                 toast.success(data.message);
 
                 setIsEnrolled(true);
+                setEnrollmentStatus(0);
 
                 setShowConfirmModal(false);
                 setShowEnrollFormModal(false);
@@ -419,7 +451,7 @@ export default function DigitalMarketing() {
                     .trim()
             );
 
-            if (isEnrolled) {
+            if (isEnrolled && enrollmentStatus === 1) {
                 router.push("/live-course-history");
                 return;
             }
@@ -835,7 +867,7 @@ export default function DigitalMarketing() {
                                 <p className="text-muted mb-4">
                                     Are you sure you want to enroll in the{" "}
                                     <strong>
-                                        Full Stack Web Development
+                                        Digital Marketing
                                     </strong>{" "}
                                     live program?
                                 </p>
@@ -962,7 +994,7 @@ export default function DigitalMarketing() {
                         >
                             <div className="d-flex position-relative justify-content-between align-items-center">
                                 <h4 className="fw-bold mb-0">
-                                    Enroll Now - Full Stack Web Development
+                                    Enroll Now - Digital Marketing
                                 </h4>
 
                                 <button
@@ -1074,17 +1106,31 @@ export default function DigitalMarketing() {
 
                             {/* BUTTON */}
                             <div className="col-12 d-flex justify-content-center">
-                                {isEnrolled ? (
+                                {!user ? (
                                     <button
                                         type="button"
-                                        onClick={() =>
-                                            router.push(
-                                                "/live-course-history"
-                                            )
-                                        }
+                                        onClick={() => router.push("/login")}
                                     >
-                                        Start Course
+                                        Login to Enroll
                                     </button>
+                                ) : isEnrolled ? (
+                                    enrollmentStatus === 1 ? (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                router.push("/live-course-history")
+                                            }
+                                        >
+                                            Start Course
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            disabled
+                                        >
+                                            Enrolled
+                                        </button>
+                                    )
                                 ) : (
                                     <button
                                         type="submit"
@@ -1121,9 +1167,13 @@ export default function DigitalMarketing() {
                                                         handleCourseAction
                                                     }
                                                 >
-                                                    {isEnrolled
-                                                        ? "Start Course"
-                                                        : "Enroll Now"}
+                                                    {!user
+                                                        ? "Login to Enroll"
+                                                        : !isEnrolled
+                                                            ? "Enroll Now"
+                                                            : enrollmentStatus === 1
+                                                                ? "Start Course"
+                                                                : "Enrolled"}
                                                 </button>
                                                 <button>Book a free Demo Class</button>
                                             </div>
@@ -1202,30 +1252,40 @@ export default function DigitalMarketing() {
                                                 />
                                             </div>
                                             <div className="d-flex justify-content-center mb-3">
-                                                {isEnrolled ? (
+                                                {!user ? (
                                                     <button
                                                         type="button"
-                                                        onClick={() => router.push("/live-course-history")}
+                                                        onClick={() => router.push("/login")}
                                                         className="w-100"
                                                     >
-                                                        Start Course
+                                                        Login to Enroll
                                                     </button>
+                                                ) : isEnrolled ? (
+                                                    enrollmentStatus === 1 ? (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                router.push("/live-course-history")
+                                                            }
+                                                            className="w-100"
+                                                        >
+                                                            Start Course
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            type="button"
+                                                            disabled
+                                                            className="w-100"
+                                                        >
+                                                            Enrolled
+                                                        </button>
+                                                    )
                                                 ) : (
                                                     <button
-                                                        type={
-                                                            user
-                                                                ? "submit"
-                                                                : "button"
-                                                        }
-                                                        onClick={() => {
-                                                            if (!user)
-                                                                router.push("/login")
-                                                        }}
+                                                        type="submit"
                                                         className="w-100"
                                                     >
-                                                        {user
-                                                            ? "Enroll Now"
-                                                            : "Login to Enroll"}
+                                                        Enroll Now
                                                     </button>
                                                 )}
                                             </div>
@@ -2127,10 +2187,9 @@ export default function DigitalMarketing() {
                                                                 <p>Session Recordings Included</p>
                                                                 <button
                                                                     onClick={handleCourseAction}
+                                                                    disabled={isEnrolled && enrollmentStatus === 0}
                                                                 >
-                                                                    {isEnrolled
-                                                                        ? "Start Course"
-                                                                        : "Enroll In Weekday Batch"}
+                                                                    {!user ? "Login to Enroll" : !isEnrolled ? "Enroll In Weekday Batch" : enrollmentStatus === 1 ? "Start Course" : "Enrolled"}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -2144,10 +2203,9 @@ export default function DigitalMarketing() {
                                                                 </div>
                                                                 <button
                                                                     onClick={handleCourseAction}
+                                                                    disabled={isEnrolled && enrollmentStatus === 0}
                                                                 >
-                                                                    {isEnrolled
-                                                                        ? "Start Course"
-                                                                        : "Enroll In Weekend Batch"}
+                                                                    {!user ? "Login to Enroll" : !isEnrolled ? "Enroll In Weekend Batch" : enrollmentStatus === 1 ? "Start Course" : "Enrolled"}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -2239,10 +2297,15 @@ export default function DigitalMarketing() {
                                                 <button
                                                     className="apply_btn"
                                                     onClick={handleCourseAction}
+                                                    disabled={isEnrolled && enrollmentStatus === 0}
                                                 >
-                                                    {isEnrolled
-                                                        ? "Start Course"
-                                                        : "Apply Now"}
+                                                    {!user
+                                                        ? "Login to Enroll"
+                                                        : !isEnrolled
+                                                            ? "Apply Now"
+                                                            : enrollmentStatus === 1
+                                                                ? "Start Course"
+                                                                : "Enrolled"}
                                                 </button>
                                             </div>
                                         </div>
@@ -2316,12 +2379,15 @@ export default function DigitalMarketing() {
                                                     <div className="dm_cta_button col-12 d-flex justify-content-center gap-3">
                                                         <button
                                                             onClick={handleCourseAction}
+                                                            disabled={isEnrolled && enrollmentStatus === 0}
                                                         >
-                                                            {isEnrolled
-                                                                ? "Start Course"
-                                                                : user
+                                                            {!user
+                                                                ? "Login to Enroll"
+                                                                : !isEnrolled
                                                                     ? "Enroll Now"
-                                                                    : "Login to Enroll"}
+                                                                    : enrollmentStatus === 1
+                                                                        ? "Start Course"
+                                                                        : "Enrolled"}
                                                         </button>
                                                         <Link href={"/contact-us"}>
                                                             <button>Talk to Counsellors</button>
@@ -2383,7 +2449,7 @@ export default function DigitalMarketing() {
                                                             <ul className="list-unstyled">
                                                                 <li>
                                                                     • Structured
-                                                                    Full Stack
+                                                                     Digital Marketing
                                                                     Roadmap
                                                                 </li>
                                                                 <li>
@@ -2404,10 +2470,15 @@ export default function DigitalMarketing() {
                                                     <button
                                                         type="button"
                                                         onClick={handleCourseAction}
+                                                        disabled={isEnrolled && enrollmentStatus === 0}
                                                     >
-                                                        {isEnrolled
-                                                            ? "Start Course"
-                                                            : "Apply Now"}
+                                                        {!user
+                                                            ? "Login to Enroll"
+                                                            : !isEnrolled
+                                                                ? "Apply Now"
+                                                                : enrollmentStatus === 1
+                                                                    ? "Start Course"
+                                                                    : "Enrolled"}
                                                     </button>
                                                 </div>
                                             </div>

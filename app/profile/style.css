@@ -25,9 +25,8 @@
 .premium_card {
     background: #fff;
     border-radius: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    /* softer */
-    padding: 24px;
+    box-shadow: 0 4px 20px #eed7d708;
+    overflow: hidden;
     margin-bottom: 30px;
     transition: transform 0.4s ease, box-shadow 0.3s ease;
 }
@@ -43,8 +42,13 @@
     background: linear-gradient(90deg, #1844a2 0%, #8b5cf6 50%, #637fd5 100%);
     position: relative;
     border-radius: 20px;
+    padding: 24px;
     margin-bottom: 60px;
     /* Space for the absolute content to bleed into */
+}
+
+.profile_info_row {
+    padding: 24px;
 }
 
 .banner_pattern {
@@ -58,7 +62,7 @@
 .banner_overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+    background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 50%, #059669 100%);
 }
 
 .notification_bell {
@@ -287,6 +291,7 @@
 }
 
 .section_header h3 {
+    font-weight: bold;
     font-size: 20px;
     color: var(--c1);
     margin: 0;
@@ -315,7 +320,7 @@
     border-radius: 16px;
     padding: 20px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
 }
 
@@ -353,7 +358,7 @@
 
 .progress_top_info {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
@@ -1235,7 +1240,7 @@
 }
 
 .profile_breadcrumb h2 {
-      font-family: var(--heading-font) !important;
+    font-family: var(--heading-font) !important;
     font-size: 20px;
     color: #0f172a;
     font-weight: 800;

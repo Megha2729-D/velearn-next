@@ -167,15 +167,35 @@ export default function HomePage() {
     });
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { name, phone, email } = contactForm;
+    const name = contactForm.name.trim();
+    const phone = contactForm.phone.trim();
+    const email = contactForm.email.trim();
 
-    if (!name || !phone || !email) {
-      toast.error("Please fill all fields");
+    if (!name) {
+      toast.error("Please enter your name");
+      return;
+    }
+
+    if (!phone) {
+      toast.error("Please enter your phone number");
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      toast.error("Please enter a valid 10-digit phone number");
+      return;
+    }
+
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -196,23 +216,26 @@ export default function HomePage() {
       );
 
       if (response.data.status) {
-        toast.success(
-          "Details submitted successfully"
-        );
+        toast.success("Details submitted successfully");
 
         setContactForm({
           name: "",
           phone: "",
           email: "",
         });
+      } else {
+        toast.error(
+          response.data.message || "Something went wrong"
+        );
       }
     } catch (error) {
+      console.error("Contact form error:", error);
       toast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  
   const testimonialData = [
     {
       img: "testimonial/arun-vikkashamuthu.png",
@@ -1612,7 +1635,6 @@ export default function HomePage() {
                       placeholder="Name"
                       value={contactForm.name}
                       onChange={handleChange}
-                      required
                     />
                   </div>
 
@@ -1623,7 +1645,6 @@ export default function HomePage() {
                       placeholder="Phone No"
                       value={contactForm.phone}
                       onChange={handleChange}
-                      required
                     />
                   </div>
 
@@ -1634,7 +1655,6 @@ export default function HomePage() {
                       placeholder="Email"
                       value={contactForm.email}
                       onChange={handleChange}
-                      required
                     />
                   </div>
 

@@ -30,6 +30,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c1);
 } */
+button:disabled {
+  cursor: not-allowed;
+  /* background-color: #c7c7c7 !important;
+  color: #3b3b3b !important; */
+}
+
+/* button:disabled:hover {
+  background-color: #c7c7c7 !important;
+  color: #3b3b3b !important;
+} */
+
 html {
   scroll-behavior: smooth;
 }

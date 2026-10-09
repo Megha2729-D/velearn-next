@@ -1,88 +1,126 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
-import "./style.css";
+
+import Sidebar from "@/components/layout/Sidebar";
+import NotificationsModal from "@/components/layout/NotificationsModal";
+import "./style.css"
+
+// IMPORTANT:
+// In Next.js App Router, global CSS should normally be imported
+// from app/layout.tsx, not directly from page.tsx.
+//
+// Make sure these are imported in your app/layout.tsx:
+// import "@/styles/CoursesCertificates.css";
+// import "@/styles/ProfileDashboard.css";
 
 const BASE_IMAGE_URL = "https://velearn.in/assets/images/";
+const BASE_API_URL = "https://crm.velearn.in/api/";
 
 interface User {
-    id: string | number;
-    name?: string;
-    email?: string;
-    phonenumber?: string;
-    phone?: string;
-    [key: string]: any;
+    id: number | string;
+    name?: string | null;
 }
 
 interface Course {
     id?: number | string;
     title: string;
     type?: "recorded" | "live";
+    [key: string]: any;
+}
+
+interface LiveCourse {
+    id?: number | string;
+    title: string;
     batch?: {
         end_date?: string | null;
-    };
+        [key: string]: any;
+    } | null;
     [key: string]: any;
+}
+
+interface RecordedCourseResponse {
+    status?: boolean;
+    data?: {
+        completed?: Course[];
+        [key: string]: any;
+    };
+}
+
+interface LiveCourseResponse {
+    status?: boolean;
+    data?: LiveCourse[];
 }
 
 const CoursesCertificates = () => {
     const [loading, setLoading] = useState(true);
+
     const [completedCourses, setCompletedCourses] = useState<Course[]>([]);
+
     const [user, setUser] = useState<User | null>(null);
+
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
     const [downloading, setDownloading] = useState(false);
 
     const certificateRef = useRef<HTMLDivElement | null>(null);
-    const router = useRouter();
 
-    const getBaseApiUrl = () => {
-        if (typeof window === "undefined") {
-            return "https://crm.velearn.in/api/";
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    const [isNotifOpen, setIsNotifOpen] = useState(false);
+
+    // =========================================================
+    // FETCH COURSES
+    // =========================================================
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+            try {
+                const parsedUser: User = JSON.parse(storedUser);
+
+                setUser(parsedUser);
+
+                if (parsedUser.id) {
+                    fetchCourses(parsedUser.id);
+                } else {
+                    setLoading(false);
+                }
+            } catch (error) {
+                console.error("Error parsing stored user:", error);
+                setLoading(false);
+            }
+        } else {
+            setLoading(false);
         }
+    }, []);
 
-        const isProduction =
-            window.location.hostname === "velearn.in" ||
-            window.location.hostname === "www.velearn.in";
-
-        return isProduction
-            ? "https://crm.velearn.in/api/"
-            : `http://${window.location.hostname}:8000/api/`;
-    };
-
-    const logoutUser = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-
-        setUser(null);
-        setCompletedCourses([]);
-
-        router.push("/login");
-    };
-
-    const fetchCourses = async (userId: string | number) => {
-        const BASE_API_URL = getBaseApiUrl();
-
+    const fetchCourses = async (userId: number | string) => {
         try {
-            // ==============================
-            // Fetch recorded courses
-            // ==============================
-            const recordedRes = await axios.get(
-                `${BASE_API_URL}my-courses/${userId}`
-            );
+            // =====================================================
+            // FETCH RECORDED COURSES
+            // =====================================================
+
+            const recordedRes =
+                await axios.get<RecordedCourseResponse>(
+                    `${BASE_API_URL}my-courses/${userId}`
+                );
 
             let recordedCompleted: Course[] = [];
 
-            if (recordedRes.data.status) {
+            if (recordedRes.data?.status) {
                 recordedCompleted =
-                    recordedRes.data.data?.completed || [];
+                    recordedRes.data?.data?.completed || [];
             }
 
-            // ==============================
-            // Fetch live courses
-            // ==============================
+            // =====================================================
+            // FETCH LIVE COURSES
+            // =====================================================
+
             const token = localStorage.getItem("token");
 
             const headers = token
@@ -91,51 +129,62 @@ const CoursesCertificates = () => {
                 }
                 : {};
 
-            const liveRes = await axios.get(
-                `${BASE_API_URL}live-course-history/${userId}`,
-                {
-                    headers,
-                }
-            );
+            const liveRes =
+                await axios.get<LiveCourseResponse>(
+                    `${BASE_API_URL}live-course-history/${userId}`,
+                    {
+                        headers,
+                    }
+                );
 
-            let liveCompleted: Course[] = [];
+            let liveCompleted: LiveCourse[] = [];
 
-            if (liveRes.data.status) {
+            if (liveRes.data?.status) {
                 const today = new Date();
+
                 today.setHours(0, 0, 0, 0);
 
-                liveCompleted = (liveRes.data.data || []).filter(
-                    (course: Course) =>
-                        course.batch &&
-                        course.batch.end_date &&
-                        new Date(course.batch.end_date) < today
+                liveCompleted = (liveRes.data?.data || []).filter(
+                    (course) => {
+                        if (
+                            !course.batch ||
+                            !course.batch.end_date
+                        ) {
+                            return false;
+                        }
+
+                        const endDate = new Date(
+                            course.batch.end_date
+                        );
+
+                        return endDate < today;
+                    }
                 );
             }
 
-            // ==============================
-            // Combine courses
-            // ==============================
-            const combined: Course[] = [
-                ...recordedCompleted.map(
-                    (course): Course => ({
-                        ...course,
-                        type: "recorded",
-                    })
-                ),
+            // =====================================================
+            // COMBINE RECORDED + LIVE COURSES
+            // =====================================================
 
-                ...liveCompleted.map(
-                    (course): Course => ({
-                        ...course,
-                        type: "live",
-                    })
-                ),
+            const combined: Course[] = [
+                ...recordedCompleted.map((course) => ({
+                    ...course,
+                    type: "recorded" as const,
+                })),
+
+                ...liveCompleted.map((course) => ({
+                    ...course,
+                    type: "live" as const,
+                })),
             ];
 
-            // ==============================
-            // Remove duplicate courses
-            // ==============================
+            // =====================================================
+            // REMOVE DUPLICATE COURSES BY TITLE
+            // =====================================================
+
             const unique: Course[] = [];
-            const seen = new Set<string | number>();
+
+            const seen = new Set<string>();
 
             for (const course of combined) {
                 if (!seen.has(course.title)) {
@@ -146,108 +195,27 @@ const CoursesCertificates = () => {
 
             setCompletedCourses(unique);
         } catch (error) {
-            console.error("Error fetching courses:", error);
+            console.error(
+                "Error fetching courses:",
+                error
+            );
+
+            setCompletedCourses([]);
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        const verifyUserAndFetchCourses = async () => {
-            const storedUser = localStorage.getItem("user");
-            const token = localStorage.getItem("token");
-
-            // ==============================
-            // No stored login
-            // ==============================
-            if (!storedUser || !token) {
-                setUser(null);
-                setLoading(false);
-                router.push("/login");
-                return;
-            }
-
-            try {
-                const parsedUser: User = JSON.parse(storedUser);
-
-                if (!parsedUser?.id) {
-                    logoutUser();
-                    return;
-                }
-
-                const BASE_API_URL = getBaseApiUrl();
-
-                // ==============================
-                // Verify user still exists
-                // ==============================
-                const response = await axios.get(
-                    `${BASE_API_URL}user/${parsedUser.id}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Accept: "application/json",
-                        },
-                    }
-                );
-
-                const result = response.data;
-
-                // ==============================
-                // User does not exist
-                // ==============================
-                if (!result?.status || !result?.data) {
-                    console.log("User not found in database");
-
-                    logoutUser();
-                    return;
-                }
-
-                // ==============================
-                // User exists
-                // ==============================
-                const verifiedUser: User = result.data;
-
-                setUser(verifiedUser);
-
-                // Update localStorage
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(verifiedUser)
-                );
-
-                // ==============================
-                // Fetch user's courses
-                // ==============================
-                await fetchCourses(verifiedUser.id);
-
-            } catch (error: any) {
-                console.error(
-                    "User verification failed:",
-                    error
-                );
-
-                // 401 / 404 / any API error
-                if (
-                    error?.response?.status === 401 ||
-                    error?.response?.status === 404
-                ) {
-                    console.log(
-                        "User deleted or authentication expired"
-                    );
-                }
-
-                logoutUser();
-            }
-        };
-
-        verifyUserAndFetchCourses();
-    }, [router]);
+    // =========================================================
+    // AUTOMATIC PDF DOWNLOAD
+    // =========================================================
 
     useEffect(() => {
         if (selectedCourse && !downloading) {
             setDownloading(true);
 
-            // Wait for certificate template and images to render
+            // Small delay so hidden certificate template
+            // and images can render properly.
             const timer = setTimeout(() => {
                 handleDownloadPDF(selectedCourse);
             }, 800);
@@ -256,7 +224,11 @@ const CoursesCertificates = () => {
         }
     }, [selectedCourse]);
 
-    const handleDownloadPDF = (course: Course) => {
+    // =========================================================
+    // DOWNLOAD CERTIFICATE PDF
+    // =========================================================
+
+    const handleDownloadPDF = async (course: Course) => {
         if (!certificateRef.current) {
             setDownloading(false);
             setSelectedCourse(null);
@@ -266,13 +238,13 @@ const CoursesCertificates = () => {
         try {
             const element = certificateRef.current;
 
-            const opt = {
+            const safeTitle = course.title
+                .replace(/\s+/g, "_")
+                .replace(/[\\/:*?"<>|]/g, "");
+            const options = {
                 margin: 10,
 
-                filename: `${course.title.replace(
-                    /\s+/g,
-                    "_"
-                )}_Certificate.pdf`,
+                filename: `${safeTitle}_Certificate.pdf`,
 
                 image: {
                     type: "jpeg" as const,
@@ -297,23 +269,13 @@ const CoursesCertificates = () => {
                 },
             };
 
-            html2pdf()
-                .set(opt)
+            await html2pdf()
+                .set(options)
                 .from(element)
-                .save()
-                .then(() => {
-                    setDownloading(false);
-                    setSelectedCourse(null);
-                })
-                .catch((error) => {
-                    console.error(
-                        "PDF generation failed:",
-                        error
-                    );
+                .save();
 
-                    setDownloading(false);
-                    setSelectedCourse(null);
-                });
+            setDownloading(false);
+            setSelectedCourse(null);
         } catch (error) {
             console.error(
                 "PDF generation failed:",
@@ -325,6 +287,10 @@ const CoursesCertificates = () => {
         }
     };
 
+    // =========================================================
+    // LOADING
+    // =========================================================
+
     if (loading) {
         return (
             <div className="p-5 text-center">
@@ -333,133 +299,255 @@ const CoursesCertificates = () => {
         );
     }
 
+    // =========================================================
+    // MAIN UI
+    // =========================================================
+
     return (
-        <div className="certificates_page">
-            <div className="section_container py-5">
+        <div className="dashboard_layout">
 
-                {/* Breadcrumb */}
-                <nav className="mb-4 d-flex align-items-center gap-2 small">
-                    <Link
-                        href="/"
-                        className="text-muted text-decoration-none"
-                    >
-                        Home
-                    </Link>
+            {/* =====================================================
+          SIDEBAR
+      ===================================================== */}
 
-                    <i
-                        className="bi bi-chevron-right text-muted"
-                        style={{
-                            fontSize: "10px",
-                        }}
-                    ></i>
+            <Sidebar
+                recordedCoursesCount={
+                    completedCourses.filter(
+                        (course) =>
+                            course.type === "recorded"
+                    ).length
+                }
 
-                    <span className="text-dark fw-bold">
-                        My Certificates
-                    </span>
-                </nav>
+                liveCoursesCount={
+                    completedCourses.filter(
+                        (course) =>
+                            course.type === "live"
+                    ).length
+                }
 
-                {/* Page Title */}
-                <h2 className="mb-4">
-                    Your{" "}
-                    <span className="text-c2">
-                        Certificates
-                    </span>
-                </h2>
+                activePage=""
 
-                {/* No Certificates */}
-                {completedCourses.length === 0 ? (
-                    <div className="text-center py-5">
-                        <i
-                            className="bi bi-patch-exclamation text-muted"
-                            style={{
-                                fontSize: "3rem",
-                            }}
-                        ></i>
+                isOpen={isSidebarOpen}
 
-                        <p className="mt-3">
-                            No completed courses found yet.
-                            Complete a course to earn your
-                            certificate!
-                        </p>
+                onClose={() =>
+                    setIsSidebarOpen(false)
+                }
+            />
 
-                        <Link
-                            href="/recorded-course"
-                            className="btn_signup mt-2"
-                            style={{
-                                display: "inline-block",
-                                textDecoration: "none",
-                            }}
+            {/* =====================================================
+          MOBILE SIDEBAR OVERLAY
+      ===================================================== */}
+
+            <div
+                className={`sidebar_overlay ${isSidebarOpen ? "show" : ""
+                    }`}
+                onClick={() =>
+                    setIsSidebarOpen(false)
+                }
+            />
+
+            {/* =====================================================
+          NOTIFICATION MODAL
+      ===================================================== */}
+
+            <NotificationsModal
+                isOpen={isNotifOpen}
+                onClose={() =>
+                    setIsNotifOpen(false)
+                }
+                notifications={[]}
+            />
+
+            {/* =====================================================
+          MAIN CONTENT
+      ===================================================== */}
+
+            <div className="dashboard_main_content">
+
+                {/* ===================================================
+            HEADER
+        =================================================== */}
+
+                <header className="dashboard_top_header">
+
+                    <div className="d-flex align-items-center gap-3">
+
+                        {/* Mobile Menu */}
+
+                        <button
+                            type="button"
+                            className="btn_mobile_menu d-lg-none"
+                            onClick={() =>
+                                setIsSidebarOpen(true)
+                            }
                         >
-                            Browse Courses
-                        </Link>
+                            <i className="bi bi-list"></i>
+                        </button>
+
+                        {/* Page Title */}
+
+                        <div className="profile_breadcrumb mb-0">
+                            <h2>My Certificates</h2>
+                        </div>
+
                     </div>
-                ) : (
-                    /* Certificate Cards */
-                    <div className="row g-4">
-                        {completedCourses.map(
-                            (course, idx) => (
-                                <div
-                                    key={
-                                        course.id ||
-                                        course.title ||
-                                        idx
-                                    }
-                                    className="col-lg-4 col-md-6"
+
+                    {/* Notification */}
+
+                    <div
+                        className="notification_bell_top"
+                        onClick={() =>
+                            setIsNotifOpen(true)
+                        }
+                    >
+                        <i className="bi bi-bell"></i>
+                    </div>
+
+                </header>
+
+                {/* ===================================================
+            CERTIFICATES PAGE
+        =================================================== */}
+
+                <div className="certificates_page px-3 px-lg-4">
+
+                    <div className="section_container pt-2 pb-4">
+
+                        {/* =================================================
+                NO COMPLETED COURSES
+            ================================================= */}
+
+                        {completedCourses.length === 0 ? (
+
+                            <div className="text-center py-5">
+
+                                <i
+                                    className="bi bi-patch-exclamation text-muted"
+                                    style={{
+                                        fontSize: "3rem",
+                                    }}
+                                ></i>
+
+                                <p className="mt-3">
+                                    No completed courses found yet.
+                                    Complete a course to earn your
+                                    certificate!
+                                </p>
+
+                                <Link
+                                    href="/recorded-course"
+                                    className="btn_signup mt-2"
+                                    style={{
+                                        display: "inline-block",
+                                        textDecoration: "none",
+                                    }}
                                 >
-                                    <div className="certificate_card">
-                                        <div className="cert_card_icon">
-                                            <i className="bi bi-patch-check-fill"></i>
+                                    Browse Courses
+                                </Link>
+
+                            </div>
+
+                        ) : (
+
+                            /* =================================================
+                               COMPLETED COURSES
+                            ================================================= */
+
+                            <div className="row g-4">
+
+                                {completedCourses.map(
+                                    (course, idx) => (
+
+                                        <div
+                                            key={
+                                                course.id ??
+                                                `${course.title}-${idx}`
+                                            }
+                                            className="col-xl-4 col-lg-6 col-md-6 col-12"
+                                        >
+
+                                            <div className="certificate_card">
+
+                                                {/* Certificate Icon */}
+
+                                                <div className="cert_card_icon">
+
+                                                    <i className="bi bi-patch-check-fill"></i>
+
+                                                </div>
+
+                                                {/* Certificate Content */}
+
+                                                <div className="cert_card_content">
+
+                                                    <h5>
+                                                        {course.title}
+                                                    </h5>
+
+                                                    <p className="small text-muted mb-3">
+                                                        Successfully Completed
+                                                    </p>
+
+                                                    {/* Download Button */}
+
+                                                    <button
+                                                        type="button"
+                                                        className="view_cert_btn"
+                                                        onClick={() => {
+                                                            if (!downloading) {
+                                                                setSelectedCourse(
+                                                                    course
+                                                                );
+                                                            }
+                                                        }}
+                                                        disabled={downloading}
+                                                    >
+
+                                                        {downloading &&
+                                                            selectedCourse?.title ===
+                                                            course.title ? (
+
+                                                            <>
+                                                                <span className="spinner-border spinner-border-sm me-2"></span>
+
+                                                                Downloading...
+                                                            </>
+
+                                                        ) : (
+
+                                                            <>
+                                                                <i className="bi bi-file-earmark-pdf-fill me-2"></i>
+
+                                                                Download PDF
+                                                            </>
+
+                                                        )}
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
-                                        <div className="cert_card_content">
-                                            <h5>
-                                                {course.title}
-                                            </h5>
+                                    )
+                                )}
 
-                                            <p className="small text-muted mb-3">
-                                                Successfully
-                                                Completed
-                                            </p>
+                            </div>
 
-                                            <button
-                                                type="button"
-                                                className="view_cert_btn"
-                                                onClick={() =>
-                                                    !downloading &&
-                                                    setSelectedCourse(
-                                                        course
-                                                    )
-                                                }
-                                                disabled={
-                                                    downloading
-                                                }
-                                            >
-                                                {downloading &&
-                                                    selectedCourse?.title ===
-                                                    course.title ? (
-                                                    <>
-                                                        <span className="spinner-border spinner-border-sm me-2"></span>
-
-                                                        Downloading...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <i className="bi bi-file-earmark-pdf-fill me-2"></i>
-
-                                                        Download PDF
-                                                    </>
-                                                )}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
                         )}
+
                     </div>
-                )}
+
+                </div>
+
             </div>
 
-            {/* Hidden Certificate Template */}
+            {/* =====================================================
+          HIDDEN CERTIFICATE TEMPLATE
+      ===================================================== */}
+
             <div
                 style={{
                     position: "absolute",
@@ -469,35 +557,57 @@ const CoursesCertificates = () => {
                     pointerEvents: "none",
                 }}
             >
+
                 {selectedCourse && (
+
                     <div
                         className="certificate_template_wrapper"
                         ref={certificateRef}
                     >
+
                         <div className="certificate_main">
+
                             <div className="cert_outer_frame">
+
                                 <div className="cert_academic_border">
+
                                     <div className="cert_inner_border">
+
+                                        {/* Watermark */}
 
                                         <div className="cert_watermark_svg"></div>
 
                                         {/* Verified Ribbon */}
+
                                         <div className="verified_ribbon">
+
                                             VERIFIED{" "}
+
                                             <i className="bi bi-patch-check-fill ms-1"></i>
+
                                         </div>
 
-                                        {/* Header */}
+                                        {/* =================================================
+                        CERTIFICATE HEADER
+                    ================================================= */}
+
                                         <div className="cert_header_row">
+
                                             <img
-                                                src={`${BASE_IMAGE_URL}velearn-logo.png`}
+                                                src={`/images/velearn-logo.png`}
                                                 alt="Velearn"
                                                 className="cert_logo_img"
+                                                crossOrigin="anonymous"
                                             />
+
                                         </div>
 
-                                        {/* Certificate Content */}
+                                        {/* =================================================
+                        CERTIFICATE BODY
+                    ================================================= */}
+
                                         <div className="cert_content_body">
+
                                             <h1 className="cert_main_title">
                                                 CERTIFICATE
                                             </h1>
@@ -509,39 +619,39 @@ const CoursesCertificates = () => {
                                             </p>
 
                                             <h2 className="cert_user_name">
-                                                {user?.name}
+                                                {user?.name || "Student"}
                                             </h2>
 
                                             <p className="cert_completion_text">
-                                                has successfully completed
-                                                all academic requirements
-                                                for
+                                                has successfully completed all
+                                                academic requirements for
                                             </p>
 
                                             <h4 className="cert_course_title">
-                                                {
-                                                    selectedCourse.title
-                                                }
+                                                {selectedCourse.title}
                                             </h4>
+
                                         </div>
 
-                                        {/* Gold Seal */}
+                                        {/* =================================================
+                        GOLD SEAL
+                    ================================================= */}
+
                                         <div className="cert_gold_seal">
+
                                             <div className="seal_inner">
+
                                                 <i
                                                     className="bi bi-award-fill"
                                                     style={{
-                                                        fontSize:
-                                                            "2rem",
+                                                        fontSize: "2rem",
                                                     }}
                                                 ></i>
 
                                                 <span
                                                     style={{
-                                                        fontSize:
-                                                            "0.6rem",
-                                                        fontWeight:
-                                                            "800",
+                                                        fontSize: "0.6rem",
+                                                        fontWeight: 800,
                                                         textTransform:
                                                             "uppercase",
                                                         letterSpacing:
@@ -550,55 +660,73 @@ const CoursesCertificates = () => {
                                                 >
                                                     Official Academy
                                                 </span>
+
                                             </div>
+
                                         </div>
 
-                                        {/* Footer */}
+                                        {/* =================================================
+                        FOOTER
+                    ================================================= */}
+
                                         <div className="cert_footer_row">
 
+                                            {/* LEFT FOOTER */}
+
                                             <div className="cert_footer_left">
+
                                                 <div className="cert_meta_info">
 
                                                     <p className="mb-0">
+
                                                         <strong>
                                                             Certificate ID:
                                                         </strong>{" "}
+
                                                         VL-
                                                         {Math.floor(
                                                             100000 +
                                                             Math.random() *
                                                             900000
                                                         )}
+
                                                     </p>
 
                                                     <p className="mb-0">
+
                                                         <strong>
                                                             Issue Date:
                                                         </strong>{" "}
+
                                                         {new Date().toLocaleDateString(
                                                             "en-GB"
                                                         )}
+
                                                     </p>
 
                                                     <p className="cert_footer_note">
                                                         *Digital Verification:
+                                                        <br />
                                                         velearn.in/verify
                                                     </p>
 
                                                 </div>
+
                                             </div>
 
+                                            {/* RIGHT FOOTER */}
+
                                             <div className="cert_footer_right">
+
                                                 <div className="cert_signature_area">
 
                                                     <img
-                                                        src="/assets/images/icons/signature.png"
-                                                        alt="Signature"
+                                                        src="/images/icons/signature.png"
+                                                        alt="Velearn signature"
                                                         className="cert_signature_img"
-                                                        onError={(
-                                                            e
-                                                        ) => {
-                                                            e.currentTarget.style.display =
+                                                        crossOrigin="anonymous"
+                                                        onError={(event) => {
+                                                            event.currentTarget.style.display =
                                                                 "none";
                                                         }}
                                                     />
@@ -612,19 +740,27 @@ const CoursesCertificates = () => {
                                                     </div>
 
                                                 </div>
+
                                             </div>
 
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 )}
+
             </div>
+
         </div>
     );
-
 };
 
 export default CoursesCertificates;

@@ -2319,9 +2319,9 @@ function UserDropdown({
                 <strong>
                     {user.name}
                 </strong>
-                <strong>
+                {/* <strong>
                     {user.id}
-                </strong>
+                </strong> */}
 
                 <small>
                     {user.email}
