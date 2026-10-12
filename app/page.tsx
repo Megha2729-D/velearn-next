@@ -64,6 +64,60 @@ export default function HomePage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [syllabusMap, setSyllabusMap] = useState<
+    Record<number, string | null | undefined>
+  >({});
+
+  const liveCourseIds = [1, 2, 3, 4, 5];
+
+  useEffect(() => {
+    const fetchSyllabuses = async () => {
+      const results = await Promise.all(
+        liveCourseIds.map(async (id) => {
+          try {
+            const response = await axios.get(
+              `${BASE_API_URL}course-detail/${id}`
+            );
+
+            const syllabus = response.data?.data?.syllabus_pdf;
+
+            return [id, syllabus || null] as const;
+          } catch (error) {
+            console.error(`Failed to fetch syllabus for course ${id}`, error);
+            return [id, null] as const;
+          }
+        })
+      );
+
+      setSyllabusMap(Object.fromEntries(results));
+    };
+
+    fetchSyllabuses();
+  }, []);
+
+  const handleSyllabusDownload = (courseId: number) => {
+    const syllabus = syllabusMap[courseId];
+
+    if (!syllabus) {
+      toast.error("Syllabus not found");
+      return;
+    }
+
+    const syllabusUrl = /^https?:\/\//i.test(syllabus)
+      ? syllabus
+      : `https://crm.velearn.in/${syllabus.replace(/^\/+/, "")}`;
+
+    const link = document.createElement("a");
+    link.href = syllabusUrl;
+    link.download = "VeLearn-Syllabus.pdf";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   // --------------------------------
   // FETCH COURSES
   // --------------------------------
@@ -235,7 +289,7 @@ export default function HomePage() {
       setIsSubmitting(false);
     }
   };
-  
+
   const testimonialData = [
     {
       img: "testimonial/arun-vikkashamuthu.png",
@@ -760,6 +814,7 @@ export default function HomePage() {
           >
             {[
               {
+                id: 1,
                 title: "Full Stack Development",
                 img: `${BASE_IMAGE_URL}live-course/full-stack-development.jpg`,
                 desc: "A live, mentor-led Full Stack Development program designed to take you from fundamentals to production-ready applications — with real projects, real tools, and real career support.",
@@ -767,30 +822,34 @@ export default function HomePage() {
                 link: "/live-course/full-stack-development",
               },
               {
+                id: 2,
                 title: "UI/UX Design",
                 img: `${BASE_IMAGE_URL}live-course/ui-ux.webp`,
-                desc: "Learn UI/UX design through live classes, hands-on projects, and expert mentorship. Master user research, UX strategy, and modern UI design to become job-ready with a strong portfolio.",
+                desc: "Learn UI/UX design through live classes, hands-on projects, and expert mentorship.",
                 duration: "3 Months",
                 link: "/live-course/ui-ux-design",
               },
               {
+                id: 3,
                 title: "Digital Marketing",
                 img: `${BASE_IMAGE_URL}live-course/digital-marketing.webp`,
-                desc: "This live Digital Marketing training program is designed to build job-ready skills through hands-on campaign execution, real-time tools, and expert mentorship.",
+                desc: "Build job-ready skills through hands-on campaign execution and expert mentorship.",
                 duration: "3 Months",
                 link: "/live-course/digital-marketing",
               },
               {
+                id: 4,
                 title: "Data Science & AI",
                 img: `${BASE_IMAGE_URL}live-course/data-science.webp`,
-                desc: "This live Data Science and AI/ML program helps you develop job-ready analytical and machine learning skills through hands-on projects.",
+                desc: "Develop analytical and machine learning skills through hands-on projects.",
                 duration: "3 Months",
                 link: "/live-course/data-science-and-machine-learning",
               },
               {
+                id: 5,
                 title: "Data Analytics",
                 img: `${BASE_IMAGE_URL}live-course/data-analytics.webp`,
-                desc: "This live Data Analytics program equips you with in-demand skills in Excel, SQL, Power BI, Python, and data visualization.",
+                desc: "Learn Excel, SQL, Power BI, Python, and data visualization.",
                 duration: "3 Months",
                 link: "/live-course/data-analytics",
               },
@@ -831,7 +890,25 @@ export default function HomePage() {
                   <div className="col-12 card_abs_butt">
                     <div className="d-flex justify-content-between">
                       <div className="syllabus_butt">
-                        <button>Syllabus</button>
+                        <div className="syllabus_butt">
+                          <button
+                            type="button"
+                            className="syllabus_download_btn"
+                            onClick={() => {
+                              const syllabus = syllabusMap[course.id];
+
+                              if (syllabus === undefined || syllabus === null || syllabus === "") {
+                                toast.error("Syllabus not found");
+                                return;
+                              }
+
+                              handleSyllabusDownload(course.id);
+                            }}
+                          >
+                            Syllabus
+                          </button>
+                        </div>
+
                       </div>
 
                       <div className="view_more_butt">

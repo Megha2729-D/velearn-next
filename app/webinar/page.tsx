@@ -377,14 +377,18 @@ export default function Webinar() {
             setLoadingSubscribe(false);
         }
     };
+
     const handleSubscribeChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
+        const { name, value } = e.target;
+
         setSubscribeData((prev) => ({
             ...prev,
-            [e.target.name]: e.target.value,
+            [name]: value,
         }));
     };
+
     return (
         <>
             {/* Banner */}
@@ -735,7 +739,7 @@ export default function Webinar() {
                                         <div className="my-4">
                                             <input
                                                 type="text"
-                                                name="subscribeName"
+                                                name="name"
                                                 id="subscribeName"
                                                 placeholder="Your Name"
                                                 value={subscribeData.name}
@@ -743,10 +747,11 @@ export default function Webinar() {
                                                 required
                                             />
                                         </div>
+
                                         <div className="my-4">
                                             <input
                                                 type="email"
-                                                name="subscribeEmail"
+                                                name="email"
                                                 id="subscribeEmail"
                                                 placeholder="E-mail ID"
                                                 value={subscribeData.email}
@@ -754,10 +759,11 @@ export default function Webinar() {
                                                 required
                                             />
                                         </div>
+
                                         <div className="my-4">
                                             <input
-                                                type="number"
-                                                name="subscribePhone"
+                                                type="tel"
+                                                name="phone"
                                                 id="subscribePhone"
                                                 placeholder="Phone no"
                                                 value={subscribeData.phone}
@@ -765,14 +771,13 @@ export default function Webinar() {
                                                 required
                                             />
                                         </div>
+
                                         <div className="col-12 d-flex justify-content-center">
                                             <button
                                                 type="submit"
                                                 disabled={loadingSubscribe}
                                             >
-                                                {loadingSubscribe
-                                                    ? "Subscribing..."
-                                                    : "Submit"}
+                                                {loadingSubscribe ? "Subscribing..." : "Submit"}
                                             </button>
                                         </div>
                                     </form>
