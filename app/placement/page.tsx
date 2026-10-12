@@ -320,7 +320,7 @@ const Placement = () => {
             !evaluationDetails &&
             !isEvalLoading &&
             !evalAlreadySubmitted
-        ) {
+        ) { 
             setIsEvalLoading(true);
             const storedUser = JSON.parse(readLocalStorage("user", "{}"));
             const userId = storedUser.id || storedUser.student_id;
