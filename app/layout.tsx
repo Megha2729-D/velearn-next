@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import { Toaster } from "react-hot-toast";
+import GuestRouteGuard from "@/components/GuestRouteGuard";
 
 import BootstrapClient from "@/components/BootstrapClient";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
@@ -63,10 +64,12 @@ export default function RootLayout({
 
         <ProtectedRoute>
           <LayoutWrapper>
-            {children}
+            <GuestRouteGuard>
+              {children}
+            </GuestRouteGuard>
           </LayoutWrapper>
         </ProtectedRoute>
-
+        
         <Toaster
           position="top-right"
           reverseOrder={false}

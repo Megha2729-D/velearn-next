@@ -340,43 +340,80 @@ const Assignments = () => {
                 return item.status === activeTab;
             });
 
+    // const totalTasks = mappedAssignments.length;
+
+    // const completedTasks = mappedAssignments.filter(
+    //     (item) =>
+    //         (item.status === "submitted" ||
+    //             item.status === "graded" ||
+    //             item.status === "evaluated") &&
+    //         item.submission?.reupload_approved !== 1 &&
+    //         item.submission?.reupload_approved !== true,
+    // ).length;
+
+    // const pendingTasks = mappedAssignments.filter(
+    //     (item) =>
+    //         item.status === "pending" ||
+    //         item.status === "late" ||
+    //         ((item.status === "graded" ||
+    //             item.status === "evaluated") &&
+    //             (item.submission?.reupload_approved === 1 ||
+    //                 item.submission?.reupload_approved === true)),
+    // ).length;
+
+    // const gradedAssignments = mappedAssignments.filter(
+    //     (item) =>
+    //         item.submission &&
+    //         item.submission.score !== null &&
+    //         item.submission.score !== undefined,
+    // );
+
+    // const avgScore =
+    //     gradedAssignments.length > 0
+    //         ? `${Math.round(
+    //             gradedAssignments.reduce(
+    //                 (acc, curr) =>
+    //                     acc + (curr.submission?.score || 0),
+    //                 0,
+    //             ) / gradedAssignments.length,
+    //         )}%`
+    //         : "0%";
+
+
     const totalTasks = mappedAssignments.length;
-
     const completedTasks = mappedAssignments.filter(
-        (item) =>
-            (item.status === "submitted" ||
-                item.status === "graded" ||
-                item.status === "evaluated") &&
-            item.submission?.reupload_approved !== 1 &&
-            item.submission?.reupload_approved !== true,
+        (i) =>
+            (i.status === "submitted" ||
+                i.status === "graded" ||
+                i.status === "evaluated") &&
+            i.submission?.reupload_approved != 1 &&
+            i.submission?.reupload_approved !== true,
     ).length;
-
     const pendingTasks = mappedAssignments.filter(
-        (item) =>
-            item.status === "pending" ||
-            item.status === "late" ||
-            ((item.status === "graded" ||
-                item.status === "evaluated") &&
-                (item.submission?.reupload_approved === 1 ||
-                    item.submission?.reupload_approved === true)),
+        (i) =>
+            i.status === "pending" ||
+            i.status === "late" ||
+            ((i.status === "graded" || i.status === "evaluated") &&
+                (i.submission?.reupload_approved == 1 ||
+                    i.submission?.reupload_approved === true)),
     ).length;
-
     const gradedAssignments = mappedAssignments.filter(
-        (item) =>
-            item.submission &&
-            item.submission.score !== null &&
-            item.submission.score !== undefined,
+        (i) =>
+            i.submission &&
+            i.submission.score !== null &&
+            i.submission.score !== undefined,
     );
-
     const avgScore =
         gradedAssignments.length > 0
-            ? `${Math.round(
-                gradedAssignments.reduce(
+            ? (() => {
+                const total = gradedAssignments.reduce(
                     (acc, curr) =>
                         acc + (curr.submission?.score || 0),
                     0,
-                ) / gradedAssignments.length,
-            )}%`
+                );
+                const avg = total / gradedAssignments.length;
+                return isNaN(avg) ? "0%" : Math.round(avg) + "%";
+            })()
             : "0%";
 
     return (
@@ -458,8 +495,8 @@ const Assignments = () => {
                     <div className="assignments_tabs">
                         <button
                             className={`tab_btn text-center justify-content-center ${activeTab === "all"
-                                    ? "active"
-                                    : ""
+                                ? "active"
+                                : ""
                                 }`}
                             onClick={() => setActiveTab("all")}
                         >
@@ -468,8 +505,8 @@ const Assignments = () => {
 
                         <button
                             className={`tab_btn text-center justify-content-center ${activeTab === "pending"
-                                    ? "active"
-                                    : ""
+                                ? "active"
+                                : ""
                                 }`}
                             onClick={() =>
                                 setActiveTab("pending")
@@ -480,8 +517,8 @@ const Assignments = () => {
 
                         <button
                             className={`tab_btn text-center justify-content-center ${activeTab === "completed"
-                                    ? "active"
-                                    : ""
+                                ? "active"
+                                : ""
                                 }`}
                             onClick={() =>
                                 setActiveTab("completed")
@@ -763,9 +800,9 @@ const Assignments = () => {
                                                     ) : (
                                                         <label
                                                             className={`btn_upload ${item.status ===
-                                                                    "late"
-                                                                    ? "late"
-                                                                    : "pending"
+                                                                "late"
+                                                                ? "late"
+                                                                : "pending"
                                                                 }`}
                                                             style={{
                                                                 cursor: "pointer",
@@ -774,9 +811,9 @@ const Assignments = () => {
                                                         >
                                                             <i
                                                                 className={`bi ${item.status ===
-                                                                        "late"
-                                                                        ? "bi-exclamation-triangle"
-                                                                        : "bi-cloud-arrow-up"
+                                                                    "late"
+                                                                    ? "bi-exclamation-triangle"
+                                                                    : "bi-cloud-arrow-up"
                                                                     }`}
                                                             ></i>{" "}
                                                             {item.isSubmitted
@@ -832,9 +869,9 @@ const Assignments = () => {
 
                                                 <button
                                                     className={`btn_brief ${expandedBriefId ===
-                                                            item.id
-                                                            ? "active"
-                                                            : ""
+                                                        item.id
+                                                        ? "active"
+                                                        : ""
                                                         }`}
                                                     onClick={() =>
                                                         setExpandedBriefId(

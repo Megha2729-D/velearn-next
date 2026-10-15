@@ -284,12 +284,17 @@ const Profile = () => {
             |--------------------------------------------------------------------------
             */
 
+            // Process Recorded Courses
             let recordedAll: Course[] = [];
             let recordedCompleted: Course[] = [];
 
             if (resRecorded.data.status) {
-                recordedAll =
-                    resRecorded.data.data?.all || [];
+                recordedAll = (resRecorded.data.data?.all || []).filter(
+                    (c: Course) =>
+                        ["active", "ongoing", "completed"].includes(
+                            (c.enrollment?.status || "").toLowerCase(),
+                        ),
+                );
 
                 recordedCompleted =
                     resRecorded.data.data?.completed || [];

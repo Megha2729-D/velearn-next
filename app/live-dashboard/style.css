@@ -132,6 +132,66 @@
     color: #cbd5e1;
 }
 
+.calendar_day.empty {
+    background: transparent !important;
+    border: none !important;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.cal_nav_btn {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.cal_nav_btn:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+.cal_nav_btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.cal_select {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cal_select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.attendance_loading_overlay {
+    opacity: 0.5;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
 /* Mini Projects */
 .project_item {
     padding-bottom: 5px;
@@ -453,7 +513,7 @@
 }
 
 .profile_breadcrumb h2 {
-      font-family: var(--heading-font) !important;
+    font-family: var(--heading-font) !important;
     font-size: 20px;
     color: #0f172a;
     font-weight: 800;
